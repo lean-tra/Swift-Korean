@@ -31,9 +31,9 @@ By translating "The Swift Programming Language" we want to help a lot of korean 
 10. 열거형 (Assign to @inureyes )
 11. 클래스와 구조체 (Assign to  @seanmoon)
 12. 속성
-13. 메서드
+13. 메서드 (Assign to @northPenguin)
 14. 서브 스크립트 (Assign to @Snowcat8436)
-15. 상속
+15. 상속 (Assign to @hoppingbonny)
 16. 초기화
 17. 해제(Deinitialization)
 18. 자동 참조 계수
