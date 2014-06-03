@@ -43,11 +43,11 @@ return "Hel l o agai n,  " + personName + "! "
 }
 pri ntl n(sayHel l oAgai n("Anna"))
 // pri nts "Hel l o agai n,  Anna! "
-Function Parameters and Return Values
+## Function Parameters and Return Values
 Function parameters and return values are extremely flexible in Swi ft. You can define
 anything from a simple uti l i ty function wi th a single unnamed parameter to a complex
 function wi th expressive parameter names and di fferent parameter options.
-Multiple Input Parameters
+##Multiple Input Parameters
 Functions can have mul tiple input parameters, whi ch are wri tten wi thin the function’s
 parentheses, separated by commas.
 Thi s function takes a start and an end index for a hal f-open range, and works out how
@@ -57,7 +57,7 @@ return end -  start
 }
 pri ntl n(hal fOpenRangeLength(1,  10))
 // pri nts "9"
-Functions Without Parameters
+##Functions Without Parameters
 Functions are not requi red to define input parameters. Here’s a function wi th no input
 parameters, whi ch always returns the same Stri ng message whenever i t i s cal led:
 func sayHel l oWorl d() -> Stri ng {
@@ -68,7 +68,7 @@ pri ntl n(sayHel l oWorl d())
 The function defini tion sti l l  needs parentheses after the function’s name, even though i t
 does not take any parameters. The function name i s al so fol lowed by an empty pai r of
 parentheses when the function i s cal led.
-Functions Without Return Values
+##Functions Without Return Values
 Functions are not requi red to define a return type. Here’s a version of the sayHel l o function,
 cal led w aveGoodbye, whi ch prints i ts own Stri ng value rather than returning i t:
 func sayGoodbye(personName: Stri ng) {
@@ -78,10 +78,11 @@ sayGoodbye("Dave")
 // pri nts "Goodbye,  Dave! "
 Because i t does not need to return a value, the function’s defini tion does not include the
 return arrow (->) or a return type.
-N O T E
+> N O T E
 Stri ctl y speaki ng,  the sayGoodbye functi on does sti l l  return a val ue,  even though no return val ue i s defi ned.
 Functi ons w i thout a defi ned return type return a speci al  val ue of type Voi d.  T hi s i s si mpl y an empty tupl e,  i n
 effect a tupl e w i th zero el ements,  w hi ch can be w ri tten as ().
+
 The return value of a function can be ignored when i t i s cal led:
 func pri ntAndCount(stri ngT oPri nt: Stri ng) -> Int {
 pri ntl n(stri ngT oPri nt)
@@ -98,11 +99,13 @@ The fi rst function, pri ntAndCount, prints a string, and then returns i ts char
 Int. The second function, pri ntWi thoutCounti ng, cal l s the fi rst function, but ignores i ts return
 value. When the second function i s cal led, the message i s sti l l  printed by the fi rst
 function, but the returned value i s not used.
-N O T E
+
+> N O T E
 Return val ues can be i gnored,  but a functi on that says i t w i l l  return a val ue must al w ays do so.  A functi on w i th
 a defi ned return type cannot al l ow  control  to fal l  out of the bottom of the functi on w i thout returni ng a val ue,
 and attempti ng to do so w i l l  resul t i n a compi l e- ti me error.
-Functions with Multiple Return Values
+
+## Functions with Multiple Return Values
 You can use a tuple type as the return type for a function to return mul tiple values as
 part of one compound return value.
 The example below defines a function cal led count, whi ch counts the number of vowel s,
@@ -129,7 +132,7 @@ pri ntl n("\(total . vow el s) vow el s and \(total . consonants) consonants")
 Note that the tuple’s members do not need to be named at the point that the tuple i s
 returned from the function, because thei r names are al ready speci fied as part of the
 function’s return type.
-Function Parameter Names
+## Function Parameter Names
 Al l  of the above functions define parameter names for thei r parameters:
 func someFuncti on(parameterName: Int) {
 // functi on body goes here,  and can use parameterName
@@ -139,7 +142,7 @@ However, these parameter names are only used wi thin the body of the function i 
 cannot be used when cal l ing the function. These kinds of parameter names are known as
 local  parameter names, because they are only avai lable for use wi thin the function’s
 body.
-External Parameter Names
+## External Parameter Names
 Sometimes i t’s useful  to name each parameter when you cal l  a function, to indi cate the
 purpose of each argument you pass to the function.
 If you want users of your function to provide parameter names when they cal l  your
@@ -150,9 +153,10 @@ func someFuncti on(external ParameterName l ocal ParameterName: Int) {
 // functi on body goes here,  and can use l ocal ParameterName
 // to refer to the argument val ue for that parameter
 }
-N O T E
+> N O T E
 If you provi de an external  parameter name for a parameter,  that external  name must al w ays be used w hen
 cal l i ng the functi on.
+
 As an example, consider the fol lowing function, whi ch joins two strings by inserting a
 thi rd “joiner” string between them:
 func joi n(s1: Stri ng,  s2: Stri ng,  joi ner: Stri ng) -> Stri ng {
@@ -178,12 +182,13 @@ joi n(stri ng: "hel l o",  toStri ng: "w orl d",  w i thJoi ner: ",  ")
 The use of external  parameter names enables thi s second version of the joi n function to be
 cal led in an expressive, sentence-l ike manner by users of the function, whi le sti l l
 providing a function body that i s readable and clear in intent.
-N O T E
-N O T E
+
+>N O T E
 Consi der usi ng external  parameter names w henever the purpose of a functi on’s arguments w oul d be uncl ear
 to someone readi ng your code for the fi rst ti me.  Y ou do not need to speci fy external  parameter names i f the
 purpose of each parameter i s cl ear and unambi guous w hen the functi on i s cal l ed.
-Shorthand External Parameter Names
+
+## Shorthand External Parameter Names
 If you want to provide an external  parameter name for a function parameter, and the
 local  parameter name i s al ready an appropriate name to use, you do not need to wri te
 the same name twi ce for that parameter. Instead, wri te the name once, and prefix the
@@ -204,13 +209,15 @@ Thi s function’s choi ce of parameter names makes for a clear, readable functi
 whi le al so enabl ing the function to be cal led wi thout ambigui ty:
 l et contai nsAVee = contai nsCharacter(stri ng: "aardvark",  characterT oFi nd: "v")
 // contai nsAVee equal s true,  because "aardvark" contai ns a "v"
-Default Parameter Values
+## Default Parameter Values
 You can define a defaul t value for any parameter as part of a function’s defini tion. If a
 defaul t value i s defined, you can omi t that parameter when cal l ing the function.
-N O T E
+
+>N O T E
 Pl ace parameters w i th defaul t val ues at the end of a functi on’s parameter l i st.  T hi s ensures that al l  cal l s to the
 functi on use the same order for thei r non-defaul t arguments,  and makes i t cl ear that the same functi on i s
 bei ng cal l ed i n each case.
+
 Here’s a version of the joi n function from earl ier, whi ch provides a defaul t value for i ts joi ner
 parameter:
 func joi n(stri ng s1: Stri ng,  toStri ng s2: Stri ng,
@@ -225,7 +232,7 @@ However, i f no value of joi ner i s provided when the function i s cal led, the
 single space (" ") i s used instead:
 joi n(stri ng: "hel l o",  toStri ng: "w orl d")
 // returns "hel l o w orl d"
-External Names for Parameters with Default Values
+## External Names for Parameters with Default Values
 In most cases, i t i s useful  to provide (and therefore requi re) an external  name for any
 parameter wi th a defaul t value. Thi s ensures that the argument for that parameter i s
 clear in purpose i f a value i s provided when the function i s cal led.
@@ -243,11 +250,12 @@ defaul ted parameter. The external  name must therefore be provided when cal l i
 function, making the parameter’s purpose clear and unambiguous:
 joi n("hel l o",  "w orl d",  joi ner: "-")
 // returns "hel l o-w orl d"
-N O T E
+>N O T E
 Y ou can opt out of thi s behavi or by w ri ti ng an underscore (_) i nstead of an expl i ci t external  name w hen you
 defi ne the parameter.  How ever,  external  names for defaul ted parameters are al w ays preferred w here
 appropri ate.
-Variadic Parameters
+
+## Variadic Parameters
 A variadi c parameter accepts zero or more values of a speci fied type. You use a variadi c
 parameter to speci fy that the parameter can be passed a varying number of input values
 when the function i s cal led. Wri te variadi c parameters by inserting three period
@@ -269,12 +277,13 @@ ari thmeti cMean(1,  2,  3,  4,  5)
 // returns 3. 0,  w hi ch i s the ari thmeti c mean of these fi ve numbers
 meti cMean(3,  8,  19)
 turns 10. 0,  w hi ch i s the ari thmeti c mean of these three numbers
-N O T E
+> N O T E
 A functi on may have at most one vari adi c parameter,  and i t must al w ays appear l ast i n the parameter l i st,  to
 avoi d ambi gui ty w hen cal l i ng the functi on w i th mul ti pl e parameters.
 If your functi on has one or more parameters w i th a defaul t val ue,  and al so has a vari adi c parameter,  pl ace
 the vari adi c parameter after al l  the defaul ted parameters at the very end of the l i st.
-Constant and Variable Parameters
+
+## Constant and Variable Parameters
 Function parameters are constants by defaul t. Trying to change the value of a function
 parameter from wi thin the body of that function resul ts in a compi le-time error. Thi s
 means that you can’t change the value of a parameter by mi stake.
@@ -306,11 +315,13 @@ stri ng in order to right-al ign i t wi thin the overal l  string. Thi s value i
 constant cal led amountT oPad. The function then adds amountT oPad copies of the pad character
 to the left of the exi sting string and returns the resul t. It uses the stri ng variable parameter
 for al l  i ts string manipulation.
-N O T E
+
+>N O T E
 T he changes you make to a vari abl e parameter do not persi st beyond the end of each cal l  to the functi on,
 and are not vi si bl e outsi de the functi on’s body.  T he vari abl e parameter onl y exi sts for the l i feti me of that
 functi on cal l .
-In-Out Parameters
+
+## In-Out Parameters
 Variable parameters, as described above, can only be changed wi thin the function i tsel f.
 If you want a function to modi fy a parameter’s value, and you want those changes to
 persi st after the function cal l  has ended, define that parameter as an in-out parameter
@@ -322,9 +333,10 @@ You can only pass a variable as the argument for an in-out parameter. You cannot
 constant or a l i teral  value as the argument, because constants and l i teral s cannot be
 modi fied. You place an ampersand (&) di rectly before a variable’s name when you pass i t
 as an argument to an inout parameter, to indi cate that i t can be modi fied by the function.
-N O T E
+>N O T E
 In-out parameters cannot have defaul t val ues,  and vari adi c parameters cannot be marked as i nout.  If you
 mark a parameter as i nout,  i t cannot al so be marked as var or l et.
+
 Here’s an example of a function cal led sw apT w oInts, whi ch has two in-out integer
 parameters cal led a and b:
 func sw apT w oInts(i nout a: Int,  i nout b: Int) {
@@ -345,11 +357,12 @@ pri ntl n("someInt i s now  \(someInt),  and anotherInt i s now  \(anotherInt)")
 // pri nts "someInt i s now  107,  and anotherInt i s now  3"
 The example above shows that the original  values of someInt and anotherInt are modi fied by
 the sw apT w oInts function, even though they were original ly defined outside of the function.
-N O T E
+>N O T E
 In-out parameters are not the same as returni ng a val ue from a functi on.  T he sw apT w oInts exampl e above
 does not defi ne a return type or return a val ue,  but i t sti l l  modi fi es the val ues of someInt and anotherInt.  Inout parameters are an al ternati ve w ay for a functi on to have an effect outsi de of the scope of i ts functi on
 body.
-Function Types
+
+## Function Types
 Every function has a speci fi c function type, made up of the parameter types and the
 return type of the function.
 For example:
@@ -372,7 +385,7 @@ pri ntl n("hel l o,  w orl d")
 The type of thi s function i s () -> (), or “a function that has no parameters, and returns Voi d.”
 Functions that don’t speci fy a return value always return Voi d, whi ch i s equivalent to an
 empty tuple in Swi ft, shown as ().
-Using Function Types
+## Using Function Types
 You use function types just l ike any other types in Swi ft. For example, you can define a
 constant or variable to be of a function type and assign an appropriate function to that
 variable:
@@ -395,7 +408,7 @@ As wi th any other type, you can leave i t to Swi ft to infer the function type 
 assign a function to a constant or variable:
 l et anotherMathFuncti on = addT w oInts
 // anotherMathFuncti on i s i nferred to be of type (Int,  Int) -> Int
-Function Types as Parameter Types
+## Function Types as Parameter Types
 You can use a function type such as (Int,  Int) -> Int as a parameter type for another
 function. Thi s enables you to leave some aspects of a function’s implementation for the
 function’s cal ler to provide when the function i s cal led.
@@ -416,7 +429,7 @@ The role of pri ntMathResul t i s to print the resul t of a cal l  to a math fun
 type. It doesn’t matter what that function’s implementation actual ly does—i t matters only
 that the function i s of the correct type. Thi s enables pri ntMathResul t to hand off some of i ts
 functional i ty to the cal ler of the function in a type-safe way.
-Function Types as Return Types
+## Function Types as Return Types
 You can use a function type as the return type of another function. You do thi s by wri ting
 a complete function type immediately after the return arrow (->) of the returning function.
 The next example defines two simple functions cal led stepForw ard and stepBackw ard. The
@@ -457,7 +470,7 @@ pri ntl n("zero! ")
 // 2. . .
 . .
 ero!
-Nested Functions
+## Nested Functions
 Al l  of the functions you have encountered so far in thi s chapter have been examples of
 global  functions, whi ch are defined at a global  scope. You can al so define functions inside
 the bodies of other functions, known as nested functions.
