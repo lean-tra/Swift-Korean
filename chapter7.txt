@@ -1,3 +1,123 @@
-# 07 통제 흐름
+# 07 제어문 (Control Flow)
 
-Write here...
+조건문(conditionals)을 만들 때에는 `if`와 `switch`를 사용하세요. 그리고 순환문(루프문, loops)을 만들 때에는 `for-in`나 `for`, `while`, `do-while`을 사용하세요. 조건이나 순환문 변수(loop variable)를 감싸주는 괄호 ( )는 옵션입니다. 본문을 감싸는 { }는 필수입니다. 
+
+```
+let individual Scores = [75,  43,  103,  87,  12]
+var teamScore = 0
+for score in individualScores {
+  if score > 50 {
+    teamScore += 3
+  } else {
+    teamScore += 1
+  }
+}
+Score
+```
+
+'if'문 안에서, 조건을 나타내는 부분은 부울 식(참 거짓, Boolean expression)이어야 합니다. 즉, 다음과 같이 쓰면 에러가 납니다. 
+
+```
+if score {...}
+```
+
+조건부를 이렇게 score라고만 써주면, 에러가 나지, 프로그램이 알아서 score를 0과 비교해주지 않습니다.
+
+조건부에서 쓴 변수가 값을 가지지 않을 수도 있는 경우에는 `if`하고 `let`을 같이 쓸 수 있습니다.
+
+이러한 값들은 **선택적(optional)**이라고 합니다. 선택적인 값은, 값을 가질 수도 있고, 값을 안 가질 수도 있습니다. 값을 안 가지는 경우에는 `nil`값을 가집니다.
+
+어떤 값이 선택적이라고 표시하려면 값의 형(type) 뒤에다가 물음표 `?`를 붙여 줍니다. 
+
+```
+var optionalString: String? = "Hello"
+optionalString == nil
+var optionalName: String? = "John Appleseed"
+var greeting = "Hello! "
+
+if let name = optionalName {
+  greeting = "Hello,  \(name)"
+}
+```
+
+> 실험해 보세요 - optionalName을 nil로 바꿔보세요. 어떤 인사말이 나오나요? optionalName의 값이 nil인 경우에 다른 인사말을 보여주는 else절을 추가해 보세요.
+
+옵션 값이 nil인 경우에, 조건부는 거짓(false)이 되고, {} 안에 있는 코드는 실행되지 않습니다. 옵션 값이 nil이 아닌 경우에는, 선택값이 unwrapped되고 let 뒷 부분에서 상수에 할당됩니다. 이렇게 되면 코드 블럭 내에서 unwrapped value가 available한 상태가 됩니다.
+
+`switch` 명령어는 모든 종류의 데이터를 지원하며 아주 다양한 종류의 비교 연산을 지원합니다 - 정수형 데이터에 국한되지 않으며, 등가인지 확인하는 연산에 국한되지 않습니다.
+
+```
+let vegetable = "red pepper"
+
+switch vegetable {
+case "celery":
+  let vegetableComment = "Add some raisins and make ants on a log. "
+case "cucumber",  "watercress":
+  let vegetableComment = "That would make a good tea sandwich. "
+case let x where x. hasSuffi x("pepper"):
+  let vegetableComment = "Is it a spicy \(x)?"
+default:
+  vegetableComment = "Everything tastes good in soup. "
+```
+
+> 실험해 보세요 - 디폴트 경우(default case)를 제거해 보세요. 어떤 에러가 나오나요?
+
+프로그램은 `switch`안에 있는 경우 중, 조건에 해당하는 case안에 있는 코드를 실행한 후, `switch` 문에서 빠져나옵니다. 실행된 case 다음에 나오는 case 안에 있는 코드는 실행되지 않습니다. 따라서 각 case 안에 있는 코드의 마지막 부분에 break 문을 써줄 필요가 없습니다. 
+
+딕셔너리(dictionary) 안에 있는 각 항목(item)에 대해서 이터레이트(iterate)할 때는, `for-in`을 사용합니다. 이 때 각 키-값 쌍(key-value pair)에 대해서 이름 쌍을 사용합니다.
+
+```
+let interestingNumbers = [
+"Prime": [2,  3,  5,  7,  11,  13],
+"Fibonacci ": [1,  1,  2,  3,  5,  8],
+"Square": [1,  4,  9,  16,  25],
+]
+
+var largest = 0
+for (kind,  numbers) in interestingNumbers {
+  for number in numbers {
+    if number > largest {
+  largest = number
+}
+```
+
+> 실험해 보세요 - 변수를 하나 더 추가해서, 가장 최근에 가장 큰 수는 무엇이었는지, 그 수는 어떤 종류였는지 추적하세요. 
+
+조건이 변하기 전까지는 코드 블럭(block of code)을 반복하고 싶다면 `while`을 사용하세요. 루프가 적어도 한 번은 반드시 실행되도록 하려면, 조건부를 끝부분에 쓰면 됩니다. 
+
+```
+var n = 2
+while n < 100 {
+  n = n * 2
+}
+n
+
+var m = 2
+do {
+  m = m * 2
+}  while  m < 100
+  m
+```
+
+루프 안에서 인덱스(index)를 사용해도 됩니다. 사용하는 방법으로는 `..`(마침표 두 개)를 사용해서 인덱스의 범위를 설정하는 방법도 있고, 초기화/조건부/증가시키는 부분을 작성하는 방법도 있습니다. 두 종류 모두 하는 작업은 같습니다:
+
+```
+var firstForLoop = 0
+for i  in 0..3 {
+  firstForLoop += i
+}
+firstForLoop
+```
+
+```
+var secondForLoop = 0
+for var i = 0; i < 3; ++i {
+  secondForLoop += 1
+}
+SecondForLoop
+```
+
+최댓값을 안 쓰고 범위를 만들 때에는 `..`(마침표 두 개)를 사용하고, 최댓값과 최솟값을 모두 사용해서 범위를 만들 때에는 `...`(마침표 세 개)를 사용합니다. 
+
+
+
