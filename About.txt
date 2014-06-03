@@ -19,4 +19,4 @@ Feel free to participate project =)
 - 문서 작성은 개인 version에서 작업 한뒤 pull request로 merge 합니다.
 
 ##  Translation Guide
-번역 관련한 룰은 [Translation guide]() 페이지에서 확인하세요 
+번역 관련한 룰은 [Translation guide](https://www.penflip.com/jjuakim/swift-korean/blob/master/translate-guide.txt) 페이지에서 확인하세요. 
