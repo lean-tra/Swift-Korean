@@ -1,48 +1,56 @@
 # Apple Swift Programming Language PDF translation for KOREAN
-This is a [Swift](https://developer.apple.com/swift/) guide documentation translation project.
-Feel free to participate project =)
-> 이 프로젝트는 애플의 새로운 프로그래밍 언어 **swift** 번역 프로젝트입니다. 자유롭게 참여하세요 =) 
+**“Apple Inc. Copyright © 2014 Apple Inc. All rights reserved.”** 
+This is a [The Swift Programming Language](https://developer.apple.com/swift/) guide documentation translation project.
+
+_This project is **never used for commercial purposes**. 
+By translating "The Swift Programming Language" we want to help a lot of korean learners who may otherwise struggle to understand it._
+
+> 이 프로젝트는 애플의 새로운 프로그래밍 언어 **swift** 번역 프로젝트입니다. 자유롭게 참여하세요 =)
+**이 번역 프로젝트는 절대로 상업적인 목적으로 사용되지 않습니다.**
 
 ## Downloads
 - [Download “The Swift Programming Language” from the iBooks Store](https://itunes.apple.com/us/book/the-swift-programming-language/id881256329?mt=11)
 - [Download "The Swift Programming Language" from private dropbox](https://www.dropbox.com/s/rd79pw1bhhvg22h/the-swift-rogramming-language.pdf)
 
 ## 현재 번역 상태
-- 일단 Chapter 25 까지 우선적으로 번역할 예정입니다. 
+- _**두껍고 이탤릭의**_ 글씨는 번역이 1차적으로 완료 된 페이지 입니다. 오역이나 더 나은 표현이 있을 경우에는 [Discussion](https://www.penflip.com/jjuakim/swift-korean/discussions)페이지에 가셔서 해당 chapter를 찾고 같이 이야기를 나눠보세요.  
+- 일단 `Chapter 25` 까지 우선적으로 번역할 예정입니다. 
 - Chapter 25까지 번역 후 P.R로 피드백 수렴하면서 뒷부분(Chapter 26~ ) 번역을 진행하겠습니다. 
-- **@멘션** 표시가 없는 챕터는 아직 할당되지 않은 챕터입니다. [Discussion](https://www.penflip.com/jjuakim/swift-korean/discussions) 에 가서 원하는 챕터를 댓글로 찜 하세요! 
+- `@멘션` 표시가 없는 챕터는 아직 할당되지 않은 챕터입니다. [Discussion-챕터 분배 (얼른 와서 찜하세요)](https://www.penflip.com/jjuakim/swift-korean/discussions/2) 에 가서 원하는 챕터를 `댓글`로 찜 하세요! 확인후 운영자가 `assign` 해드립니다 
 
 ## 작업 할당
-01. Swift에 대해서 (@FlashMaestro)
-02. Swift 둘러보기 (@FlashMaestro)
-03. 기초 다지기 (@FlashMaestro)
-04. 기본 연산자
-05. 문자열과 문자
-06. 컬렉션 타입
-07. 통제 흐름
-08. 함수  (@Quartet)
-09. 클로저(Closures)
-10. 열거형
+01. _**Swift에 대해서  by @FlashMaestro**_
+02. Swift 둘러보기 (Assign to @FlashMaestro)
+03. 기초 다지기 (Assign to @FlashMaestro)
+04. 기본 연산자 (Assign to @Nirvana)
+05. 문자열과 문자 (Assign to @Nirvana)
+06. 컬렉션 타입 (Assign to @justinchronicle, @seanmoon)
+07. 통제 흐름 (Assign to @nassol)
+08. 함수  (Assign to @Quartet)
+09. 클로저(Closures) (Assign to @inureyes)
+10. 열거형 (Assign to @inureyes )
 11. 클래스와 구조체
 12. 속성
 13. 메서드
-14. 서브 스크립트 (@snowcat8436)
+14. 서브 스크립트 (Assign to @Snowcat8436)
 15. 상속
 16. 초기화
 17. 해제(Deinitialization)
 18. 자동 참조 계수
-19. 옵션 연쇄
+19. 옵션 연쇄 (Assign to @hyukhur)
 20. 타입 변환
-21. 내부 타입 (@jjuakim)
+21. 내부 타입 (Assign to @jjuakim)
 22. 확장
 23. 프로토콜
 24. 제네릭
-25. 고급 연산자
+25. 고급 연산자 (Assign to @dyanos)
 
 ## Rule
+[추가논의](https://www.penflip.com/jjuakim/swift-korean/discussions/1)는 이 곳에서..
 - 문서 작성은 개인 version에서 작업 한뒤 pull request로 merge 합니다.
 
 ##  Translation Guide
+[추가논의](https://www.penflip.com/jjuakim/swift-korean/discussions/1)는 이 곳에서..
 - 담당 부분에서 최초 등장 용어에 영문을 함께 표기. 그 이후로는 번역단어로만 표기
 > Ex) (최초) 함수(Function)란 xxxx -> (이후) 함수는 xxxx
 
