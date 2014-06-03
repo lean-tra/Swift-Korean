@@ -8,3 +8,4 @@ chater4txt.txt
 chapter4.txt
 chapter5.txt
 chapter6.txt
+chater7.txt
