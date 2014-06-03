@@ -14,7 +14,7 @@ Feel free to participate project =)
 - `@멘션` 표시가 없는 챕터는 아직 할당되지 않은 챕터입니다. [Discussion-챕터 분배 (얼른 와서 찜하세요)](https://www.penflip.com/jjuakim/swift-korean/discussions/2) 에 가서 원하는 챕터를 `댓글`로 찜 하세요! 확인후 운영자가 `asign` 해드립니다 
 
 ## 작업 할당
-01. _**Swift에 대해서**_ (@FlashMaestro)
+01. _**Swift에 대해서  by @FlashMaestro**_
 02. Swift 둘러보기 (@FlashMaestro)
 03. 기초 다지기 (@FlashMaestro)
 04. 기본 연산자
@@ -27,7 +27,7 @@ Feel free to participate project =)
 11. 클래스와 구조체
 12. 속성
 13. 메서드
-14. 서브 스크립트 (@snowcat8436)
+14. 서브 스크립트 (@Snowcat8436)
 15. 상속
 16. 초기화
 17. 해제(Deinitialization)
