@@ -1,4 +1,0 @@
-# Translate guide
-- 담당 부분에서 최초 등장 용어에 영문을 함께 표기. 그 이후로는 번역단어로만 표기
-   Ex) (최초) 함수(Function)란 xxxx -> (이후) 함수는 xxxx
-
