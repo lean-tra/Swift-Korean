@@ -36,11 +36,7 @@ sayHello 함수를 다른 입력값으로 여러번 호출할 수 있습니다. 
 스위프트에서 함수 파라메터와 반환값은 극도로 유연합니다. 이름없는 파라메터를 사용하는 단순한 기능성 함수에서부터 표현 파라메터 이름(expressive parameter names)과 다른 파라메터 옵션을 가진 복잡한 함수에 이르기까지 무엇이든 정의할수 있습니다.
 
 ## 파라메터 복수 입력
-Functions can have mul tiple input parameters, whi ch are wri tten wi thin the function’s
-parentheses, separated by commas.
 함수는 괄호 안에서 콤마로 구분되는 복수의 입력 파라메터를 가질수 있습니다. 
-Thi s function takes a start and an end index for a hal f-open range, and works out how
-many elements the range contains:
 이 함수는 반개영역half-open range의 시작과 끝의 인덱스를 받아 얼마나 많은 요소elements들이 영역안에 있는지 계산합니다:
 
     func halfOpenRangeLength(start: Int, end: Int) -> Int {
@@ -49,14 +45,15 @@ many elements the range contains:
     println(halfOpenRangeLength(1, 10))
     // prints "9"
 
-##Functions Without Parameters
-Functions are not requi red to define input parameters. Here’s a function wi th no input
-parameters, whi ch always returns the same Stri ng message whenever i t i s cal led:
-func sayHel l oWorl d() -> Stri ng {
-return "hel l o,  w orl d"
-}
-pri ntl n(sayHel l oWorl d())
-// pri nts "hel l o,  w orl d"
+## 파라메터가 없는 함수
+함수에 입력 파라메터를 정의할 필요는 없습니다. 밑의 예제는 입력 파라메터가 없는 함수입니다. 이 함수는 호출될때마다 언제나 같은 메시지를 반환합니다.
+
+    func sayHelloWorld() -> String {
+	    return "hello, world"
+    }
+    println(sayHelloWorld())
+    // prints "hello, world"
+    
 The function defini tion sti l l  needs parentheses after the function’s name, even though i t
 does not take any parameters. The function name i s al so fol lowed by an empty pai r of
 parentheses when the function i s cal led.
