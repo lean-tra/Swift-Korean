@@ -1,4 +1,7 @@
-### Apple Swift Programming Language PDF translation for KOREAN
+# Apple Swift Programming Language PDF translation for KOREAN
+This is a [Swift](https://developer.apple.com/swift/) guide documentation translation project.
+Feel free to participate project =)
+> 이 프로젝트는 애플의 새로운 프로그래밍 언어 **swift** 번역 프로젝트입니다. 자유롭게 참여하세요 =) 
 
 ### Downloads
-- Please add download link for non-apple user
+- [Download “The Swift Programming Language” from the iBooks Store](https://itunes.apple.com/us/book/the-swift-programming-language/id881256329?mt=11)
