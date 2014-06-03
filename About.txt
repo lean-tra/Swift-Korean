@@ -26,7 +26,7 @@ Feel free to participate project =)
 11. 클래스와 구조체
 12. 속성
 13. 메서드
-14. 서브 스크립트 (@)
+14. 서브 스크립트 (@snowcat8436)
 15. 상속
 16. 초기화
 17. 해제(Deinitialization)
