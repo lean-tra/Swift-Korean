@@ -78,3 +78,5 @@ println("The width of someResolution is \
 		(someResolution.width)")
 // "The width of soneResolution is 0" 출력
 ```
+이 예제에서 `someResolution.width`는 `someResolution`의 `width` 프로퍼티를 참조하고 기본 초기값 0를 반환합니다.
+여러분은 섭(sub)프로퍼티에를 통해 `VideoMode`에 속한 `resolution` 프로퍼티의 `width` 프로퍼티에도 접근할수 있습니다. 
