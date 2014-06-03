@@ -7,13 +7,37 @@ Feel free to participate project =)
 - [Download “The Swift Programming Language” from the iBooks Store](https://itunes.apple.com/us/book/the-swift-programming-language/id881256329?mt=11)
 - [Download "The Swift Programming Language" from private dropbox](https://www.dropbox.com/s/rd79pw1bhhvg22h/the-swift-rogramming-language.pdf)
 
-## 계획
-- Introduction, Chapter 03 기본 다지기 ~ Chapter 07 통제 흐름 (@FlashMaestro)
-- Chapter 08 함수 ~ Chapter 13 메서드 (@Quartet)
-- Chapter 14 서브 스크립트 ~ Chapter 20 타입 변환 (@Yong)
-- Chapter 21 내부 타입 ~ Chapter 25 고급 연산자 (@Alice Kim)
+## 현재 번역 상태
+- 일단 Chapter 25 까지 우선적으로 번역할 예정입니다. 
+- Chapter 25까지 번역 후 P.R로 피드백 수렴하면서 뒷부분(Chapter 26~ ) 번역을 진행하겠습니다. 
+- **@멘션** 표시가 없는 챕터는 아직 할당되지 않은 챕터입니다. [Discussion](https://www.penflip.com/jjuakim/swift-korean/discussions) 에 가서 원하는 챕터를 댓글로 찜 하세요! 
 
--Chapter 25까지 번역 후 P.R로 피드백 수렴하면서 Chapter 26~ 번역
+## 작업 할당
+01. Swift에 대해서 (@FlashMaestro)
+02. Swift 둘러보기 (@FlashMaestro)
+03. 기초 다지기 (@FlashMaestro)
+04. 기본 연산자
+05. 문자열과 문자
+06. 컬렉션 타입
+07. 통제 흐름
+08. 함수  (@Quartet)
+09. 클로저(Closures)
+10. 열거형
+11. 클래스와 구조체
+12. 속성
+13. 메서드
+14. 서브 스크립트 (@)
+15. 상속
+16. 초기화
+17. 해제(Deinitialization)
+18. 자동 참조 계수
+19. 옵션 연쇄
+20. 타입 변환
+21. 내부 타입 (@jjuakim)
+22. 확장
+23. 프로토콜
+24. 제네릭
+25. 고급 연산자
 
 ## Rule
 - 문서 작성은 개인 version에서 작업 한뒤 pull request로 merge 합니다.
