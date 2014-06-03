@@ -68,10 +68,10 @@ C 및 Objective-C의 산술 연산자와는 달리 Swift 산술 연산자는 값
 두 개의 Character 값이거나 하나는 Character 값 그리고 하나는 String 값일때 두 개를 함께 더해서 새로운 String 값을 만들 수 있습니다.
 
 ```
-‘let dog: Character = "🐶"
-let cow: Character = "🐮"
+‘let dog: Character = ":dog"
+let cow: Character = ":cow"
 let dogCow = dog + cow
-// dogCow is equal to "🐶🐮’
+// dogCow is equal to ":dog:cow"
 ```
 연속된 String 과 문자 를 또한 참조 바란다. // 링크 
 
