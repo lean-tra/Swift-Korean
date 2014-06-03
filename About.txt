@@ -45,6 +45,7 @@ By translating "The Swift Programming Language" we want to help a lot of korean 
 24. 제네릭
 25. 고급 연산자 (Assign to @dyanos)
 
+
 ## Rule
 [추가논의](https://www.penflip.com/jjuakim/swift-korean/discussions/1)는 이 곳에서..
 - 문서 작성은 개인 version에서 작업 한뒤 pull request로 merge 합니다.
