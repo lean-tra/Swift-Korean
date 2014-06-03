@@ -24,19 +24,19 @@ By translating "The Swift Programming Language" we want to help a lot of korean 
 03. 기초 다지기 (Assign to @FlashMaestro)
 04. 기본 연산자 (Assign to @Nirvana)
 05. 문자열과 문자 (Assign to @Nirvana)
-06. 컬렉션 타입 (Assign to @justinchronicle, @seanmoon)
+06. 컬렉션 타입 (Assign to @justinchronicle)
 07. 통제 흐름 (Assign to @nassol)
 08. 함수  (Assign to @Quartet)
 09. 클로저(Closures) (Assign to @inureyes)
 10. 열거형 (Assign to @inureyes )
-11. 클래스와 구조체
-12. 속성
-13. 메서드
+11. 클래스와 구조체 (Assign to  @seanmoon)
+12. 속성 (Assign to @mango)
+13. 메서드 (Assign to @northPenguin)
 14. 서브 스크립트 (Assign to @Snowcat8436)
-15. 상속
+15. 상속 (Assign to @hoppingbonny)
 16. 초기화
 17. 해제(Deinitialization)
-18. 자동 참조 계수
+18. 자동 참조 계수(ARC) (Assign to @RoyTheGame)
 19. 옵션 연쇄 (Assign to @hyukhur)
 20. 타입 변환
 21. 내부 타입 (Assign to @jjuakim)
@@ -44,6 +44,7 @@ By translating "The Swift Programming Language" we want to help a lot of korean 
 23. 프로토콜
 24. 제네릭
 25. 고급 연산자 (Assign to @dyanos)
+
 
 ## Rule
 [추가논의](https://www.penflip.com/jjuakim/swift-korean/discussions/1)는 이 곳에서..
