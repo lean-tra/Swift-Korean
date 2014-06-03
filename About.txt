@@ -30,7 +30,7 @@ By translating "The Swift Programming Language" we want to help a lot of korean 
 09. 클로저(Closures) (Assign to @inureyes)
 10. 열거형 (Assign to @inureyes )
 11. 클래스와 구조체 (Assign to  @seanmoon)
-12. 속성
+12. 속성 (Assign to @mango)
 13. 메서드 (Assign to @northPenguin)
 14. 서브 스크립트 (Assign to @Snowcat8436)
 15. 상속 (Assign to @hoppingbonny)
