@@ -1,3 +1,312 @@
 # 09 클로저(Closures)
 
-Write here...
+Closures
+Closures are sel f-contained blocks of functional i ty that can be passed around and used in
+your code. Closures in Swi ft are simi lar to blocks in C and Objective-C and to lambdas in
+other programming languages.
+Closures can capture and store references to any constants and variables from the
+context in whi ch they are defined. Thi s i s known as closing over those constants and
+variables, hence the name “closures”. Swi ft handles al l  of the memory management of
+capturing for you.
+N O T E
+Don’t w orry i f you are not fami l i ar w i th the concept of “capturi ng”.  It i s expl ai ned i n detai l  bel ow  i n Capturi ng
+Val ues.
+Global  and nested functions, as introduced in Functions, are actual ly special  cases of
+closures. Closures take one of three forms:
+Swi ft’s closure expressions have a clean, clear style, wi th optimi zations that encourage
+brief, clutter-free syntax in common scenarios. These optimi zations include:
+Closure Expressions
+Global  functions are closures that have a name and do not capture any values.
+Nested functions are closures that have a name and can capture values from thei r
+enclosing function.
+Closure expressions are unnamed closures wri tten in a l ightweight syntax that can
+capture values from thei r surrounding context.
+Inferring parameter and return value types from context
+Impl i ci t returns from single-expression closures
+Shorthand argument names
+Trai l ing closure syntax
+Nested functions, as introduced in Nested Functions, are a convenient means of naming
+and defining sel f-contained blocks of code as part of a larger function. However, i t i s
+sometimes useful  to wri te shorter versions of function-l ike constructs wi thout a ful l
+declaration and name. Thi s i s parti cularly true when you work wi th functions that take
+other functions as one or more of thei r arguments.
+Closure expressions are a way to wri te inl ine closures in a brief, focused syntax. Closure
+expressions provide several  syntax optimi zations for wri ting closures in thei r simplest
+form wi thout loss of clari ty or intent. The closure expression examples below i l lustrate
+these optimi zations by refining a single example of the sort function over several
+i terations, each of whi ch expresses the same functional i ty in a more succinct way.
+The Sort Function
+Swi ft’s standard l ibrary provides a function cal led sort, whi ch sorts an array of values of a
+known type, based on the output of a sorting closure that you provide. Once i t completes
+the sorting process, the sort function returns a new array of the same type and si ze as the
+old one, wi th i ts elements in the correct sorted order.
+The closure expression examples below use the sort function to sort an array of Stri ng
+values in reverse alphabeti cal  order. Here’s the ini tial  array to be sorted:
+l et names = ["Chri s",  "Al ex",  "Ew a",  "Barry",  "Dani el l a"]
+The sort function takes two arguments:
+Thi s example i s sorting an array of Stri ng values, and so the sorting closure needs to be a
+function of type (Stri ng,  Stri ng) -> Bool .
+One way to provide the sorting closure i s to wri te a normal  function of the correct type,
+and to pass i t in as the sort function’s second parameter:
+func backw ards(s1: Stri ng,  s2: Stri ng) -> Bool  {
+return s1 > s2
+}
+An array of values of a known type.
+A closure that takes two arguments of the same type as the array’s contents, and
+returns a Bool  value to say whether the fi rst value should appear before or after the
+second value once the values are sorted. The sorting closure needs to return true i f
+the fi rst value should appear before the second value, and fal se otherwi se.
+var reversed = sort(names,  backw ards)
+// reversed i s equal  to ["Ew a",  "Dani el l a",  "Chri s",  "Barry",  "Al ex"]
+If the fi rst string (s1) i s greater than the second string (s2), the backw ards function wi l l  return
+true, indi cating that s1 should appear before s2 in the sorted array. For characters in
+strings, “greater than” means “appears later in the alphabet than”. Thi s means that the
+letter "B" i s “greater than” the letter "A", and the string "T om" i s greater than the string
+"T i m". Thi s gives a reverse alphabeti cal  sort, wi th "Barry" being placed before "Al ex", and so
+on.
+However, thi s i s a rather long-winded way to wri te what i s essential ly a single-expression
+function (a > b). In thi s example, i t would be preferable to wri te the sorting closure inl ine,
+using closure expression syntax.
+Closure Expression Syntax
+Closure expression syntax has the fol lowing general  form:
+{ ( parameters ) ->  return type  i n
+statements
+}
+Closure expression syntax can use constant parameters, variable parameters, and i nout
+parameters. Defaul t values cannot be provided. Variadi c parameters can be used i f you
+name the variadi c parameter and place i t last in the parameter l i st. Tuples can al so be
+used as parameter types and return types.
+The example below shows a closure expression version of the backw ards function from
+earl ier:
+reversed = sort(names,  { (s1: Stri ng,  s2: Stri ng) -> Bool  i n
+return s1 > s2
+})
+Note that the declaration of parameters and return type for thi s inl ine closure i s identi cal
+to the declaration from the backw ards function. In both cases, i t i s wri tten as (s1: Stri ng,  s2:
+Stri ng) -> Bool . However, for the inl ine closure expression, the parameters and return type
+are wri tten inside the curly braces, not outside of them.
+The start of the closure’s body i s introduced by the i n keyword. Thi s keyword indi cates
+that the defini tion of the closure’s parameters and return type has fini shed, and the body
+of the closure i s about to begin.
+Because the body of the closure i s so short, i t can even be wri tten on a single l ine:
+reversed = sort(names,  { (s1: Stri ng,  s2: Stri ng) -> Bool  i n return s1 > s2 } )
+Thi s i l lustrates that the overal l  cal l  to the sort function has remained the same. A pai r of
+parentheses sti l l  wrap the enti re set of arguments for the function. However, one of those
+arguments i s now an inl ine closure.
+Inferring Type From Context
+Because the sorting closure i s passed as an argument to a function, Swi ft can infer the
+types of i ts parameters and the type of the value i t returns from the type of the sort
+function’s second parameter. Thi s parameter i s expecting a function of type (Stri ng,  Stri ng) ->
+Bool . Thi s means that the Stri ng, Stri ng, and Bool  types do not need to be wri tten as part of the
+closure expression’s defini tion. Because al l  of the types can be inferred, the return arrow
+(->) and the parentheses around the names of the parameters can al so be omi tted:
+reversed = sort(names,  { s1,  s2 i n return s1 > s2 } )
+It i s always possible to infer parameter types and return type when passing a closure to a
+function as an inl ine closure expression. As a resul t, you rarely need to wri te an inl ine
+closure in i ts ful lest form.
+Nonetheless, you can make the types expl i ci t i f you wi sh, and doing so i s encouraged i f i t
+avoids ambigui ty for readers of your code. In the case of the sort function, the purpose of
+the closure i s clear from the fact that sorting i s taking place, and i t i s safe for a reader to
+assume that the closure i s l ikely to be working wi th Stri ng values, because i t i s assi sting
+wi th the sorting of an array of strings.
+Implicit Returns from Single-Expression Closures
+Single-expression closures can impl i ci tly return the resul t of thei r single expression by
+omi tting the return keyword from thei r declaration, as in thi s version of the previous
+example:
+reversed = sort(names,  { s1,  s2 i n s1 > s2 } )
+Here, the function type of the sort function’s second argument makes i t clear that a Bool
+value must be returned by the closure. Because the closure’s body contains a single
+expression (s1 > s2) that returns a Bool  value, there i s no ambigui ty, and the return keyword
+can be omi tted.
+Shorthand Argument Names
+Swi ft automati cal ly provides shorthand argument names to inl ine closures, whi ch can be
+used to refer to the values of the closure’s arguments by the names $0, $1, $2, and so on.
+If you use these shorthand argument names wi thin your closure expression, you can omi t
+the closure’s argument l i st from i ts defini tion, and the number and type of the shorthand
+argument names wi l l  be inferred from the expected function type. The i n keyword can al so
+be omi tted, because the closure expression i s made up enti rely of i ts body:
+reversed = sort(names,  { $0 > $1 } )
+Here, $0 and $1 refer to the closure’s fi rst and second Stri ng arguments.
+Operator Functions
+There’s actual ly an even shorter way to wri te the closure expression above. Swi ft’s Stri ng
+type defines i ts string-speci fi c implementation of the greater-than operator (>) as a
+function that has two parameters of type Stri ng, and returns a value of type Bool . Thi s
+exactly matches the function type needed for the sort function’s second parameter.
+Therefore, you can simply pass in the greater-than operator, and Swi ft wi l l  infer that you
+want to use i ts string-speci fi c implementation:
+reversed = sort(names,  >)
+For more about operator functions, see Operator Functions.
+Trailing Closures
+If you need to pass a closure expression to a function as the function’s final  argument and
+the closure expression i s long, i t can be useful  to wri te i t as a trai l ing closure instead. A
+trai l ing closure i s a closure expression that i s wri tten outside of (and after) the
+parentheses of the function cal l  i t supports:
+func someFuncti onT hatT akesACl osure(cl osure: () -> ()) {
+// functi on body goes here
+}
+// here's how  you cal l  thi s functi on w i thout usi ng a trai l i ng cl osure:
+someFuncti onT hatT akesACl osure({
+// cl osure's body goes here
+})
+ere's how  you cal l  thi s functi on w i th a trai l i ng cl osure i nstead:
+eFuncti onT hatT akesACl osure() {
+/ trai l i ng cl osure's body goes here
+N O T E
+If a cl osure expressi on i s provi ded as the functi on’s onl y argument and you provi de that expressi on as a
+trai l i ng cl osure,  you do not need to w ri te a pai r of parentheses () after the functi on’s name w hen you cal l  the
+functi on.
+The string-sorting closure from the Closure Expression Syntax section above can be
+wri tten outside of the sort function’s parentheses as a trai l ing closure:
+reversed = sort(names) { $0 > $1 }
+Trai l ing closures are most useful  when the closure i s suffi ciently long that i t i s not
+possible to wri te i t inl ine on a single l ine. As an example, Swi ft’s Array type has a map
+method whi ch takes a closure expression as i ts single argument. The closure i s cal led
+once for each i tem in the array, and returns an al ternative mapped value (possibly of
+some other type) for that i tem. The nature of the mapping and the type of the returned
+value i s left up to the closure to speci fy.
+After applying the provided closure to each array element, the map method returns a new
+array containing al l  of the new mapped values, in the same order as thei r corresponding
+values in the original  array.
+Here’s how you can use the map method wi th a trai l ing closure to convert an array of Int
+values into an array of Stri ng values. The array [16,  58,  510] i s used to create the new array
+["OneSi x",  "Fi veEi ght",  "Fi veOneZero"]:
+l et di gi tNames = [
+0: "Zero",  1: "One",  2: "T w o",    3: "T hree",  4: "Four",
+5: "Fi ve",  6: "Si x",  7: "Seven",  8: "Ei ght",  9: "Ni ne"
+]
+l et numbers = [16,  58,  510]
+The code above creates a di ctionary of mappings between the integer digi ts and Engl i shlanguage versions of thei r names. It al so defines an array of integers, ready to be
+converted into strings.
+You can now use the numbers array to create an array of Stri ng values, by passing a closure
+expression to the array’s map method as a trai l ing closure. Note that the cal l  to numbers.map
+does not need to include any parentheses after map, because the map method has only
+one parameter, and that parameter i s provided as a trai l ing closure:
+l et stri ngs = numbers.map {
+(var number) -> Stri ng i n
+var output = ""
+w hi l e number > 0 {
+output = di gi tNames[number % 10]!  + output
+number /= 10
+}
+return output
+}
+ri ngs i s i nferred to be of type Stri ng[]
+val ue i s ["OneSi x",  "Fi veEi ght",  "Fi veOneZero"]
+The map function cal l s the closure expression once for each i tem in the array. You do not
+need to speci fy the type of the closure’s input parameter, number, because the type can be
+inferred from the values in the array to be mapped.
+In thi s example, the closure’s number parameter i s defined as a variable parameter, as
+described in Constant and Variable Parameters, so that the parameter’s value can be
+modi fied wi thin the closure body, rather than declaring a new local  variable and assigning
+the passed number value to i t. The closure expression al so speci fies a return type of Stri ng,
+to indi cate the type that wi l l  be stored in the mapped output array.
+The closure expression bui lds a string cal led output each time i t i s cal led. It cal culates the
+last digi t of number by using the remainder operator (number % 10), and uses thi s digi t to
+look up an appropriate string in the di gi tNames di ctionary.
+N O T E
+T he cal l  to the di gi tNames di cti onary’s subscri pt i s fol l ow ed by an excl amati on mark (! ),  because di cti onary
+subscri pts return an opti onal  val ue to i ndi cate that the di cti onary l ookup can fai l  i f the key does not exi st.  In
+the exampl e above,  i t i s guaranteed that number % 10 w i l l  al w ays be a val i d subscri pt key for the di gi tNames
+di cti onary,  and so an excl amati on mark i s used to force-unw rap the Stri ng val ue stored i n the subscri pt’s
+opti onal  return val ue.
+The string retrieved from the di gi tNames di ctionary i s added to the front of output, effectively
+bui lding a string version of the number in reverse. (The expression number % 10 gives a
+value of 6 for 16, 8 for 58, and 0 for 510.)
+The number variable i s then divided by 10. Because i t i s an integer, i t i s rounded down
+during the divi sion, so 16 becomes 1, 58 becomes 5, and 510 becomes 51.
+The process i s repeated unti l  number /= 10 i s equal  to 0, at whi ch point the output string i s
+returned by the closure, and i s added to the output array by the map function.
+The use of trai l ing closure syntax in the example above neatly encapsulates the closure’s
+functional i ty immediately after the function that closure supports, wi thout needing to
+wrap the enti re closure wi thin the map function’s outer parentheses.
+Capturing Values
+A closure can capture constants and variables from the surrounding context in whi ch i t i s
+defined. The closure can then refer to and modi fy the values of those constants and
+variables from wi thin i ts body, even i f the original  scope that defined the constants and
+variables no longer exi sts.
+The simplest form of a closure in Swi ft i s a nested function, wri tten wi thin the body of
+another function. A nested function can capture any of i ts outer function’s arguments and
+can al so capture any constants and variables defined wi thin the outer function.
+Here’s an example of a function cal led makeIncrementor, whi ch contains a nested function
+cal led i ncrementor. The nested i ncrementor function captures two values, runni ngT otal  and amount,
+from i ts surrounding context. After capturing these values, i ncrementor i s returned by
+makeIncrementor as a closure that increments runni ngT otal  by amount each time i t i s cal led.
+func makeIncrementor(forIncrement amount: Int) -> () -> Int {
+var runni ngT otal  = 0
+func i ncrementor() -> Int {
+runni ngT otal  += amount
+return runni ngT otal
+}
+return i ncrementor
+}
+The return type of makeIncrementor i s () -> Int. Thi s means that i t returns a function, rather
+than a simple value. The function i t returns has no parameters, and returns an Int value
+each time i t i s cal led. To learn how functions can return other functions, see Function
+Types as Return Types.
+The makeIncrementor function defines an integer variable cal led runni ngT otal , to store the
+current running total  of the incrementor that wi l l  be returned. Thi s variable i s ini tial i zed
+wi th a value of 0.
+The makeIncrementor function has a single Int parameter wi th an external  name of forIncrement,
+and a local  name of amount. The argument value passed to thi s parameter speci fies how
+much runni ngT otal  should be incremented by each time the returned incrementor function i s
+cal led.
+makeIncrementor defines a nested function cal led i ncrementor, whi ch performs the actual
+incrementing. Thi s function simply adds amount to runni ngT otal , and returns the resul t.
+When considered in i solation, the nested i ncrementor function might seem unusual :
+func i ncrementor() -> Int {
+runni ngT otal  += amount
+return runni ngT otal
+}
+The i ncrementor function doesn’t have any parameters, and yet i t refers to runni ngT otal  and
+amount from wi thin i ts function body. It does thi s by capturing the exi sting values of
+runni ngT otal  and amount from i ts surrounding function and using them wi thin i ts own function
+body.
+Because i t does not modi fy amount, i ncrementor actual ly captures and stores a copy of the
+value stored in amount. Thi s value i s stored along wi th the new i ncrementor function.
+However, because i t modi fies the runni ngT otal  variable each time i t i s cal led, i ncrementor
+captures a reference to the current runni ngT otal  variable, and not just a copy of i ts ini tial
+value. Capturing a reference ensures sure that runni ngT otal  does not di sappear when the cal l
+to makeIncrementor ends, and ensures that runni ngT otal  wi l l  continue to be avai lable the next
+time that the incrementor function i s cal led.
+N O T E
+Sw i ft determi nes w hat shoul d be captured by reference and w hat shoul d be copi ed by val ue.  Y ou don’t need
+to annotate amount or runni ngT otal  to say that they can be used w i thi n the nested i ncrementor functi on.
+Sw i ft al so handl es al l  memory management i nvol ved i n di sposi ng of runni ngT otal  w hen i t i s no l onger needed
+by the i ncrementor functi on.
+Here’s an example of makeIncrementor in action:
+l et i ncrementByT en = makeIncrementor(forIncrement: 10)
+Thi s example sets a constant cal led i ncrementByT en to refer to an incrementor function that
+adds 10 to i ts runni ngT otal  variable each time i t i s cal led. Cal l ing the function mul tiple times
+shows thi s behavior in action:
+i ncrementByT en()
+// returns a val ue of 10
+i ncrementByT en()
+// returns a val ue of 20
+i ncrementByT en()
+// returns a val ue of 30
+If you create another incrementor, i t wi l l  have i ts own stored reference to a new,
+separate runni ngT otal  variable. In the example below, i ncrementBySeven captures a reference to
+a new runni ngT otal  variable, and thi s variable i s unconnected to the one captured by
+i ncrementByT en:
+l et i ncrementBySeven = makeIncrementor(forIncrement: 7)
+i ncrementBySeven()
+// returns a val ue of 7
+i ncrementByT en()
+// returns a val ue of 40
+N O T E
+If you assi gn a cl osure to a property of a cl ass i nstance,  and the cl osure captures that i nstance by referri ng to
+the i nstance or i ts members,  you w i l l  create a strong reference cycl e betw een the cl osure and the i nstance.
+Sw i ft uses capture l i sts to break these strong reference cycl es.  For more i nformati on,  see Strong Reference
+Cycl es for Cl osulosures Are Reference Types
+In the example above, i ncrementBySeven and i ncrementByT en are constants, but the closures
+these constants refer to are sti l l  able to increment the runni ngT otal  variables that they have
+captured. Thi s i s because functions and closures are reference types.
+Whenever you assign a function or a closure to a constant or a variable, you are actual ly
+setting that constant or variable to be a reference to the function or closure. In the
+example above, i t i s the choi ce of closure that i ncrementByT en refers to that i s constant, and
+not the contents of the closure i tsel f.
+Thi s al so means that i f you assign a closure to two di fferent constants or variables, both
+of those constants or variables wi l l  refer to the same closure:
+l et al soIncrementByT en = i ncrementByT en
+al soIncrementByT en()
+// returns a val ue of 50

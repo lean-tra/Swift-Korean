@@ -1,3 +1,401 @@
 # 11 클래스와 구조체
 
-Write here...
+Classes and Structures
+Classes and structures are general -purpose, flexible constructs that become the bui lding
+blocks of your program’s code. You define properties and methods to add functional i ty to
+your classes and structures by using exactly the same syntax as for constants, variables,
+and functions.
+Unl ike other programming languages, Swi ft does not requi re you to create separate
+interface and implementation fi les for custom classes and structures. In Swi ft, you define
+a class or a structure in a single fi le, and the external  interface to that class or structure i s
+automati cal ly made avai lable for other code to use.
+N O T E
+An i nstance of a cl ass i s tradi ti onal l y know n as an object.  How ever,  Sw i ft cl asses and structures are much
+cl oser i n functi onal i ty than i n other l anguages,  and much of thi s chapter descri bes functi onal i ty that can appl y
+to i nstances of ei ther a cl ass or a structure type.  Because of thi s,  the more general  term i nstance i s used.
+Comparing Classes and Structures
+Classes and structures in Swi ft have many things in common. Both can:
+For more information, see Properties, Methods, Subscripts, Ini tial i zation, Extensions, and
+Protocol s.
+Classes have addi tional  capabi l i ties that structures do not:
+Define properties to store values
+Define methods to provide functional i ty
+Define subscripts to provide access to thei r values using subscript syntax
+Define ini tial i zers to set up thei r ini tial  state
+Be extended to expand thei r functional i ty beyond a defaul t implementation
+Conform to protocol s to provide standard functional i ty of a certain kind
+Inheri tance enables one class to inheri t the characteri sti cs of another.
+For more information, see Inheri tance, Type Casting, Ini tial i zation, and Automati c
+Reference Counting.
+N O T E
+Structures are al w ays copi ed w hen they are passed around i n your code,  and do not use reference counti ng.
+Definition Syntax
+Classes and structures have a simi lar defini tion syntax. You introduce classes wi th the cl ass
+keyword and structures wi th the struct keyword. Both place thei r enti re defini tion wi thin a
+pai r of braces:
+cl ass SomeCl ass {
+// cl ass defi ni ti on goes here
+}
+struct SomeStructure {
+// structure defi ni ti on goes here
+}
+N O T E
+Whenever you defi ne a new  cl ass or structure,  you effecti vel y defi ne a brand new  Sw i ft type.  Gi ve types
+UpperCamel Case names (such as SomeCl ass and SomeStructure here) to match the capi tal i zati on of standard
+Sw i ft types (such as Stri ng,  Int,  and Bool ).  Conversel y,  al w ays gi ve properti es and methods l ow erCamel Case
+names (such as frameRate and i ncrementCount) to di fferenti ate them from type names.
+Here’s an example of a structure defini tion and a class defini tion:
+struct Resol uti on {
+Type casting enables you to check and interpret the type of a class instance at
+runtime.
+Deini tial i zers enable an instance of a class to free up any resources i t has
+assigned.
+Reference counting al lows more than one reference to a class instance.
+var w i dth = 0
+var hei ght = 0
+}
+cl ass Vi deoMode {
+var resol uti on = Resol uti on()
+var i nterl aced = fal se
+var frameRate = 0. 0
+var name: Stri ng?
+The example above defines a new structure cal led Resol uti on, to describe a pixel -based
+di splay resolution. Thi s structure has two stored properties cal led w i dth and hei ght. Stored
+properties are constants or variables that are bundled up and stored as part of the class
+or structure. These two properties are inferred to be of type Int by setting them to an
+ini tial  integer value of 0.
+The example above al so defines a new class cal led Vi deoMode, to describe a speci fi c video
+mode for video di splay. Thi s class has four variable stored properties. The fi rst, resol uti on, i s
+ini tial i zed wi th a new Resol uti on structure instance, whi ch infers a property type of Resol uti on.
+For the other three properties, new Vi deoMode instances wi l l  be ini tial i zed wi th an i nterl aced
+setting of fal se (meaning “non-interlaced video”), a playback frame rate of 0. 0, and an
+optional  Stri ng value cal led name. The name property i s automati cal ly given a defaul t value of
+ni l , or “no name value”, because i t i s of an optional  type.
+Class and Structure Instances
+The Resol uti on structure defini tion and the Vi deoMode class defini tion only describe what a
+Resol uti on or Vi deoMode wi l l  look l ike. They themselves do not describe a speci fi c resolution or
+video mode. To do that, you need to create an instance of the structure or class.
+The syntax for creating instances i s very simi lar for both structures and classes:
+l et someResol uti on = Resol uti on()
+l et someVi deoMode = Vi deoMode()
+Structures and classes both use ini tial i zer syntax for new instances. The simplest form of
+ini tial i zer syntax uses the type name of the class or structure fol lowed by empty
+parentheses, such as Resol uti on() or Vi deoMode(). Thi s creates a new instance of the class or
+structure, wi th any properties ini tial i zed to thei r defaul t values. Class and structure
+ini tial i zation i s described in more detai l  in Ini tial i zation.
+Accessing Properties
+You can access the properties of an instance using dot syntax. In dot syntax, you wri te
+the property name immediately after the instance name, separated by a period (.),
+wi thout any spaces:
+pri ntl n("T he w i dth of someResol uti on i s \(someResol uti on.w i dth)")
+// pri nts "T he w i dth of someResol uti on i s 0"
+In thi s example, someResol uti on.w i dth refers to the w i dth property of someResol uti on, and returns i ts
+defaul t ini tial  value of 0.
+You can dri l l  down into sub-properties, such as the w i dth property in the resol uti on property of
+a Vi deoMode:
+pri ntl n("T he w i dth of someVi deoMode i s \(someVi deoMode. resol uti on.w i dth)")
+// pri nts "T he w i dth of someVi deoMode i s 0"
+You can al so use dot syntax to assign a new value to a variable property:
+someVi deoMode. resol uti on.w i dth = 1280
+pri ntl n("T he w i dth of someVi deoMode i s now  \(someVi deoMode. resol uti on.w i dth)")
+// pri nts "T he w i dth of someVi deoMode i s now  1280"
+N O T E
+Unl i ke Objecti ve-C,  Sw i ft enabl es you to set sub-properti es of a structure property di rectl y.  In the l ast exampl e
+above,  the w i dth property of the resol uti on property of someVi deoMode i s set di rectl y,  w i thout your needi ng to
+set the enti re resol uti on property to a new  val ue.
+Memberwise Initializers for Structure Types
+Al l  structures have an automati cal ly-generated memberwi se ini tial i zer, whi ch you can use
+to ini tial i ze the member properties of new structure instances. Ini tial  values for the
+properties of the new instance can be passed to the memberwi se ini tial i zer by name:
+l et vga = Resol uti on(w i dth: 640,  hei ght: 480)
+Unl ike structures, class instances do not receive a defaul t memberwi se ini tial i zer.
+Ini tial i zers are described in more detai l  in Ini tial i zation.
+Structures and Enumerations Are Value Types
+A value type i s a type that i s copied when i t i s assigned to a variable or constant, or when
+i t i s passed to a function.
+You’ve actual ly been using value types extensively throughout the previous chapters. In
+fact, al l  of the basi c types in Swi ft—integers, floating-point numbers, Booleans, strings,
+arrays and di ctionaries—are value types, and are implemented as structures behind the
+scenes.
+Al l  structures and enumerations are value types in Swi ft. Thi s means that any structure
+and enumeration instances you create—and any value types they have as properties—are
+always copied when they are passed around in your code.
+Consider thi s example, whi ch uses the Resol uti on structure from the previous example:
+l et hd = Resol uti on(w i dth: 1920,  hei ght: 1080)
+var ci nema = hd
+Thi s example declares a constant cal led hd and sets i t to a Resol uti on instance ini tial i zed
+wi th the width and height of ful l  HD video (1920 pixel s wide by 1080 pixel s high).
+It then declares a variable cal led ci nema and sets i t to the current value of hd. Because
+Resol uti on i s a structure, a copy of the exi sting instance i s made, and thi s new copy i s
+assigned to ci nema. Even though hd and ci nema now have the same width and height, they
+are two completely di fferent instances behind the scenes.
+Next, the w i dth property of ci nema i s amended to be the width of the sl ightly-wider 2K
+standard used for digi tal  cinema projection (2048 pixel s wide and 1080 pixel s high):
+ci nema.w i dth = 2048
+Checking the w i dth property of ci nema shows that i t has indeed changed to be 2048:
+pri ntl n("ci nema i s now  \(ci nema.w i dth) pi xel s w i de")
+// pri nts "ci nema i s now  2048 pi xel s w i de"
+However, the w i dth property of the original  hd instance sti l l  has the old value of 1920:
+pri ntl n("hd i s sti l l  \(hd.w i dth) pi xel s w i de")
+// pri nts "hd i s sti l l  1920 pi xel s w i de"
+When ci nema was given the current value of hd, the values stored in hd were copied into the
+new ci nema instance. The end resul t i s two completely separate instances, whi ch just
+happened to contain the same numeri c values. Because they are separate instances,
+setting the width of ci nema to 2048 doesn’t affect the width stored in hd.
+The same behavior appl ies to enumerations:
+enum CompassPoi nt {
+case North,  South,  East,  West
+}
+var currentDi recti on = CompassPoi nt.West
+l et rememberedDi recti on = currentDi recti on
+currentDi recti on = . East
+i f rememberedDi recti on == .West {
+pri ntl n("T he remembered di recti on i s sti l l  .West")
+}
+i nts "T he remembered di recti on i s sti l l  .West"
+When rememberedDi recti on i s assigned the value of currentDi recti on, i t i s actual ly set to a copy of
+that value. Changing the value of currentDi recti on thereafter does not affect the copy of the
+original  value that was stored in rememberedDi recti on.
+Classes Are Reference Types
+Unl ike value types, reference types are not copied when they are assigned to a variable
+or constant, or when they are passed to a function. Rather than a copy, a reference to the
+same exi sting instance i s used instead.
+Here’s an example, using the Vi deoMode class defined above:
+l et tenEi ghty = Vi deoMode()
+tenEi ghty. resol uti on = hd
+tenEi ghty. i nterl aced = true
+tenEi ghty. name = "1080i "
+tenEi ghty. frameRate = 25. 0
+Thi s example declares a new constant cal led tenEi ghty and sets i t to refer to a new instance
+of the Vi deoMode class. The video mode i s assigned a copy of the HD resolution of 1920 by
+1080 from before. It i s set to be interlaced, and i s given a name of "1080i ". Final ly, i t i s set
+to a frame rate of 25. 0 frames per second.
+Next, tenEi ghty i s assigned to a new constant, cal led al soT enEi ghty, and the frame rate of
+al soT enEi ghty i s modi fied:
+l et al soT enEi ghty = tenEi ghty
+al soT enEi ghty. frameRate = 30. 0
+Because classes are reference types, tenEi ghty and al soT enEi ghty actual ly both refer to the
+same Vi deoMode instance. Effectively, they are just two di fferent names for the same single
+instance.
+Checking the frameRate property of tenEi ghty shows that i t correctly reports the new frame
+rate of 30. 0 from the underlying Vi deoMode instance:
+pri ntl n("T he frameRate property of tenEi ghty i s now  \(tenEi ghty. frameRate)")
+// pri nts "T he frameRate property of tenEi ghty i s now  30. 0"
+Note that tenEi ghty and al soT enEi ghty are declared as constants, rather than variables.
+However, you can sti l l  change tenEi ghty. frameRate and al soT enEi ghty. frameRate because the values
+of the tenEi ghty and al soT enEi ghty constants themselves do not actual ly change. tenEi ghty and
+al soT enEi ghty themselves do not “store” the Vi deoMode instance—instead, they both refer to a
+Vi deoMode instance behind the scenes. It i s the frameRate property of the underlying Vi deoMode
+that i s changed, not the values of the constant references to that Vi deoMode.
+Identity Operators
+Because classes are reference types, i t i s possible for mul tiple constants and variables to
+refer to the same single instance of a class behind the scenes. (The same i s not true for
+structures and enumerations, because they are value types and are always copied when
+they are assigned to a constant or variable, or passed to a function.)
+It can sometimes be useful  to find out i f two constants or variables refer to exactly the
+same instance of a class. To enable thi s, Swi ft provides two identi ty operators:
+Use these operators to check whether two constants or variables refer to the same single
+instance:
+i f tenEi ghty === al soT enEi ghty {
+pri ntl n("tenEi ghty and al soT enEi ghty refer to the same Resol uti on i nstance. ")
+}
+// pri nts "tenEi ghty and al soT enEi ghty refer to the same Resol uti on i nstance. "
+Note that “identi cal  to” (represented by three equal s signs, or ===) does not mean the
+same thing as “equal  to” (represented by two equal s signs, or ==):
+When you define your own custom classes and structures, i t i s your responsibi l i ty to
+decide what qual i fies as two instances being “equal ”. The process of defining your own
+implementations of the “equal  to” and “not equal  to” operators i s described in
+Equivalence Operators.
+Pointers
+If you have experience wi th C, C++, or Objective-C, you may know that these languages
+use pointers to refer to addresses in memory. A Swi ft constant or variable that refers to
+an instance of some reference type i s simi lar to a pointer in C, but i s not a di rect pointer
+to an address in memory, and does not requi re you to wri te an asteri sk (*) to indi cate
+that you are creating a reference. Instead, these references are defined l ike any other
+constant or variable in Swi ft.
+Identi cal  to (===)
+Not identi cal  to (! ==)
+“Identi cal  to” means that two constants or variables of class type refer to exactly
+the same class instance.
+“Equal  to” means that two instances are considered “equal ” or “equivalent” in
+value, for some appropriate meaning of “equal ”, as defined by the type’s designer.
+Choosing Between Classes and Structures
+You can use both classes and structures to define custom data types to use as the
+bui lding blocks of your program’s code.
+However, structure instances are always passed by value, and class instances are always
+passed by reference. Thi s means that they are sui ted to di fferent kinds of tasks. As you
+consider the data constructs and functional i ty that you need for a project, decide whether
+each data construct should be defined as a class or as a structure.
+As a general  guidel ine, consider creating a structure when one or more of these
+condi tions apply:
+Examples of good candidates for structures include:
+In al l  other cases, define a class, and create instances of that class to be managed and
+passed by reference. In practi ce, thi s means that most custom data constructs should be
+classes, not structures.
+Assignment and Copy Behavior for Collection Types
+Swi ft’s Array and Di cti onary types are implemented as structures. However, arrays have
+sl ightly di fferent copying behavior from di ctionaries and other structures when they are
+The structure’s primary purpose i s to encapsulate a few relatively simple data
+values.
+It i s reasonable to expect that the encapsulated values wi l l  be copied rather than
+referenced when you assign or pass around an instance of that structure.
+Any properties stored by the structure are themselves value types, whi ch would
+al so be expected to be copied rather than referenced.
+The structure does not need to inheri t properties or behavior from another
+exi sting type.
+The si ze of a geometri c shape, perhaps encapsulating a w i dth property and a hei ght
+property, both of type Doubl e.
+A way to refer to ranges wi thin a series, perhaps encapsulating a start property and
+a l ength property, both of type Int.
+A point in a 3D coordinate system, perhaps encapsulating x, y and z properties,
+each of type Doubl e.
+assigned to a constant or variable, and when they are passed to a function or method.
+The behavior described for Array and Di cti onary below i s di fferent again from the behavior of
+NSArray and NSDi cti onary in Foundation, whi ch are implemented as classes, not structures.
+NSArray and NSDi cti onary instances are always assigned and passed around as a reference to
+an exi sting instance, rather than as a copy.
+N O T E
+T he descri pti ons bel ow  refer to the “copyi ng” of arrays,  di cti onari es,  stri ngs,  and other val ues.  Where copyi ng
+i s menti oned,  the behavi or you see i n your code w i l l  al w ays be as i f a copy took pl ace.  How ever,  Sw i ft onl y
+performs an actual  copy behi nd the scenes w hen i t i s absol utel y necessary to do so.  Sw i ft manages al l  val ue
+copyi ng to ensure opti mal  performance,  and you shoul d not avoi d assi gnment to try to preempt thi s
+opti mi zati on.
+Assignment and Copy Behavior for Dictionaries
+Whenever you assign a Di cti onary instance to a constant or variable, or pass a Di cti onary
+instance as an argument to a function or method cal l , the di ctionary i s copied at the point
+that the assignment or cal l  takes place. Thi s process i s described in Structures and
+Enumerations Are Value Types.
+If the keys and/or values stored in the Di cti onary instance are value types (structures or
+enumerations), they too are copied when the assignment or cal l  takes place. Conversely,
+i f the keys and/or values are reference types (classes or functions), the references are
+copied, but not the class instances or functions that they refer to. Thi s copy behavior for a
+di ctionary’s keys and values i s the same as the copy behavior for a structure’s stored
+properties when the structure i s copied.
+The example below defines a di ctionary cal led ages, whi ch stores the names and ages of
+four people. The ages di ctionary i s then assigned to a new variable cal led copi edAges and i s
+copied when thi s assignment takes place. After the assignment, ages and copi edAges are two
+separate di ctionaries.
+var ages = ["Peter": 23,  "Wei ": 35,  "Ani sh": 65,  "Katya": 19]
+var copi edAges = ages
+The keys for thi s di ctionary are of type Stri ng, and the values are of type Int. Both types are
+value types in Swi ft, and so the keys and values are al so copied when the di ctionary copy
+takes place.
+You can prove that the ages di ctionary has been copied by changing an age value in one of
+the di ctionaries and checking the corresponding value in the other. If you set the value
+for "Peter" in the copi edAges di ctionary to 24, the ages di ctionary sti l l  returns the old value of 23
+from before the copy took place:
+copi edAges["Peter"] = 24
+pri ntl n(ages["Peter"])
+// pri nts "23"
+Assignment and Copy Behavior for Arrays
+The assignment and copy behavior for Swi ft’s Array type i s more complex than for i ts
+Di cti onary type. Array provides C-l ike performance when you work wi th an array’s contents
+and copies an array’s contents only when copying i s necessary.
+If you assign an Array instance to a constant or variable, or pass an Array instance as an
+argument to a function or method cal l , the contents of the array are not copied at the
+point that the assignment or cal l  takes place. Instead, both arrays share the same
+sequence of element values. When you modi fy an element value through one array, the
+resul t i s observable through the other.
+For arrays, copying only takes place when you perform an action that has the potential  to
+modi fy the length of the array. Thi s includes appending, inserting, or removing i tems, or
+using a ranged subscript to replace a range of i tems in the array. If and when array
+copying does take place, the copy behavior for an array’s contents i s the same as for a
+di ctionary’s keys and values, as described in Assignment and Copy Behavior for
+Di ctionaries.
+The example below assigns a new array of Int values to a variable cal led a. Thi s array i s
+al so assigned to two further variables cal led b and c:
+var a = [1,  2,  3]
+var b = a
+var c = a
+You can retrieve the fi rst value in the array wi th subscript syntax on ei ther a, b, or c:
+pri ntl n(a[0])
+// 1
+pri ntl n(b[0])
+// 1
+pri ntl n(c[0])
+// 1
+If you set an i tem in the array to a new value wi th subscript syntax, al l  three of a, b, and c
+wi l l  return the new value. Note that the array i s not copied when you set a new value
+wi th subscript syntax, because setting a single value wi th subscript syntax does not have
+the potential  to change the array’s length:
+a[0] = 42
+pri ntl n(a[0])
+// 42
+pri ntl n(b[0])
+// 42
+pri ntl n(c[0])
+// 42
+However, i f you append a new i tem to a, you do modi fy the array’s length. Thi s prompts
+Swi ft to create a new copy of the array at the point that you append the new value.
+Henceforth, a i s a separate, independent copy of the array.
+If you change a value in a after the copy i s made, a wi l l  return a di fferent value from b and
+c, whi ch both sti l l  reference the original  array contents from before the copy took place:
+a. append(4)
+a[0] = 777
+pri ntl n(a[0])
+// 777
+pri ntl n(b[0])
+// 42
+pri ntl n(c[0])
+// 42
+Ensuring That an Array Is Unique
+It can be useful  to ensure that you have a unique copy of an array before performing an
+action on that array’s contents, or before passing that array to a function or method. You
+ensure the uniqueness of an array reference by cal l ing the unshare method on a variable of
+array type. (The unshare method cannot be cal led on a constant array.)
+If mul tiple variables currently refer to the same array, and you cal l  the unshare method on
+one of those variables, the array i s copied, so that the variable has i ts own independent
+copy of the array. However, no copying takes place i f the variable i s al ready the only
+reference to the array.
+At the end of the previous example, b and c both reference the same array. Cal l  the unshare
+method on b to make i t become a unique copy:
+b. unshare()
+If you change the fi rst value in b after cal l ing the unshare method, al l  three arrays wi l l  now
+report a di fferent value:
+b[0] = -105
+pri ntl n(a[0])
+// 777
+pri ntl n(b[0])
+// -105
+pri ntl n(c[0])
+// 42
+Checking Whether Two Arrays Share the Same Elements
+Check whether two arrays or subarrays share the same storage and elements by
+comparing them wi th the identi ty operators (=== and ! ==).
+The example below uses the “identi cal  to” operator (===) to check whether b and c sti l l
+share the same array elements:
+i f b === c {
+pri ntl n("b and c sti l l  share the same array el ements. ")
+} el se {
+pri ntl n("b and c now  refer to tw o i ndependent sets of array el ements. ")
+}
+// pri nts "b and c now  refer to tw o i ndependent sets of array el ements. "
+Al ternatively, use the identi ty operators to check whether two subarrays share the same
+elements. The example below compares two identi cal  subarrays from b and confi rms that
+they refer to the same elements:
+i f b[0. . . 1] === b[0. . . 1] {
+pri ntl n("T hese tw o subarrays share the same el ements. ")
+} el se {
+pri ntl n("T hese tw o subarrays do not share the same el ements. ")
+}
+// pri nts "T hese tw o subarrays share the same el ements. "
+Forcing a Copy of an Array
+Force an expl i ci t copy of an array by cal l ing the array’s copy method. Thi s method
+performs a shal low copy of the array and returns a new array containing the copied
+i tems.
+The example below defines an array cal led names, whi ch stores the names of seven
+people. A new variable cal led copi edNames i s set to the resul t of cal l ing the copy method on
+the names array:
+var names = ["Mohsen",  "Hi l ary",  "Justyn",  "Amy",  "Ri ch",  "Graham",  "Vi c"]
+var copi edNames = names. copy()
+You can prove that the names array has been copied by changing an i tem in one of the
+arrays and checking the corresponding i tem in the other. If you set the fi rst i tem in the
+copi edNames array to "Mo" rather than "Mohsen", the names array sti l l  returns the old value of
+"Mohsen" from before the copy took place:
+copi edNames[0] = "Mo"
+pri ntl n(names[0])
+// pri nts "Mohsen"
+N O T E
+If you si mpl y need to be sure that your reference to an array’s contents i s the onl y reference i n exi stence,
+cal l  the unshare method,  not the copy method.  T he unshare method does not make a copy of the array
+unl ess i t i s necessary to do so.  T he copy method al w ays copi es the array,  even i f i t i s al ready unshared.

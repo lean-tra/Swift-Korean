@@ -3,6 +3,12 @@ This is a [Swift](https://developer.apple.com/swift/) guide documentation transl
 Feel free to participate project =)
 > 이 프로젝트는 애플의 새로운 프로그래밍 언어 **swift** 번역 프로젝트입니다. 자유롭게 참여하세요 =) 
 
-### Downloads
+## Downloads
 - [Download “The Swift Programming Language” from the iBooks Store](https://itunes.apple.com/us/book/the-swift-programming-language/id881256329?mt=11)
 - [Download "The Swift Programming Language" from private dropbox](https://www.dropbox.com/s/rd79pw1bhhvg22h/the-swift-rogramming-language.pdf)
+
+## 계획
+업데이트 예정
+
+## Rule
+- 문서 작성은 개인 version에서 작업 한뒤 pull request로 merge 합니다. 

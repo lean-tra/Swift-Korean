@@ -1,3 +1,211 @@
 # 10 열거형
 
-Write here...
+Enumerations
+An enumeration defines a common type for a group of related values and enables you to
+work wi th those values in a type-safe way wi thin your code.
+If you are fami l iar wi th C, you wi l l  know that C enumerations assign related names to a
+set of integer values. Enumerations in Swi ft are much more flexible, and do not have to
+provide a value for each member of the enumeration. If a value (known as a “raw” value)
+i s provided for each enumeration member, the value can be a string, a character, or a
+value of any integer or floating-point type.
+Al ternatively, enumeration members can speci fy associated values of any type to be
+stored along wi th each di fferent member value, much as unions or variants do in other
+languages. You can define a common set of related members as part of one enumeration,
+each of whi ch has a di fferent set of values of appropriate types associated wi th i t.
+Enumerations in Swi ft are fi rst-class types in thei r own right. They adopt many features
+tradi tional ly supported only by classes, such as computed properties to provide addi tional
+information about the enumeration’s current value, and instance methods to provide
+functional i ty related to the values the enumeration represents. Enumerations can al so
+define ini tial i zers to provide an ini tial  member value; can be extended to expand thei r
+functional i ty beyond thei r original  implementation; and can conform to protocol s to
+provide standard functional i ty.
+For more on these capabi l i ties, see Properties, Methods, Ini tial i zation, Extensions, and
+Protocol s.
+Enumeration Syntax
+You introduce enumerations wi th the enum keyword and place thei r enti re defini tion wi thin
+a pai r of braces:
+enum SomeEnumerati on {
+// enumerati on defi ni ti on goes here
+}
+Here’s an example for the four main points of a compass:
+enum CompassPoi nt {
+case North
+case South
+case East
+case West
+}
+The values defined in an enumeration (such as North, South, East, and West) are the member
+values (or members) of that enumeration. The case keyword indi cates that a new l ine of
+member values i s about to be defined.
+N O T E
+Unl i ke C and Objecti ve-C,  Sw i ft enumerati on members are not assi gned a defaul t i nteger val ue w hen they are
+created.  In the CompassPoi nts exampl e above,  North,  South,  East and West do not i mpl i ci tl y equal  0,  1,  2
+and 3.  Instead,  the di fferent enumerati on members are ful l y- fl edged val ues i n thei r ow n ri ght,  w i th an
+expl i ci tl y-defi ned type of CompassPoi nt.
+Mul tiple member values can appear on a single l ine, separated by commas:
+enum Pl anet {
+case Mercury,  Venus,  Earth,  Mars,  Jupi ter,  Saturn,  Uranus,  Neptune
+}
+Each enumeration defini tion defines a brand new type. Like other types in Swi ft, thei r
+names (such as CompassPoi nt and Pl anet) should start wi th a capi tal  letter. Give enumeration
+types singular rather than plural  names, so that they read as sel f-evident:
+var di recti onT oHead = CompassPoi nt.West
+The type of di recti onT oHead i s inferred when i t i s ini tial i zed wi th one of the possible values of
+CompassPoi nt. Once di recti onT oHead i s declared as a CompassPoi nt, you can set i t to a di fferent
+CompassPoi nt value using a shorter dot syntax:
+di recti onT oHead = . East
+The type of di recti onT oHead i s al ready known, and so you can drop the type when setting i ts
+value. Thi s makes for highly readable code when working wi th expl i ci tly-typed
+enumeration values.
+Matching Enumeration Values with a Switch Statement
+You can match individual  enumeration values wi th a sw i tch statement:
+di recti onT oHead = . South
+sw i tch di recti onT oHead {
+case . North:
+pri ntl n("Lots of pl anets have a north")
+case . South:
+pri ntl n("Watch out for pengui ns")
+case . East:
+pri ntl n("Where the sun ri ses")
+case .West:
+ri ntl n("Where the ski es are bl ue")
+i nts "Watch out for pengui ns"
+You can read thi s code as:
+“Consider the value of di recti onT oHead. In the case where i t equal s . North, print "Lots of pl anets
+have a north". In the case where i t equal s . South, print "Watch out for pengui ns".”
+…and so on.
+As described in Control  Flow, a sw i tch statement must be exhaustive when considering an
+enumeration’s members. If the case for .West i s omi tted, thi s code does not compi le,
+because i t does not consider the complete l i st of CompassPoi nt members. Requi ring
+exhaustiveness ensures that enumeration members are not accidental ly omi tted.
+When i t i s not appropriate to provide a case for every enumeration member, you can
+provide a defaul t case to cover any members that are not addressed expl i ci tly:
+l et somePl anet = Pl anet. Earth
+sw i tch somePl anet {
+case . Earth:
+pri ntl n("Mostl y harml ess")
+defaul t:
+pri ntl n("Not a safe pl ace for humans")
+}
+// pri nts "Mostl y harml ess"
+Associated Values
+The examples in the previous section show how the members of an enumeration are a
+defined (and typed) value in thei r own right. You can set a constant or variable to
+Pl anet. Earth, and check for thi s value later. However, i t i s sometimes useful  to be able to
+store associated values of other types alongside these member values. Thi s enables you
+to store addi tional  custom information along wi th the member value, and permi ts thi s
+information to vary each time you use that member in your code.
+You can define Swi ft enumerations to store associated values of any given type, and the
+value types can be di fferent for each member of the enumeration i f needed.
+Enumerations simi lar to these are known as di scriminated unions, tagged unions, or
+variants in other programming languages.
+For example, suppose an inventory tracking system needs to track products by two
+di fferent types of barcode. Some products are labeled wi th 1D barcodes in UPC-A format,
+whi ch uses the numbers 0 to 9. Each barcode has a “number system” digi t, fol lowed by
+ten “identi fier” digi ts. These are fol lowed by a “check” digi t to veri fy that the code has
+been scanned correctly:
+Other products are labeled wi th 2D barcodes in QR code format, whi ch can use any ISO
+8859-1 character and can encode a string up to 2,953 characters long:
+It would be convenient for an inventory tracking system to be able to store UPC-A
+barcodes as a tuple of three integers, and QR code barcodes as a string of any length.
+In Swi ft, an enumeration to define product barcodes of ei ther type might look l ike thi s:
+enum Barcode {
+case UPCA(Int,  Int,  Int)
+case QRCode(Stri ng)
+}
+Thi s can be read as:
+“Define an enumeration type cal led Barcode, whi ch can take ei ther a value of UPCA wi th an
+associated value of type (Int, Int, Int), or a value of QRCode wi th an associated value of type
+Stri ng.”
+Thi s defini tion does not provide any actual  Int or Stri ng values—i t just defines the type of
+associated values that Barcode constants and variables can store when they are equal  to
+Barcode. UPCA or Barcode.QRCode.
+New barcodes can then be created using ei ther type:
+var productBarcode = Barcode. UPCA(8,  85909_51226,  3)
+Thi s example creates a new variable cal led productBarcode and assigns i t a value of
+Barcode. UPCA wi th an associated tuple value of (8,  8590951226,  3). The provided “identi fier”
+value has an underscore wi thin i ts integer l i teral—85909_51226—to make i t easier to read as
+a barcode.
+The same product can be assigned a di fferent type of barcode:
+productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
+At thi s point, the original  Barcode. UPCA and i ts integer values are replaced by the new
+Barcode.QRCode and i ts string value. Constants and variables of type Barcode can store ei ther a
+. UPCA or a .QRCode (together wi th thei r associated values), but they can only store one of
+them at any given time.
+The di fferent barcode types can be checked using a swi tch statement, as before. Thi s
+time, however, the associated values can be extracted as part of the swi tch statement.
+You extract each associated value as a constant (wi th the l et prefix) or a variable (wi th
+the var prefix) for use wi thin the sw i tch case’s body:
+sw i tch productBarcode {
+case . UPCA(l et numberSystem,  l et i denti fi er,  l et check):
+pri ntl n("UPC-A w i th val ue of \(numberSystem),  \(i denti fi er),  \(check). ")
+case .QRCode(l et productCode):
+pri ntl n("QR code w i th val ue of \(productCode). ")
+}
+// pri nts "QR code w i th val ue of ABCDEFGHIJKLMNOP. "
+If al l  of the associated values for a enumeration member are extracted as constants, or i f
+al l  are extracted as variables, you can place a single var or l et annotation before the
+member name, for brevi ty:
+sw i tch productBarcode {
+case l et . UPCA(numberSystem,  i denti fi er,  check):
+pri ntl n("UPC-A w i th val ue of \(numberSystem),  \(i denti fi er),  \(check). ")
+case l et .QRCode(productCode):
+pri ntl n("QR code w i th val ue of \(productCode). ")
+}
+// pri nts "QR code w i th val ue of ABCDEFGHIJKLMNOP. "
+Raw Values
+The barcode example in Associated Values shows how members of an enumeration can
+declare that they store associated values of di fferent types. As an al ternative to
+associated values, enumeration members can come prepopulated wi th defaul t values
+(cal led raw values), whi ch are al l  of the same type.
+Here’s an example that stores raw ASCII values alongside named enumeration members:
+enum ASCIIControl Character: Character {
+case T ab = "\t"
+case Li neFeed = "\n"
+case Carri ageReturn = "\r"
+}
+Here, the raw values for an enumeration cal led ASCIIControl Character are defined to be of type
+Character, and are set to some of the more common ASCII control  characters. Character
+values are described in Strings and Characters.
+Note that raw values are not the same as associated values. Raw values are set to
+prepopulated values when you fi rst define the enumeration in your code, l ike the three
+ASCII codes above. The raw value for a parti cular enumeration member i s always the
+same. Associated values are set when you create a new constant or variable based on
+one of the enumeration’s members, and can be di fferent each time you do so.
+Raw values can be strings, characters, or any of the integer or floating-point number
+types. Each raw value must be unique wi thin i ts enumeration declaration. When integers
+are used for raw values, they auto-increment i f no value i s speci fied for some of the
+enumeration members.
+The enumeration below i s a refinement of the earl ier Pl anet enumeration, wi th raw integer
+values to represent each planet’s order from the sun:
+enum Pl anet: Int {
+case Mercury = 1,  Venus,  Earth,  Mars,  Jupi ter,  Saturn,  Uranus,  Neptune
+}
+Auto-incrementation means that Pl anet. Venus has a raw value of 2, and so on.
+Access the raw value of an enumeration member wi th i ts toRaw  method:
+l et earthsOrder = Pl anet. Earth. toRaw ()
+// earthsOrder i s 3
+Use an enumeration’s fromRaw  method to try to find an enumeration member wi th a
+parti cular raw value. Thi s example identi fies Uranus from i ts raw value of 7:
+l et possi bl ePl anet = Pl anet. fromRaw (7)
+// possi bl ePl anet i s of type Pl anet? and equal s Pl anet. Uranus
+Not al l  possible Int values wi l l  find a matching planet, however. Because of thi s, the
+fromRaw  method returns an optional  enumeration member. In the example above,
+possi bl ePl anet i s of type Pl anet?, or “optional  Pl anet.”
+If you try to find a Planet wi th a posi tion of 9, the optional  Pl anet value returned by fromRaw
+wi l l  be ni l :
+l et posi ti onT oFi nd = 9
+i f l et somePl anet = Pl anet. fromRaw (posi ti onT oFi nd) {
+sw i tch somePl anet {
+case . Earth:
+pri ntl n("Mostl y harml ess")
+defaul t:
+pri ntl n("Not a safe pl ace for humans")
+}
+} el se {
+ri ntl n("T here i sn't a pl anet at posi ti on \(posi ti onT oFi nd)")
+i nts "T here i sn't a pl anet at posi ti on 9"
+Thi s example uses optional  binding to try to access a planet wi th a raw value of 9. The
+statement i f l et somePl anet = Pl anet. fromRaw (9) retrieves an optional  Pl anet, and sets somePl anet to
+the contents of that optional  Pl anet i f i t can be retrieved. In thi s case, i t i s not possible to
+retrieve a planet wi th a posi tion of 9, and so the el se branch i s executed instead.
