@@ -173,9 +173,6 @@ func join(string s1: String,  toString s2: String,  withJoiner joiner: String) -
 
 ## 단축 외부 파라메터 이름
 만약 함수의 외부 파라메터 이름을 제공하려 할때 이미 해당 파라메터의 내부 이름(local parameter name)이 이미 적절한 이름을 가지고 있다면, 똑같은 이름을 두번 쓸 필요가 없다. 대신 파라메터 이름을 한번 쓰고, 이름의 접두어로 해시 심볼(hash symbol) (`#`)을 붙인다. 이렇게 함으로서 스위프트는 해당 이름을 외부 파라메터 이름과 지역 파라메터 이름으로 동시에 쓰게 될 것이다.
-Thi s example defines a function cal led contai nsCharacter, whi ch defines external  parameter
-names for both of i ts parameters by placing a hash symbol  before thei r local  parameter
-names:
 이 예제는 `containsCharacter` 함수를 정의하고 호출한다. 해당 함수는 두 입력 파라메터에 `#`을 붙여서 같은 이름으로 외부 파라메터 이름과 내부 파라메터 이름으로 쓰이게 하였다.
 ```
 func containsCharacter(#string: String,  #characterToFind: Character) -> Bool {
@@ -192,29 +189,29 @@ func containsCharacter(#string: String,  #characterToFind: Character) -> Bool {
 let containsAVee = containsCharacter(string: "aardvark", characterToFind: "v")
 // containsAVee equals true,  because "aardvark" contai ns a "v"
 ```
-## Default Parameter Values
-You can define a defaul t value for any parameter as part of a function’s defini tion. If a
-defaul t value i s defined, you can omi t that parameter when cal l ing the function.
+## 기본(default) 파라메터 값
+함수 정의의 일부로서 파라메터의 기본 값을 지정해줄 수 있다. 기본값이 지정되어 있으면 함수를 호출할때 해당 파라메터를 생략할 수 있다.
 
 >N O T E
-Pl ace parameters w i th defaul t val ues at the end of a functi on’s parameter l i st.  T hi s ensures that al l  cal l s to the
-functi on use the same order for thei r non-defaul t arguments,  and makes i t cl ear that the same functi on i s
-bei ng cal l ed i n each case.
+기본값을 가지는 파라메터는 함수의 파라메터 리스트에서 마지막에 둔다. 이렇게 함으로써 함수 호출이 기본값을 가지지 않는 파라메터들이 언제나 같은 순서임을 보장할 수 있고, 매번 함수가 호출될 때마다 같은 함수가 호출되게 한다.
 
-Here’s a version of the joi n function from earl ier, whi ch provides a defaul t value for i ts joi ner
-parameter:
-func joi n(stri ng s1: Stri ng,  toStri ng s2: Stri ng,
-w i thJoi ner joi ner: Stri ng = " ") -> Stri ng {
-return s1 + joi ner + s2
+앞서 보인 `join`함수의 `joiner` 파라메터에 기본값을 부여한 버전이 있다.
+```
+func join(string s1: String, toString s2: String, withJoiner joiner: String = " ") 
+-> String {
+	return s1 + joiner + s2
 }
-If a string value for joi ner i s provided when the joi n function i s cal led, that string value i s
-used to join the two strings together, as before:
-joi n(stri ng: "hel l o",  toStri ng: "w orl d",  w i thJoi ner: "-")
-// returns "hel l o-w orl d"
-However, i f no value of joi ner i s provided when the function i s cal led, the defaul t value of a
-single space (" ") i s used instead:
-joi n(stri ng: "hel l o",  toStri ng: "w orl d")
-// returns "hel l o w orl d"
+```
+만약 `join`함수의 `joiner` 문자열 값이 주어지면, 앞서 보았던 것처럼 해당 문자열 값이 두 문자열을 붙이는데 사용된다.
+```
+join(string: "hello", toString: "world", withJoiner: "-")
+// returns "hello-world
+```
+하지만 아무런 값이 `joiner`에 주어지지 않는다면, 기본값인 공백 한칸 (`" "`)이 대신 사용된다.
+```
+join(string: "hello", toString: "world")
+// returns "hello world"
+```
 ## External Names for Parameters with Default Values
 In most cases, i t i s useful  to provide (and therefore requi re) an external  name for any
 parameter wi th a defaul t value. Thi s ensures that the argument for that parameter i s
