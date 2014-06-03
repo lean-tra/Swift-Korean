@@ -14,7 +14,9 @@ Feel free to participate project =)
 - Chapter 21 내부 타입 ~ Chapter 25 고급 연산자 (@Alice Kim)
 
 -Chapter 25까지 번역 후 P.R로 피드백 수렴하면서 Chapter 26~ 번역
+
 ## Rule
 - 문서 작성은 개인 version에서 작업 한뒤 pull request로 merge 합니다.
-- 담당 부분에서 최초 등장 용어에 영문을 함께 표기. 그 이후로는 번역단어로만 표기
-   Ex) (최초) 함수(Function)란 xxxx -> (이후) 함수는 xxxx
+
+##  Translation Guide
+번역 관련한 룰은 [Translation guide]() 페이지에서 확인하세요 
