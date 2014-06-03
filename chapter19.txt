@@ -1,4 +1,4 @@
-# 19 Auto Reference Counting (ARC)
+# 19 옵션 연쇄 (Optional Chaining)
 
 
 Write here...
