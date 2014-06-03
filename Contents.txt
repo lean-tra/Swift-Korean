@@ -1,6 +1,7 @@
 > These files will be included in your book:
 
 About.txt
+translate-guide.txt
 chapter1.txt
 chapter2.txt
 chapter3.txt
@@ -26,5 +27,3 @@ chapter22.txt
 chapter23.txt
 chapter24.txt
 chapter25.txt
-chapter26.txt
-chapter27.txt
