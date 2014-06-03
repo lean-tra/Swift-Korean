@@ -36,8 +36,8 @@ By translating "The Swift Programming Language" we want to help a lot of korean 
 15. 상속 (Assign to @hoppingbonny)
 16. 초기화
 17. 해제(Deinitialization)
-18. 자동 참조 계수
-19. Auto Reference Counting(ARC) (Assign to @hyukhur)
+18. 자동 참조 계수(ARC) (Assign to @RoyTheGame)
+19. 옵션 연쇄 (Assign to @hyukhur)
 20. 타입 변환
 21. 내부 타입 (Assign to @jjuakim)
 22. 확장
