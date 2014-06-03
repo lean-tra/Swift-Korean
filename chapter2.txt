@@ -1,3 +1,4 @@
-# Chapter 2
+# Welcome to Swift
+## Swift 둘러보기(A Swift Tour)
 
 Write here...
