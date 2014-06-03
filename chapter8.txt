@@ -171,27 +171,27 @@ func join(string s1: String,  toString s2: String,  withJoiner joiner: String) -
 >N O T E
 누군가가 당신의 코드를 처음 보았을때 명확하지 않을 수 있다면 외부 파라메터 이름을 쓰는것을 언제나 고려하십시오. 만약 함수가 호출될때 각각의 파라메터들의 목적이 명확하고 모호하지 않다면 외부 파라메터 이름을 정할 필요는 없습니다.
 
-## Shorthand External Parameter Names
-If you want to provide an external  parameter name for a function parameter, and the
-local  parameter name i s al ready an appropriate name to use, you do not need to wri te
-the same name twi ce for that parameter. Instead, wri te the name once, and prefix the
-name wi th a hash symbol  (#). Thi s tel l s Swi ft to use that name as both the local
-parameter name and the external  parameter name.
+## 단축 외부 파라메터 이름
+만약 함수의 외부 파라메터 이름을 제공하려 할때 이미 해당 파라메터의 내부 이름(local parameter name)이 이미 적절한 이름을 가지고 있다면, 똑같은 이름을 두번 쓸 필요가 없다. 대신 파라메터 이름을 한번 쓰고, 이름의 접두어로 해시 심볼(hash symbol) (`#`)을 붙인다. 이렇게 함으로서 스위프트는 해당 이름을 외부 파라메터 이름과 지역 파라메터 이름으로 동시에 쓰게 될 것이다.
 Thi s example defines a function cal led contai nsCharacter, whi ch defines external  parameter
 names for both of i ts parameters by placing a hash symbol  before thei r local  parameter
 names:
-func contai nsCharacter(#stri ng: Stri ng,  #characterT oFi nd: Character) -> Bool  {
-for character i n stri ng {
-i f character == characterT oFi nd {
-return true
-}
-}
-return fal se
-}
-Thi s function’s choi ce of parameter names makes for a clear, readable function body,
-whi le al so enabl ing the function to be cal led wi thout ambigui ty:
-l et contai nsAVee = contai nsCharacter(stri ng: "aardvark",  characterT oFi nd: "v")
-// contai nsAVee equal s true,  because "aardvark" contai ns a "v"
+이 예제는 `containsCharacter` 함수를 정의하고 호출한다. 해당 함수는 두 입력 파라메터에 `#`을 붙여서 같은 이름으로 외부 파라메터 이름과 내부 파라메터 이름으로 쓰이게 하였다.
+```
+func containsCharacter(#string: String,  #characterToFind: Character) -> Bool {
+  for character in string {
+    if character == characterToFind {
+    	return true
+    	}
+    }
+  return false
+  }
+```
+이 함수의 파라메터 이름 선정은 함수 몸체를 명확하고 가독성있게 하며 동시에 함수 호출에 모호함이 없게 하였다.
+```
+let containsAVee = containsCharacter(string: "aardvark", characterToFind: "v")
+// containsAVee equals true,  because "aardvark" contai ns a "v"
+```
 ## Default Parameter Values
 You can define a defaul t value for any parameter as part of a function’s defini tion. If a
 defaul t value i s defined, you can omi t that parameter when cal l ing the function.
