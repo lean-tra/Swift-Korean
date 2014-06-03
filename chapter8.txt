@@ -73,19 +73,19 @@ println(sayHelloAgain("Anna"))
 엄밀히 말하자면, sayGoodbye 함수는 반환값이 정의되어있지 않아도 여전히 반환값을 가집니다.  반환값이 정의되어있지 않은 함수는 Void타입의 특수값을 반환합니다. '()'로 쓰여질수 있는 단순한 빈 튜플(Tuple)이며, 사실상 요소를 갖고있지 않은 튜플입니다.
 
 함수가 호출되었을때 함수의 반환값은 무시될수 있다.
-
-  func printAndCount(stringToPrint: String) -> Int {
-    println(stringToPrint)
-    return countElements(stringToPrint)
-  }
-  func printWithoutCounting(stringToPrint: String) {
-  	printAndCount(stringToPrint)
-  }
-  printAndCount("hello, world")
-  // prints "hello, world" and returns a value of 12
-  printWithoutCounting("hello, world")
-  // prints "hello, world" but does not return a value
-  
+```
+func printAndCount(stringToPrint: String) -> Int {
+  println(stringToPrint)
+  return countElements(stringToPrint)
+}
+func printWithoutCounting(stringToPrint: String) {
+	printAndCount(stringToPrint)
+}
+printAndCount("hello, world")
+// prints "hello, world" and returns a value of 12
+printWithoutCounting("hello, world")
+// prints "hello, world" but does not return a value
+```
 첫번째 함수인 printAndCount는 문자열을 출력하고 출력한 문자열의 캐릭터 갯수를 세서 Int 타입으로 반환합니다. 두번째 함수인 printWithoutCounting은 첫번째 함수를 호출합니다. 하지만 반환값은 무시합니다. 두번째 함수가 호출되면 메시지는 첫번째 함수에 의해 여전히 출력되지만, 첫번째 함수의 반환값은 사용되지 않습니다.
 
 > N O T E
@@ -110,34 +110,34 @@ func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
   }
   return (vowels, consonants, others)
 }
- ```
+```
 이 count 함수를 이용함으로서 임의의 문자열의 문자 갯수를 셀수 있습니다.  그리고 세 개의 이름있는 Int 값으로 구성된 튜플로 그 값을 받아옵니다.
-
-  let total  = count("some arbitrary string! ")
-  println("\(total.vowels) vowels and \(total.consonants) consonants")
-  // prints "6 vowels and 13 consonants"
-  
+```
+let total  = count("some arbitrary string! ")
+println("\(total.vowels) vowels and \(total.consonants) consonants")
+// prints "6 vowels and 13 consonants"
+```
 튜플의 멤버들은 함수 내에서 반환할때 이름을 지을 필요가 없습니다. 함수 정의시에 함수의 반환 타입에 이미 명시가 되어있기 때문입니다. 
 
 ## 함수 파라메터 이름
 위의 모든 함수들은 함수 자신의 파라메터로 파라메터 이름을 정의하고 있다.
-
-  func someFunction(parameterName: Int) {
-    // function body goes here, and can use parameterName
-    // to refer to the argument value for that parameter
-  }
-  
+```
+func someFunction(parameterName: Int) {
+  // function body goes here, and can use parameterName
+  // to refer to the argument value for that parameter
+}
+```
 하지만 그러한 파라메터 이름들은 오직 함수 자신의 몸체(Body) 안에서만 사용될 수 있습니다. 또한 함수를 호출할때는 사용할 수 없습니다. 그러한 종류의 파라메터 이름은 지역 파라메터 이름(local parameter names)이라고 합니다. 오직 함수의 내부(Body)에서만 사용할 수 있기 때문입니다.
 
 ## 외부 파라메터 이름(External Parameter Names)
 때때로 각각의 파라메터의 이름을 함수를 호출할때 지어주는 것이 유용할때가 있습니다. 함수에게 어떤 인수가 어떤 목적인지 지시하기 위해서죠.
 만약 당신이 만든 함수를 사용하려는 사용자에게 파라메터 이름을 제공하고 싶다면, 지역 파라메터 이름과 외부 파라메터 이름을 정의하면 됩니다. 외부 파라메터 이름은 지역 파라메터 이름 바로 앞에 공백으로 구분해서 작성합니다.
-
-  func someFunction(external ParameterName localParameterName: Int) {
-    // function body goes here, and can use local ParameterName
-    // to refer to the argument value for that parameter
-  }
-  
+```
+func someFunction(external ParameterName localParameterName: Int) {
+  // function body goes here, and can use local ParameterName
+  // to refer to the argument value for that parameter
+}
+```
 > N O T E
 만약 외부 파라메터 이름이 파라메터에 대해 제공된다면, 외부 파라메터 이름은 언제나 함수 호출시에 사용되어야 합니다.
 
