@@ -1,0 +1,6 @@
+> These files will be included in your book:
+
+About.txt
+chapter1.txt
+chapter2.txt
+chapter3.txt
