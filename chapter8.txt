@@ -212,28 +212,22 @@ join(string: "hello", toString: "world", withJoiner: "-")
 join(string: "hello", toString: "world")
 // returns "hello world"
 ```
-## External Names for Parameters with Default Values
-In most cases, i t i s useful  to provide (and therefore requi re) an external  name for any
-parameter wi th a defaul t value. Thi s ensures that the argument for that parameter i s
-clear in purpose i f a value i s provided when the function i s cal led.
-To make thi s process easier, Swi ft provides an automati c external  name for any defaul ted
-parameter you define, i f you do not provide an external  name yoursel f. The automati c
-external  name i s the same as the local  name, as i f you had wri tten a hash symbol  before
-the local  name in your code.
-Here’s a version of the joi n function from earl ier, whi ch does not provide external  names
-for any of i ts parameters, but sti l l  provides a defaul t value for i ts joi ner parameter:
-func joi n(s1: Stri ng,  s2: Stri ng,  joi ner: Stri ng = " ") -> Stri ng {
-return s1 + joi ner + s2
+## 기본값을 가지는 외부 파라메터 이름
+대부분의 경우 외부 파라메터 이름에 기본값을 제공(외부 파라메터이기에 요구되기도 하는)하는 것은 유용하다. 그렇게 함으로써 함수가 호출될때 인수가 파라메터에 대해 가지는 목적이 명확해진다.
+이 과정을 쉽게 하기위해, 외부 이름을 부여하지 않은 파라메터에 대해 스위프트는 자동 외부 이름을 기본값이 정의되어 있는 파라메터에 대해 제공한다. 자동 외부 이름은 지역 이름과 똑같다. 앞서 본 해시 심볼(`#`)을 사용한 것처럼.
+여기에 `joiner` 문자열 값에 기본값을 부여하였지만, 파라메터 일체에 외부 파라메터 이름은 주지 않은 버전의 `join`함수가 있다.
+```
+func join(s1: String, s2: String, joiner: String = " ") -> String {
+	return s1 + joiner + s2
 }
-In thi s case, Swi ft automati cal ly provides an external  parameter name of joi ner for the
-defaul ted parameter. The external  name must therefore be provided when cal l ing the
-function, making the parameter’s purpose clear and unambiguous:
-joi n("hel l o",  "w orl d",  joi ner: "-")
-// returns "hel l o-w orl d"
+```
+이 경우에 스위프트는 자동적으로 외부 파라메터 이름을 기본값이 있는 파라메터 `joiner`에 대해 부여한다. 그러므로 외부 이름은 반드시 함수가 호출 될 때에 제공되어야 하며, 파라메터의 목적을 명확하고 모호하지 않게 한다.
+```
+join("hello", "world", joiner: "-")
+// returns "hello-world"
+```
 >N O T E
-Y ou can opt out of thi s behavi or by w ri ti ng an underscore (_) i nstead of an expl i ci t external  name w hen you
-defi ne the parameter.  How ever,  external  names for defaul ted parameters are al w ays preferred w here
-appropri ate.
+함수를 정의할때 명시적인 외부 이름을 쓰는 것 대신에 밑줄(`_`)을 씀으로써 이 동작을 수행하지 않게 할 수 있다. 하지만 기본값을 가진 파라메터에 적절한 외부 이름을 제공하는것은 언제나 바람직하다.
 
 ## Variadic Parameters
 A variadi c parameter accepts zero or more values of a speci fied type. You use a variadi c
