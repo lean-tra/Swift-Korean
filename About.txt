@@ -24,7 +24,7 @@ By translating "The Swift Programming Laguage" we want to helping a lot of korea
 03. 기초 다지기 (Assign to @FlashMaestro)
 04. 기본 연산자 (Assign to @Nirvana)
 05. 문자열과 문자 (Assign to @Nirvana)
-06. 컬렉션 타입 (Assign to @justinchronicle)
+06. 컬렉션 타입 (Assign to @justinchronicle, @seanmoon)
 07. 통제 흐름 (Assign to @nassol)
 08. 함수  (Assign to @Quartet)
 09. 클로저(Closures) (Assign to @inureyes)
@@ -43,7 +43,7 @@ By translating "The Swift Programming Laguage" we want to helping a lot of korea
 22. 확장
 23. 프로토콜
 24. 제네릭
-25. 고급 연산자
+25. 고급 연산자 (Assign to @dyanos)
 
 ## Rule
 [추가논의](https://www.penflip.com/jjuakim/swift-korean/discussions/1)는 이 곳에서..
