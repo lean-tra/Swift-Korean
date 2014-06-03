@@ -27,3 +27,4 @@ chapter23.txt
 chapter24.txt
 chapter25.txt
 chapter26.txt
+chapter27.txt
