@@ -3,7 +3,7 @@
 This is a [The Swift Programming Language](https://developer.apple.com/swift/) guide documentation translation project.
 
 _This project is **never used for commercial purposes**. 
-By translating "The Swift Programming Laguage" we want to help a lot of korean learners who may otherwise struggle to understand it._
+By translating "The Swift Programming Language" we want to help a lot of korean learners who may otherwise struggle to understand it._
 
 > 이 프로젝트는 애플의 새로운 프로그래밍 언어 **swift** 번역 프로젝트입니다. 자유롭게 참여하세요 =)
 **이 번역 프로젝트는 절대로 상업적인 목적으로 사용되지 않습니다.**
