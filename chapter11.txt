@@ -44,7 +44,17 @@ NOTE
 프로퍼티나 메소드를 정의할때는 형이름과 차별화를 주기위해 lowerCamelCase를 사용하십시오(ex: frameRate, incrementCount)
 
 클래스와 구조체 정의문의 예:
+struct Resolution {
+	var width = 0
+	var height = 0
+}
 
+class VideoMode {
+	var resolution = Resolution()
+	var interlaced = false
+	var frameRate = 0.0
+	var name: String?
+}
 
 NOTE
 Classes and Structures
