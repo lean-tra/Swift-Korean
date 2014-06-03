@@ -10,7 +10,7 @@ Feel free to participate project =)
 ## 계획
 - Introduction, Chapter 03 기본 다지기 ~ Chapter 07 통제 흐름 (@FlashMaestro)
 - Chapter 08 함수 ~ Chapter 13 메서드 (@Quartet)
-- Chapter 14 서브 스크립트 ~ Chapter 20 타입 변환 (@Yong)
+- Chapter 14 서브 스크립트 ~ Chapter 20 타입 변환 (@Snowcat8436)
 - Chapter 21 내부 타입 ~ Chapter 25 고급 연산자 (@Alice Kim)
 
 -Chapter 25까지 번역 후 P.R로 피드백 수렴하면서 Chapter 26~ 번역
