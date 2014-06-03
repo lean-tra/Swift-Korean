@@ -8,30 +8,32 @@
 모든 함수는 함수명을 가지고 있으며, 함수명은 함수가 하는일을 설명해줍니다. 함수를 사용하기위해서 함수를 함수의 이름을 사용하여 "호출"하고 함수의 파라메터 타입들과 일치하는 입력 값들(아규먼트Arguments)을 넘겨줍니다. 함수의 입력값은 함수의 파라메터리스트와 언제나 일치해야합니다.
 아래의 함수 예제 이름은 greetingForPerson입니다. 함수가 행하는 일이 바로 그것(사람에게 환영인사Greeting for person)이기 때문입니다. 입력으로 사람의 이름을 받아서 그 사람에 대한 환영 인사를 반환합니다. 이를 달성하기 위해 파라메터를 하나 정의하고 - personName이라는 String 값 - 반환 타입을 String으로 합니다. 그렇게 그 사람에 대한 인사를 포함하는 것입니다.
 
-      func sayHello(personName: String) -> String {
-      let greeting = "Hello, " + personName + "!"
-      return greeting
-      }
-
+```
+func sayHello(personName: String) -> String {
+  let greeting = "Hello, " + personName + "!"
+  return greeting
+}
+```
 이 모든 정보들은 func 키워드 접두어를 쓰는 함수의 정의안에 포함이 되게도비니다. 함수의 반환 타입은 화살표(하이픈과 우측 꺽괄호) __'->'__를 사용하여 화살표 오른쪽에 표시합니다.
 함수 정의는 함수가 무엇을 하는지, 무엇을 파라메터로 받는지 완료되었을때 무엇을 반환하는지 설명합니다. 함수 정의는 함수가 코드안에서 호출될때 명확하고 애매함이 없는 방법으로 사용될수 있게합니다:
 
-	println(sayHello("Anna"))
-    // prints "Hello, Anna!"
-    println(sayHello("Brian"))
-    // prints "Hello, Brian!"
-
+```
+println(sayHello("Anna"))
+// prints "Hello, Anna!"
+println(sayHello("Brian"))
+// prints "Hello, Brian!"
+```
 sayHello 함수를 괄호안에 String 타입의 인수를 넣어서 호출합니다. 예를들면 sayHello("Anna") 처럼 말이죠. sayHello가 String타입을 반환하기에 sayHello함수는 println로 싸여서 호출될 수 있습니다. 이렇게 함으로서 println함수가 sayHello함수의 반환값을 위에 보이는 것처럼 출력할 수 있습니다.
 sayHello함수의 몸체는 greeting이라는 새 String 상수를 선언하는 것으로 시작합니다. 그리고 greeting을 personName에 대한 단순한 환영인사로 설정합니다. 이 환영 인사는 return키워드를 통해 함수의 밖으로 되돌려지게 됩니다. return greeting이 실행 되면 함수의 실행은 끝나게되고, greeting의 현재 값을 돌려주게됩니다.
 sayHello 함수를 다른 입력값으로 여러번 호출할 수 있습니다. 위의 예제는 입력값이 "Anna", "Brian" 일때를 각각 보여주고 있습니다. 함수는 사람(입력값)에 맞게끔 환영인사를 각각의 경우에 맞추어 돌려줍니다.
 함수 몸체를 단순화하기 위해서는, 메시지의 생성과 반환을 한줄로 합치면 됩니다:
-
-	func sayHelloAgain(personName: String) -> String {
-    	return "Helloagain, " + personName + "!"
-    }
-    println(sayHelloAgain("Anna"))
-    // prints "Helloagain, Anna! 
-
+```
+func sayHelloAgain(personName: String) -> String {
+	return "Helloagain, " + personName + "!"
+}
+println(sayHelloAgain("Anna"))
+// prints "Helloagain, Anna! 
+```
 ## 함수 파라메터와 반환값
 스위프트에서 함수 파라메터와 반환값은 극도로 유연합니다. 이름없는 파라메터를 사용하는 단순한 기능성 함수에서부터 명시적 파라메터 이름(expressive parameter names)과 다른 파라메터 옵션을 가진 복잡한 함수에 이르기까지 무엇이든 정의할수 있습니다.
 
@@ -92,22 +94,23 @@ sayHello 함수를 다른 입력값으로 여러번 호출할 수 있습니다. 
 ## 여러개의 반환값을 가지는 함수
 튜플 타입은 하나의 합성된 반환값으로서 함수의 반환에 사용될 수 있습니다.
 아래의 예제는 count라는 함수의 정의입니다. 이 함수는 아메리칸 영어에서 사용되는 표준 모음과 자음을 기반으로 모음과 자음 그리고 다른 문자들을 문자열안에서 셉니다.
-
-  func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
-    var vowels = 0, consonants = 0, others = 0
-    for character in string {
-      switch String(character).lowercaseString {
-        case "a", "e", "i ", "o", "u":
-        	++vowels
-        case "b", "c", "d", "f", "g", "h", "j", "k", "l ", "m",
-        "n", "p", "q", "r", "s", "t", "v", "w ", "x", "y", "z":
-        	++consonants
-        default:
-        	++others
-      }
-      return (vowels, consonants, others)
-	}
-    
+```
+func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
+  var vowels = 0, consonants = 0, others = 0
+  for character in string {
+    switch String(character).lowercaseString {
+      case "a", "e", "i ", "o", "u":
+      ++vowels
+      case "b", "c", "d", "f", "g", "h", "j", "k", "l ", "m",
+      "n", "p", "q", "r", "s", "t", "v", "w ", "x", "y", "z":
+      ++consonants
+      default:
+      ++others
+    }
+  }
+  return (vowels, consonants, others)
+}
+ ```
 이 count 함수를 이용함으로서 임의의 문자열의 문자 갯수를 셀수 있습니다.  그리고 세 개의 이름있는 Int 값으로 구성된 튜플로 그 값을 받아옵니다.
 
   let total  = count("some arbitrary string! ")
