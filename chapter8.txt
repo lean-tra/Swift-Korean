@@ -89,33 +89,33 @@ sayHello 함수를 다른 입력값으로 여러번 호출할 수 있습니다. 
 > N O T E
 반환값은 무시될수 있습니다. 하지만 함수는 언제나 값을 반환할것입니다. 반환 타입이 정의된 함수는 값을 반환하지 않은채로 함수가 실행 될수 없습니다. 그렇게 하려고 시도할 경우 컴파일 에러를 낼 것입니다. 
 
-## Functions with Multiple Return Values
-You can use a tuple type as the return type for a function to return mul tiple values as
-part of one compound return value.
-The example below defines a function cal led count, whi ch counts the number of vowel s,
-consonants, and other characters in a string, based on the standard set of vowel s and
-consonants used in Ameri can Engl i sh:
-func count(stri ng: Stri ng) -> (vow el s: Int,  consonants: Int,  others: Int) {
-var vow el s = 0,  consonants = 0,  others = 0
-for character i n stri ng {
-sw i tch Stri ng(character). l ow ercaseStri ng {
-case "a",  "e",  "i ",  "o",  "u":
-++vow el s
-case "b",  "c",  "d",  "f",  "g",  "h",  "j",  "k",  "l ",  "m",
-"n",  "p",  "q",  "r",  "s",  "t",  "v",  "w ",  "x",  "y",  "z":
-++consonants
-defaul t:
-++others
-}
-eturn (vow el s,  consonants,  others)
-You can use thi s count function to count the characters in an arbi trary string, and to
-retrieve the counted total s as a tuple of three named Int values:
-l et total  = count("some arbi trary stri ng! ")
-pri ntl n("\(total . vow el s) vow el s and \(total . consonants) consonants")
-// pri nts "6 vow el s and 13 consonants"
-Note that the tuple’s members do not need to be named at the point that the tuple i s
-returned from the function, because thei r names are al ready speci fied as part of the
-function’s return type.
+## 여러개의 반환값을 가지는 함수
+튜플 타입은 하나의 합성된 반환값으로서 함수의 반환에 사용될 수 있습니다.
+아래의 예제는 count라는 함수의 정의입니다. 이 함수는 아메리칸 영어에서 사용되는 표준 모음과 자음을 기반으로 모음과 자음 그리고 다른 문자들을 문자열안에서 셉니다.
+
+  func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
+    var vowels = 0, consonants = 0, others = 0
+    for character in string {
+      switch String(character).lowercaseString {
+        case "a", "e", "i ", "o", "u":
+        	++vowels
+        case "b", "c", "d", "f", "g", "h", "j", "k", "l ", "m",
+        "n", "p", "q", "r", "s", "t", "v", "w ", "x", "y", "z":
+        	++consonants
+        default:
+        	++others
+      }
+      return (vowels, consonants, others)
+	}
+    
+이 count 함수를 이용함으로서 임의의 문자열의 문자 갯수를 셀수 있습니다.  그리고 세 개의 이름있는 Int 값으로 구성된 튜플로 그 값을 받아옵니다.
+
+  let total  = count("some arbitrary string! ")
+  println("\(total.vowels) vowels and \(total.consonants) consonants")
+  // prints "6 vowels and 13 consonants"
+  
+튜플의 멤버들은 함수 내에서 반환할때 이름을 지을 필요가 없습니다. 함수 정의시에 함수의 반환 타입에 이미 명시가 되어있기 때문입니다. 
+
 ## Function Parameter Names
 Al l  of the above functions define parameter names for thei r parameters:
 func someFuncti on(parameterName: Int) {
