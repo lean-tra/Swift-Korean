@@ -24,12 +24,12 @@ By translating "The Swift Programming Language" we want to help a lot of korean 
 03. 기초 다지기 (Assign to @FlashMaestro)
 04. 기본 연산자 (Assign to @Nirvana)
 05. 문자열과 문자 (Assign to @Nirvana)
-06. 컬렉션 타입 (Assign to @justinchronicle, @seanmoon)
+06. 컬렉션 타입 (Assign to @justinchronicle)
 07. 통제 흐름 (Assign to @nassol)
 08. 함수  (Assign to @Quartet)
 09. 클로저(Closures) (Assign to @inureyes)
 10. 열거형 (Assign to @inureyes )
-11. 클래스와 구조체
+11. 클래스와 구조체 (Assign to  @seanmoon)
 12. 속성
 13. 메서드
 14. 서브 스크립트 (Assign to @Snowcat8436)
