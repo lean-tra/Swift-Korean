@@ -8,8 +8,12 @@ Feel free to participate project =)
 - [Download "The Swift Programming Language" from private dropbox](https://www.dropbox.com/s/rd79pw1bhhvg22h/the-swift-rogramming-language.pdf)
 
 ## 계획
-업데이트 예정
+- Introduction, Chapter 03 기본 다지기 ~ Chapter 07 통제 흐름 (@FlashMaestro)
+- Chapter 08 함수 ~ Chapter 13 메서드 (@Quartet)
+- Chapter 14 서브 스크립트 ~ Chapter 20 타입 변환 (@Yong)
+- Chapter 21 내부 타입 ~ Chapter 25 고급 연산자 (@Alice Kim)
 
+-Chapter 25까지 번역 후 P.R로 피드백 수렴하면서 Chapter 26~ 번역
 ## Rule
 - 문서 작성은 개인 version에서 작업 한뒤 pull request로 merge 합니다.
 - 담당 부분에서 최초 등장 용어에 영문을 함께 표기. 그 이후로는 번역단어로만 표기
