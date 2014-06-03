@@ -5,3 +5,4 @@ Feel free to participate project =)
 
 ### Downloads
 - [Download “The Swift Programming Language” from the iBooks Store](https://itunes.apple.com/us/book/the-swift-programming-language/id881256329?mt=11)
+- [Download "The Swift Programming Language" from private dropbox](https://www.dropbox.com/s/rd79pw1bhhvg22h/the-swift-rogramming-language.pdf)
