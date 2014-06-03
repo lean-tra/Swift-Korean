@@ -1,7 +1,7 @@
 # 08 함수Function
-함수는 특정 일을 수행하는 자기 완결성Self-contained을 가진 코드들의 집합입니다. 당신은 함수의 이름을 지으면서 이 함수가 무엇을 하는지 식별하게 할 수 있습니다. 그리고 그 이름으로 함수를 "호출Call"하여 필요할때 함수의 일을 수행하게 만들 수 있습니다.
-스위프트Swift의 함수 문법은 파라메터가 없는 C스타일의 함수에서부터 지역 파라메터와 파라메터 이름 각각에 대한 외부 파라메터를 가지고 있는 복잡한 오브젝티브-C 스타일의 함수까지 전부 표현할 수 있습니다. 파라메터는 기본 값을 가질수 있어 단순한 함수 호출에 쓰일수 있습니다. 또한 In-out 파라메터로서 변수를 넘겨 변수가 함수의 실행후에 파라메터가 변경되게 할 수도 있습니다.
-파라메터 타입과 반환Return 타입으로 이루어진 모든 스위프트의 함수들은 타입을 가집니다. 스위프트에 있는 다른 타입들과 마찬가지로, 함수의 타입들을 사용할 수 있습니다. 즉 함수를 다른 함수에 파라메터로서 넘겨주거나 함수를 다른 함수에서 반환받을 수 있습니다. 함수들은 유용한 기능 캡슐화를 위해 중첩된 함수안의 범위 내에서 쓰여질수도 있습니다.
+함수는 특정 일을 수행하는 자기 완결성(Self-contained)을 가진 코드들의 집합입니다. 당신은 함수의 이름을 지으면서 이 함수가 무엇을 하는지 식별하게 할 수 있습니다. 그리고 그 이름으로 함수를 "호출(Call)"하여 필요할때 함수의 일을 수행하게 만들 수 있습니다.
+스위프트(Swift)의 함수 문법은 파라메터가 없는 C스타일의 함수에서부터 지역 파라메터와 파라메터 이름 각각에 대한 외부 파라메터를 가지고 있는 복잡한 오브젝티브-C 스타일의 함수까지 전부 표현할 수 있습니다. 파라메터는 기본 값을 가질수 있어 단순한 함수 호출에 쓰일수 있습니다. 또한 In-out 파라메터로서 변수를 넘겨 변수가 함수의 실행후에 파라메터가 변경되게 할 수도 있습니다.
+파라메터 타입과 반환(Return) 타입으로 이루어진 모든 스위프트의 함수들은 타입을 가집니다. 스위프트에 있는 다른 타입들과 마찬가지로, 함수의 타입들을 사용할 수 있습니다. 즉 함수를 다른 함수에 파라메터로서 넘겨주거나 함수를 다른 함수에서 반환받을 수 있습니다. 함수들은 유용한 기능 캡슐화를 위해 중첩된 함수안의 범위 내에서 쓰여질수도 있습니다.
 
 ## 함수 정의와 호출
 함수를 정의할때 함수의 입력(파라메터)을 하나 이상의 이름이 있고 타입이 정해진 값으로 할 수 있습니다. 또한 값의 타입은 함수의 실행이 끝났을때 함수가 되돌려줄 수 있습니다 (반환 타입).
@@ -37,7 +37,7 @@ sayHello 함수를 다른 입력값으로 여러번 호출할 수 있습니다. 
 
 ## 파라메터 복수 입력
 함수는 괄호 안에서 콤마로 구분되는 복수의 입력 파라메터를 가질수 있습니다. 
-이 함수는 반개영역half-open range의 시작과 끝의 인덱스를 받아 얼마나 많은 요소elements들이 영역안에 있는지 계산합니다:
+이 함수는 반개영역half-open range의 시작과 끝의 인덱스를 받아 얼마나 많은 요소(elements)들이 영역안에 있는지 계산합니다:
 
     func halfOpenRangeLength(start: Int, end: Int) -> Int {
     	return end - start
@@ -54,37 +54,36 @@ sayHello 함수를 다른 입력값으로 여러번 호출할 수 있습니다. 
     println(sayHelloWorld())
     // prints "hello, world"
     
-The function defini tion sti l l  needs parentheses after the function’s name, even though i t
-does not take any parameters. The function name i s al so fol lowed by an empty pai r of
-parentheses when the function i s cal led.
+함수 정의는 아무런 파라메터를 받지 않는다고 해도 함수 이름뒤에 여전히 괄호를 포함해야 합니다. 함수가 호출될 때도 함수 이름뒤에 빈 괄호 한쌍이 따라와야합니다.
 
-##Functions Without Return Values
-Functions are not requi red to define a return type. Here’s a version of the sayHel l o function,
-cal led w aveGoodbye, whi ch prints i ts own Stri ng value rather than returning i t:
-func sayGoodbye(personName: Stri ng) {
-pri ntl n("Goodbye,  \(personName)! ")
-}
-sayGoodbye("Dave")
-// pri nts "Goodbye,  Dave! "
-Because i t does not need to return a value, the function’s defini tion does not include the
-return arrow (->) or a return type.
+## 반환값이 없는 함수
+함수에 반환 타입을 정의할 필요는 없습니다. 밑의 예제는 sayHello의 waveGoodbye라 불리는 버전입니다. 값을 반환하지 않고 자신만의 String값을 출력합니다.
+
+    func sayGoodbye(personName: String) {
+	    println("Goodbye, ` \(personName)! ")
+    }
+    sayGoodbye("Dave")
+    // prints "Goodbye, Dave!"
+    
+반환값을 필요로 하지 않기 때문에 함수 정의는 반환 화살표(return arrow)나 반환 타입을 포함하지 않습니다.
+
 > N O T E
-Stri ctl y speaki ng,  the sayGoodbye functi on does sti l l  return a val ue,  even though no return val ue i s defi ned.
-Functi ons w i thout a defi ned return type return a speci al  val ue of type Voi d.  T hi s i s si mpl y an empty tupl e,  i n
-effect a tupl e w i th zero el ements,  w hi ch can be w ri tten as ().
+엄밀히 말하자면, sayGoodbye 함수는 반환값이 정의되어있지 않아도 여전히 반환값을 가집니다.  반환값이 정의되어있지 않은 함수는 Void타입의 특수값을 반환합니다. '()'로 쓰여질수 있는 단순한 빈 튜플(Tuple)이며, 사실상 요소를 갖고있지 않은 튜플입니다.
 
 The return value of a function can be ignored when i t i s cal led:
-func pri ntAndCount(stri ngT oPri nt: Stri ng) -> Int {
-pri ntl n(stri ngT oPri nt)
-return countEl ements(stri ngT oPri nt)
-}
-func pri ntWi thoutCounti ng(stri ngT oPri nt: Stri ng) {
-pri ntAndCount(stri ngT oPri nt)
-}
-pri ntAndCount("hel l o,  w orl d")
-// pri nts "hel l o,  w orl d" and returns a val ue of 12
-Wi thoutCounti ng("hel l o,  w orl d")
-i nts "hel l o,  w orl d" but does not return a val ue
+
+  func printAndCount(stringToPrint: String) -> Int {
+    println(stringToPrint)
+    return countElements(stringToPrint)
+  }
+  func printWithoutCounting(stringToPrint: String) {
+  	printAndCount(stringToPrint)
+  }
+  printAndCount("hello, world")
+  // prints "hello, world" and returns a value of 12
+  WithoutCounting("hello, world")
+  prints "hello, world" but does not return a value
+  
 The fi rst function, pri ntAndCount, prints a string, and then returns i ts character count as an
 Int. The second function, pri ntWi thoutCounti ng, cal l s the fi rst function, but ignores i ts return
 value. When the second function i s cal led, the message i s sti l l  printed by the fi rst
