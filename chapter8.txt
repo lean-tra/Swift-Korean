@@ -1,0 +1,471 @@
+# 08 함수
+함수는 특정 일을 수행하는 자기 완결성을 가진 코드들의 집합입니다. 당신은 함수의 이름을 지으면서 이 함수가 무엇을 하는지 식별하게 할 수 있습니다. 그리고 그 이름으로 함수를 "호출"하여 필요할때 함수의 일을 수행하게 만들 수 있습니다.
+스위프트Swift의 함수 문법은 파라메터가 없는 C스타일의 함수에서부터 지역 파라메터와 파라메터 이름 각각에 대한 외부 파라메터를 가지고 있는 복잡한 오브젝티브-C 스타일의 함수까지 전부 표현할 수 있습니다. 파라메터는 기본 값을 가질수 있어 단순한 함수 호출에 쓰일수 있습니다. 또한 In-out 파라메터로서 변수를 넘겨 변수가 함수의 실행후에 파라메터가 변경되게 할 수도 있습니다.
+파라메터 타입과 반환 타입으로 이루어진 모든 스위프트의 함수들은 타입을 가집니다. 스위프트에 있는 다른 타입들과 마찬가지로, 함수의 타입들을 사용할 수 있습니다. 즉 함수를 다른 함수에 파라메터로서 넘겨주거나 함수를 다른 함수에서 반환받을 수 있습니다. 함수들은 유용한 기능 캡슐화를 위해 중첩된 함수안의 범위 내에서 쓰여질수도 있습니다.
+
+## 함수 정의와 호출
+함수를 정의할때 함수의 입력(파라메터)을 하나 이상의 이름이 있고 타입이 정해진 값으로 할 수 있습니다. 또한 값의 타입은 함수의 실행이 끝났을때 함수가 되돌려줄 수 있습니다 (반환 타입).
+모든 함수는 함수명을 가지고 있으며, 함수명은 함수가 하는일을 설명해줍니다. 함수를 사용하기위해서 함수를 함수의 이름을 사용하여 "호출"하고 함수의 파라메터 타입들과 일치하는 입력 값들(아규먼트Arguments)을 넘겨줍니다. 함수의 입력값은 함수의 파라메터리스트와 언제나 일치해야합니다.
+아래의 함수 예제 이름은 greetingForPerson입니다. 함수가 행하는 일이 바로 그것(사람에게 환영인사Greeting for person)이기 때문입니다. 입력으로 사람의 이름을 받아서 그 사람에 대한 환영 인사를 반환합니다. 이를 달성하기 위해 파라메터를 하나 정의하고 - personName이라는 String 값 - 반환 타입을 String으로 합니다. 그렇게 그 사람에 대한 인사를 포함하는 것입니다.
+![images8-1jpg.txt](images8-1jpg.txt)
+이 모든 정보들은 func 키워드 접두어를 쓰는 함수의 정의안에 포함이 되게도비니다. 함수의 반환 타입은 화살표(하이픈과 우측 꺽괄호) __'->'__를 사용하여 화살표 오른쪽에 표시합니다.
+함수 정의는 함수가 무엇을 하는지, 무엇을 파라메터로 받는지 완료되었을때 무엇을 반환하는지 설명합니다. 함수 정의는 함수가 코드안에서 호출될때 명확하고 애매함이 없는 방법으로 사용될수 있게합니다:
+![images8-2jpg.txt](images8-2jpg.txt)
+sayHello 함수를 괄호안에 String 타입의 인수를 넣어서 호출합니다. 예를들면 sayHello("Anna") 처럼 말이죠. sayHello가 String타입을 반환하기에 sayHello함수는 println로 싸여서 호출될 수 있습니다. 이렇게 함으로서 println함수가 sayHello함수의 반환값을 위에 보이는 것처럼 출력할 수 있습니다.
+sayHello함수의 몸체는 greeting이라는 새 String 상수를 선언하는 것으로 시작합니다. 그리고 greeting을 personName에 대한 단순한 환영인사로 설정합니다. 이 환영 인사는 return키워드를 통해 함수의 밖으로 되돌려지게 됩니다. return greeting이 실행 되면 함수의 실행은 끝나게되고, greeting의 현재 값을 돌려주게됩니다.
+sayHello 함수를 다른 입력값으로 여러번 호출할 수 있습니다. 위의 예제는 입력값이 "Anna", "Brian" 일때를 각각 보여주고 있습니다. 함수는 사람(입력값)에 맞게끔 환영인사를 각각의 경우에 맞추어 돌려줍니다.
+함수 몸체를 단순화하기 위해서는, 메시지의 생성과 반환을 한줄로 합치면 됩니다:
+![images8-3jpg.txt](images8-3jpg.txt)
+
+## Function Parameters and Return Values
+Function parameters and return values are extremely flexible in Swi ft. You can define
+anything from a simple uti l i ty function wi th a single unnamed parameter to a complex
+function wi th expressive parameter names and di fferent parameter options.
+##Multiple Input Parameters
+Functions can have mul tiple input parameters, whi ch are wri tten wi thin the function’s
+parentheses, separated by commas.
+Thi s function takes a start and an end index for a hal f-open range, and works out how
+many elements the range contains:
+func hal fOpenRangeLength(start: Int,  end: Int) -> Int {
+return end -  start
+}
+pri ntl n(hal fOpenRangeLength(1,  10))
+// pri nts "9"
+##Functions Without Parameters
+Functions are not requi red to define input parameters. Here’s a function wi th no input
+parameters, whi ch always returns the same Stri ng message whenever i t i s cal led:
+func sayHel l oWorl d() -> Stri ng {
+return "hel l o,  w orl d"
+}
+pri ntl n(sayHel l oWorl d())
+// pri nts "hel l o,  w orl d"
+The function defini tion sti l l  needs parentheses after the function’s name, even though i t
+does not take any parameters. The function name i s al so fol lowed by an empty pai r of
+parentheses when the function i s cal led.
+##Functions Without Return Values
+Functions are not requi red to define a return type. Here’s a version of the sayHel l o function,
+cal led w aveGoodbye, whi ch prints i ts own Stri ng value rather than returning i t:
+func sayGoodbye(personName: Stri ng) {
+pri ntl n("Goodbye,  \(personName)! ")
+}
+sayGoodbye("Dave")
+// pri nts "Goodbye,  Dave! "
+Because i t does not need to return a value, the function’s defini tion does not include the
+return arrow (->) or a return type.
+> N O T E
+Stri ctl y speaki ng,  the sayGoodbye functi on does sti l l  return a val ue,  even though no return val ue i s defi ned.
+Functi ons w i thout a defi ned return type return a speci al  val ue of type Voi d.  T hi s i s si mpl y an empty tupl e,  i n
+effect a tupl e w i th zero el ements,  w hi ch can be w ri tten as ().
+
+The return value of a function can be ignored when i t i s cal led:
+func pri ntAndCount(stri ngT oPri nt: Stri ng) -> Int {
+pri ntl n(stri ngT oPri nt)
+return countEl ements(stri ngT oPri nt)
+}
+func pri ntWi thoutCounti ng(stri ngT oPri nt: Stri ng) {
+pri ntAndCount(stri ngT oPri nt)
+}
+pri ntAndCount("hel l o,  w orl d")
+// pri nts "hel l o,  w orl d" and returns a val ue of 12
+Wi thoutCounti ng("hel l o,  w orl d")
+i nts "hel l o,  w orl d" but does not return a val ue
+The fi rst function, pri ntAndCount, prints a string, and then returns i ts character count as an
+Int. The second function, pri ntWi thoutCounti ng, cal l s the fi rst function, but ignores i ts return
+value. When the second function i s cal led, the message i s sti l l  printed by the fi rst
+function, but the returned value i s not used.
+
+> N O T E
+Return val ues can be i gnored,  but a functi on that says i t w i l l  return a val ue must al w ays do so.  A functi on w i th
+a defi ned return type cannot al l ow  control  to fal l  out of the bottom of the functi on w i thout returni ng a val ue,
+and attempti ng to do so w i l l  resul t i n a compi l e- ti me error.
+
+## Functions with Multiple Return Values
+You can use a tuple type as the return type for a function to return mul tiple values as
+part of one compound return value.
+The example below defines a function cal led count, whi ch counts the number of vowel s,
+consonants, and other characters in a string, based on the standard set of vowel s and
+consonants used in Ameri can Engl i sh:
+func count(stri ng: Stri ng) -> (vow el s: Int,  consonants: Int,  others: Int) {
+var vow el s = 0,  consonants = 0,  others = 0
+for character i n stri ng {
+sw i tch Stri ng(character). l ow ercaseStri ng {
+case "a",  "e",  "i ",  "o",  "u":
+++vow el s
+case "b",  "c",  "d",  "f",  "g",  "h",  "j",  "k",  "l ",  "m",
+"n",  "p",  "q",  "r",  "s",  "t",  "v",  "w ",  "x",  "y",  "z":
+++consonants
+defaul t:
+++others
+}
+eturn (vow el s,  consonants,  others)
+You can use thi s count function to count the characters in an arbi trary string, and to
+retrieve the counted total s as a tuple of three named Int values:
+l et total  = count("some arbi trary stri ng! ")
+pri ntl n("\(total . vow el s) vow el s and \(total . consonants) consonants")
+// pri nts "6 vow el s and 13 consonants"
+Note that the tuple’s members do not need to be named at the point that the tuple i s
+returned from the function, because thei r names are al ready speci fied as part of the
+function’s return type.
+## Function Parameter Names
+Al l  of the above functions define parameter names for thei r parameters:
+func someFuncti on(parameterName: Int) {
+// functi on body goes here,  and can use parameterName
+// to refer to the argument val ue for that parameter
+}
+However, these parameter names are only used wi thin the body of the function i tsel f, and
+cannot be used when cal l ing the function. These kinds of parameter names are known as
+local  parameter names, because they are only avai lable for use wi thin the function’s
+body.
+## External Parameter Names
+Sometimes i t’s useful  to name each parameter when you cal l  a function, to indi cate the
+purpose of each argument you pass to the function.
+If you want users of your function to provide parameter names when they cal l  your
+function, define an external  parameter name for each parameter, in addi tion to the local
+parameter name. You wri te an external  parameter name before the local  parameter
+name i t supports, separated by a space:
+func someFuncti on(external ParameterName l ocal ParameterName: Int) {
+// functi on body goes here,  and can use l ocal ParameterName
+// to refer to the argument val ue for that parameter
+}
+> N O T E
+If you provi de an external  parameter name for a parameter,  that external  name must al w ays be used w hen
+cal l i ng the functi on.
+
+As an example, consider the fol lowing function, whi ch joins two strings by inserting a
+thi rd “joiner” string between them:
+func joi n(s1: Stri ng,  s2: Stri ng,  joi ner: Stri ng) -> Stri ng {
+return s1 + joi ner + s2
+}
+When you cal l  thi s function, the purpose of the three strings that you pass to the function
+i s unclear:
+joi n("hel l o",  "w orl d",  ",  ")
+// returns "hel l o,  w orl d"
+To make the purpose of these Stri ng values clearer, define external  parameter names for
+each joi n function parameter:
+func joi n(stri ng s1: Stri ng,  toStri ng s2: Stri ng,  w i thJoi ner joi ner: Stri ng)
+-> Stri ng {
+return s1 + joi ner + s2
+}
+In thi s version of the joi n function, the fi rst parameter has an external  name of stri ng and a
+local  name of s1; the second parameter has an external  name of toStri ng and a local  name
+of s2; and the thi rd parameter has an external  name of w i thJoi ner and a local  name of joi ner.
+You can now use these external  parameter names to cal l  the function in a clear and
+unambiguous way:
+joi n(stri ng: "hel l o",  toStri ng: "w orl d",  w i thJoi ner: ",  ")
+// returns "hel l o,  w orl d"
+The use of external  parameter names enables thi s second version of the joi n function to be
+cal led in an expressive, sentence-l ike manner by users of the function, whi le sti l l
+providing a function body that i s readable and clear in intent.
+
+>N O T E
+Consi der usi ng external  parameter names w henever the purpose of a functi on’s arguments w oul d be uncl ear
+to someone readi ng your code for the fi rst ti me.  Y ou do not need to speci fy external  parameter names i f the
+purpose of each parameter i s cl ear and unambi guous w hen the functi on i s cal l ed.
+
+## Shorthand External Parameter Names
+If you want to provide an external  parameter name for a function parameter, and the
+local  parameter name i s al ready an appropriate name to use, you do not need to wri te
+the same name twi ce for that parameter. Instead, wri te the name once, and prefix the
+name wi th a hash symbol  (#). Thi s tel l s Swi ft to use that name as both the local
+parameter name and the external  parameter name.
+Thi s example defines a function cal led contai nsCharacter, whi ch defines external  parameter
+names for both of i ts parameters by placing a hash symbol  before thei r local  parameter
+names:
+func contai nsCharacter(#stri ng: Stri ng,  #characterT oFi nd: Character) -> Bool  {
+for character i n stri ng {
+i f character == characterT oFi nd {
+return true
+}
+}
+return fal se
+}
+Thi s function’s choi ce of parameter names makes for a clear, readable function body,
+whi le al so enabl ing the function to be cal led wi thout ambigui ty:
+l et contai nsAVee = contai nsCharacter(stri ng: "aardvark",  characterT oFi nd: "v")
+// contai nsAVee equal s true,  because "aardvark" contai ns a "v"
+## Default Parameter Values
+You can define a defaul t value for any parameter as part of a function’s defini tion. If a
+defaul t value i s defined, you can omi t that parameter when cal l ing the function.
+
+>N O T E
+Pl ace parameters w i th defaul t val ues at the end of a functi on’s parameter l i st.  T hi s ensures that al l  cal l s to the
+functi on use the same order for thei r non-defaul t arguments,  and makes i t cl ear that the same functi on i s
+bei ng cal l ed i n each case.
+
+Here’s a version of the joi n function from earl ier, whi ch provides a defaul t value for i ts joi ner
+parameter:
+func joi n(stri ng s1: Stri ng,  toStri ng s2: Stri ng,
+w i thJoi ner joi ner: Stri ng = " ") -> Stri ng {
+return s1 + joi ner + s2
+}
+If a string value for joi ner i s provided when the joi n function i s cal led, that string value i s
+used to join the two strings together, as before:
+joi n(stri ng: "hel l o",  toStri ng: "w orl d",  w i thJoi ner: "-")
+// returns "hel l o-w orl d"
+However, i f no value of joi ner i s provided when the function i s cal led, the defaul t value of a
+single space (" ") i s used instead:
+joi n(stri ng: "hel l o",  toStri ng: "w orl d")
+// returns "hel l o w orl d"
+## External Names for Parameters with Default Values
+In most cases, i t i s useful  to provide (and therefore requi re) an external  name for any
+parameter wi th a defaul t value. Thi s ensures that the argument for that parameter i s
+clear in purpose i f a value i s provided when the function i s cal led.
+To make thi s process easier, Swi ft provides an automati c external  name for any defaul ted
+parameter you define, i f you do not provide an external  name yoursel f. The automati c
+external  name i s the same as the local  name, as i f you had wri tten a hash symbol  before
+the local  name in your code.
+Here’s a version of the joi n function from earl ier, whi ch does not provide external  names
+for any of i ts parameters, but sti l l  provides a defaul t value for i ts joi ner parameter:
+func joi n(s1: Stri ng,  s2: Stri ng,  joi ner: Stri ng = " ") -> Stri ng {
+return s1 + joi ner + s2
+}
+In thi s case, Swi ft automati cal ly provides an external  parameter name of joi ner for the
+defaul ted parameter. The external  name must therefore be provided when cal l ing the
+function, making the parameter’s purpose clear and unambiguous:
+joi n("hel l o",  "w orl d",  joi ner: "-")
+// returns "hel l o-w orl d"
+>N O T E
+Y ou can opt out of thi s behavi or by w ri ti ng an underscore (_) i nstead of an expl i ci t external  name w hen you
+defi ne the parameter.  How ever,  external  names for defaul ted parameters are al w ays preferred w here
+appropri ate.
+
+## Variadic Parameters
+A variadi c parameter accepts zero or more values of a speci fied type. You use a variadi c
+parameter to speci fy that the parameter can be passed a varying number of input values
+when the function i s cal led. Wri te variadi c parameters by inserting three period
+characters (. . .) after the parameter’s type name.
+The values passed to a variadi c parameter are made avai lable wi thin the function’s body
+as an array of the appropriate type. For example, a variadi c parameter wi th a name of
+numbers and a type of Doubl e. . .  i s made avai lable wi thin the function’s body as a constant
+array cal led numbers of type Doubl e[].
+The example below cal culates the ari thmeti c mean (al so known as the average) for a l i st
+of numbers of any length:
+func ari thmeti cMean(numbers: Doubl e. . . ) -> Doubl e {
+var total : Doubl e = 0
+for number i n numbers {
+total  += number
+}
+return total  / Doubl e(numbers. count)
+}
+ari thmeti cMean(1,  2,  3,  4,  5)
+// returns 3. 0,  w hi ch i s the ari thmeti c mean of these fi ve numbers
+meti cMean(3,  8,  19)
+turns 10. 0,  w hi ch i s the ari thmeti c mean of these three numbers
+> N O T E
+A functi on may have at most one vari adi c parameter,  and i t must al w ays appear l ast i n the parameter l i st,  to
+avoi d ambi gui ty w hen cal l i ng the functi on w i th mul ti pl e parameters.
+If your functi on has one or more parameters w i th a defaul t val ue,  and al so has a vari adi c parameter,  pl ace
+the vari adi c parameter after al l  the defaul ted parameters at the very end of the l i st.
+
+## Constant and Variable Parameters
+Function parameters are constants by defaul t. Trying to change the value of a function
+parameter from wi thin the body of that function resul ts in a compi le-time error. Thi s
+means that you can’t change the value of a parameter by mi stake.
+However, sometimes i t i s useful  for a function to have a variable copy of a parameter’s
+value to work wi th. You can avoid defining a new variable yoursel f wi thin the function by
+speci fying one or more parameters as variable parameters instead. Variable parameters
+are avai lable as variables rather than as constants, and give a new modi fiable copy of the
+parameter’s value for your function to work wi th.
+Define variable parameters by prefixing the parameter name wi th the keyword var:
+func al i gnRi ght(var stri ng: Stri ng,  count: Int,  pad: Character) -> Stri ng {
+l et amountT oPad = count -  countEl ements(stri ng)
+for _ i n 1. . . amountT oPad {
+stri ng = pad + stri ng
+}
+return stri ng
+}
+l et ori gi nal Stri ng = "hel l o"
+l et paddedStri ng = al i gnRi ght(ori gi nal Stri ng,  10,  "-")
+addedStri ng i s equal  to "- - - - -hel l o"
+i gi nal Stri ng i s sti l l  equal  to "hel l o"
+Thi s example defines a new function cal led al i gnRi ght, whi ch al igns an input string to the
+right edge of a longer output string. Any space on the left i s fi l led wi th a speci fied
+padding character. In thi s example, the string "hel l o" i s converted to the string "- - - - -hel l o".
+The al i gnRi ght function defines the input parameter stri ng to be a variable parameter. Thi s
+means that stri ng i s now avai lable as a local  variable, ini tial i zed wi th the passed-in string
+value, and can be manipulated wi thin the body of the function.
+The function starts by working out how many characters need to be added to the left of
+stri ng in order to right-al ign i t wi thin the overal l  string. Thi s value i s stored in a local
+constant cal led amountT oPad. The function then adds amountT oPad copies of the pad character
+to the left of the exi sting string and returns the resul t. It uses the stri ng variable parameter
+for al l  i ts string manipulation.
+
+>N O T E
+T he changes you make to a vari abl e parameter do not persi st beyond the end of each cal l  to the functi on,
+and are not vi si bl e outsi de the functi on’s body.  T he vari abl e parameter onl y exi sts for the l i feti me of that
+functi on cal l .
+
+## In-Out Parameters
+Variable parameters, as described above, can only be changed wi thin the function i tsel f.
+If you want a function to modi fy a parameter’s value, and you want those changes to
+persi st after the function cal l  has ended, define that parameter as an in-out parameter
+instead.
+You wri te an in-out parameter by placing the i nout keyword at the start of i ts parameter
+defini tion. An in-out parameter has a value that i s passed in to the function, i s modi fied
+by the function, and i s passed back out of the function to replace the original  value.
+You can only pass a variable as the argument for an in-out parameter. You cannot pass a
+constant or a l i teral  value as the argument, because constants and l i teral s cannot be
+modi fied. You place an ampersand (&) di rectly before a variable’s name when you pass i t
+as an argument to an inout parameter, to indi cate that i t can be modi fied by the function.
+>N O T E
+In-out parameters cannot have defaul t val ues,  and vari adi c parameters cannot be marked as i nout.  If you
+mark a parameter as i nout,  i t cannot al so be marked as var or l et.
+
+Here’s an example of a function cal led sw apT w oInts, whi ch has two in-out integer
+parameters cal led a and b:
+func sw apT w oInts(i nout a: Int,  i nout b: Int) {
+l et temporaryA = a
+a = b
+b = temporaryA
+}
+The sw apT w oInts function simply swaps the value of b into a, and the value of a into b. The
+function performs thi s swap by storing the value of a in a temporary constant cal led
+temporaryA, assigning the value of b to a, and then assigning temporaryA to b.
+You can cal l  the sw apT w oInts function wi th two variables of type Int to swap thei r values.
+Note that the names of someInt and anotherInt are prefixed wi th an ampersand when they
+are passed to the sw apT w oInts function:
+var someInt = 3
+var anotherInt = 107
+sw apT w oInts(&someInt,  &anotherInt)
+pri ntl n("someInt i s now  \(someInt),  and anotherInt i s now  \(anotherInt)")
+// pri nts "someInt i s now  107,  and anotherInt i s now  3"
+The example above shows that the original  values of someInt and anotherInt are modi fied by
+the sw apT w oInts function, even though they were original ly defined outside of the function.
+>N O T E
+In-out parameters are not the same as returni ng a val ue from a functi on.  T he sw apT w oInts exampl e above
+does not defi ne a return type or return a val ue,  but i t sti l l  modi fi es the val ues of someInt and anotherInt.  Inout parameters are an al ternati ve w ay for a functi on to have an effect outsi de of the scope of i ts functi on
+body.
+
+## Function Types
+Every function has a speci fi c function type, made up of the parameter types and the
+return type of the function.
+For example:
+func addT w oInts(a: Int,  b: Int) -> Int {
+return a + b
+}
+func mul ti pl yT w oInts(a: Int,  b: Int) -> Int {
+return a * b
+}
+Thi s example defines two simple mathemati cal  functions cal led addT w oInts and mul ti pl yT w oInts.
+These functions each take two Int values, and return an Int value, whi ch i s the resul t of
+performing an appropriate mathemati cal  operation.
+The type of both of these functions i s (Int,  Int) -> Int. Thi s can be read as:
+“A function type that has two parameters, both of type Int, and that returns a value of
+type Int.”
+Here’s another example, for a function wi th no parameters or return value:
+func pri ntHel l oWorl d() {
+pri ntl n("hel l o,  w orl d")
+}
+The type of thi s function i s () -> (), or “a function that has no parameters, and returns Voi d.”
+Functions that don’t speci fy a return value always return Voi d, whi ch i s equivalent to an
+empty tuple in Swi ft, shown as ().
+## Using Function Types
+You use function types just l ike any other types in Swi ft. For example, you can define a
+constant or variable to be of a function type and assign an appropriate function to that
+variable:
+var mathFuncti on: (Int,  Int) -> Int = addT w oInts
+Thi s can be read as:
+“Define a variable cal led mathFuncti on, whi ch has a type of ‘a function that takes two Int
+values, and returns an Int value.’ Set thi s new variable to refer to the function cal led
+addT w oInts.”
+The addT w oInts function has the same type as the mathFuncti on variable, and so thi s
+assignment i s al lowed by Swi ft’s type-checker.
+You can now cal l  the assigned function wi th the name mathFuncti on:
+pri ntl n("Resul t: \(mathFuncti on(2,  3))")
+// pri nts "Resul t: 5"
+A di fferent function wi th the same matching type can be assigned to the same variable, in
+the same way as for non-function types:
+mathFuncti on = mul ti pl yT w oInts
+pri ntl n("Resul t: \(mathFuncti on(2,  3))")
+// pri nts "Resul t: 6"
+As wi th any other type, you can leave i t to Swi ft to infer the function type when you
+assign a function to a constant or variable:
+l et anotherMathFuncti on = addT w oInts
+// anotherMathFuncti on i s i nferred to be of type (Int,  Int) -> Int
+## Function Types as Parameter Types
+You can use a function type such as (Int,  Int) -> Int as a parameter type for another
+function. Thi s enables you to leave some aspects of a function’s implementation for the
+function’s cal ler to provide when the function i s cal led.
+Here’s an example to print the resul ts of the math functions from above:
+func pri ntMathResul t(mathFuncti on: (Int,  Int) -> Int,  a: Int,  b: Int) {
+pri ntl n("Resul t: \(mathFuncti on(a,  b))")
+}
+pri ntMathResul t(addT w oInts,  3,  5)
+// pri nts "Resul t: 8"
+Thi s example defines a function cal led pri ntMathResul t, whi ch has three parameters. The fi rst
+parameter i s cal led mathFuncti on, and i s of type (Int,  Int) -> Int. You can pass any function of
+that type as the argument for thi s fi rst parameter. The second and thi rd parameters are
+cal led a and b, and are both of type Int. These are used as the two input values for the
+provided math function.
+When pri ntMathResul t i s cal led, i t i s passed the addT w oInts function, and the integer values 3
+and 5. It cal l s the provided function wi th the values 3 and 5, and prints the resul t of 8.
+The role of pri ntMathResul t i s to print the resul t of a cal l  to a math function of an appropriate
+type. It doesn’t matter what that function’s implementation actual ly does—i t matters only
+that the function i s of the correct type. Thi s enables pri ntMathResul t to hand off some of i ts
+functional i ty to the cal ler of the function in a type-safe way.
+## Function Types as Return Types
+You can use a function type as the return type of another function. You do thi s by wri ting
+a complete function type immediately after the return arrow (->) of the returning function.
+The next example defines two simple functions cal led stepForw ard and stepBackw ard. The
+stepForw ard function returns a value one more than i ts input value, and the stepBackw ard
+function returns a value one less than i ts input value. Both functions have a type of (Int) ->
+Int:
+func stepForw ard(i nput: Int) -> Int {
+return i nput + 1
+}
+func stepBackw ard(i nput: Int) -> Int {
+return i nput -  1
+}
+Here’s a function cal led chooseStepFuncti on, whose return type i s “a function of type (Int) -> Int”.
+chooseStepFuncti on returns the stepForw ard function or the stepBackw ard function based on a
+Boolean parameter cal led backw ards:
+func chooseStepFuncti on(backw ards: Bool ) -> (Int) -> Int {
+return backw ards ? stepBackw ard : stepForw ard
+}
+You can now use chooseStepFuncti on to obtain a function that wi l l  step in one di rection or the
+other:
+var currentVal ue = 3
+l et moveNearerT oZero = chooseStepFuncti on(currentVal ue > 0)
+// moveNearerT oZero now  refers to the stepBackw ard() functi on
+The preceding example works out whether a posi tive or negative step i s needed to move
+a variable cal led currentVal ue progressively closer to zero. currentVal ue has an ini tial  value of 3,
+whi ch means that currentVal ue > 0 returns true, causing chooseStepFuncti on to return the
+stepBackw ard function. A reference to the returned function i s stored in a constant cal led
+moveNearerT oZero.
+Now that moveNearerT oZero refers to the correct function, i t can be used to count to zero:
+pri ntl n("Counti ng to zero:")
+// Counti ng to zero:
+w hi l e currentVal ue ! = 0 {
+pri ntl n("\(currentVal ue). . .  ")
+currentVal ue = moveNearerT oZero(currentVal ue)
+}
+pri ntl n("zero! ")
+// 3. . .
+// 2. . .
+. .
+ero!
+## Nested Functions
+Al l  of the functions you have encountered so far in thi s chapter have been examples of
+global  functions, whi ch are defined at a global  scope. You can al so define functions inside
+the bodies of other functions, known as nested functions.
+Nested functions are hidden from the outside world by defaul t, but can sti l l  be cal led and
+used by thei r enclosing function. An enclosing function can al so return one of i ts nested
+functions to al low the nested function to be used in another scope.
+You can rewri te the chooseStepFuncti on example above to use and return nested functions:
+func chooseStepFuncti on(backw ards: Bool ) -> (Int) -> Int {
+func stepForw ard(i nput: Int) -> Int { return i nput + 1 }
+func stepBackw ard(i nput: Int) -> Int { return i nput -  1 }
+return backw ards ? stepBackw ard : stepForw ard
+}
+var currentVal ue = -4
+l et moveNearerT oZero = chooseStepFuncti on(currentVal ue > 0)
+// moveNearerT oZero now  refers to the nested stepForw ard() functi on
+w hi l e currentVal ue ! = 0 {
+ri ntl n("\(currentVal ue). . .  ")
+urrentVal ue = moveNearerT oZero(currentVal ue)
+("zero! ")
+. . .
+. . .
+. . .
+. . .
+ero!

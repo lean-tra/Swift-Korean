@@ -1,4 +1,20 @@
-### Apple Swift Programming Language PDF translation for KOREAN
+# Apple Swift Programming Language PDF translation for KOREAN
+This is a [Swift](https://developer.apple.com/swift/) guide documentation translation project.
+Feel free to participate project =)
+> 이 프로젝트는 애플의 새로운 프로그래밍 언어 **swift** 번역 프로젝트입니다. 자유롭게 참여하세요 =) 
 
-### Downloads
-- Please add download link for non-apple user
+## Downloads
+- [Download “The Swift Programming Language” from the iBooks Store](https://itunes.apple.com/us/book/the-swift-programming-language/id881256329?mt=11)
+- [Download "The Swift Programming Language" from private dropbox](https://www.dropbox.com/s/rd79pw1bhhvg22h/the-swift-rogramming-language.pdf)
+
+## 계획
+- Introduction, Chapter 03 기본 다지기 ~ Chapter 07 통제 흐름 (@FlashMaestro)
+- Chapter 08 함수 ~ Chapter 13 메서드 (@Quartet)
+- Chapter 14 서브 스크립트 ~ Chapter 20 타입 변환 (@Yong)
+- Chapter 21 내부 타입 ~ Chapter 25 고급 연산자 (@Alice Kim)
+
+-Chapter 25까지 번역 후 P.R로 피드백 수렴하면서 Chapter 26~ 번역
+## Rule
+- 문서 작성은 개인 version에서 작업 한뒤 pull request로 merge 합니다.
+- 담당 부분에서 최초 등장 용어에 영문을 함께 표기. 그 이후로는 번역단어로만 표기
+   Ex) (최초) 함수(Function)란 xxxx -> (이후) 함수는 xxxx

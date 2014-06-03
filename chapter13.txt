@@ -1,0 +1,295 @@
+# 13 메서드
+
+Methods
+Methods are functions that are associated wi th a parti cular type. Classes, structures, and
+enumerations can al l  define instance methods, whi ch encapsulate speci fi c tasks and
+functional i ty for working wi th an instance of a given type. Classes, structures, and
+enumerations can al so define type methods, whi ch are associated wi th the type i tsel f.
+Type methods are simi lar to class methods in Objective-C.
+The fact that structures and enumerations can define methods in Swi ft i s a major
+di fference from C and Objective-C. In Objective-C, classes are the only types that can
+define methods. In Swi ft, you can choose whether to define a class, structure, or
+enumeration, and sti l l  have the flexibi l i ty to define methods on the type you create.
+Instance Methods
+Instance methods are functions that belong to instances of a parti cular class, structure, or
+enumeration. They support the functional i ty of those instances, ei ther by providing ways
+to access and modi fy instance properties, or by providing functional i ty related to the
+instance’s purpose. Instance methods have exactly the same syntax as functions, as
+described in Functions.
+You wri te an instance method wi thin the opening and closing braces of the type i t
+belongs to. An instance method has impl i ci t access to al l  other instance methods and
+properties of that type. An instance method can be cal led only on a speci fi c instance of
+the type i t belongs to. It cannot be cal led in i solation wi thout an exi sting instance.
+Here’s an example that defines a simple Counter class, whi ch can be used to count the
+number of times an action occurs:
+cl ass Counter {
+var count = 0
+func i ncrement() {
+count++
+}
+func i ncrementBy(amount: Int) {
+count += amount
+}
+func reset() {
+count = 0
+The Counter class defines three instance methods:
+The Counter class al so declares a variable property, count, to keep track of the current
+counter value.
+You cal l  instance methods wi th the same dot syntax as properties:
+l et counter = Counter()
+// the i ni ti al  counter val ue i s 0
+counter. i ncrement()
+// the counter's val ue i s now  1
+counter. i ncrementBy(5)
+// the counter's val ue i s now  6
+counter. reset()
+// the counter's val ue i s now  0
+Local and External Parameter Names for Methods
+Function parameters can have both a local  name (for use wi thin the function’s body) and
+an external  name (for use when cal l ing the function), as described in External  Parameter
+Names. The same i s true for method parameters, because methods are just functions
+that are associated wi th a type. However, the defaul t behavior of local  names and
+external  names i s di fferent for functions and methods.
+Methods in Swi ft are very simi lar to thei r counterparts in Objective-C. As in Objective-C,
+the name of a method in Swi ft typi cal ly refers to the method’s fi rst parameter using a
+preposi tion such as w i th, for, or by, as seen in the i ncrementBy method from the preceding
+i ncrement increments the counter by 1.
+i ncrementBy(amount: Int) increments the counter by an speci fied integer amount.
+reset resets the counter to zero.
+Counter class example. The use of a preposi tion enables the method to be read as a
+sentence when i t i s cal led. Swi ft makes thi s establ i shed method naming convention easy
+to wri te by using a di fferent defaul t approach for method parameters than i t uses for
+function parameters.
+Speci fi cal ly, Swi ft gives the fi rst parameter name in a method a local  parameter name by
+defaul t, and gives the second and subsequent parameter names both local  and external
+parameter names by defaul t. Thi s convention matches the typi cal  naming and cal l ing
+convention you wi l l  be fami l iar wi th from wri ting Objective-C methods, and makes for
+expressive method cal l s wi thout the need to qual i fy your parameter names.
+Consider thi s al ternative version of the Counter class, whi ch defines a more complex form of
+the i ncrementBy method:
+cl ass Counter {
+var count: Int = 0
+func i ncrementBy(amount: Int,  numberOfT i mes: Int) {
+count += amount * numberOfT i mes
+}
+}
+Thi s i ncrementBy method has two parameters—amount and numberOfT i mes. By defaul t, Swi ft
+treats amount as a local  name only, but treats numberOfT i mes as both a local  and an external
+name. You cal l  the method as fol lows:
+l et counter = Counter()
+counter. i ncrementBy(5,  numberOfT i mes: 3)
+// counter val ue i s now  15
+You don’t need to define an external  parameter name for the fi rst argument value,
+because i ts purpose i s clear from the function name i ncrementBy. The second argument,
+however, i s qual i fied by an external  parameter name to make i ts purpose clear when the
+method i s cal led.
+Thi s defaul t behavior effectively treats the method as i f you had wri tten a hash symbol
+(#) before the numberOfT i mes parameter:
+func i ncrementBy(amount: Int,  #numberOfT i mes: Int) {
+count += amount * numberOfT i mes
+}
+The defaul t behavior described above mean that method defini tions in Swi ft are wri tten
+wi th the same grammati cal  style as Objective-C, and are cal led in a natural , expressive
+way.
+Modifying External Parameter Name Behavior for Methods
+Sometimes i t’s useful  to provide an external  parameter name for a method’s fi rst
+parameter, even though thi s i s not the defaul t behavior. You can ei ther add an expl i ci t
+external  name yoursel f, or you can prefix the fi rst parameter’s name wi th a hash symbol
+to use the local  name as an external  name too.
+Conversely, i f you do not want to provide an external  name for the second or subsequent
+parameter of a method, override the defaul t behavior by using an underscore character
+(_) as an expl i ci t external  parameter name for that parameter.
+The self Property
+Every instance of a type has an impl i ci t property cal led sel f, whi ch i s exactly equivalent to
+the instance i tsel f. You use thi s impl i ci t sel f property to refer to the current instance wi thin
+i ts own instance methods.
+The i ncrement method in the example above could have been wri tten l ike thi s:
+func i ncrement() {
+sel f. count++
+}
+In practi ce, you don’t need to wri te sel f in your code very often. If you don’t expl i ci tly wri te
+sel f, Swi ft assumes that you are referring to a property or method of the current instance
+whenever you use a known property or method name wi thin a method. Thi s assumption
+i s demonstrated by the use of count (rather than sel f. count) inside the three instance
+methods for Counter.
+The main exception to thi s rule occurs when a parameter name for an instance method
+has the same name as a property of that instance. In thi s si tuation, the parameter name
+takes precedence, and i t becomes necessary to refer to the property in a more qual i fied
+way. You use the impl i ci t sel f property to di stingui sh between the parameter name and
+the property name.
+Here, sel f di sambiguates between a method parameter cal led x and an instance property
+that i s al so cal led x:
+struct Poi nt {
+var x = 0. 0,  y = 0. 0
+func i sT oT heRi ghtOfX(x: Doubl e) -> Bool  {
+return sel f. x > x
+}
+}
+l et somePoi nt = Poi nt(x: 4. 0,  y: 5. 0)
+i f somePoi nt. i sT oT heRi ghtOfX(1. 0) {
+pri ntl n("T hi s poi nt i s to the ri ght of the l i ne w here x == 1. 0")
+i nts "T hi s poi nt i s to the ri ght of the l i ne w here x == 1. 0"
+Wi thout the sel f prefix, Swi ft would assume that both uses of x referred to the method
+parameter cal led x.
+Modifying Value Types from Within Instance Methods
+Structures and enumerations are value types. By defaul t, the properties of a value type
+cannot be modi fied from wi thin i ts instance methods.
+However, i f you need to modi fy the properties of your structure or enumeration wi thin a
+parti cular method, you can opt in to mutating behavior for that method. The method can
+then mutate (that i s, change) i ts properties from wi thin the method, and any changes
+that i t makes are wri tten back to the original  structure when the method ends. The
+method can al so assign a completely new instance to i ts impl i ci t sel f property, and thi s
+new instance wi l l  replace the exi sting one when the method ends.
+You can opt in to thi s behavior by placing the mutati ng keyword before the func keyword for
+that method:
+struct Poi nt {
+var x = 0. 0,  y = 0. 0
+mutati ng func moveByX(del taX: Doubl e,  y del taY : Doubl e) {
+x += del taX
+y += del taY
+}
+}
+var somePoi nt = Poi nt(x: 1. 0,  y: 1. 0)
+somePoi nt.moveByX(2. 0,  y: 3. 0)
+("T he poi nt i s now  at (\(somePoi nt. x),  \(somePoi nt. y))")
+i nts "T he poi nt i s now  at (3. 0,  4. 0)"
+The Poi nt structure above defines a mutating moveByX method, whi ch moves a Poi nt instance
+by a certain amount. Instead of returning a new point, thi s method actual ly modi fies the
+point on whi ch i t i s cal led. The mutati ng keyword i s added to i ts defini tion to enable i t to
+modi fy i ts properties.
+Note that you cannot cal l  a mutating method on a constant of structure type, because i ts
+properties cannot be changed, even i f they are variable properties, as described in Stored
+Properties of Constant Structure Instances:
+l et fi xedPoi nt = Poi nt(x: 3. 0,  y: 3. 0)
+fi xedPoi nt.moveByX(2. 0,  y: 3. 0)
+// thi s w i l l  report an error
+Assigning to self Within a Mutating Method
+Mutating methods can assign an enti rely new instance to the impl i ci t sel f property. The
+Poi nt example shown above could have been wri tten in the fol lowing way instead:
+struct Poi nt {
+var x = 0. 0,  y = 0. 0
+mutati ng func moveByX(del taX: Doubl e,  y del taY : Doubl e) {
+sel f = Poi nt(x: x + del taX,  y: y + del taY )
+}
+}
+Thi s version of the mutating moveByX method creates a brand new structure whose x and y
+values are set to the target location. The end resul t of cal l ing thi s al ternative version of
+the method wi l l  be exactly the same as for cal l ing the earl ier version.
+Mutating methods for enumerations can set the impl i ci t sel f parameter to be a di fferent
+member from the same enumeration:
+enum T ri StateSw i tch {
+case Off,  Low ,  Hi gh
+mutati ng func next() {
+sw i tch sel f {
+case Off:
+sel f = Low
+case Low :
+sel f = Hi gh
+case Hi gh:
+sel f = Off
+}
+ovenLi ght = T ri StateSw i tch. Low
+nLi ght. next()
+venLi ght i s now  equal  to . Hi gh
+nLi ght. next()
+venLi ght i s now  equal  to .Off
+Thi s example defines an enumeration for a three-state swi tch. The swi tch cycles between
+three di fferent power states (Off, Low  and Hi gh) every time i ts next method i s cal led.
+Type Methods
+Instance methods, as described above, are methods that are cal led on an instance of a
+parti cular type. You can al so define methods that are cal led on the type i tsel f. These
+kinds of methods are cal led type methods. You indi cate type methods for classes by
+wri ting the keyword cl ass before the method’s func keyword, and type methods for
+structures and enumerations by wri ting the keyword stati c before the method’s func
+keyword.
+N O T E
+In Objecti ve-C,  you can defi ne type- l evel  methods onl y for Objecti ve-C cl asses.  In Sw i ft,  you can defi ne typel evel  methods for al l  cl asses,  structures,  and enumerati ons.  Each type method i s expl i ci tl y scoped to the type
+i t supports.
+Type methods are cal led wi th dot syntax, l ike instance methods. However, you cal l  type
+methods on the type, not on an instance of that type. Here’s how you cal l  a type method
+on a class cal led SomeCl ass:
+cl ass SomeCl ass {
+cl ass func someT ypeMethod() {
+// type method i mpl ementati on goes here
+}
+}
+SomeCl ass. someT ypeMethod()
+Wi thin the body of a type method, the impl i ci t sel f property refers to the type i tsel f, rather
+than an instance of that type. For structures and enumerations, thi s means that you can
+use sel f to di sambiguate between stati c properties and stati c method parameters, just as
+you do for instance properties and instance method parameters.
+More general ly, any unqual i fied method and property names that you use wi thin the body
+of a type method wi l l  refer to other type-level  methods and properties. A type method
+can cal l  another type method wi th the other method’s name, wi thout needing to prefix i t
+wi th the type name. Simi larly, type methods on structures and enumerations can access
+stati c properties by using the stati c property’s name wi thout a type name prefix.
+The example below defines a structure cal led Level T racker, whi ch tracks a player’s progress
+through the di fferent level s or stages of a game. It i s a single-player game, but can store
+information for mul tiple players on a single devi ce.
+Al l  of the game’s level s (apart from level  one) are locked when the game i s fi rst played.
+Every time a player fini shes a level , that level  i s unlocked for al l  players on the devi ce.
+The Level T racker structure uses stati c properties and methods to keep track of whi ch level s
+of the game have been unlocked. It al so tracks the current level  for an individual  player.
+struct Level T racker {
+stati c var hi ghestUnl ockedLevel  = 1
+stati c func unl ockLevel (l evel : Int) {
+i f l evel  > hi ghestUnl ockedLevel  { hi ghestUnl ockedLevel  = l evel  }
+}
+stati c func l evel IsUnl ocked(l evel : Int) -> Bool  {
+return l evel  <= hi ghestUnl ockedLevel
+}
+var currentLevel  = 1
+mutati ng func advanceT oLevel (l evel : Int) -> Bool  {
+i f Level T racker. l evel IsUnl ocked(l evel ) {
+currentLevel  = l evel
+return true
+} el se {
+return fal se
+}
+The Level T racker structure keeps track of the highest level  that any player has unlocked.
+Thi s value i s stored in a stati c property cal led hi ghestUnl ockedLevel .
+Level T racker al so defines two type functions to work wi th the hi ghestUnl ockedLevel  property. The
+fi rst i s a type function cal led unl ockLevel , whi ch updates the value of hi ghestUnl ockedLevel
+whenever a new level  i s unlocked. The second i s a convenience type function cal led
+l evel IsUnl ocked, whi ch returns true i f a parti cular level  number i s al ready unlocked. (Note that
+these type methods can access the hi ghestUnl ockedLevel  stati c property wi thout your needing
+to wri te i t as Level T racker. hi ghestUnl ockedLevel .)
+In addi tion to i ts stati c property and type methods, Level T racker tracks an individual  player’s
+progress through the game. It uses an instance property cal led currentLevel  to track the level
+that a player i s currently playing.
+To help manage the currentLevel  property, Level T racker defines an instance method cal led
+advanceT oLevel . Before updating currentLevel , thi s method checks whether the requested new
+level  i s al ready unlocked. The advanceT oLevel  method returns a Boolean value to indi cate
+whether or not i t was actual ly able to set currentLevel .
+The Level T racker structure i s used wi th the Pl ayer class, shown below, to track and update the
+progress of an individual  player:
+cl ass Pl ayer {
+var tracker = Level T racker()
+l et pl ayerName: Stri ng
+func compl etedLevel (l evel : Int) {
+Level T racker. unl ockLevel (l evel  + 1)
+tracker. advanceT oLevel (l evel  + 1)
+}
+i ni t(name: Stri ng) {
+pl ayerName = name
+The Pl ayer class creates a new instance of Level T racker to track that player’s progress. It al so
+provides a method cal led compl etedLevel , whi ch i s cal led whenever a player completes a
+parti cular level . Thi s method unlocks the next level  for al l  players and updates the
+player’s progress to move them to the next level . (The Boolean return value of
+advanceT oLevel  i s ignored, because the level  i s known to have been unlocked by the cal l  to
+Level T racker. unl ockLevel  on the previous l ine.)
+You can create a instance of the Pl ayer class for a new player, and see what happens when
+the player completes level  one:
+var pl ayer = Pl ayer(name: "Argyri os")
+pl ayer. compl etedLevel (1)
+pri ntl n("hi ghest unl ocked l evel  i s now  \(Level T racker. hi ghestUnl ockedLevel )")
+// pri nts "hi ghest unl ocked l evel  i s now  2"
+If you create a second player, whom you try to move to a level  that i s not yet unlocked
+by any player in the game, the attempt to set the player’s current level  fai l s:
+pl ayer = Pl ayer(name: "Beto")
+i f pl ayer. tracker. advanceT oLevel (6) {
+pri ntl n("pl ayer i s now  on l evel  6")
+} el se {
+pri ntl n("l evel  6 has not yet been unl ocked")
+}
+// pri nts "l evel  6 has not yet been unl ocked"

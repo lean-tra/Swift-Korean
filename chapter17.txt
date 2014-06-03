@@ -1,0 +1,3 @@
+# 17 해제(Deinitialization)
+
+Write here...
