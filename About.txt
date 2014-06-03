@@ -20,7 +20,7 @@ Feel free to participate project =)
 04. 기본 연산자 (Assign to @Nirvana)
 05. 문자열과 문자 (Assign to @Nirvana)
 06. 컬렉션 타입
-07. 통제 흐름
+07. 통제 흐름 (Assign to @nassol)
 08. 함수  (Assign to @Quartet)
 09. 클로저(Closures)
 10. 열거형
