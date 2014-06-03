@@ -1,7 +1,12 @@
 # Apple Swift Programming Language PDF translation for KOREAN
-This is a [Swift](https://developer.apple.com/swift/) guide documentation translation project.
-Feel free to participate project =)
-> 이 프로젝트는 애플의 새로운 프로그래밍 언어 **swift** 번역 프로젝트입니다. 자유롭게 참여하세요 =) 
+**“Apple Inc. Copyright © 2014 Apple Inc. All rights reserved.”** 
+This is a [The Swift Programming Language](https://developer.apple.com/swift/) guide documentation translation project.
+
+_This project is **never used for commercial purposes**. 
+By translating "The Swift Programming Language" we want to help a lot of korean learners who may otherwise struggle to understand it._
+
+> 이 프로젝트는 애플의 새로운 프로그래밍 언어 **swift** 번역 프로젝트입니다. 자유롭게 참여하세요 =)
+**이 번역 프로젝트는 절대로 상업적인 목적으로 사용되지 않습니다.**
 
 ## Downloads
 - [Download “The Swift Programming Language” from the iBooks Store](https://itunes.apple.com/us/book/the-swift-programming-language/id881256329?mt=11)
@@ -19,11 +24,11 @@ Feel free to participate project =)
 03. 기초 다지기 (Assign to @FlashMaestro)
 04. 기본 연산자 (Assign to @Nirvana)
 05. 문자열과 문자 (Assign to @Nirvana)
-06. 컬렉션 타입
+06. 컬렉션 타입 (Assign to @justinchronicle, @seanmoon)
 07. 통제 흐름 (Assign to @nassol)
 08. 함수  (Assign to @Quartet)
-09. 클로저(Closures)
-10. 열거형
+09. 클로저(Closures) (Assign to @inureyes)
+10. 열거형 (Assign to @inureyes )
 11. 클래스와 구조체
 12. 속성
 13. 메서드
@@ -32,13 +37,13 @@ Feel free to participate project =)
 16. 초기화
 17. 해제(Deinitialization)
 18. 자동 참조 계수
-19. 옵션 연쇄
+19. 옵션 연쇄 (Assign to @hyukhur)
 20. 타입 변환
 21. 내부 타입 (Assign to @jjuakim)
 22. 확장
 23. 프로토콜
 24. 제네릭
-25. 고급 연산자
+25. 고급 연산자 (Assign to @dyanos)
 
 ## Rule
 [추가논의](https://www.penflip.com/jjuakim/swift-korean/discussions/1)는 이 곳에서..
