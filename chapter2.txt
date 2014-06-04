@@ -440,6 +440,39 @@ let aceRawValue = ace.toRaw()
 
 위의 예를 보면 열거형의 원본 값의 타입은 int 입니다. 그래서 특별히 첫번째 원본값만 가지고 있는 것입니다. 나머지 원본 값들은 순서에 따라 자동으로 할당됩니다. 또 문자열이나 실수형태의 값들도 원본값으로 가진 열거형을 만들 수 있습니다.
 
+toRaw와 fromRaw 함수를 사용해서 원본값과 열거형 값을 상호 변환할 수 있습니다.
+
+```c
+if let convertedRank = Rank.fromRaw(3) {
+    let threeDescription = convertedRank.simpleDescription()
+}
+```
+
+열거형의 구성값들은 실제 값을 쓰는 다른 방법일 뿐 아니라. 모두 실제 값입니다. 사실 실제값이 의미있는 경우가 아니라면 굳이 첫번째 값을 제공할 필요가 없습니다.
+
+```c
+enum Suit {
+    case Spades, Hearts, Diamonds, Clubs
+    func simpleDescription() -> String {
+        switch self {
+        case .Spades:
+            return "spades"
+        case .Hearts:
+            return "hearts"
+        case .Diamonds:
+            return "diamonds"
+        case .Clubs:
+            return "clubs"
+        }
+    }
+}
+let hearts = Suit.Hearts
+let heartsDescription = hearts.simpleDescription()
+```
+
+>실험
+Suit에 color 메서드를 추가해 보자. color 메서드는 스페이드와 클로버는 'black'을 반환하고 하트와 다이아몬드는 'red'를 반환하도록 하면 한다.
+
 
 
 
