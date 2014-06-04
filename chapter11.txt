@@ -186,6 +186,7 @@ println("The frameRate property of tenEighty is now
 이러한 이유로 두 상수나 변수가 정확하게 동일한 클래스의 인스턴스를 참조하고 있는지 알아내는것은 종종 유용하게 사용됩니다. 그러한 경우를 알아내기 위해서 Swift는 아래의 두가지 식별연산자를 제공합니다
 * 동일한(Identical to) (===)
 * 동일하지 않은(Not identical to) (!==)
+
 두 상수나 변수가 동일한 인스턴스를 가리키는지 검사하기 위해 위의 두 연산자를 사용하십시오.
 ```
 if tenEighty === alsoTenEighty {
