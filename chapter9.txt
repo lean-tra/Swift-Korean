@@ -1,4 +1,5 @@
-# 09 클로저(Closures)
+# 09 클로저 (Closures)
+> Translator : 이름 (메일주소)
 
 Closures
 Closures are sel f-contained blocks of functional i ty that can be passed around and used in
