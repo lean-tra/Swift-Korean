@@ -254,40 +254,46 @@ func를 사용해 함수를 선언할 수 있습니다. 함수의 이름과 괄�
 ```
 
 함수는 최상위 타입입니다. 이것은 어떤 함수가 다른 함수를 반환값형태로  반환할 수 있다는 것을 의미합니다.
-   
-   1|  func makeIncrementer() -> (Int -> Int) {
-   2|      func addOne(number: Int) -> Int {
-   3|          return 1 + number
-   4|      }
-   5|      return addOne
-   6|  }
-   7|  var increment = makeIncrementer()
-   8|  increment(7)
-   
+
+```c
+  func makeIncrementer() -> (Int -> Int) {
+      func addOne(number: Int) -> Int {
+          return 1 + number
+      }
+      return addOne
+  }
+  var increment = makeIncrementer()
+  increment(7)
+```
+
 또 함수는 다른 함수를 인자로 받을 수 있습니다.
 
-   1|  func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
-   2|      for item in list {
-   3|          if condition(item) {
-   4|              return true
-   5|          }
-   6|      }
-   7|      return false
-   8|  }
-   9|  func lessThanTen(number: Int) -> Bool {
-  10|      return number < 10
-  11|  }
-  12|  var numbers = [20, 19, 7, 12]
-  13|  hasAnyMatches(numbers, lessThanTen)
-  
+```c
+  func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
+      for item in list {
+          if condition(item) {
+              return true
+          }
+      }
+      return false
+  }
+  func lessThanTen(number: Int) -> Bool {
+      return number < 10
+  }
+  var numbers = [20, 19, 7, 12]
+  hasAnyMatches(numbers, lessThanTen)
+```
+
 함수는 실제로는 클로저의 특별한 예입니다. 중괄호로 묶기만 해서 이름없이 클로저를 사용할 수도 있습니다. in을 사용해 몸통에서 인자와 반환값 타입을 분리해 쓸 수 있습니다.
-  
-   1|  numbers.map({
-   2|      (number: Int) -> Int in
-   3|      let result = 3 * number
-   4|      return result
-   5|      })
-   
+
+```c
+  numbers.map({
+      (number: Int) -> Int in
+      let result = 3 * number
+      return result
+      })
+```
+
 >실험
 모든 홀수값에 대해 0을 반환하도록 클로저를 수정해보자.
     
@@ -303,31 +309,37 @@ func를 사용해 함수를 선언할 수 있습니다. 함수의 이름과 괄�
 
 클래스를 만들기 위해서는 클래스 이름과 함께 class 키워드를 사용하면 됩니다.클래스 컨텍스트(context) 내부를 제외하고 클래스 안에 속성을 선언하기 위해서는 상수나 변수를 선언하는 것과 똑같은 방식으로 쓰면 됩니다. 마찬가지로 메서드와 함수도 선언할 수 있습니다.
 
-	   1|  class Shape {
-       2|    var numberOfSides = 0
-       3|    func simpleDescription() -> String {
-       4|      return "A shape with \(numberOfSides) sides."
-       5|    }
-       6|  }
+```c
+  class Shape {
+    var numberOfSides = 0
+    func simpleDescription() -> String {
+      return "A shape with \(numberOfSides) sides."
+    }
+  }
+```
 
 어떤 클래스의 인스턴스를 만들려면 클래스 이름 다음에 괄호를 넣으면 됩니다. .(점) 문법을 사용하면 인스턴스의 속성이나 메서드에 접근할 수 있습니다.
 
-	   1|  var shape = Shape()
-       2|  shape.numberOfSides = 7
-       3|  var shapeDescription = shape.simpleDescription()
+```c
+  var shape = Shape()
+  shape.numberOfSides = 7
+  var shapeDescription = shape.simpleDescription()
+```
 
 현재 상태의 Shape클래스는 중요한 것이 빠져있습니다. 바로 클래스가 생성될 때 클래스를 초기화하기 위한 초기화자 입니다. init 키워드를 사용해 만들어 봅시다.
 
-	     1|  class NamedShape {
-         2|      var numberOfSides: Int = 0
-         3|      var name: String
-         4|      init(name: String) {
-         5|          self.name = name
-         6|      }
-         7|      func simpleDescription() -> String {
-         8|          return "A shape with \(numberOfSides) sides."
-         9|      }
-       10|  }
+```c
+  class NamedShape {
+      var numberOfSides: Int = 0
+      var name: String
+      init(name: String) {
+          self.name = name
+      }
+      func simpleDescription() -> String {
+          return "A shape with \(numberOfSides) sides."
+      }
+  }
+```
 
 인자의 name과 속성의 name을 구분하기 위해서 self 키워드가 어떻게 사용되는지 주의해서 봅시다.  클래스의 인스턴스를 만들 때 초기화자에 인자를 전달하는 방식은 함수에 전달하는 방식과 동일합니다. 모든 속성은 numberOfSides 처럼 값을 선언 할 때 혹은 name처럼 클래스를 초기화 할 때 처럼 적어도 둘중에 한가지 방법을 통해 값을 할당해줘야 합니다.
 
