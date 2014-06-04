@@ -91,7 +91,7 @@ try to downcast to an incorrect class type.
 The example below iterates over each MediaItem in library, and prints an appropriate
 description for each item. To do this, it needs to access each item as a true Movie or Song,
 and not just as a MediaItem. This is necessary in order for it to be able to access the director
-or artist property of a Movie or Song for use in the description.
+ㅇㅇor artist property of a Movie or Song for use in the description.
 In this example, each item in the array might be a Movie, or it might be a Song. You don’t
 know in advance which actual class to use for each item, and so it is appropriate to use
 the optional form of the type cast operator (as?) to check the downcast each time through
