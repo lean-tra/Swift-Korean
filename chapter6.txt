@@ -1,3 +1,4 @@
-# 06 컬렉션 타입
+# 06 컬렉션 타입 (Collection Types)
+> Translator : 이름 (메일주소)
 
 Write here...
