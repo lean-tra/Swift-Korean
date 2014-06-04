@@ -60,50 +60,60 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 
 배열과 딕셔너리는 대괄호([])를 이용해 만들 수 있습니다. 그리고 대괄호 안에 인덱스나 키를 이용해 각각의 요소에 접근할 수 있습니다.
 
-1| var shoppingList = ["catfish", "water", "tulips", "blue paint"]
-2| shoppingList[1] = "bottle of water"
-3|
-4| var occupations = [
-5|		"Malcolm":"Captian",
-6|		"Kaylee":"Mechanic",
-7| ]
-8| occupations["Jayne"] = "Public Relations"
+```c
+var shoppingList = ["catfish", "water", "tulips", "blue paint"]
+shoppingList[1] = "bottle of water"
+
+var occupations = [
+	"Malcolm":"Captian",
+	"Kaylee":"Mechanic",
+]
+occupations["Jayne"] = "Public Relations"
+```
 
 빈 배열이나 딕셔너리를 만들려면, 초기화자(initializer) 문법을 사용하면 됩니다.
 
-1| let emptyArray = String[]()
-2| let emptyDictionary = Dictionary<String, Float>()
+```c
+let emptyArray = String[]()
+let emptyDictionary = Dictionary<String, Float>()
+```
 
 타입 정보를 추론할 수 없다면 빈 배열은 []로 빈 딕셔너리는 [:]로 쓸 수 있습니다. 예를 들어 변수에 새로운 값을 할당하거나 함수에 인자로 넘겨줄 때
 
+```c
 shoppingList = [] //쇼핑을 가서 모든 것을 샀다.
+```
 
 ##흐름 제어
 if와 switch를 사용해서 조건문을 만들 수 있고 for-in, for, while, do-while을 이용해서 반복문을 만들 수 있습니다. 조건문과 반복문을 괄호로 감싸는 것은 선택사항입니다. 중괄호로 몸통을 감싸는 것은 필수입니다.
 
-  1| let individualScores = [75, 43, 103, 87, 12]
-  2| var teamScore = 0
-  3| for score in individualScores {
-  4|    if score > 50 {
-  5|        teamScore += 3
-  6|    } else {
-  7|        teamScore += 1
-  8|    }
-  9|}
-10|teamScore
+```c
+ let individualScores = [75, 43, 103, 87, 12]
+ var teamScore = 0
+ for score in individualScores {
+    if score > 50 {
+        teamScore += 3
+    } else {
+        teamScore += 1
+    }
+}
+teamScore
+```
 
 if문 안에 조건은 꼭 불리언(Boolean) 표현이어야 합니다. 이것은 if score {...} 이 0과의 비교를 암시하지 않기 때문에 에러가 발생합니다.
 
 사라질 값을 가지고 if와 let을  함께 사용하는 것도 가능합니다. 이런 값들은 옵션으로 대표됩니다. 옵션값은 어떤 값을 가지거나 사라질 값을 표현하는 nil을 가지기도 합니다. 값의 타입 뒤에 물음표를 쓰면 옵션값이라는 것을 나타냅니다.
 
- 1| var optionalString: String? = "Hello"
- 2| optionalString == nil
- 3| 
- 4| var optionalName: String? = "John Appleseed"
- 5| var greeting = "Hello!"
- 6| if let name = optionalName {
- 7|    greeting = "Hello, \(name)"
- 8| }
+```c
+ var optionalString: String? = "Hello"
+ optionalString == nil
+ 
+ var optionalName: String? = "John Appleseed"
+ var greeting = "Hello!"
+ if let name = optionalName {
+    greeting = "Hello, \(name)"
+ }
+ ```
  
 >실험
 optionalName의 값을 nil로 바꿔보자. 어떤 greeting의 값을 받을 수 있는가? optionalName이 nil일 때 다른 값을 greeting에 할당하도록 else 절을 추가해보자.
@@ -112,17 +122,19 @@ optionalName의 값을 nil로 바꿔보자. 어떤 greeting의 값을 받을 수
 
 스위치(Switch) 구문에는 정수형 값이나 동등 비교연산 뿐만 아니라 어떤 종류의 데이터든 사용할 수 있고 다양한 비교 연산자들을 사용할 수 있습니다.
 
-  1|  let vegetable = "red pepper"
-  2|  switch vegetable {
-  3|  case "celery":
-  4|      let vegetableComment = "Add some raisins and make ants on a log."
-  5|  case "cucumber", "watercress":
-  6|      let vegetableComment = "That would make a good tea sandwich."
-  7|  case let x where x.hasSuffix("pepper"):
-  8|      let vegetableComment = "Is it a spicy \(x)?"
-  9|  default:
-10|      let vegetableComment = "Everything tastes good in soup."
-11|  }
+```c
+  let vegetable = "red pepper"
+  switch vegetable {
+  case "celery":
+      let vegetableComment = "Add some raisins and make ants on a log."
+  case "cucumber", "watercress":
+      let vegetableComment = "That would make a good tea sandwich."
+  case let x where x.hasSuffix("pepper"):
+      let vegetableComment = "Is it a spicy \(x)?"
+  default:
+      let vegetableComment = "Everything tastes good in soup."
+  }
+```
 
 >실험
 스위치 구문에서 default의 경우를 제거해 보자. 어떤 에러가 발생하는가?
@@ -131,20 +143,22 @@ optionalName의 값을 nil로 바꿔보자. 어떤 greeting의 값을 받을 수
 
 for-in 문을 사용하면 각각 키-값 쌍으로 사용할 수 있는 이름들의 쌍을 이용해 딕셔너리에 있는 요소들을 반복처리할 수 있습니다.
 
-   1|  let interestingNumbers = [
-   2|      "Prime": [2, 3, 5, 7, 11, 13],
-   3|      "Fibonacci": [1, 1, 2, 3, 5, 8],
-   4|      "Square": [1, 4, 9, 16, 25],
-   5|  ]
-   6|  var largest = 0
-   7|  for (kind, numbers) in interestingNumbers {
-   8|      for number in numbers {
-   9|          if number > largest {
- 10|              largest = number
- 11|          }
- 12|      }
- 13|  }
- 14|  largest
+```c
+  let interestingNumbers = [
+      "Prime": [2, 3, 5, 7, 11, 13],
+      "Fibonacci": [1, 1, 2, 3, 5, 8],
+      "Square": [1, 4, 9, 16, 25],
+  ]
+  var largest = 0
+  for (kind, numbers) in interestingNumbers {
+      for number in numbers {
+          if number > largest {
+              largest = number
+          }
+      }
+  }
+  largest
+ ```
  
 >실험
 계속 알아 보기 위해서 기존의 제일 큰 값만큼 큰 값을 가지는 요소를 추가해보자.
@@ -153,31 +167,35 @@ for-in 문을 사용하면 각각 키-값 쌍으로 사용할 수 있는 이름�
 
 반복문이 적어도 한번은 실행될 수 있도록 보장하기 위해서 조건문을 반복문 끝에 쓸수도 있습니다.
 
-   1|  var n = 2
-   2|  while n < 100 {
-   3|      n = n * 2
-   4|  }
-   5|  n
-   6|   
-   7|  var m = 2
-   8|  do {
-   9|      m = m * 2
- 10|  } while m < 100
- 11|  m
- 
+```c
+  var n = 2
+  while n < 100 {
+      n = n * 2
+  }
+  n
+   
+  var m = 2
+  do {
+      m = m * 2
+  } while m < 100
+  m
+```
+
  반복문안에서 ..을 사용해 인덱스의 범위를 만들어 사용하거나 명시적으로 초기화, 조건문, 증감식을 사용하는 것 또한 가능합니다. 아래쪽에 나오는 두가지 반복문은 동일한 일을 수행합니다.
- 
-   1|   var firstForLoop = 0
-   2|  for i in 0..3 {
-   3|      firstForLoop += i
-   4|  }
-   5|  firstForLoop
-   6|   
-   7|  var secondForLoop = 0
-   8|  for var i = 0; i < 3; ++i {
-   9|      secondForLoop += 1
- 10|  }
- 11|  secondForLoop
+
+```c
+   var firstForLoop = 0
+  for i in 0..3 {
+      firstForLoop += i
+  }
+  firstForLoop
+   
+  var secondForLoop = 0
+  for var i = 0; i < 3; ++i {
+      secondForLoop += 1
+  }
+  secondForLoop
+```
  
  ..을 사용해서 범위를 지정하면 제일 나중값은 제외가 됩니다. 대신 ...을 사용하면 양쪽 끝값 모두 포함하게 됩니다.
  
@@ -185,84 +203,97 @@ for-in 문을 사용하면 각각 키-값 쌍으로 사용할 수 있는 이름�
  
 func를 사용해 함수를 선언할 수 있습니다. 함수의 이름과 괄호안에 인자들을 넣어서 함수를 호출할 수 있습니다. 매개변수들의 이름과 분리해서 ->를 사용해 타입을 써주면 함수 반환값의 타입을 지정할 수 있습니다.
 
-   1|  func greet(name: String, day: String) -> String {
-   2|      return "Hello \(name), today is \(day)."
-   3|  }
-   4|  greet("Bob", "Tuesday")
-   
+```c
+  func greet(name: String, day: String) -> String {
+      return "Hello \(name), today is \(day)."
+  }
+  greet("Bob", "Tuesday")
+```   
 
 >실험
 매개변수 day를 제거하고 오늘의 스페셜 런치 매개변수를 greeting에 추가해보자.
     
     튜플(tuple)을 사용하면 여러개의 값을 반환할 수 있습니다.
-    
-   1|  func getGasPrices() -> (Double, Double, Double) {
-   2|      return (3.59, 3.69, 3.79)
-   3|  }
-   4|  getGasPrices()
-   
+
+```c
+  func getGasPrices() -> (Double, Double, Double) {
+      return (3.59, 3.69, 3.79)
+  }
+  getGasPrices()
+```
+
    함수는 배열을 이용해서 여러개의 값을 인자로 받는 것도 가능합니다.
-   
-   1|  func sumOf(numbers: Int...) -> Int {
-   2|      var sum = 0
-   3|      for number in numbers {
-   4|          sum += number
-   5|      }
-   6|      return sum
-   7|  }
-   8|  sumOf()
-   9|  sumOf(42, 597, 12)
-   
+
+```c
+  func sumOf(numbers: Int...) -> Int {
+      var sum = 0
+      for number in numbers {
+          sum += number
+      }
+      return sum
+  }
+  sumOf()
+  sumOf(42, 597, 12)
+```
+
 >실험
 인자들의 평균값을 계산하는 함수를 만들어보자.
     
 함수는 다른 것에 포함될 수도 있습니다. 내장된(Nested) 함수는 감싸고 있는 함수에서 선언된 변수에 접근할 수 있습니다. 길어지고 복잡한 함수의 코드를 정리하기 위해 내장된 함수를 사용할 수 있습니다.
-    
-   1|  func returnFifteen() -> Int {
-   2|      var y = 10
-   3|      func add() {
-   4|          y += 5
-   5|      }
-   6|      add()
-   7|      return y
-   8|  }
-   9|  returnFifteen()
-   
+
+```c
+  func returnFifteen() -> Int {
+      var y = 10
+      func add() {
+          y += 5
+      }
+      add()
+      return y
+  }
+  returnFifteen()
+```
+
 함수는 최상위 타입입니다. 이것은 어떤 함수가 다른 함수를 반환값형태로  반환할 수 있다는 것을 의미합니다.
-   
-   1|  func makeIncrementer() -> (Int -> Int) {
-   2|      func addOne(number: Int) -> Int {
-   3|          return 1 + number
-   4|      }
-   5|      return addOne
-   6|  }
-   7|  var increment = makeIncrementer()
-   8|  increment(7)
-   
+
+```c
+  func makeIncrementer() -> (Int -> Int) {
+      func addOne(number: Int) -> Int {
+          return 1 + number
+      }
+      return addOne
+  }
+  var increment = makeIncrementer()
+  increment(7)
+```
+
 또 함수는 다른 함수를 인자로 받을 수 있습니다.
 
-   1|  func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
-   2|      for item in list {
-   3|          if condition(item) {
-   4|              return true
-   5|          }
-   6|      }
-   7|      return false
-   8|  }
-   9|  func lessThanTen(number: Int) -> Bool {
-  10|      return number < 10
-  11|  }
-  12|  var numbers = [20, 19, 7, 12]
-  13|  hasAnyMatches(numbers, lessThanTen)
-  
+```c
+  func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
+      for item in list {
+          if condition(item) {
+              return true
+          }
+      }
+      return false
+  }
+  func lessThanTen(number: Int) -> Bool {
+      return number < 10
+  }
+  var numbers = [20, 19, 7, 12]
+  hasAnyMatches(numbers, lessThanTen)
+```
+
 함수는 실제로는 클로저의 특별한 예입니다. 중괄호로 묶기만 해서 이름없이 클로저를 사용할 수도 있습니다. in을 사용해 몸통에서 인자와 반환값 타입을 분리해 쓸 수 있습니다.
-  
-   1|  numbers.map({
-   2|      (number: Int) -> Int in
-   3|      let result = 3 * number
-   4|      return result
-   5|      })
-   
+
+```c
+  numbers.map({
+      (number: Int) -> Int in
+      let result = 3 * number
+      return result
+      })
+```
+
 >실험
 모든 홀수값에 대해 0을 반환하도록 클로저를 수정해보자.
     
@@ -278,31 +309,37 @@ func를 사용해 함수를 선언할 수 있습니다. 함수의 이름과 괄�
 
 클래스를 만들기 위해서는 클래스 이름과 함께 class 키워드를 사용하면 됩니다.클래스 컨텍스트(context) 내부를 제외하고 클래스 안에 속성을 선언하기 위해서는 상수나 변수를 선언하는 것과 똑같은 방식으로 쓰면 됩니다. 마찬가지로 메서드와 함수도 선언할 수 있습니다.
 
-	   1|  class Shape {
-       2|    var numberOfSides = 0
-       3|    func simpleDescription() -> String {
-       4|      return "A shape with \(numberOfSides) sides."
-       5|    }
-       6|  }
+```c
+  class Shape {
+    var numberOfSides = 0
+    func simpleDescription() -> String {
+      return "A shape with \(numberOfSides) sides."
+    }
+  }
+```
 
 어떤 클래스의 인스턴스를 만들려면 클래스 이름 다음에 괄호를 넣으면 됩니다. .(점) 문법을 사용하면 인스턴스의 속성이나 메서드에 접근할 수 있습니다.
 
-	   1|  var shape = Shape()
-       2|  shape.numberOfSides = 7
-       3|  var shapeDescription = shape.simpleDescription()
+```c
+  var shape = Shape()
+  shape.numberOfSides = 7
+  var shapeDescription = shape.simpleDescription()
+```
 
 현재 상태의 Shape클래스는 중요한 것이 빠져있습니다. 바로 클래스가 생성될 때 클래스를 초기화하기 위한 초기화자 입니다. init 키워드를 사용해 만들어 봅시다.
 
-	     1|  class NamedShape {
-         2|      var numberOfSides: Int = 0
-         3|      var name: String
-         4|      init(name: String) {
-         5|          self.name = name
-         6|      }
-         7|      func simpleDescription() -> String {
-         8|          return "A shape with \(numberOfSides) sides."
-         9|      }
-       10|  }
+```c
+  class NamedShape {
+      var numberOfSides: Int = 0
+      var name: String
+      init(name: String) {
+          self.name = name
+      }
+      func simpleDescription() -> String {
+          return "A shape with \(numberOfSides) sides."
+      }
+  }
+```
 
 인자의 name과 속성의 name을 구분하기 위해서 self 키워드가 어떻게 사용되는지 주의해서 봅시다.  클래스의 인스턴스를 만들 때 초기화자에 인자를 전달하는 방식은 함수에 전달하는 방식과 동일합니다. 모든 속성은 numberOfSides 처럼 값을 선언 할 때 혹은 name처럼 클래스를 초기화 할 때 처럼 적어도 둘중에 한가지 방법을 통해 값을 할당해줘야 합니다.
 
