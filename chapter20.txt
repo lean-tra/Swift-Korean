@@ -9,10 +9,7 @@ Swift에서 타입 변환은 `is`와 `as`라는 연산자로 구현할 수 있�
 
 ## 타입 캐스팅을 위한 클래스 계층 정의(Defining a Class Hierarchy for Type Casting)
 
-타입 캐스팅을 
-You can use type casting with a hierarchy of classes and subclasses to check the type of a
-particular class instance and to cast that instance to another class within the same
-hierarchy. 
+당신은 특정한 클래스의 인스턴스의 타입을 체크하거나 인스턴스를 같은 계층의 또다른 클래스로 변환하기 위해서 클래스들과 하위클래스들의 계층정보를 사용한 타입캐스팅을 할 수 있다.
 아래의 세가지의 코드조각(code snippets)는 타입 캐스팅이 사용되는 예제를 보여주기 위한 계층적인 클래스들과 각각의 클래스들의 인스턴스를 포함하는 배열(array)를 정의하고 있습니다.
 첫번째 코드 조각은 MediaItem이라는 새로운 기본 클래스(base class)를 정의하고 있습니다. 이 클래스는 디지털 미디어 라이브러리에 있는 모든 아이템들을 위한 기본적인 기능을 제공합니다. 특히   문자열(String)타입의 name 속성(Property)를 선언하고, initializer를 통해서 'name'을 초기화 합니다(이것은 모든 미디어 아이템(영화나 노래)들이 이름을 가지고 있다고 가정합니다)
 
