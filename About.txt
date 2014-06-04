@@ -1,4 +1,4 @@
-# Apple Swift Programming Language PDF translation for KOREAN
+# Apple Swift Programming Language translation for KOREAN
 **“Apple Inc. Copyright © 2014 Apple Inc. All rights reserved.”** 
 This is a [The Swift Programming Language](https://developer.apple.com/swift/) guide documentation translation project.
 
