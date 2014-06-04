@@ -115,6 +115,7 @@ This section shows you how to write a generic collection type called `Stack`. A 
 
 The illustration below shows the push / pop behavior for a stack:
 
+![p595-1.png](images/p595-1.png)
  
 1. There are currently three values on the stack.
 2. A fourth value is “pushed” on to the top of the stack.
