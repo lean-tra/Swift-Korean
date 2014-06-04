@@ -126,11 +126,7 @@ Any나 AnyObject는 오로지 당신이 명시적으로 behavior나 그들이 �
 AnyObject
 
 Cocoa APIS를 이용하여 작업을 할때, 보통 AnyObject[] 타입의 배열를(any object 타입의 값을 가진 배열) 받는것이 일반적입니다. 이것은 Objctive-C가 명시적인 타입의 배열을 가지지 못하기 때문입니다. 그러나 당신이 종종  당신이 알고있는 API가 제공하는 array를 포함한 여러가지 정보를 포함한 오브젝트들의 타입에 대해서 자신이 있을 수 있다.
-이러한 상황에서, 당신은 optional unwrapping이 필요하지 않은 경우에 한하여 AnyObject를 사용
-In these situations, you can use the forced version of the type cast operator (as) to
-downcast each item in the array to a more specific class type than AnyObject, without the
-need for optional unwrapping.
-아래의 예제는 하나의 AnyObject[]타입의 배열을 정의하고 3개의 Movie 클래스 인스턴스를 가지는 배열을 가지도록 합니다:
+이러한 상황에서, 당신은 optional unwrapping이 필요하지 않은 경우에 한하여 배열의 각각의 아이템을 특정한 클래스의 타입으로 바꾸는 다운캐스팅을하기 위한 타입 변환 연산자 as로 강제로 변경한 형태를 사용할 수 있습니다.
 ```c
 let someObjects: AnyObject[] = [
  Movie(name: "2001: A Space Odyssey", director: "Stanley Kubrick"),
@@ -138,7 +134,7 @@ let someObjects: AnyObject[] = [
  Movie(name: "Alien", director: "Ridley Scott")
 ]
 ```
-이 배열은 오로지 Moive 인스턴스만 가지는 것을 이미 알고 있으므로, 당신은 다운캐스팅 및 타입 변환 연산자 'as'를 이용하여 non-optional Moive로 강제로 바꾸는 unwrap를 할 수 있습니다.
+이 배열은 오로지 Moive 인스턴스만 가지는 것을 이미 알고 있으므로, 당신은 다운캐스팅 및 타입 변환 연산자 'as'를 이용하여 non-optional Moive로 강제로 형태를 바꾸는 unwrap를 할 수 있습니다.
 ```c
 for object in someObjects {
  let movie = object as Movie
@@ -158,6 +154,7 @@ for movie in someObjects as Movie[] {
 ```
 
 Any
+
 
 Here’s an example of using Any to work with a mix of different types, including non-class
 types. The example creates an array called things, which can store values of type Any:
