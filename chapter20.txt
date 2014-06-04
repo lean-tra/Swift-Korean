@@ -1,6 +1,6 @@
 # 20 타입 변환
 
-타입변환(Type Casting)
+## 타입변환(Type Casting)
 
 타입 변환이란 인스탄스(instance)의 타입을 체크하기 위한 방법이며, 또한 
 and/or to treat that instance as if
@@ -8,7 +8,7 @@ it is a different superclass or subclass from somewhere else in its own class hi
 Swift에서 타입 변환은 'is'와 'as'라는 연산자로 구현할 수 있으며, 이 두 연산자는 값의 타입을 체크하거나 다른 타입으로 변환하는 간단하고 표현적인 방법을 제공합니다.
 또한 해당 타입이 프로토콜에 적합하지 아닌지 체크하기 위해서 타입 변환을 사용할 수 있으며 보다 자세한 사항은 [Protocol Conformance](링크)를 참조하시기 바랍니다.
 
-**타입 캐스팅을 위한 클래스 계층 정의(Defining a Class Hierarchy for Type Casting)**
+## 타입 캐스팅을 위한 클래스 계층 정의(Defining a Class Hierarchy for Type Casting)
 
 타입 캐스팅을 
 You can use type casting with a hierarchy of classes and subclasses to check the type of a
@@ -59,7 +59,7 @@ let library = [
 ```
 library에 저장된 요소들은 해당 Scenes뒤에서는 여전히 Movie와 Song인스탄스이다. 그러나 만일 네가 이 array의 컨텐츠들을 반복자 등을 이용하여 뽑아낸 다면, 네가 받게된 그 아이템들의 타입은 Song이나 Movie이 아닌 MediaItem일 것이다. 그것들을 원래의 타입으로 작업을 하기 위해얻고 싶다면, 당신은 그들의 타입을 체크하는 것이 필요하고, 또한 그들을 downcast해서 다른 타입으로 변경하여야 한다. 이는 아래서 설명하도록 하겠다.
 
-타입 체크(Checking Type)
+## 타입 체크(Checking Type)
 
 어떠한 instance가 확실히 하위클래스 타입인지 아닌지를 체크하기 위해서는 타입 체크 연산자인 'is'를 이용합니다. 이 타입체크용 연산자는 만일 해당 인스탄스가 해당 하위 클래스라면 true를, 아니라면 false를 반환합니다.
 아래의 예시는 library배열에 있는 Movie의 instance의 수와 Song의 instance의 수를 세기 위한movieCount와 songCount라는 두개의 변수를 선언하는 것을 보여줍니다.:
@@ -78,7 +78,7 @@ for item in library {
 ```
 이 예시에서는 library배열의 모든 아이템에 대해서 작업하며, 각각의 1번의 과정마다 for-in loop는 배열에 MediaItem 상수를 가져오고, 각각의 아이템이 만일 Movie 인스탄스이면 is Movie에서 true를 아니라면 false를 반환하고, 이와 유시하게 아이템이 만일 Song의 인스탄스인지 아닌지에 따라 is Song 체크부분의 리턴값이 결정됩니다. for-in loop의 마지막이 되면, moveCount와 songCount의 값을 보고 전체 MediaItem인스탄스중에 각각의 타입이 얼마만큼의 수가 들어있는지 찾아낼 수 있다.
 
-다운캐스팅( Downcasting )
+## 다운캐스팅( Downcasting )
 
 상수와 변수의 명확한 클래스 타입은 사실은 아마도 the scenes뒤에 있는 하위 클래스의 인스탄스에 속할것이다. 
 당신이 위와 같은 케이스를 믿는 경우, 당신은 타입 변환 연산자인 'as'를 통하여 하위클래스타입으로 다운캐스팅을 시도 할 수 있다.
@@ -113,7 +113,7 @@ library 배열안의 두개의 Song 인스탄스에 해당 내용을 적용하�
 >NOTE
 변환(Casting)은 실제로 해당 인스턴스를 수정하거나 그 값을 바꾸는 것이 아닙니다. 근본적인 인스턴스는 처음상태 그대로 남아있습니다. 이것은 간단히 특별한 것이며, 캐스팅된 타입의 인스턴스로서 접근이 가능한 것입니다.
 
-**Type Casting for Any and AnyObject**
+## Type Casting for Any and AnyObject
 
 Swift는 특정한 타입을 가지지 않는 상태로 작업하기 위한 두가지의 특별한 타입을 제공합니다:
 
@@ -123,7 +123,7 @@ Any 는 함수형의 타입을 제외하고는 어떠한 타입의 인스탄스�
 >NOTE
 Any나 AnyObject는 오로지 당신이 명시적으로 behavior나 그들이 제공하는 능력들이 필요한 경우에만 사용합니다. 이는 항상 당신의 코드 속에서당신이 예상한 특정한 형태의 타입으로 작동하는 것이 더 낫습니다.
 
-AnyObject
+## AnyObject
 
 Cocoa APIS를 이용하여 작업을 할때, 보통 AnyObject[] 타입의 배열를(any object 타입의 값을 가진 배열) 받는것이 일반적입니다. 이것은 Objctive-C가 명시적인 타입의 배열을 가지지 못하기 때문입니다. 그러나 당신이 종종  당신이 알고있는 API가 제공하는 array를 포함한 여러가지 정보를 포함한 오브젝트들의 타입에 대해서 자신이 있을 수 있다.
 이러한 상황에서, 당신은 optional unwrapping이 필요하지 않은 경우에 한하여 배열의 각각의 아이템을 특정한 클래스의 타입으로 바꾸는 다운캐스팅을하기 위한 타입 변환 연산자 as로 강제로 변경한 형태를 사용할 수 있습니다.
@@ -153,11 +153,9 @@ for movie in someObjects as Movie[] {
 // Movie: 'Moon', dir. Duncan Jones// Movie: 'Alien', dir. Ridley Scott
 ```
 
-Any
+## Any
 
-
-Here’s an example of using Any to work with a mix of different types, including non-class
-types. The example creates an array called things, which can store values of type Any:
+이곳에 non-class타입을 포함한 여러가지 다른 타입을 섞어서 작업하기 위한 Any를 사용한 예제가 있다. 이 예제는 Any타입의 값을 저장할 수 있는 thing이라고 불리는 한 배열을 생성한다.
 ```c
 var things = Any[]()
  
@@ -169,13 +167,10 @@ things.append("hello")
 things.append((3.0, 5.0))
 things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
 ```
-The things array contains two Int values, two Double values, a String value, a tuple of type
-(Double, Double), and the movie “Ghostbusters”, directed by Ivan Reitman.
-You can use the is and as operators in a switch statement’s cases to discover the specific
-type of a constant or variable that is known only to be of type Any or AnyObject. The
-example below iterates over the items in the things array and queries the type of each
-item with a switch statement. Several of the switch statement’s cases bind their matched
-value to a constant of the specified type to enable its value to be printed:
+thing배열은 두개의 int 값, 두개의 Double값, 하나의 String값, 하나의 (Double,Double)타입의 tople, 그리고 "Ghostbusters"의 name과 "Ivan Retiman"의 director속성을 가진 Moive를 한개 가지고 있다.
+당신은 Any나 AnyObject로 알고있는 변수에서 특정한 타입의 상수나 변수 찾기 위한 스위치 구문의 case 항목에 `is`와 `as` 연산자를 사용할수 있습니다.
+아래의 예제는 아이템들의 things 배열의 각 아이템을 반복하면서 스위치 문을 통해서 각각의 타입을 요청한다.
+몇몇의 스위치문의 case항목에서 올바르게 맞는 값과 타입을 가지는 상수의 경우는 해당 값과 형태를 출력한다:
 ```c
 for thing in things {
  switch thing {
@@ -207,6 +202,6 @@ default:
 // a movie called 'Ghostbusters', dir. Ivan Reitman
 ```
 
->NO T E
+>NOTE
 The cases of a switch statement use the forced version of the type cast operator (as, not as?) to check and
 cast to a specific type. This check is always safe within the context of a switch case statement.
