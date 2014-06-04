@@ -34,15 +34,15 @@ By translating "The Swift Programming Language" we want to help a lot of korean 
 13. 메서드 (Assign to @northPenguin)
 14. 서브 스크립트 (Assign to @Snowcat8436)
 15. 상속 (Assign to @hoppingbonny)
-16. 초기화
-17. 해제(Deinitialization)
+16. 초기화 (Assign to @qwneed)
+17. 해제(Deinitialization) (Assign to @qwneed)
 18. 자동 참조 계수(ARC) (Assign to @RoyTheGame)
 19. 옵션 연쇄 (Assign to @hyukhur)
-20. 타입 변환
+20. 타입 변환 (Assign to @Snowcat8436)
 21. 내부 타입 (Assign to @jjuakim)
-22. 확장
-23. 프로토콜
-24. 제네릭
+22. 확장 (Assign to @easthelper)
+23. 프로토콜 
+24. 제네릭 (Assign to @eonil)
 25. 고급 연산자 (Assign to @dyanos)
 
 
