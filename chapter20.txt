@@ -101,26 +101,17 @@ for item in library {
 // Song: 'The One And Only', by Chesney Hawkes
 // Song: 'Never Gonna Give You Up', by Rick Astley
 /////
-The example starts by trying to downcast the current item as a Movie. Because item is aMediaItem instance, it’s possible that it might be a Movie; equally, it’s also possible that it
-might a Song, or even just a base MediaItem. Because of this uncertainty, the as? form of the
-type cast operator returns an optional value when attempting to downcast to a subclass
-type. The result of item as Movie is of type Movie?, or “optional Movie”.
-Downcasting to Movie fails when applied to the two Song instances in the library array. To
-cope with this, the example above uses optional binding to check whether the optional
-Movie actually contains a value (that is, to find out whether the downcast succeeded.) This
-optional binding is written “if let movie = item as? Movie”, which can be read as:
-“Try to access item as a Movie. If this is successful, set a new temporary constant called
-movie to the value stored in the returned optional Movie.”
-If the downcasting succeeds, the properties of movie are then used to print a description
-for that Movie instance, including the name of its director. A similar principle is used to check
-for Song instances, and to print an appropriate description (including artist name) whenever
-a Song is found in the library.
+이 예시는 현재 아이템이 Movie라고 생각하고 다운 캐스팅을 시도하는 것으로 시작합니다. 아이템이 MediaItem 인스탄스이므로 이 아이템은 Movie일 수 있습니다, 또한 똑같은 이유로 Song도 가능합니다, 혹은 오로지 단순히 MediaItem일수도 있습니다. 이것이 불확실 하기 때문에, as? 타입변환 연산자를 사용하여 하위 클래스로의 다운캐스팅을 시도시에 optional value를 반환합니다. 그 결과 item as Moive의 결과는 Move? 타입, 즉 optional Movie이 됩니다.
+library 배열안의 두개의 Song 인스탄스에 해당 내용을 적용하여 Movie로 다운캐스팅을 할경우 실패한다.  이것에 대처하기 위해, 위의 예시에서는 결과로 나온 optional Movie값이 실제로 값을 가지고 있는지 체크하기 위한(이 경우는 다운캐스팅이 성공했는지 아닌지 찾는 과정이다) optional binding을 사용한다. 
+이 optional binding 은 "if let movie = is as? Moive"와 같이 적히며, 이는 다음과 같이 해석될 수 있다: "해당 아이템을 Movie로 생각하고 접근을 시도한다. 만일 해당 작업이 상공하면, 반환된 optional Movie값을 저장할 movie라고 불리는 새로운 임시 상수값을 설정한다.
+만일 다운 캐스팅이 성공한다면, movie의 속성들을 가지고 director와 같은 Moive 인스탄스를 위한 설명을 출력하는데 사용할 수 있습니다. 
+비슷한 원리로 Song 인스턴스를 위한 체크를 하여, library에서 Song인스탄스를 찾기만 한다면, artist와 같은 적절한 설명을 출력할 수 있습니다.
 
-NO T E
-Casting does not actually modify the instance or change its values. The underlying instance remains the same;
+NOTE
+변환(Casting)은 실제로 해당 인스턴스를 수정하거나 그 값을 바꾸는 것이 아닙니다. 근본적인 인스턴스는 처음상태 그대로 남아있습니다. 그러나 
 it is simply treated and accessed as an instance of the type to which it has been cast.
 
-Type Casting for Any and AnyObject
+**Type Casting for Any and AnyObject**
 
 Swift provides two special type aliases for working with non-specific types:
 
