@@ -1,3 +1,127 @@
-# 14 서브 스크립트
+# 14 서브 스크립트 (Subscripts)
+> Translator : 이름 (메일주소)
 
-Write here...
+ Class, Structures, 그리고 enumeratione의 경우 subscripts을 통해서 정의할 수 있습니다.
+ subscripts는 collection, list, sequence의 memberelements에 접근하기 위한 일종의 바로가기입니다. 또한 subscirpts를 사용하면 추가적인 method들을 사용하지 않고도 값을 지정하거나 검색할 수 있습니다. 예를들어서  someArray[index] 나 someDictionary[key]를 사용하여 값에 접근할 수 있습니다.
+ 
+ 한 타입을 위해서 여러개의 subscript를 선언할 수도 있고, 또한 적절한 subscript overload의 사용은 subscript로 넘기는 index value의 type을 기본으로 하여 선택된다.
+subscripts는 1차원에 제한되지 않고, 당신의 원하는 타입 형태에 따라서 다수의 input parameter를 가진 subscripts를 선언할 수 있습니다.
+
+Subscript 문법
+Subscripts는 당신이 instance의 이름 뒤에 한개 혹은 그 이상의 '[ ]'를 통해서 instance의 타입을 요청을 할수 있게 해줍니다. 그들의 문법은 instance method와 computed property의 문법과 유사합니다. subscript 선언들은 instance method와 유사하게 subscript 키워드와 특정한 하나 혹은 그 이상의 input parameter들과 return type으로 구성됩니다. 다만 instance method들과 달리 subscripts는 read-write이거나 read-only입니다. 
+
+다음 behavior는 subscript가 computed property들과 동일한 방식으로 getter와 setter를 통해 커뮤니케이션 하는 것을 보여줍니다.
+/////
+subscript(index: Int) -> Int {
+ get {
+ // return an appropriate subscript value here
+ }
+ set(newValue) {
+ // perform a suitable setting action here
+ }
+}
+/////
+newValue의 type은 해당 subscript의 return 값과 동일합니다.
+computed properties와 같이 당신은 setter의 parameter인 (newValue)를 특정하게 선택할수 없습니다. 만일 당신이 setter를 위한 타입을 아무것도 제공하지 않는다면, 그제서야 기본 parameter인 newValue가 setter를 위해 제공될 것입니다.
+
+read-only computed properties와 같이 get 키워드를 빼서 read-only subscript를 만들 수 있다.:
+/////
+subscript(index: Int) -> Int {
+ // return an appropriate subscript value here
+}
+////
+이곳에 정수의 n 배 표현을 하려는 TimesTable structure를 선언하기 을 위한 read-only subscript구현 예제가 하나 있습니다.
+/////
+struct TimesTable {
+ let multiplier: Int
+ subscript(index: Int) -> Int {
+ return multiplier * index
+ }
+}
+let threeTimesTable = TimesTable(multiplier: 3)
+println("six times three is \(threeTimesTable[6])")
+// prints "six times three is 18"
+/////
+이 예제에서 새로운 TimesTable instance는 3의 배수를 출력을 하도록 생성되고.
+이것은 넘겨준 값인 3을 structure의 initializer가 instance의 multiplier parameter로 사용한 것을 의미합니다. 
+해당 subscript를 call하는 것으로 threeTimesTable instance 에게 요청할 수 있다.보는바와같이 threeTimesTable[6]과 같이 call하는 것으로 threeTimesTable instance의 subscript를 call할 수 있다. 해당 요청은 6의 3배 테이블을 요청했으며 그 값은 18=6*3 이 된다.
+
+NOTE
+n배 테이블은 고정된 숫자값을 출력하는 규칙에 기반합니다. 따라서 newValue등을 통하여 treeTimesTable[someindex]를 설정하는 것은 적절하지 않으며 그러기에 위의 TimesTable을 위한 subscript는 read-only subscript로 선언되었습니다.
+
+Subscript Usage
+
+아주 정확한 의미의 "subscript"는 그것이 사용되는 문맥에 따라 결정된다. Subscripts는 일반적으로 collection, list, 또는 sequence에 특정 member elements에 접근하기 위한 바로가기라는 의미로 사용되며. 당신은 당신의 particular class나 structure의기능을 위해 대부분의 적절한 방식으로 자유롭게 subscripts를 구현할 수있다.
+예를 들어서 Swift의 Dictionary type은 Dictionary instance에 저장된 값들을 설정하고 retrieve하기 위한 하나의 subscript로 구현했다.
+당신은 dictionary안에 dictionary의 key 타입의 key값을 subscript의 brace안에 넣는 것으로 값을 세팅할 수 있으며 dictionary안에 들어갈 값을 subscript에 할당할 수도 있다.
+You can set a value in a dictionary by providing a key of the
+dictionary’s key type within subscript braces, and assigning a value of the dictionary’s
+value type to the subscript:
+/////
+var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+numberOfLegs["bird"] = 2
+/////
+위 예제는 numberOfLegs라는 변수를 선언하고 이를 3가지 key-value 쌍을 가진 dictionary literal로 초기화 하고있다.
+numberOfLegs dictionary의 타입은 Dictionary<String, int>를 뜻하며. dictionary가 생성이 된 후, 이 예제는 subscript assignment을 사용하여 String key "bird"와 int 값인 2를 dictionary에 추가하는 것을 볼 수있다.
+Dictionary subscripting에 관한 보다 많은 정보를 원한다면, Accessing and Modifying a Dicionary(link)를 참고하기 바란다.
+
+NOTE
+Swift의 Dictionary type은 내부적인 key-value subscripting 이 요구하고 반환하는 타입이 optional type인 subscript로 구현하였습니다. 위의 numberOfLegs dictionary를 보면, key-value subscript 요구하고 반환하는 타입이 Int일까요?, 그렇지 않으면 “optional int”일까요? Dictionary type은  '모든 키가 값을 가지는 것은 아니다'라는 사실을 위한 모델을 지원하는 optional subscript type을 사용합니다. 그리고 어떤 key에 value를 삭제하는 방법을 제공하는데, 이경우 해당 key값의 value는 nill로 할당된다.
+
+Subscript Options
+
+Subscripts은 어떠한 숫자의 input parameter들도 처리가 가능하다.그리고 그리고 이 input parameter들은 어떠한 타입도 가능하다. Subscripts는 또한 어떠한 타입으로도 return이 가능하다. Subscripts는 variable parameters와 variadic parameters도 가능하지만, in-out parameters 나 default parameter 값은 지원하지 않습니다.
+class나 structure는 필요한 만큼의 subscript를 구현하는 것이 가능하며, 적절한 subscript는 보통각 subscript가 사용되는 요소요소에서 subscript에 포함된이 서로 대비하도록 한 값이나 값들의 타입이 기초라고 생각할 수 있습니다. 
+이러한 다수의 subscripts에 관한 정의는 subscript overloading으로도 알려져 있습니다.
+대부분의 한개의 parameter만을 요구하는 subscript와는 다르게, 만일 네가 만들 것에 필요하다면, 다수의 parameter를 요구하는 subscript를 선언할 수도 있습니다.
+다음 예제는 Double값을 가지는 2차원 matrix를 표현하는 Matrix라는 structure를 선언하고 있습니다. Matrix structure의 subscript는 두개의 integer parameter를 요구 하고 있습니다:
+/////
+struct Matrix {
+ let rows: Int, columns: Int
+ var grid: Double[]
+ init(rows: Int, columns: Int) {
+ self.rows = rows
+ self.columns = columns
+ grid = Array(count: rows * columns, repeatedValue: 0.0)
+ }
+ func indexIsValidForRow(row: Int, column: Int) -> Bool {
+ return row >= 0 && row < rows && column >= 0 && column < columns
+subscript(row: Int, column: Int) -> Double {
+ get {
+ assert(indexIsValidForRow(row, column: column), "Index out of range")
+ return grid[(row * columns) + column]
+ }
+ set {
+ assert(indexIsValidForRow(row, column: column), "Index out of range")
+ grid[(row * columns) + column] = newValue
+ }
+ /////
+Matrix는 rows 와 columns이라는 두개의 parameter를 요구하는 initializer 를 제공하며, Double type의 충분이 커서 rows * columns 만큼의 저장이 가능한 array를 생성합니다. 각 Matrix의 위치의 초기값은 0.0으로 주어지며. 이러한 작업이 모두 이루어 진 다음에는 만들어진 array를  array의 initializer로 보내서 올바른 크기의 array를 만듭니다. 이 initializer에 다한 자세한 사항은 Creating and Initializing an Array(링크)를 참고하세요.
+
+이제 다음과 같은 방식으로  적절한 row와 column을  initializer에 넘기는 것으로 new Matrix instance를 생성할 수 있습니다.
+/////
+var matrix = Matrix(rows: 2, columns: 2)
+/////
+아래의 예제는 2x2의 크기를 가진 새로운 Matrix instance를 생성하는 예제입니다. matrix instace를 효과적으로 평평하게 펴서 보여주기 위한 grid array를 참고하면 왼쪽위에서부터 오른쪽 아래로 읽어 나가는 것을 볼 수 있습니다.
+/////
+(그림있음)
+/////
+matrix의 값을 넣을때는 ,를 이용해서 subscript에 맞는 형태로 값을 넘겨주면 세팅할 수 있습니다:
+////
+matrix[0, 1] = 1.5
+matrix[1, 0] = 3.2
+/////
+이 두 문장은 우측 상단의 값([0, 1])을 1.5로, 좌측 하단의 값([1, 0])을 3.2로 설정합니다:
+/////
+(그림있음)
+/////
+Matrix의 subscript의 getter와 setter는 모두 올바른 row와 column값이 들어오는지 체크하는 assertion을 포함하고 있습니다. 이 assertion들을 돕기 위하여 Matrix는 자체적으로 indexIsValid라는 convenience method를 가지고 있으며 이는 주어진 값이 matrix의 범위를 넘어가는지 아닌지를 체크합니다:
+func indexIsValidForRow(row: Int, column: Int) -> Bool {
+ return row >= 0 && row < rows && column >= 0 && column < columns
+}
+만일 matrix의 경계를 넘어가는 값이 subscript로 들어오게 된다면 assertion이 triggered됩니다:
+let someValue = matrix[2, 2]
+// this triggers an assert, because [2, 2] is outside of the matrix bounds 
+
+
+
