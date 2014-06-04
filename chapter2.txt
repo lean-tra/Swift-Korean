@@ -43,7 +43,7 @@ let을 사용하면 상수를 만들고 var를 사용하면 변수를 만들 수
 
 1|  let apples = 3
 2| let oranges = 5
-3| let appleSummary = "I have \(aaples) apples."
+3| let appleSummary = "I have \(apples) apples."
 4| let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 
 `실험
