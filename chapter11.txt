@@ -1,5 +1,5 @@
 # 11 클래스와 구조체 (Classes and Structures)
-> Translator : 이름 (메일주소)
+> Translator : 문대선(daeseonmoon@gmail.com)
 
 클래스와 구조체는 프로그램의 코드블럭을 정의할때 사용됩니다. 여러분은 프로퍼티를 정의할수 있고 기능을 추가하기 위해 상수, 변수 그리고 함수를 정의할때와 동일한 문법적 표기로 메소드를 정의하실 수도 있습니다.
 다른 프로그래밍 언어와는 달리 스위프트는 사용자 클래스와 구조체를 위해서 헤더파일과 구현파일을 나누실 필요가 없습니다. 단일파일에 선언과 구현을 하며 다른 코드에서 사용하기 위한 그 클래스와 구조체의 외부 인터페이스는 자동적으로 생성됩니다.
@@ -12,7 +12,7 @@
  * 프로퍼티를 정의하고 값을 할당할수 있습니다.
  * 메소드를 정의하고 메소드의 기능(역할)을 정의할수 있습니다.
  * 접근자 문법을 통해서 할당된 값에 사용할수 있는 접근자를 정의할수 있습니다.
- * 초기화를 위해 생성자를 정의할수 있습니다.
+ * 초기화를 위해 초기자(Initializer)를 정의할수 있습니다.
  * 기본 구현에 확장가능(상속)
  * 특정 종류의 표즌 기능을 제공하는 프로토콜을 준수할수 있습니다.
 
@@ -21,7 +21,7 @@
 클래스는 구조체를 통해서는 할수없는 아래와 같은 추가적인 기능들을 지원합니다.
  * 상속은 다른 클래스의 특성을 상속받는 클래스의 생성을 가능케합니다.
  * 형변환은 여러분이 런타임시에 클래스의 형을 확인하고 변환을 가능케합니다.
- * 소멸자는 클래스 인스턴스에 할당된 자원을 환원 가능케합니다.
+ * 해제(Deinitializer)는 클래스 인스턴스에 할당된 자원을 환원 가능케합니다.
  * 참조카운팅은 하나의 클래스 인스턴스에 하나 이상의 참조를 가능케합니다.
 
 더 많은 정보를 원하신다면 Inheritance, Type Casting, Initialization 그리고 Automatic Reference Counting 항목을 참조하십시오.
@@ -81,3 +81,73 @@ println("The width of someResolution is \
 ```
 이 예제에서 `someResolution.width`는 `someResolution`의 `width` 프로퍼티를 참조하고 기본 초기값 0를 반환합니다.
 여러분은 섭(sub)프로퍼티를 통해 `VideoMode`에 속한 `resolution` 프로퍼티의 `width` 프로퍼티에도 접근할수 있습니다. 
+```
+println("The width of someVideoMode is \
+		(someVideoMode.resolution.width)")
+// "The width of someVideoMode is 0" 출력
+```
+dot 문법을 통해 변수 프로퍼티에 새로운 값을 할당하는것도 가능합니다.
+```
+someVideoMode.resolution.width = 1280
+println("The width of someVideoMode is now \
+		(someVideoMode.resolution.width)")
+// "The width of someVideoMode is now 1280" 출력
+```
+> NOTE
+> Objective-C와는 달리 Swift는 구조체의 프로퍼티도 섭프로퍼티를 통해 직접적으로 설정할수 있습니다. 위의 마지막 예제에서 someVideoMode에 속한 resulotion 프로퍼티의 width 프로퍼티의 값을 resolution 프로퍼티를 새로설정할 필요없이 직접적으로 할당했습니다.
+
+##구조체형의 멤버 초기화
+모든 구조체는 여러분이 새로은 구조체 인스턴스의 멤버 프로퍼티들을 초기화 할수있는 자동 생성된 멤버초기자(*member initializer*)를 제공합니다. 새로운 구조체 프로퍼티의 기본 초기화 값은 각 변수의 이름으로 멤버초기자에 넘겨줄수 있습니다.
+```
+let vga = Resolution(width: 640, height: 480)
+```
+구조체완 달리 클래스 인스턴스의 경우에는 기본 멤버초기자를 받지 않습니다. 초기자의 자세한 사항은 `Initialization`을 참조해주십시오.
+
+# 구조체와 열거형은 값형식
+갑형식(*value type*)은 함수에 매개변수로 넘겨지거나 변수나 상수에 할당될때 값을 복사하는 형입니다.
+
+사실 여러분은 지금까지 전 챕터에서 값형식을 광범위하게 사용했습니다. 사실 스위프트에서 기본 형- 정수, 실수, 불리언, 문자열, 배열과 딕셔너리-은 전부 값형식이고 구조체로 구현되어있습니다.
+
+Swift에서 모든 구조체와 열거형은 값형식입니다. 즉 여러분이 생성하는 모든 구조체와 열거형 인스턴스들-그리고 그들에 속한 모든 값형식 프로퍼티-은 언제나 여러분의 코드내에서 그들이 함수의 인자로 전달되거나 새로운 변수나 상수에 할당될때 복사가 됩니다.
+
+전 챕터에서 사용된 `Resolution` 구조체의 사용예를 한번보죠
+```
+let hd = Resolution(width: 1920, height: 1080)
+var cinema = hd
+```
+이 예제는 `hd` 상수를 선언하고 full HD video(1920 픽셀 넓이에 1080 픽셀 높이)의 넓이와 높이로 초기화된 Resolution 인스턴스를 할당했습니다.
+
+그리고 `cinema` 변수를 선언하고 `hd` 상수의 값을 할당했습니다. `Resolution`이 구조체이기 때문에 존재하는 인스턴스의 복사가 이루어지고 이 새로 복사된 값이 `cinema`에 할당됩니다. `hd`와 `cinema`가 현재 같은 넓이와 높이 값을 가지고 있지만 그들은 완전히 다른 인스턴스입니다.
+
+다음의 코드를 통해 `cinema`의 `width` 프로퍼티에 디지털 시네마 프로젝션(2048 픽셀 넓이와 1080 픽셀 높이)의 넓이를 새로 할당하도록 하겠습니다.
+```
+cinema.width = 2048
+```
+`cinema` 인스턴스의 `width`를 출력해봄으로써 이 값이 2048로 변했음을 확인할수 있습니다.
+```
+println("cinema is now \(cinema.width) pixels wide")
+// "cinema is now 2048 pixels wide" 출력
+```
+하지만 아래의 코드를 통해 `hd` 인스턴스에 속한 `width` 프로퍼티의 값은 여전히 1920임을 확인할수 있습니다.
+```
+println("hd is still \(hd.width) pixels wide")
+// "hd is still 1920 pixels wide" 출력
+```
+`cinema`에 `hd` 인스턴스를 할당할때 `hd`에 저장되어있던 프로퍼티의 값들이 새로 생성된 `cinema` 인스턴스로 복사가 이루어졌음을 알수 있습니다. 결과를 보면 동일한 값을 가지고 있는 완전히 분리된 인스턴스임을 알수 있습니다.
+두 인스턴스는 서로 다른 인스턴스이기 때문에 `cinema`의 `width`를 2048로 할당하더라도 `hd` 인스턴스에 저장되어있는 width 값에는 어떠한 영향도 미치지 않습니다.
+
+열거형에도 동일한 법칙이 적용됩니다
+```
+enum CompassPoint {
+	case North, South, East, West
+}
+var currentDirection = CompassPoint.West
+let rememberedDirection = currentDirection
+currentDirection = .East
+if rememberedDirection == .West {
+	println("The remembered direction is still .West")
+}
+// "The remembered direction is still .West" 출력
+```
+`rememberedDirection`에 `currentDirection`의 값이 할당될때 실제적으로는 값의 복사가 이루어집니다. 그러므로 `currentDirection`의 값이 변경된후에도 `rememberedDirection`에 복사되어서 저장된 원래 값에는 어떠한 영향도 미치지 않습니다.
+
