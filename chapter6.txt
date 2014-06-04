@@ -5,7 +5,7 @@
 스위프트에서 배열과 딕셔너리는 항상 자신이 저장하고자 하는 키와 값의 타입을 확인한다. 이것은 다른 타입을 가진 값을 배열이나 딕셔너리에 실수로라도 저장하지 못한다는 것을 의미한다. 이는 또한 배열과 딕셔너리에서 값을 가져올 때 어떤 타입의 값을 가져올 수 있는지 확신할 수 있다는 의미이기도 하다. 스위프트에서 이렇게 명시적인 타입 컬렉션을 사용하는 것은 당신의 코드가 명확한 밸류 타입을 가져야 하게끔 하는 것이며 개발시 타입이 맞는지 아닌지를 바로바로 잡아낼 수 있게끔 해준다는 것이다.
 
 > **참고:**
-> 스위프트의 `Array` 타입은 상수나 변수에 지정될 때, 혹은 함수나 메소드에서 사용될 때 다른 타입들과 다른 행동을 보여준다. 더 자세한 내용은 "컬렉션의 값 변형"\*링크필요\* 섹션과 "컬렉션 타입에서 할당과 복사 형태"\*링크필요\* 섹션을 참고하도록 하자.
+> 스위프트의 `Array` 타입은 상수나 변수에 지정될 때, 혹은 함수나 메소드에서 사용될 때 다른 타입들과 다른 행동을 보여준다. 더 자세한 내용은 "컬렉션의 변경 가능성"\*링크필요\* 섹션과 "컬렉션 타입에서 할당과 복사 형태"\*링크필요\* 섹션을 참고하도록 하자.
 
 
 ## 배열 Arrays ##
@@ -56,7 +56,7 @@ var shoppingList = ["Eggs", "Mink"]
 
 배열은 메소드와 프로퍼티를 통해 접근과 수정이 가능하다. 혹은 subscript 문법을 사용할 수도 있다.
 
-배열 안에 값이 몇 개나 있는지를 확인하기 위해 일기 전용 속성인 `count` 프로퍼티를 사용한다:
+배열 안에 값이 몇 개나 있는지를 확인하기 위해 읽기 전용 속성인 `count` 프로퍼티를 사용한다:
 
 ```
 println("The shopping list contains \(shoppingList.count) items.")
@@ -259,11 +259,214 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
 
 스위프트의 딕셔너리 타입은 `Dictionary<KeyType, VaueType>` 형태로 쓰인다. 여기서 `KeyType`은 딕셔너리의 키 값으로 쓰이는 값에 대한 타입이고, `ValueType`은 딕셔너리의 키 값에 맞추어 저장하고자 하는 밸류의 타입을 정의하는 것이다.
 
-The only restriction is that KeyType must be hashable—that is, it must provide a way to
-make itself uniquely representable. All of Swift’s basic types (such as String, Int, Double, and
-Bool) are hashable by default, and all of these types can be used as the keys of a
-dictionary. Enumeration member values without associated values (as described in
-Enumerations) are also hashable by default.
-
 딕셔너리가 갖고 있는 유일한 제약사항은 반드시 `KeyType`은 해시 가능한 타입이어야 한다. 즉, 그 자체로 유일하게 표현이 가능한 방법을 제공해야 한다는 것이다. 스위프트의 모든 기본 타입들 &ndash; `String`, `Int`, `Double`, `Bool` &ndash; 은 기본적으로 해시 가능한 것들이므로 딕셔너리의 키 타입으로 사용 가능하다. 연관된 값이 없는 열거형의 멤버 값들 역시도 기본적으로 해시 가능한 타입이다. ("Enumerations"\*링크필요\* 참조)
+
+
+### 딕셔너리 표현식 Dictionary Literals ###
+
+딕셔너리는 딕셔너리 표현식을 통해서 초기화를 시킬 수 있다. 딕셔너리 표현식은 앞에서 살펴봤던 배열 표현식과 비슷한 문법을 갖는다. 딕셔너리 표현식은 하나 또는 그 이상의 키/밸류 쌍을 딕셔너리 컬렉션에 담는 축약 형태를 가리킨다.
+
+키/밸류 쌍은 키와 밸류의 조합이다. 딕셔너리 표현식에서 각각의 키/밸류 쌍 안에서 키와 밸류는 콜론으로 나뉜다. 키/밸류 쌍은 리스트로써, 콤마로 나뉘고 대괄호로 감싼다:
+
+```
+[ key 1 : value 1 , key 2 : value 2 , key 3 : value 3 ]
+```
+
+아래 예제는 국제공항들의 이름들을 저장하는 딕셔너리를 생성한다. 이 딕셔너리에서 키 값은 국제공항 코드 (IATA 코드)를 나타내는 세글자 코드이며 밸류는 공항의 이름이다:
+
+```
+var airports: Dictionary<String, String> = ["TYO": "Tokyo", "DUB": "Dublin"]
+```
+
+`airports` 딕셔너리는 `Dictionary<String, String>` 타입을 갖게끔 정의했으며 이것은 "`Dictionary` 타입으로서 `String` 타입의 키, `String` 타입의 밸류를 갖는다"는 것을 의미한다.
+
+> **참고:**
+> `airports` 딕셔너리는 `let` introducer를 이용한 상수형 대신 `var` introducer를 이용하여 변수로 정의하였다. 이는 아래 예제들에서 이 딕셔너리에 계속해서 공항들을 추가할 것이기 때문이다.
+
+`airports` 딕셔너리는 두 개의 키/밸류 쌍을 포함하는 딕셔너리 표현식을 통해 초기화를 시켰다. 첫번째 쌍은 "`TYO`" 라는 키에 "`Tokyo`" 라는 밸류를 갖는다. 두번째 쌍은 "`DUB`" 라는 키에 "`Dublin`" 이라는 밸류를 갖는다.
+
+이 딕셔너리 표현식은 두개의 `String:String` 쌍을 포함한다. 이것은 `airports` 타입의 정의인 `String` 타입의 키와 `String` 타입의 밸류를 갖는 딕셔너리와 일치한다. 따라서 딕셔너리 표현식을 이용해서 `airpots` 딕셔너리 변수를 두개의 초기값으로 초기화 시킬 수 있다.
+
+As with arrays, you don’t have to write the type of the dictionary if you’re initializing it
+with a dictionary literal whose keys and values have consistent types. The initialization of
+airports could have been be written in a shorter form instead:
+배열과 같이 딕셔너리 표현식의 키/밸류 쌍이 갖는 타입이 일정하다면 딕셔너리 타입을 정의할 필요가 없다. `aiports`의 초기화는 아래와 같은 축약 형태로 표현할 수 있다:
+
+```
+var airports = ["TYO": "Tokyo", "DUB": "Dublin"]
+```
+
+딕셔너리 표현식 안의 모든 키 값의 타입이 서로 같고, 마찬가지로 모든 밸류 타입이 서로 같기 때문에, 스위프트는 `Dictionary<String, String>` 타입이 `airports` 딕셔너리에 적용 가능하다고 추정할 수 있다.
+
+
+### 딕셔너리의 접근 및 수정 Accessing and Modifying a Dictionary ###
+
+You access and modify a dictionary through its methods and properties, or by using
+subscript syntax. As with an array, you can find out the number of items in a Dictionary by
+checking its read-only count property:
+
+딕셔너리는 메소드와 프로퍼티를 통해 접근과 수정이 가능하다. 혹은 subscript 문법을 사용할 수도 있다. 배열과 같이 딕셔너리 안에 값이 몇 개나 있는지를 확인하기 위해 읽기 전용 속성인 `count` 프로퍼티를 사용한다: 
+
+```
+println("The dictionary of airports contains \(airports.count) items.")
+
+// prints "The dictionary of airports contains 2 items."
+```
+
+딕셔너리에 새 아이템을 추가하기 위해 subscript 문법을 사용할 수 있다. 같은 타입의 새 키를 subscript 인덱스로 사용하여 같은 타입의 새로운 밸류를 할당한다:
+
+```
+airports["LHR"] = "London"
+
+// the airports dictionary now contains 3 items
+```
+
+You can also use subscript syntax to change the value associated with a particular key:
+Subscript 문법을 사용하여 특정 키에 물려 있는 값을 변경시킬 수도 있다:
+
+```
+airports["LHR"] = "London Heathrow"
+
+// the value for "LHR" has been changed to "London Heathrow"
+```
+
+또다른 subscripting 방법으로써, 딕셔너리의 `updateValue(forKey:)` 메소드를 사용하여 특정 키에 해당하는 값을 설정하거나 변경할 수 있다. 위의 Subscript 예제와 같이 `updateValue(forKey:)` 메소드는 만약 키가 존재하지 않을 경우에는 값을 새로 설정하거나 키가 이미 존재한다면 기존의 값을 수정한다. 하지만 subscript와는 달리 `updateValue(forKey:)` 메소드는 업데이트를 하고난 뒤 이전 값을 반환한다. 이렇게 함으로써 실제로 업데이트가 일어났는지 아닌지를 확인할 수 있게 된다.
+
+`updateValue(forKey:)` 메소드는 딕셔너리의 밸류 타입에 해당하는 `Optional` 값을 반환한다. 예를 들어 어떤 딕셔너리가 `String` 밸류를 저장한다면 이 메소드는 `String?` 타입 또는 "Optional `String`" 타입의 밸류를 반환한다. 이 Optional 밸류는 만약 키가 이미 있었다면 수정하기 이전 밸류를, 아니라면 `nil`을 갖는다:
+
+```
+if let oldValue = airports.updateValue("Dublin International", forKey: "DUB") {
+   println("The old value for DUB was \(oldValue).")
+}
+
+// prints "The old value for DUB was Dublin."
+```
+
+Subscript 문법을 이용하면 특정 키 값에 대응하는 밸류를 딕셔너리에서 찾을 수 있다. 값이 존재하지 않는 키를 요청할 수 있기 때문에 딕셔너리는 딕셔너리의 밸류 타입에 해당하는 Optional 밸류를 반환한다. 만약 딕셔너리가 요청한 키에 대응하는 밸류를 갖고 있다면, Subscript 는 그 키에 대응하는 밸류를 Optional 밸류를 반환한다. 아니라면 Subscript는 `nil`을 반환한다:
+
+```
+if let airportName = airports["DUB"] {
+    println("The name of the airport is \(airportName).")
+} else {
+    println("That airport is not in the airports dictionary.")
+}
+
+// prints "The name of the airport is Dublin International."
+```
+
+Subscript 문법을 이용해 `nil` 값을 특정 키에 할당하는 것으로 딕셔너리에서 키/밸류 쌍을 삭제할 수 있다:
+
+```
+airports["APL"] = "Apple International"
+
+// "Apple International" is not the real airport for APL, so delete it
+
+airports["APL"] = nil
+
+// APL has now been removed from the dictionary
+```
+
+또는 키/밸류 쌍을 딕셔너리에서 삭제할 때 `removeValueForKey` 메소드를 이용할 수 있다. 이 메소드는 키/밸류 쌍을 삭제하고 삭제된 값을 반환하거나 값이 없다면 `nil`을 반환한다:
+
+```
+if let removedValue = airports.removeValueForKey("DUB") {
+    println("The removed airport's name is \(removedValue).")
+} else {
+    println("The airports dictionary does not contain a value for DUB.")
+}
+
+// prints "The removed airport's name is Dublin International."
+```
+
+
+### 딕셔너리에서 반복문 사용하기 Iterating Over a Dictionary ###
+
+`for-in` 반복문을 사용하면 딕셔너리 안의 모든 키/밸류 쌍에 접근할 수 있다. 딕셔너리 각각의 아이템은 `(key, value)` 튜플을 반환하고, 반복문을 돌리는 도중 이 튜플의 멤버들을 분리하여 임시 상수 혹은 변수에 할당하여 사용할 수 있다:
+
+
+```
+for (airportCode, airportName) in airports {
+    println("\(airportCode): \(airportName)")
+}
+
+// TYO: Tokyo
+// LHR: London Heathrow
+```
+
+`for-in` 반복문에 대한 자세한 내용은 "For 반복문"\*링크필요\* 섹션을 참고하도록 하자.
+
+또한 딕셔너리의 `keys`, `values` 프로퍼티를 이용하면 키 또는 밸류 컬렉션을 반복문으로 돌릴 수 있다:
+
+```
+for airportCode in airports.keys {
+    println("Airport code: \(airportCode)")
+}
+
+// Airport code: TYO
+// Airport code: LHR
+
+for airportName in airports.values {
+    println("Airport name: \(airportName)")
+}
+
+// Airport name: Tokyo
+// Airport name: London Heathrow
+```
+
+만약 딕셔너리의 키 콜렉션, 밸류 콜렉션을 `Array` 인스턴스를 이용하고 싶다면, 딕셔너리의 `keys`, `values` 프로퍼티를 배열로 초기화하여 사용할 수 있다:
+
+```
+let airportCodes = Array(airports.keys)
+
+// airportCodes is ["TYO", "LHR"]
+
+let airportNames = Array(airports.values)
+
+// airportNames is ["Tokyo", "London Heathrow"]
+```
+
+> **참고:**
+> 스위프트의 `Dictionary` 타입은 순서를 정하지 않는 컬렉션이다. 키, 밸류, 키/밸류 쌍의 순서는 반복문을 돌릴때 정해지지 않는다.
+
+
+### 빈 딕셔너리 만들기 Creating an Empty Dictionary ###
+
+배열과 마찬가지로 초기화 문법을 이용하여 비어있는 딕셔너리 타입을 만들 수 있다:
+
+```
+var namesOfIntegers = Dictionary<Int, String>()
+
+// namesOfIntegers is an empty Dictionary<Int, String>
+```
+
+이 예제는 `Int, String` 타입을 갖는 빈 딕셔너리를 만든다. 키는 `Int` 타입, 밸류는 `String` 타입이다.
+
+만약 컨텍스트에서 이미 해당 타입에 대한 정보를 제공한다면 빈 딕셔너리 표현식을 이용하여 딕셔너리를 초기화하여 만들 수 있다. 빈 딕셔너리 표현식은 `[:]` 으로 나타낼 수 있다:
+
+```
+namesOfIntegers[16] = "sixteen"
+
+// namesOfIntegers now contains 1 key-value pair
+
+namesOfIntegers = [:]
+
+// namesOfIntegers is once again an empty dictionary of type Int, String
+```
+
+> **참고:**
+> 스위프트의 배열과 딕셔너리 타입은 제너릭 컬렉션을 구현한다. 제너릭 타입과 컬렉션에 대한 더 자세한 내용은 "제너릭"\*링크필요\* 섹션을 참고하도록 하자.
+
+
+## 컬렉션의 변경 가능성 Mutability of Collections ##
+
+배열과 딕셔너리는 하나의 컬렉션 안에 여러개의 값을 저장한다. 만약 어떤 변수를 배열이나 딕셔너리 형태로 만든다면 이 컬렉션은 변경이 가능하다. 이는 컬렉션이 초기화된 후에도 여기에 아이템을 더 추가한다거나 뺀다거나 하는 식으로 컬렉션의 크기를 변경시킬 수 있다는 것을 의미한다. 반면에 배열이나 딕셔너리를 상수에 할당한다면 이때에는 컬렉션의 값도, 크기도 바꿀 수 없다.
+
+이러한 불변성 딕셔너리는 기존의 키에 대응하는 값을 바꿀 수 없다는 것을 의미한다. 다시 말해서 불변성 딕셔너리라면 한 번 값이 설정된 후에는 절대로 바꿀 수 없다.
+
+그러나 배열에서 이러한 불변성은 살짝 다른 의미를 갖는다. 불변성 배열의 크기를 바꿀 가능성이 있는 어떤 것도 할 수 없지만, 기존의 배열 인덱스에 새로운 값을 설정하는 것은 가능하다. 이것은 배열의 크기가 고정될 경우, 스위프트의 `Array` 타입에 배열 연산과 관련하여 최적의 성능을 제공한다.
+
+스위프트가 제공하는 `Array` 타입의 변경 가능성은 또한 어떻게 배열 인스턴스가 생성되고 변경되는지에 대해서도 영향을 미친다. 더 자세한 내용은 "컬렉션 타입에서 할당과 복사 형태"\*링크필요\* 섹션을 참조하도록 하자.
+
+> **참고:**
+> 컬렉션의 크기를 변경시킬 필요가 없는 경우에는 불변성 컬렉션을 만드는 것이 좋다. 이렇게 함으로써 스위프트 컴파일러가 컬렉션의 퍼포먼스에 최적화를 시킬 수 있다.
 
