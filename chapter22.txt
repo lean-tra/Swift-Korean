@@ -29,7 +29,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
 ```
 확장으로 프로토콜 준수의 추가는 Adding Protocol Conformance with an Extension 에 설명 되어 있습니다.
 
-### Computed Properties
+### 연산 속성
 확장은 연산 인스턴스 속성과 연산 타입 속성을 기존의 타입에 추가할 수 있습니다. 이 예제는 거리 단위를 제공하기 위해 다섯개의 연산 인스턴스 속성을 Swift의 내장 Double 타입에 추가합니다. 
 ```c
 extension Double {
