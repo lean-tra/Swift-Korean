@@ -1,4 +1,4 @@
-# 06 컬렉션 타입 (Collection Types) #
+# 06 컬렉션 타입 (Collection Types)
 
 > Translator : 유정협 (justin.yoo@aliencube.com)
 
