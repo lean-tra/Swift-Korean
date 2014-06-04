@@ -1,6 +1,6 @@
-# 23 프로토콜
+# 23 프로토콜 (Protocols)
+> Translator : 이름 (메일주소)
 
-# 23 Protocols
 A protocol defines a blueprint of methods, properties, and other requirements that suit a
 particular task or piece of functionality. The protocol doesn’t actually provide an
 implementation for any of these requirements—it only describes what an implementation
