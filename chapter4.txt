@@ -361,7 +361,36 @@ if hasDoorKey || knowOverridePassword {
 }
 // prints "Welcome!"
 ```
-## 혼합 논리 연산자
+## 복합 논리 연산자
+
+당신은 여러 논리 연산자를 결합하여 복합 논리 연산자를 만들 수 있습니다.
+```
+if enteredDoorCode && passedRetinaScan || hasDoorKey || knowOverridePassword {
+	println("Welcome!")
+} else {
+	println("ACCESS DENIED")
+}
+// prints "Welcome!"
+```
+이 예제는 && 및 || 연산자를 여러개 사용하려 긴 복합 표현식을 만들었습니다. 그러나 && 와 || 연산자는 여전히 두 개의 값에 대해 작동하므로 이는 실제로 서로 세개가 연결된 작은 표현입니다.
+이것은 이렇게 읽을 수 있습니다:
+
+만약 우리가 문의 코드를 입력하고 망막 검사를 통과한경우; 우리가 유효한 도어 키가 있는 경우이거나  긴급 재정의 암호를 알고있는 경우 다음 액세스 할 수 있습니다.
+
+`enteredDoorCode` 와 `passedRetinaScan` 그리고 `hasDoorKey` 의 값에 기초하여 처음 작은 표현식은 `false`이다. 그러나 긴급 재정의 암호가 `true`로 알려져있다 ,그래서 전체 복합 표현식은 여전히 `true`로 평가됩니다. 
 
 ## 괄호 명시
+괄호가 엄격히 필요하지 않은경우, 읽기 복잡한 표현의 의도록 쉽게 만들수 있는 경우에 괄호가 포함되는것이 유용한 경우가 종종 있다.
+
+위의 door access 예제 코드에서 그것의 의도를 명시적으로 확인하기 위해 복합 표현식의 첫번째 부분을 괄호를 추가하는데에 유용합니다.
+
+```
+if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowOverridePassword {
+	println("Welcome!")
+} else {
+	println("ACCESS DENIED")
+}
+// prints "Welcome!"
+```
+괄호는 처음 두 값을 전체 논리에서 별도의 가능한 상태의 일부로 분명히 간주되게 만듭니다. 복합식의 출력이 변하지는 않지만 전체적인 목적이 독자에게 명확해집니다. 가독성은 항상 간결함을 선호합니다; 괄호의 사용은 당신의 의도를 확실히 파악하는데 도움이 됩니다.
 
