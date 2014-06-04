@@ -1,4 +1,5 @@
-# 20 타입 변환
+# 20 타입 변환 (Type Casting)
+> Translator : 이름 (메일주소)
 
 ## 타입변환(Type Casting)
 
