@@ -491,7 +491,36 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 >실험
 각 카드를 rank와 suit를 조합해서 만들어 전체 카드를 만들어 주는 메서드를 Card에 추가해보자.
 
-열거형 구성자의 인스턴스는 인스턴스와 함께 여러개의 값을 사용할 수 있습니다. 같은 열거형의 구성자의 인스턴스들은 각 인스턴스와 함께 다른 값들은 가질 수 있습니다.  
+열거형 구성자의 인스턴스는 인스턴스와 함께 관련값들을 사용할 수 있습니다. 같은 열거형의 구성자의 인스턴스들은 각 인스턴스와 함께 다른 관련값을 가질 수 있습니다. 인스턴스를 만들 때 관련값을 공급할 수 있습니다. 관련값과 원본값은 다릅니다. 열거형 구성자의 원본값은 모든 인스턴스에서 같은 값(열거형을 정의할 때 지정한 값)을 갖습니다. 
+
+예를 들면, 일출, 일몰 시간을 서버에 요청한다고 가정해보자. 서버는 두 시간 모두를 응답하거나 에러 정보를 응답할 수도 있다.
+
+```c
+enum ServerResponse {
+    case Result(String, String)
+    case Error(String)
+}
+ 
+let success = ServerResponse.Result("6:00 am", "8:09 pm")
+let failure = ServerResponse.Error("Out of cheese.")
+ 
+switch success {
+case let .Result(sunrise, sunset):
+    let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+case let .Error(error):
+    let serverResponse = "Failure...  \(error)"
+}
+```
+
+>실험
+ServerResponse에 세번째 경우를 추가하고 스위치문에도 추가해보자.
+
+스위치문의 경우의 수와 비교를 수행하기 위해 ServerResponse로 부터 일출, 일몰 시간 값을 어떻게 추출해 내는지 눈여겨 보자. 
+
+##프로토콜(Protocols)와 확장(Extensions)##
+
+
+
 
 
 
