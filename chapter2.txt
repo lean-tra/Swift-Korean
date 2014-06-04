@@ -407,7 +407,9 @@ counter.incrementBy(2, numberOfTimes: 7)
 ```
 옵션 값을 사용할 때는 메서드나 속성, 서브스크립트 앞에 ?를 쓸 수 있습니다.  만약 ? 앞에 값이 nil 이라면 ? 이후에 나오는 모든 것은 무시되고 표현의 값들은 nil을 갖습니다. 반면에 값이 있는 경우라면 ? 이후의 모든 그 값을 기준으로 동작합니다. 양쪽 경우 모두 옵션 값으로 사용됩니다.
 
-##열거(Enumerations)와 구조체(Structures)
+##열거형(Enumerations)과 구조체(Structures)
+
+
 
 
 
