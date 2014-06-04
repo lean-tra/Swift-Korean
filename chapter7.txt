@@ -1,4 +1,5 @@
-# 07 제어문 (Control Flow)
+# 07 흐름제어  (Control Flow)
+> Translator : 이름 (메일주소)
 
 조건문(conditionals)을 만들 때에는 `if`와 `switch`를 사용하세요. 그리고 순환문(루프문, loops)을 만들 때에는 `for-in`나 `for`, `while`, `do-while`을 사용하세요. 조건이나 순환문 변수(loop variable)를 감싸주는 괄호 ( )는 옵션입니다. 본문을 감싸는 { }는 필수입니다. 
 
