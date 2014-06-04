@@ -84,18 +84,8 @@ for item in library {
 다른 하나는 as와 같은 연산자를 사용하는 forced form으로 다운 캐스팅을 시도하고 강제로 unwrap한 결과를 한번에 합한 작업을 합니다.
 네가 만일 다운캐스트가 성공할지 확신을 가지지 못한다면 타입변환 연산자인 as?를 이용하는 optional form을 사용한다. 위 연산자를 사용하는 form은 항상 optional value를 리턴하며 그래서 만일 다운 캐스트가 가능하지 않은 경우에는 nil을 리턴할 수 있도록 할 수 있다. 이 것은 당신이 다운 캐스팅의 성공 유무를 체크할 수 있도록 하게 한다.
 오직 당신이 다운캐스트가 항상 성공할 것이라는 확신이 있다면 타입 변환 연산자인 as를 이용하는 forced form을 사용할 수 있다. 위의 연산자를 사용하는 form은 만일 올바르지 않은 클래스 타입으로 다운캐스팅을 시도했을 시에 런타임 에러를 발생시킨다.
-아래의 예시는 
-Use the forced form of the type cast operator (as) only when you are sure that the
-downcast will always succeed. This form of the operator will trigger a runtime error if you
-try to downcast to an incorrect class type.
-The example below iterates over each MediaItem in library, and prints an appropriate
-description for each item. To do this, it needs to access each item as a true Movie or Song,
-and not just as a MediaItem. This is necessary in order for it to be able to access the director
-ㅇㅇor artist property of a Movie or Song for use in the description.
-In this example, each item in the array might be a Movie, or it might be a Song. You don’t
-know in advance which actual class to use for each item, and so it is appropriate to use
-the optional form of the type cast operator (as?) to check the downcast each time through
-the loop:
+아래에 library 내의 각 MediaItem을 반복해가면서 각 아이템들을 위한 적절한 설명을 출력하는 예시를 만들었다. 이를 위해서 각 아이템이 단순히 MediaItme이 아닌 진정으로 Movie나 Song인지억세스 해볼 필요가 있다. 이를 위해서설명을 출력하기 위해서 Movie나 Song의 director나 artist 속성에 접근할수 있게 할 필요가 있다.
+예시에서 배열내의 각각의 item은 Movie이거나 Song이라고 생각된다. 당신은 각각의 아이템이 실제 어떠한 클래스인지 미리 알 수가 없습니다. 그러므로 optional form을 위한 as? 연산자를 사용하여 루프를 통해 각 케이스마다 다운캐스팅을 체크하는 것이 적절합니다:
 /////
 for item in library {
  if let movie = item as? Movie {
