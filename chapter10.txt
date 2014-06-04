@@ -1,4 +1,5 @@
-# 10 열거형
+# 10 열거형 (Enumerations)
+> Translator : 이름 (메일주소)
 
 Enumerations
 An enumeration defines a common type for a group of related values and enables you to
