@@ -196,8 +196,48 @@ The `swapTwoValues` function and the `Stack` type can work with any type. Howeve
 
 For example, Swift’s `Dictionary` type places a limitation on the types that can be used as keys for a dictionary. As described in [Dictionaries](#), the type of a dictionary’s keys must be hashable. That is, it must provide a way to make itself uniquely representable. `Dictionary` needs its keys to be hashable so that it can check whether it already contains a value for a particular key. Without this requirement, `Dictionary` could not tell whether it should insert or replace a value for a particular key, nor would it be able to find a value for a given key that is already in the dictionary.
 
-This requirement is enforced by a type constraint on the key type for Dictionary, which specifies that the key type must conform to the Hashable protocol, a special protocol defined in the Swift standard library. All of Swift’s basic types (such as String, Int, Double, and Bool) are hashable by default.
+This requirement is enforced by a type constraint on the key type for `Dictionary`, which specifies that the key type must conform to the `Hashable` protocol, a special protocol defined in the Swift standard library. All of Swift’s basic types (such as `String`, `Int`, `Double`, and `Bool`) are hashable by default.
 
-You can define your own type constraints when creating custom generic types, and these constraints provide much of the power of generic programming. Abstract concepts like Hashable characterize types in terms of their conceptual characteristics, rather than their explicit type.”
+You can define your own type constraints when creating custom generic types, and these constraints provide much of the power of generic programming. Abstract concepts like `Hashable` characterize types in terms of their conceptual characteristics, rather than their explicit type.
 
-Excerpt From: Apple Inc. “The Swift Programming Language.” iBooks. https://itun.es/jp/jEUH0.l
+### Type Constraint Syntax
+You write type constraints by placing a single class or protocol constraint after a type parameter’s name, separated by a colon, as part of the type parameter list. The basic syntax for type constraints on a generic function is shown below (although the syntax is the same for generic types):
+
+```
+func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
+    // function body goes here
+}
+```
+
+The hypothetical function above has two type parameters. 
+
+The first type parameter, `T`, has a type constraint that requires `T` to be a subclass of `SomeClass`. The second type parameter, `U`, has a type constraint that requires `U` to conform to the protocol `SomeProtocol`.
+‌
+### Type Constraints in Action
+Here’s a non-generic function called `findStringIndex`, which is given a `String` value to find and an array of `String` values within which to find it. The `findStringIndex` function returns an optional `Int` value, which will be the index of the first matching string in the array if it is found, or `nil` if the string cannot be found:
+
+```
+func findStringIndex(array: String[], valueToFind: String) -> Int? {
+    for (index, value) in enumerate(array) {
+        if value == valueToFind {
+            return index
+        }
+    }
+    return nil
+}
+```
+
+The `findStringIndex` function can be used to find a string value in an array of strings:
+
+```
+let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
+if let foundIndex = findStringIndex(strings, "llama") {
+    println("The index of llama is \(foundIndex)")
+}
+// prints "The index of llama is 2"
+```
+
+The principle of finding the index of a value in an array isn’t useful only for strings, however. You can write the same functionality as a generic function called `findIndex`, by replacing any mention of strings with values of some type `T` instead.
+
+Here’s how you might expect a generic version of `findStringIndex`, called `findIndex`, to be written. Note that the return type of this function is still `Int?`, because the function returns an optional index number, not an optional value from the array. Be warned, though—this function does not compile, for reasons explained after the example:
+
