@@ -1,4 +1,5 @@
-# 13 메서드
+# 13 메서드 (Methods)
+> Translator : 이름 (메일주소)
 
 Methods
 Methods are functions that are associated wi th a parti cular type. Classes, structures, and
