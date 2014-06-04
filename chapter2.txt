@@ -475,6 +475,22 @@ Suit에 color 메서드를 추가해 보자. color 메서드는 스페이드와 
 
 열거형의 구성중 하나인 Heart가 상단값을 어떻게 참조하는지 두가지 방법을 살펴봅시다. 상수 hearts에 값을 할당 할 때, 상수는 명시적으로 타입을 가지고 있지 않기 때문에 Suit.Hearts 처럼 전체 이름을 살펴봅니다. 스위치문 안에서는 열거형은 .Hearts로 축약형을 써서 참조하는데, 이것은 self가 이미 suit라는 것을 알고 있기 때문입니다. 값의 형을 이미 알고 있다면 언제든지 축약형을 사용해도 됩니다.
 
+구조체를 만들기 위해서는 struct 키워드를 사용합니다. 구조체는 메서드나 이니셜라이저 같은 클래스와 비슷한 기능들을 지원합니다. 클래스와 구조체의 가장 중요한 차이점중 하나는 구조체의 경우 코드 내에서 전달될 때 값복사 형태로 전달되지만 클래스의 경우에는 참조복사 형태로 전달된 다는 것입니다.
+
+```c
+struct Card {
+    var rank: Rank
+    var suit: Suit
+    func simpleDescription() -> String {
+        return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+    }
+}
+let threeOfSpades = Card(rank: .Three, suit: .Spades)
+let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+```
+>실험
+각 카드를 rank와 suit를 조합해서 만들어 전체 카드를 만들어 주는 메서드를 Card에 추가해보자.
+
 
 
 
