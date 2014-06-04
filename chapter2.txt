@@ -491,7 +491,7 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 >실험
 각 카드를 rank와 suit를 조합해서 만들어 전체 카드를 만들어 주는 메서드를 Card에 추가해보자.
 
-
+열거형 구성자의 인스턴스는 인스턴스와 함께 여러개의 값을 사용할 수 있습니다. 같은 열거형의 구성자의 인스턴스들은 각 인스턴스와 함께 다른 값들은 가질 수 있습니다.  
 
 
 
