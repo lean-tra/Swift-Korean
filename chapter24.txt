@@ -122,3 +122,20 @@ The illustration below shows the push / pop behavior for a stack:
 3. The stack now holds four values, with the most recent one at the top.
 4. The top item in the stack is removed, or “popped”.
 5. After popping a value, the stack once again holds three values.
+
+Here’s how to write a non-generic version of a stack, in this case for a stack of `Int` values:
+
+```
+struct IntStack {
+    var items = Int[]()
+    mutating func push(item: Int) {
+        items.append(item)
+    }
+    mutating func pop() -> Int {
+        return items.removeLast()
+    }
+}
+```
+
+This structure uses an `Array` property called `items` to store the values in the stack. `Stack` provides two methods, `push` and `pop`, to push and pop values on and off the stack. These methods are marked as `mutating`, because they need to modify (or mutate) the structure’s `items` array.
+
