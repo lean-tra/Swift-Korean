@@ -369,6 +369,51 @@ EquilateralTriangle 클래스의 이니셜라이저는 세가지의 다른 단�
 
 속성의 값을 계산할 필요는 없지만 새로운 값을 할당하기  전이나 후에 수행해야할 코드가 있다면 willSet, didSet을 사용할 수 있습니다. 예를 들면 아래쪽에 나오는 클래스에서는 삼각형의 빗면의 길이가 사각형의 옆면의 길이와 항상 동일하다는 것을 보장합니다.
 
+```c
+class TriangleAndSquare {
+    var triangle: EquilateralTriangle {
+    willSet {
+        square.sideLength = newValue.sideLength
+    }
+    }
+    var square: Square {
+    willSet {
+        triangle.sideLength = newValue.sideLength
+    }
+    }
+    init(size: Double, name: String) {
+        square = Square(sideLength: size, name: name)
+        triangle = EquilateralTriangle(sideLength: size, name: name)
+    }
+}
+var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
+triangleAndSquare.square.sideLength
+triangleAndSquare.triangle.sideLength
+triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
+triangleAndSquare.triangle.sideLength
+```
+
+클래스에 있는 메서드들은 함수와는 다른 중요한 특징이 한가지 있습니다.함수에서 사용되는 매개변수의 이름들은 함수 내부에서만 사용합니다. 그러나 메서드에 사용되는 매개변수의 이름은 메서드를 호출할 때도 사용됩니다(첫번째 매개변수의 이름은 제외하고). 기본적으로 메서드는 호출할 때 혹은 메서드에서 사용되는 이름과 동일한 매개변수 이름을 갖습니다. 하지만 메서드 내부에서 사용될 두번째 이름을 특별히 정해줄 수도 있습니다.
+
+```c
+class Counter {
+    var count: Int = 0
+    func incrementBy(amount: Int, numberOfTimes times: Int) {
+        count += amount * times
+    }
+}
+var counter = Counter()
+counter.incrementBy(2, numberOfTimes: 7)
+```
+옵션 값을 사용할 때는 메서드나 속성, 서브스크립트 앞에 ?를 쓸 수 있습니다.  만약 ? 앞에 값이 nil 이라면 ? 이후에 나오는 모든 것은 무시되고 표현의 값들은 nil을 갖습니다. 반면에 값이 있는 경우라면 ? 이후의 모든 그 값을 기준으로 동작합니다. 양쪽 경우 모두 옵션 값으로 사용됩니다.
+
+##열거(Enumerations)와 구조체(Structures)
+
+
+
+
+
+
 
 
 
