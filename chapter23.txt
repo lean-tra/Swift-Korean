@@ -1,313 +1,343 @@
-# 23 프로토콜 (Protocols)
-> Translator : 이름 (메일주소)
+# 23. 프로토콜
 
-A protocol defines a blueprint of methods, properties, and other requirements that suit a
-particular task or piece of functionality. The protocol doesn’t actually provide an
-implementation for any of these requirements—it only describes what an implementation
-will look like. The protocol can then be adopted by a class, structure, or enumeration to
-provide an actual implementation of those requirements. Any type that satisfies the
-requirements of a protocol is said to conform to that protocol.
-프로토콜은 특정 작업이나 기능에 부합하는 메소드, 속성, 그리고 다른 요구사항들에 대한 청사진과 같습니다. 프로토콜에는 이런 요구사항들에 대한 어떤 구현도 포함하지 않고, 다만 구현된 모습이 어떨지 윤곽만 드러납니다. 그러면 클래스, 구조체나 열거형에서 프로토콜을 따라 요구사항들을 실제로 구현하게 됩니다. 프로토콜의 요구사항을 만족하는 형(`type`)이라면 그 프로토콜에 들어맞다(conform)라고 하죠.
+*프로토콜*은 특정한 일이나 기능의 일부에 대한 메소드나 속성이나 다른 요구사항들의 전체적인 모습을 정의한다.
+실제로 이런 요구사항들의 구현을 제공하지는 않고, 그 구현이 어떻게 보일지에 대해 명시한다.
+이 요구사항들을 실제로 구현된 클래스, 구조체, 열거형 등에 그 프로토콜이 *적용*될 수 있다.
+프로토콜의 요구사항을 만족하면 어떤 타입이라도 그 프로토콜에 *일치한다(conform)*라고 말한다.
 
-Protocols can require that conforming types have specific instance properties, instance
-methods, type methods, operators, and subscripts.
-Protocol Syntax
-You define protocols in a very similar way to classes, structures, and enumerations:
+
+프로토콜은 특정한 인스턴스 속성들, 인스턴스 메소드들, 타입 메소드들, 연산자들, 인덱스참조(subscript) 등을 갖는 타입을 가져야한다.
+
+### 프로토콜 문법
+프로토콜을 클래스, 구조체, 열거체와 매우 비슷한 방법으로 정의한다.
+
+``` swfit
 protocol SomeProtocol {
-// protocol definition goes here
+    // 프로토콜 정의가 여기 온다
 }
-Custom types state that they adopt a particular protocol by placing the protocol’s name
-after the type’s name, separated by a colon, as part of their definition. Multiple protocols
-can be listed, and are separated by commas:
+```
+
+타입을 정의하는 곳에서 타입의 이름 뒤에 콜론(:)으로 구분해서 프로토콜의 이름을 써서 프로토콜을 커스텀 타입에 적용시킨다. 여러 프로토콜을 쉼표(,)로 구분해서 사용할 수 있다.
+
+``` swift
 struct SomeStructure: FirstProtocol, AnotherProtocol {
-// structure definition goes here
+    // 구조체 정의가 여기 온다
 }
-If a class has a superclass, list the superclass name before any protocols it adopts,
-followed by a comma:
+```
+
+클래스가 부모를 가질 때는 프로토콜들 앞에 부모 클래스를 명시하고 쉼표로 구분해서 적용한다.
+
+``` swift
 class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
-// class definition goes here
+    // 클래스 정의가 여기 온다
 }
-Property Requirements
-A protocol can require any conforming type to provide an instance property or type
-property with a particular name and type. The protocol doesn’t specify whether the
-property should be a stored property or a computed property—it only specifies the
-required property name and type. The protocol also specifies whether each property must
-be gettable or gettable and settable.
-If a protocol requires a property to be gettable and settable, that property requirement
-cannot be fulfilled by a constant stored property or a read-only computed property. If the
-protocol only requires a property to be gettable, the requirement can be satisfied by any
-kind of property, and it is valid for it also to be settable if this is useful for your own code.
-Property requirements are always declared as variable properties, prefixed with the var
-keyword. Gettable and settable properties are indicated by writing { get set } after their
-type declaration, and gettable properties are indicated by writing { get }.
+```
+
+### 속성 요구사항
+프로토콜은 특정한 이름과 속성을 갖는 인스턴스 속성과 타입 속성을 제공하는 타입이 될 수 있다. 프로토콜에는 이 속성이 저장된 속성이어야하는지 계산된 속성이어야 하는지에 대해 명시하지 않는다. 단지 속성의 이름과 타입만 명시할 뿐이다. 또한 각 속성에 대해 읽기(gettable)인지 읽기/쓰기(gettable/settable)가 필요한지 명시할 수 한다.
+
+프로토콜의 속성에 읽기나 읽기/쓰기에 대한 명시가 있다면 그 속성은 저장된 상수값이나 읽기전용(read-only)의 계산된 값을 넣을 수 없다.
+만약 읽기가 필요하다고만 명시가 되어있고 어떤 종류의 속성도 가능하며 필요하면 읽기를 만들어도 괜찮다.
+
+속성 요구사항은 항상 `var` 키워드가 앞에 있는 변수 속성으로 선언된다. 읽기/쓰기 속성은 타입 뒤에 `{ get set }`을 써서 명시하며, 읽기는 `{ get }`으로 명시한다.
+
+``` swift
 protocol SomeProtocol {
-var mustBeSettable: Int { get set }
-var doesNotNeedToBeSettable: Int { get }
+    var mustBeSettable: Int { get set }
+    var doesNotNeedToBeSettable: Int { get }
 }
-Always prefix type property requirements with the class keyword when you define them in
-a protocol. This is true even though type property requirements are prefixed with the static
-keyword when implemented by a structure or enumeration:
+```
+
+타입 속성은 `class` 키워드를 붙여서 정의할 수 있다. 구조체나 열거형에서 구현할 때는 `static`을 붙이면 된다.
+
+``` swift
 protocol AnotherProtocol {
-class var someTypeProperty: Int { get set }
+    class var someTypeProperty: Int { get set }
 }
-Here’s an example of a protocol with a single instance property requirement:
+```
+
+인스턴스 속성 하나만 필요로 하는 프로토콜 예제가 있다.
+
+``` swift
 protocol FullyNamed {
-var fullName: String { get }
+    var fullName: String { get }
 }
-The FullyNamed protocol defines any kind of thing that has a fully-qualified name. It doesn’t
-specify what kind of thing it must be—it only specifies that the thing must be able to
-provide a full name for itself. It specifies this requirement by stating that any FullyNamed
-type must have a gettable instance property called fullName, which is of type String.
-Here’s an example of a simple structure that adopts and conforms to the FullyNamed
-protocol:
+```
+
+`FullyNamed` 프로토콜은 이름이 맞으면 종류에 관계없는 속성을 정의한다. 어떤 `종류`여야하는지 명시하지는 않았고 그저 풀네임을 젱고할 수만 있으면 된다. `String` 타입의 읽기 가능한 `fullName`이라는 인스턴스 속성을 가진 `FullNamed`라는 요구사항만 명시되어있다.
+
+`FullyNamed` 프로토콜이 적용되어있고 일치하는 간단한 구조체 예제다.
+
+``` swift
 struct Person: FullyNamed {
-var fullName: String
+    var fullName: String
 }
 let john = Person(fullName: "John Appleseed")
-// john.fullName is "John Appleseed"
-This example defines a structure called Person, which represents a specific named person.
-It states that it adopts the FullyNamed protocol as part of the first line of its definition.
-Each instance of Person has a single stored property called fullName, which is of type String.
-This matches the single requirement of the FullyNamed protocol, and means that Person has
-correctly conformed to the protocol. (Swift reports an error at compile-time if a protocol
-requirement is not fulfilled.)
-Here’s a more complex class, which also adopts and conforms to the FullyNamed protocol:
+// john.fullName is "John Appleseed’
+```
+
+이 예제에서는 `Person`이라고 불리는 구조체를 정의했고, 특정한 이름을 갖는다고 나타나있다. `FullyNamed` 프로토콜을 정의 첫번째 줄에 적용한 것이 보인다.
+
+
+`Person`의 인스턴스들은 `String` 타입의 `fullName` 속성 하나를 갖는다. `FullNamed` 프로토콜의 요구사항 하나와 일치하며, `Person`이 확실하게 프로토콜에 일치한다는 것을 의미한다. (스위프트에서는 프로토콜의 요구사항이 채워지지 않으면 컴파일타임에 에러를 낸다.)
+
+
+조금 더 복잡한 클래스가 있고, `FullNamed` 프로토콜을 적용했고 일치한다.
+
+``` swift
 class Starship: FullyNamed {
-var prefix: String?
-var name: String
-init(name: String, prefix: String? = nil) {
-self.name = name
-self.prefix = prefix
+    var prefix: String?
+    var name: String
+    init(name: String, prefix: String? = nil) {
+        self.name = name
+        self.prefix = prefix
+    }
+    var fullName: String {
+    return (prefix ? prefix! + " " : "") + name
+    }
 }
-var fullName: String {
-return (prefix ? prefix! + " " : "") + name
-ncc1701 = Starship(name: "Enterprise", prefix: "USS")
-ncc1701.fullName is "USS Enterprise"
-This class implements the fullName property requirement as a computed read-only property
-for a starship. Each Starship class instance stores a mandatory name and an optional prefix.
-The fullName property uses the prefix value if it exists, and prepends it to the beginning of
-name to create a full name for the starship.
-Method Requirements
-Protocols can require specific instance methods and type methods to be implemented by
-conforming types. These methods are written as part of the protocol’s definition in exactly
-the same way as for normal instance and type methods, but without curly braces or a
-method body. Variadic parameters are allowed, subject to the same rules as for normal
-methods.
-N O T E
-Protocols use the same syntax as normal methods, but are not allowed to specify default values for method
-parameters.
-As with type property requirements, you always prefix type method requirements with the
-class keyword when they are defined in a protocol. This is true even though type method
-requirements are prefixed with the static keyword when implemented by a structure or
-enumeration:
+var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
+// ncc1701.fullName is "USS Enterprise’
+```
+
+이 클래스에서는 계산된 읽기전용 속성으로 `fullName` 속성을 구현했다.
+각 `Starship` 클래스 인스턴스는 `name`을 필수로 `prefix`를 옵션으로 갖는다. `prefix` 값이 존재하면 `name`의 앞에 붙여서 우주선의 풀네임을 만들어 `fullName` 속성이 된다.
+
+
+### 메소드 요구사항
+
+프로토콜은 일치하는 타입을 구현하기 위해 인스턴스 메소드들과 타입 메소드들을 요구사항으로 명시할 수 있다.
+중괄호나 메소드 구현체(body)만 없을 뿐, 일반적인 인스턴스 메소드나 타입 메소드를 정의하는 것과 정확히 같은 방법으로 정의된다.
+일반적인 메소드와 같은 규칙으로 가변길이의 변수도 가능하다.
+
+> 노트
+> 
+> 프로토콜은 일반적인 메소드들과 같은 문법을 사용하지만 인자로 기본값을 명시할 수 없다.
+
+프로토콜에서 타입 속성을 정의할 때처럼 `class` 키워드를 타입 메소드 앞에 붙여주면 된다. 구조체나 열거형에서 구현할 때는 `static`을 붙여주면 된다.
+
+``` swift
 protocol SomeProtocol {
-class func someTypeMethod()
+    class func someTypeMethod()
 }
-The following example defines a protocol with a single instance method requirement:
+```
+
+인스턴스 메소드 하나만 있는 프로토콜의 예제다.
+
+``` swift
 protocol RandomNumberGenerator {
-func random() -> Double
+    func random() -> Double
 }
-This protocol, RandomNumberGenerator, requires any conforming type to have an instance
-method called random, which returns a Double value whenever it is called. (Although it is not
-specified as part of the protocol, it is assumed that this value will be a number between
-0.0 and 1.0 inclusive.)
-The RandomNumberGenerator protocol does not make any assumptions about how each random
-number will be generated—it simply requires the generator to provide a standard way to
-generate a new random number.
-Here’s an implementation of a class that adopts and conforms to the RandomNumberGenerator
-protocol. This class implements a pseudorandom number generator algorithm known as a
-linear congruential generator:
+```
+`RandomNumberGenerator` 프로토콜은 `Double`을 리턴하는 `random` 인스턴스 메소드를 갖는 어떤 타입에도 일치할 수 있다. (프로토콜에서는 명시되지 않았지만 `0.0`에서 `1.0` 사이의 값을 리턴할 것이라고 추정된다.)
+
+`RandomNumberGenerator` 프로토콜만으로는 어떻게 난수를 생성할지에 대한 정보가 없다. 단지 새로운 난수를 만들어서 제공하는 발생기를 필요로 할 뿐이다.
+
+`RandomNumberGenerator` 프로토콜을 적용하고 일치하는 클래스 구현체가 있다. *선형 합동 생성기(linear congruential generator)*라는 의사난수 생성 알고리즘을 구현했다.
+
+``` swift
 class LinearCongruentialGenerator: RandomNumberGenerator {
-var lastRandom = 42.0
-let m = 139968.0
-let a = 3877.0
-let c = 29573.0
-func random() -> Double {
-lastRandom = ((lastRandom * a + c) % m)
-return lastRandom / m
+    var lastRandom = 42.0
+    let m = 139968.0
+    let a = 3877.0
+    let c = 29573.0
+    func random() -> Double {
+        lastRandom = ((lastRandom * a + c) % m)
+        return lastRandom / m
+    }
 }
-generator = LinearCongruentialGenerator()
-("Here's a random number: \(generator.random())")
-prints "Here's a random number: 0.37464991998171"
-("And another one: \(generator.random())")
-prints "And another one: 0.729023776863283"
-Mutating Method Requirements
-It is sometimes necessary for a method to modify (or mutate) the instance it belongs to.
-For instance methods on value types (that is, structures and enumerations) you place the
-mutating keyword before a method’s func keyword to indicate that the method is allowed to
-modify the instance it belongs to and/or any properties of that instance. This process is
-described in Modifying Value Types from Within Instance Methods.
-If you define a protocol instance method requirement that is intended to mutate
-instances of any type that adopts the protocol, mark the method with the mutating keyword
-as part of the protocol’s definition. This enables structures and enumerations to adopt the
-protocol and satisfy that method requirement.
-N O T E
-If you mark a protocol instance method requirement as mutating, you do not need to write the mutating
-keyword when writing an implementation of that method for a class. The mutating keyword is only used by
-structures and enumerations.
-The example below defines a protocol called Togglable, which defines a single instance
-method requirement called toggle. As its name suggests, the toggle method is intended to
-toggle or invert the state of any conforming type, typically by modifying a property of that
-type.
-The toggle method is marked with the mutating keyword as part of the Togglable protocol
-definition, to indicate that the method is expected to mutate the state of a conforming
-instance when it is called:
+let generator = LinearCongruentialGenerator()
+println("Here's a random number: \(generator.random())")
+// prints "Here's a random number: 0.37464991998171"
+println("And another one: \(generator.random())")
+// prints "And another one: 0.729023776863283"
+```
+
+### 변이(mutating) 메소드
+
+가끔 메소드에서 자신의 인스턴스를 수정(혹은 *변이*)할 필요가 있다. 밸류 타입(즉, 구조체와 열거형)의 인스턴스 메소드에서 메소드의 `func` 앞에 `mutating` 키워드를 써서 소속된 인스턴스를 바꾸거나 인스턴스의 속성을 수정할 수 있게 명시한다. 이 과정은 [인스턴스 메소드 내에서 밸류 타입의 수정](#)에서 설졍되어있다.
+
+프로토콜이 적용된 타입의 인스턴스를 변이할 수 있다고 인스턴스 메소드에 명시하려면 프로토콜 정의세ㅓ `mutating` 키워드를 추가하면 된다. 이 프로토콜이 적용된 구조체와 열거형은 요구사항을 만족한다.
+
+> 노트
+> 
+> 프로토콜을 `mutating`이라고 명시하면 클래스에서 메소드를 구현할 때는 `mutating` 키워드를 쓰지 않아도 된다.
+> `mutating` 키워드는 구조체와 열거형에서만 쓰인다.
+
+아래에는 `Togglable`이라는 프로토콜 예제인데, `toggle`이라는 인스턴스 메소드 하나만 정의되어있다. 이름에서 알 수 있듯 `toggle` 메소드는 보통 타입의 속성을 변환하는 것인데 프로토콜에 일치하는 타입의 속성을 토글하거나 반전한다.
+
+`toggle` 메소드는 `Togglable` 프로토콜 정의에서 `mutating` 키워드로 이 메소드를 호출했을 때 인스턴스의 상태가 변이될 것을 예상할 수 있다.
+
+``` swift
 protocol Togglable {
-mutating func toggle()
+    mutating func toggle()
 }
-If you implement the Togglable protocol for a structure or enumeration, that structure or
-enumeration can conform to the protocol by providing an implementation of the toggle
-method that is also marked as mutating.
-The example below defines an enumeration called OnOffSwitch. This enumeration toggles
-between two states, indicated by the enumeration cases On and Off. The enumeration’s
-toggle implementation is marked as mutating, to match the Togglable protocol’s requirements:
+
+`Togglable` 프로토콜을 구조체나 열거형으로 구현하려면, `mutating`이 명시된 `toggle` 메소드를 구현해야 프로토콜에 일치할 수 있다.
+
+아래 예제는 `OnOffSwitch`라는 열거형이다. 이 열거형은 `On`과 `Off` 두가지 상태 사이를 토글한다. 열거형의 `toggle` 구현체는 `Togglable` 프로토콜의 요구사항에 맞게 `mutating`이 명시되어 있다.
+
+``` swift
 enum OnOffSwitch: Togglable {
-case Off, On
-mutating func toggle() {
-switch self {
-case Off:
-self = On
-case On:
-self = Off
+    case Off, On
+    mutating func toggle() {
+        switch self {
+        case Off:
+            self = On
+        case On:
+            self = Off
+        }
+    }
 }
-lightSwitch = OnOffSwitch.Off
+var lightSwitch = OnOffSwitch.Off
 lightSwitch.toggle()
-lightSwitch is now equal to .On
-Protocols as Types
-Protocols do not actually implement any functionality themselves. Nonetheless, any
-protocol you create will become a fully-fledged type for use in your code.
-Because it is a type, you can use a protocol in many places where other types are
-allowed, including:
-N O T E
-Because protocols are types, begin their names with a capital letter (such as FullyNamed and
-RandomNumberGenerator) to match the names of other types in Swift (such as Int, String, and Double).
-Here’s an example of a protocol used as a type:
+// lightSwitch은 이제 .On과 같다.
+```
+
+### 타입으로서의 프로토콜
+프로토콜은 그 자체로 어떤 기능도 갖고 있지 않다. 하지만 어떤 프로토콜도 코드에서 다른 타입처럼 쓰일 수 있다.
+
+왜냐하면 프로토콜도 타입이므로 다른 타입들이 쓰이는 곳에서 사용될 수 있다.
+- 함수, 메소드, 생성자에서 인자의 타입 혹은 리턴 타입으로
+- 상수, 변수, 속성의 타입으로
+- 배열, 사전, 다른 컨테이너에서 요소의 타입으로
+사용될 수 있다.
+
+> 노트
+> 
+> 프로토콜이 타입이므로 스위프트의 다른 타입(`Int`, `String`, `Double`같은)처럼 이름을 대문자(`FullyNamed`나 `RandomNumberGenerator`처럼)로 사용할 수 있다.
+
+타입으로 프로토콜을 사용하는 예제다.
+
+``` swift
 class Dice {
-let sides: Int
-let generator: RandomNumberGenerator
-init(sides: Int, generator: RandomNumberGenerator) {
-self.sides = sides
-self.generator = generator
+    let sides: Int
+    let generator: RandomNumberGenerator
+    init(sides: Int, generator: RandomNumberGenerator) {
+        self.sides = sides
+        self.generator = generator
+    }
+    func roll() -> Int {
+        return Int(generator.random() * Double(sides)) + 1
+    }
 }
-func roll() -> Int {
-return Int(generator.random() * Double(sides)) + 1
-This example defines a new class called Dice, which represents an n-sided dice for use in a
-board game. Dice instances have an integer property called sides, which represents how
-many sides they have, and a property called generator, which provides a random number
-generator from which to create dice roll values.
-As a parameter type or return type in a function, method, or initializer
-As the type of a constant, variable, or property
-As the type of items in an array, dictionary, or other container
-The generator property is of type RandomNumberGenerator. Therefore, you can set it to an
-instance of any type that adopts the RandomNumberGenerator protocol. Nothing else is required
-of the instance you assign to this property, except that the instance must adopt the
-RandomNumberGenerator protocol.
-Dice also has an initializer, to set up its initial state. This initializer has a parameter called
-generator, which is also of type RandomNumberGenerator. You can pass a value of any conforming
-type in to this parameter when initializing a new Dice instance.
-Dice provides one instance method, roll, which returns an integer value between 1 and the
-number of sides on the dice. This method calls the generator’s random method to create a
-new random number between 0.0 and 1.0, and uses this random number to create a dice
-roll value within the correct range. Because generator is known to adopt RandomNumberGenerator,
-it is guaranteed to have a random method to call.
-Here’s how the Dice class can be used to create a six-sided dice with a
-LinearCongruentialGenerator instance as its random number generator:
+```
+
+이 예제에서는 *n*면체의 `Dice`라는 새로운 클래스가 정의되어있다. `Dice`의 인스턴스는 면을 얼마나 가지고 있는지를 나타내는 `sides`라는 정수 속성과 주사위를 굴렸을 때 난수를 생성해주는 `generator` 속성을 가지고 있다.
+
+`generator` 속성은 `RandomNumberGenerator` 타입의 속성이다. 그러므로 `RandomNumberGenerator` 프로토콜을 적용한 *어떤* 타입의 인스턴스라도 할당할 수 있다.
+
+`Dice`는 초기 상태를 설정하는 생성자도 가지고 있다. 생성자는 `RandomNumberGenerator` 타입의 `generator`를 인자로 받는다.
+새로운 `Dice` 인스턴스를 만들 때 프로토콜에 일치하는 어떤 타입도 인자로 넘길 수 있다.
+
+`Dice`는 하나의 인스턴스 메소드 `roll`이 있는데, 1에서 면의 수 사이에 해당하는 정수를 리턴한다. 이 메소드에서는 생성기의 `random` 메소드를 호출해서 `0.0`과 `1.0` 사이의 난수를 받아 정확한 범위의 값을 만든다. `generator`가 `RandomNumberGenerator`를 적용하고 있기 때문에 확실하게 `rondom` 메소드를 가지고 있다.
+
+
+여기 `LinearCongruentialGenerator` 인스턴스를 난수생성기로 받는 6면체의 `Dice` 클래스가 어떻게 사용되는지 예제가 있다.
+
+``` swift
 var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
 for _ in 1...5 {
-println("Random dice roll is \(d6.roll())")
+    println("랜덤한 주사위값은 \(d6.roll())")
 }
-// Random dice roll is 3
-// Random dice roll is 5
-// Random dice roll is 4
-// Random dice roll is 5
-// Random dice roll is 4
-Delegation
-Delegation is a design pattern that enables a class or structure to hand off (or delegate)
-some of its responsibilities to an instance of another type. This design pattern is
-implemented by defining a protocol that encapsulates the delegated responsibilities, such
-that a conforming type (known as a delegate) is guaranteed to provide the functionality
-that has been delegated. Delegation can be used to respond to a particular action, or to
-retrieve data from an external source without needing to know the underlying type of that
-source.
-The example below defines two protocols for use with dice-based board games:
+// 랜덤한 주사위값은 3
+// 랜덤한 주사위값은 5
+// 랜덤한 주사위값은 4
+// 랜덤한 주사위값은 5
+// 랜덤한 주사위값은 4
+‌```
+
+### 위임 (Delegation)
+위임은 클래스나 구조체가 다른 타입의 인스턴스에게 책임의 일부를 넘길(혹은 *위임할*) 수 있는 디자인 패턴이다. 이 디자인 패턴에서는 위임된 책임을 캡슐화하는 프로토콜을 정의하는데, 거기에 일치하는 타입(대리자delegate로 알려진)은 위임받은 기능이 있다고 보장된다. 위임은 특정 액션에 대해 응답하거나, 외부에서 온 정보가 어떤 타입인지에 관계없이 데이터를 처리할 때 사용할 수 있다.
+
+아래에 주사위를 사용한 보드게임에 두가지 프로토콜이 정의되어있다.
+
+``` swift
 protocol DiceGame {
-var dice: Dice { get }
-func play()
+    var dice: Dice { get }
+    func play()
 }
 protocol DiceGameDelegate {
-func gameDidStart(game: DiceGame)
-func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
-func gameDidEnd(game: DiceGame)
+    func gameDidStart(game: DiceGame)
+    func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
+    func gameDidEnd(game: DiceGame)
 }
-The DiceGame protocol is a protocol that can be adopted by any game that involves dice.
-The DiceGameDelegate protocol can be adopted by any type to track the progress of a DiceGame.
-Here’s a version of the Snakes and Ladders game originally introduced in Control Flow.
-This version is adapted to use a Dice instance for its dice-rolls; to adopt the DiceGame
-protocol; and to notify a DiceGameDelegate about its progress:
+```
+
+`DiceGame` 프로토콜은 주사위를 포함하는 어떤 게임에도 적용할 수 있는 프로토콜이다. `DiceGameDelegate` 프로토콜은 `DiceGame`의 진행을 기록할 수 있는 어떤 타입에도 적용할 수 있는 프로토콜이다.
+
+앞서 [흐름 제어](#)에서 소개되었던 *뱀과 사다리*의 수정 버전이다. 이 버전에서는 주사위 굴리기를 위해 `Dice` 인스턴스를 사용한 `DiceGame` 프로토콜을 적용했고 과정을 `DiceGameDelegate`에 알리기 위해 `DiceGame` 프로토콜을 적용했다.
+
+``` swift
 class SnakesAndLadders: DiceGame {
-let finalSquare = 25
-let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
-var square = 0
-var board: Int[]
-init() {
-board = Int[](count: finalSquare + 1, repeatedValue: 0)
-board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
-board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
-var delegate: DiceGameDelegate?
-func play() {
-square = 0
-delegate?.gameDidStart(self)
-gameLoop: while square != finalSquare {
-let diceRoll = dice.roll()
-delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
-switch square + diceRoll {
-case finalSquare:
-break gameLoop
-case let newSquare where newSquare > finalSquare:
-continue gameLoop
-default:
-square += diceRoll
-square += board[square]
+    let finalSquare = 25
+    let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
+    var square = 0
+    var board: Int[]
+    init() {
+        board = Int[](count: finalSquare + 1, repeatedValue: 0)
+        board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+        board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+    }
+    var delegate: DiceGameDelegate?
+    func play() {
+        square = 0
+        delegate?.gameDidStart(self)
+        gameLoop: while square != finalSquare {
+            let diceRoll = dice.roll()
+            delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
+            switch square + diceRoll {
+            case finalSquare:
+                break gameLoop
+            case let newSquare where newSquare > finalSquare:
+                continue gameLoop
+            default:
+                square += diceRoll
+                square += board[square]
+            }
+        }
+        delegate?.gameDidEnd(self)
+    }
 }
-}
-delegate?.gameDidEnd(self)
-For a description of the Snakes and Ladders gameplay, see the Break section of the
-Control Flow chapter.
-This version of the game is wrapped up as a class called SnakesAndLadders, which adopts the
-DiceGame protocol. It provides a gettable dice property and a play method in order to conform
-to the protocol. (The dice property is declared as a constant property because it does not
-need to change after initialization, and the protocol only requires that it is gettable.)
-The Snakes and Ladders game board setup takes place within the class’s init() initializer.
-All game logic is moved into the protocol’s play method, which uses the protocol’s required
-dice property to provide its dice roll values.
-Note that the delegate property is defined as an optional DiceGameDelegate, because a delegate
-isn’t required in order to play the game. Because it is of an optional type, the delegate
-property is automatically set to an initial value of nil. Thereafter, the game instantiator has
-the option to set the property to a suitable delegate.
-DiceGameDelegate provides three methods for tracking the progress of a game. These three
-methods have been incorporated into the game logic within the play method above, and
-are called when a new game starts, a new turn begins, or the game ends.
-Because the delegate property is an optional DiceGameDelegate, the play method uses optional
-chaining each time it calls a method on the delegate. If the delegate property is nil, these
-delegate calls fail gracefully and without error. If the delegate property is non-nil, the
-delegate methods are called, and are passed the SnakesAndLadders instance as a parameter.
-This next example shows a class called DiceGameTracker, which adopts the DiceGameDelegate
-protocol:
+```
+
+*뱀과 사다리* 게임에 대한 설명을 원하면 [흐름 제어](#) 챕터의 [break](#) 섹션에 나와있다.
+
+이 버전에서는 `DiceGame`을 적용한 `SnakesAndLadders`라는 클래스로 이루어졌다. `dice` 속성과 `play` 메소드을 가지고 있어 프로토콜에 일치한다. (`dice` 속성은 상수 속성으로 선언되었는데, 일단 생성되고 난 뒤에 변경될 필요가 없으며 프로토콜의 요구는 읽기만 가능하면 된다.)
+
+*뱀과 사다리* 게임보드 설정은 클래스의 `init()` 생성자 내에서 이루어진다. 게임 로직 전체는 프로토콜의 `play` 메소드 내로 옮겨졌고, 주사위를 굴린 값을 얻기 위해 `dice` 속성을 필요로 하는 프로토콜을 사용한다.
+
+`delegate` 속성은 `DiceGameDelegate` 옵션으로 되어있는데, 게임을 실행하는데 대리자가 꼭 필요하지는 않아서이다. 옵션값이기 때문에 `delegate` 속성은 자동으로 `nil`을 초기값으로 받는다. 그리고 나서 게임을 초기화할 때 적절한 위임자를 속성으로 받을 수도 있다.
+
+`DiceGameDelegate`는 게임의 진행을 기록하기 위해 3가지 메소드를 제공한다. `play` 메소드 내부에서 사용되며 새로운 게임을 시작할 때, 턴이 시작될 때, 게임이 끝날 때 호출된다.
+
+`delegate` 속성은 `DiceGameDelegate` 타입의 옵션값이기 때문에 `play` 메소드는 대리자에서 메소드를 호출할 때마다 옵션 체인을 사용한다. `delegate` 속성이 nil이면, 이 대리자는 에러없이 호출을 실패한다. `deleagte` 속성이 nil이 아니면 메소드를 호출하고 `SnakesAndLadders` 인스턴스를 인자로 넘긴다.
+
+다음 예제는 `DiceGameTracker`라는 클래스로, `DiceGameDelegate` 프로토콜이 적용되었다.
+
+``` swift
 class DiceGameTracker: DiceGameDelegate {
-var numberOfTurns = 0
-func gameDidStart(game: DiceGame) {
-numberOfTurns = 0
-if game is SnakesAndLadders {
-println("Started a new game of Snakes and Ladders")
+    var numberOfTurns = 0
+    func gameDidStart(game: DiceGame) {
+        numberOfTurns = 0
+        if game is SnakesAndLadders {
+            println("Started a new game of Snakes and Ladders")
+        }
+        println("The game is using a \(game.dice.sides)-sided dice")
+    }
+    func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
+        ++numberOfTurns
+        println("Rolled a \(diceRoll)")
+    }
+    func gameDidEnd(game: DiceGame) {
+        println("The game lasted for \(numberOfTurns) turns")
+    }
 }
-println("The game is using a \(game.dice.sides)-sided dice")
-}
-func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
-++numberOfTurns
-println("Rolled a \(diceRoll)")
-func gameDidEnd(game: DiceGame) {
-println("The game lasted for \(numberOfTurns) turns")
-DiceGameTracker implements all three methods required by DiceGameDelegate. It uses these
+```
+
+`DiceGameTracker`에서는 `DiceGameDelegate`에서 필요한 세가지 메소드를 모두 구현되어있다. 
+
+It uses these
 methods to keep track of the number of turns a game has taken. It resets a numberOfTurns
 property to zero when the game starts; increments it each time a new turn begins; and
 prints out the total number of turns once the game has ended.
