@@ -125,10 +125,8 @@ Any나 AnyObject는 오로지 당신이 명시적으로 behavior나 그들이 �
 
 AnyObject
 
-Cocoa APIS를 이용하여 작업을 할때, 보통 AnyObject[] 타입의 배열를(any object 타입의 값을 가진 배열) 받는것이 일반적입니다. This is because Objective-C does not have
-explicitly typed arrays. However, you can often be confident about the type of objects
-contained in such an array just from the information you know about the API that
-provided the array.
+Cocoa APIS를 이용하여 작업을 할때, 보통 AnyObject[] 타입의 배열를(any object 타입의 값을 가진 배열) 받는것이 일반적입니다. 이것은 Objctive-C가 명시적인 타입의 배열을 가지지 못하기 때문입니다. 그러나 당신이 종종  당신이 알고있는 API가 제공하는 array를 포함한 여러가지 정보를 포함한 오브젝트들의 타입에 대해서 자신이 있을 수 있다.
+이러한 상황에서, 
 In these situations, you can use the forced version of the type cast operator (as) to
 downcast each item in the array to a more specific class type than AnyObject, without the
 need for optional unwrapping.
@@ -140,8 +138,10 @@ let someObjects: AnyObject[] = [
  Movie(name: "Moon", director: "Duncan Jones"),
  Movie(name: "Alien", director: "Ridley Scott")
 ]
+```
 Because this array is known to contain only Movie instances, you can downcast and unwrap
 directly to a non-optional Movie with the forced version of the type cast operator (as):
+```c
 for object in someObjects {
  let movie = object as Movie
  println("Movie: '\(movie.name)', dir. \(movie.director)")
