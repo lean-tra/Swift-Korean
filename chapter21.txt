@@ -1,4 +1,4 @@
-# 21 Nested Types (중첩 형식)
+# 21 중첩 형식 (Nested Types )
 > Translator : Alice Kim (mail@jua.kim)
 번역에 대한 의견이 있을 때에는 메일이나 [Chapter21 - Discussion ](https://www.penflip.com/jjuakim/swift-korean/discussions/7)에 의견을 남겨주세요
 
