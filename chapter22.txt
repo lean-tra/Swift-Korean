@@ -1,12 +1,13 @@
 # 22 확장 (Extensions)
 > Translator : Dongwoo Son (easthelper@gmail.com)
 
-확장(Extensions)은 이미 존재하는 클래스, 구조체, 열거형 타입에 새 기능성을 추가합니다. 이는  원본 소스코드에 접근할 수 없는 타입들을 확장하는 능력을 포함합니다. (레트로액티브 모델링) 확장은 Objective-c 의 카테고리 와 유사합니다.
+확장(Extensions)은 이미 존재하는 클래스, 구조체, 열거형 타입에 새 기능성을 추가합니다. 이는  원본 소스코드에 접근할 수 없는 타입들을 확장하는 능력을 포함합니다. (Retroactive modeling) 확장은 Objective-c 의 카테고리 와 유사합니다.
 
 Swift 의 확장이 할수있는 것:
-* 프로퍼티와 정적 프로퍼티의 추가
+* computed properties, computed static properties의 추가
 * 인스턴스 메소드와 타입 메소드 정의
 * 새로운 이니셜라이저 제공
+* 서브스크립트 정의
 * 기존 타입에 프로토콜 적용시키기
 
 > NOTE
