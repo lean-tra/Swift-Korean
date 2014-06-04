@@ -1,4 +1,5 @@
-# 15 상속
+# 15 상속 (Inheritance)
+> Translator : 이름 (메일주소)
 
 Write here...
 
