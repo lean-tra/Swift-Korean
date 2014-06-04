@@ -8,7 +8,7 @@ By translating "The Swift Programming Language" we want to help a lot of korean 
 > 이 프로젝트는 애플의 새로운 프로그래밍 언어 **swift** 번역 프로젝트입니다. 자유롭게 참여하세요 =)
 **이 번역 프로젝트는 절대로 상업적인 목적으로 사용되지 않습니다.**
 
-## Oiginal Contents
+## Original Contents
 - [Download “The Swift Programming Language” from the iBooks Store](https://itunes.apple.com/us/book/the-swift-programming-language/id881256329?mt=11)
 - [The Swift Programming Language 웹 사이트](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/)
 
