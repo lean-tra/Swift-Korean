@@ -266,3 +266,37 @@ func를 사용해 함수를 선언할 수 있습니다. 함수의 이름과 괄�
 	sort([1, 5, 3, 12, 2]) { $0 > $1 }
     
 ##객체(Objects)와 클래스(Classes)
+
+클래스를 만들기 위해서는 클래스 이름과 함께 class 키워드를 사용하면 됩니다.클래스 컨텍스트(context) 내부를 제외하고 클래스 안에 속성을 선언하기 위해서는 상수나 변수를 선언하는 것과 똑같은 방식으로 쓰면 됩니다. 마찬가지로 메서드와 함수도 선언할 수 있습니다.
+
+	   1|  class Shape {
+       2|    var numberOfSides = 0
+       3|    func simpleDescription() -> String {
+       4|      return "A shape with \(numberOfSides) sides."
+       5|    }
+       6|  }
+
+어떤 클래스의 인스턴스를 만들려면 클래스 이름 다음에 괄호를 넣으면 됩니다. .(점) 문법을 사용하면 인스턴스의 속성이나 메서드에 접근할 수 있습니다.
+
+	   1|  var shape = Shape()
+       2|  shape.numberOfSides = 7
+       3|  var shapeDescription = shape.simpleDescription()
+
+현재 상태의 Shape클래스는 중요한 것이 빠져있습니다. 바로 클래스가 생성될 때 클래스를 초기화하기 위한 초기화자 입니다. init 키워드를 사용해 만들어 봅시다.
+
+	     1|  class NamedShape {
+         2|      var numberOfSides: Int = 0
+         3|      var name: String
+         4|      init(name: String) {
+         5|          self.name = name
+         6|      }
+         7|      func simpleDescription() -> String {
+         8|          return "A shape with \(numberOfSides) sides."
+         9|      }
+       10|  }
+
+인자의 name과 속성의 name을 구분하기 위해서 self 키워드가 어떻게 사용되는지 주의해서 봅시다.  클래스의 인스턴스를 만들 때 초기화자에 인자를 전달하는 방식은 함수에 전달하는 방식과 동일합니다. 모든 속성은 numberOfSides 처럼 값을 선언 할 때 혹은 name처럼 클래스를 초기화 할 때 처럼 적어도 둘중에 한가지 방법을 통해 값을 할당해줘야 합니다.
+
+
+
+
