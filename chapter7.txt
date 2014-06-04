@@ -7,7 +7,7 @@ C언어에서는 `for`-조건부-증가(increment) 순환문(loop) 이런 방식
  
 C언어의 `switch`문과 비교했을 때, Swift의 `switch`문은 훨씬 더 강력합니다. Swift에서는 `switch`문이 "fall through" 하지 않습니다(역자주: fall through란, switch문에서 한 case에 대해서 처리하고 난 후 다음 case로 넘어가는 것). C언어에서는 실수로 `break`문을 써주지 않아서 에러가 생기는 경우가 있는데 Swift에서는 fall through 하지 않기 때문에 이런 에러를 방지할 수 있습니다. `swich`내의 case에 대해서 여러 종류의 pattern-maching을 사용할 수 있습니다. 수의 범위 match, 투플 match, casts to a specific type. `switch case`에서 match된 값을 임시 상수나 변수에 binding할 수도 있습니다. 이렇게 binding해두면 case의 본문(body) 내에서 이 상수나 변수를 사용할 수 있습니다. 또한 매칭 조건(matching condition)이 복잡한 경우에는, 각 case에 대해서 where절(where clause)을 사용해서 표현할 수 있습니다.  
 
-## `For` 순환문(For Loops)
+## For 순환문(For Loops)
 
 `for` 순환문(for loop) 사용하면 코드 블럭을 특정 횟수 만큼 수행할 수 있습니다. Swift에는 두 종류의 for 순환문이 있습니다:
 
@@ -15,7 +15,7 @@ C언어의 `switch`문과 비교했을 때, Swift의 `switch`문은 훨씬 더 �
 
 * `for-condition-increment` : 특정 조건부가 참이 될 때까지 코드를 실행합니다. 보통 루프를 한 번 도는 것이 끝날 때마다 counter를 1씩 증가시킵니다.  
 
- ## `For-In`
+## For-In
  
 여러 항목이 들어 있는 컬렉션(collection)이나, 어떤 범위, 배열 안에 들어 있는 항목(item)에 대해서, 또는 문자열에 들어 있는 각 문자에 대해서 iteration을 할 때 `for-in` loop를 사용합니다. 
 
