@@ -303,4 +303,64 @@ for i in 0.count {
 arrays에 대해 더 참조하고 싶다면 Arrays 항목 를 참조하시오 // 링크
 
 ## 논리 연산자
+논리 연산자는 `true`와 `false` 불리언 논리 값을 수정하거나 결합합니다. Swift는 C 기반 언어의 세 가지 표준 논리 연산자를 지원합니다.
+
+- NOT (!a)
+- AND (a && b)
+- OR (a || b)
+
+##논리 NOT 연산자
+논리 NOT 연산자(`!a`)는 불리언 값인 `true` 값을 반전시키고 `false` 값은 `true` 가 된다.
+
+논리 NOT 연산자는 전위 연산자입니다. 값 앞에 연산을 공백없이 즉시 표현 할 수 있습니다. 이것은 "`not` a"로 바로 읽을 수 있으며 다음의 예제에서 볼 수 있습니다.
+
+```
+let allowedEntry = false
+if !allowedEnrty {
+	println("ACCESS DENIED")
+}
+// prints "ACCESS DENIED"
+```
+`if !allowedEntry` 는 "if not allowed entry" 로 읽을 수 있습니다.
+즉 `allowedEntry`이 false인 경우 라인 이후의 `not allowed entry` 가 `true`인 경우에 해당할 경우로 실행됩니다.
+이 예제에서와 같이 불리언 상수와 변수 이름의 주의 깊은 선택은 이중 부정 또는 혼란한 논리구문을 피하면서 읽기 쉽고 간결한 코드를 유지하는데 도움이 될 수 있습니다.
+
+## 논리 AND 연산자
+
+논리 AND 연산자(`a && b`)의 overall expression은 두 값이 모두 `true`이어야 `true`가 됩니다.
+
+반대로 두 값이 `false` 이면 overall expression 또한 `false` 입니다. 사실 첫번째 값이 `false` 인 경우 두번째 값이 evaluated 되지 않습니다. 그것을 가능할수 없기 떄문에 overall expression이 `true`와 같게 됩니다. 이는 short-circuit evaluation 로 불린다.
+
+이 예제에서는 두 개의 `Bool`값을 고려하여 만약 두 값이 `true` 에만 액세스 할 수 있습니다.
+
+```
+let enteredDoorCode = true
+let passedRetinaScan = false
+if enteredDoorCode && passedRetinaScan {
+	println("Welcome!")
+} else {
+	println("ACCEss DENIED")
+}
+// prints "ACCESS DENIED"
+```
+## 논리 OR 연산자
+논리 OR 연산자(`a || b`)는 인접한 파이프 문자로 만든 중위연산자 입니다. overall expression 이 `true`가 될 때 까지 두 개의 값 중 하나만이 참이어야 하는 논리식을 만드는데 사용합니다.
+
+위의 논리 AND 연산자처럼 논리 OR 연산자는 식을 고려할떄 short-circuit evaluation을 사용합니다. 논리 OR식의 좌측에 `true`가 해당하는 경우는 overall expression 식의 결과를 변경 할수 있기 때문에 우측은 계산되지 않는다.
+
+아래의 예제에서 첫 번째 `Bool` 값(`hasDoorKey`)은 `false`이지만 두 번째 값(`knowsOverridePassword`)는 `true`이다. 하나의 값 이`true`이기 떄문에 overall expression은 `true`로 평가하고 액세스가 허용됩니다.
+
+```
+let hasDoorKey = false
+let knowOverridePassword = true
+if hasDoorKey || knowOverridePassword {
+	println("Welcome!")
+} else {
+	println("ACCESS DENIED")
+}
+// prints "Welcome!"
+```
+## 혼합 논리 연산자
+
+## 괄호 명시
 
