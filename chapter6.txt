@@ -15,12 +15,12 @@
 스위프트에서 배열은 특정한 종류들의 값들을 저장할 수 있다. 이것은 Objective-C의 `NSArray`와 `NSMutableArray` 클라스와는 다르다. `NSArray`와 `NSMutableArray` 클라스는 어느 종류의 객체든 저장할 수 있고, 반환하는 객체의 속성에 대한 어떠한 정보도 제공하지 않는다. 반면에 스위프트에서는 특정 배열에 저장할 수 있는 밸류 타입은 항상 명시적인 타입 선언을 통하거나 타입 추정을 통해 확인한다. 굳이 클라스 타입이 될 필요는 없다. 예를 들어 만약 당신이 `Int` 타입 배열을 하나 생성한다고 하면, `Int` 값이 아닌 어떤 값도 이 배열에 대입할 수 없다. 스위프트는 타입 지정에 대해 안전하고, 배열 안에 무슨 타입이 들어있는지를 혹은 들어갈지를 항상 확인한다.
 
 
-## 배열 타입 축약 문법 Array Type Shorthand Syntax ##
+### 배열 타입 축약 문법 Array Type Shorthand Syntax ###
 
 스위프트 배열 타입을 정확하게 쓰려면 `Array<SomeType>` 형태로 해야 한다. 여기서 `SomeType`은 배열에 저장할 타입을 의미한다. 또한 축약 형태인 `SomeType[]`으로도 배열을 사용할 수 있다. 이 두 가지 형태가 기능적으로는 동일할지라도, 축약 형태를 사용하는 것을 권장한다. 이 축약 형태의 배열이 이 가이드 문서에서도 계속 쓰일 것이다.
 
 
-## 배열 표현식 Array Literals ##
+### 배열 표현식 Array Literals ###
 
 배열은 배열 표현식을 통해서 초기화를 시킬 수 있다. 배열 표현식은 하나 또는 그 이상의 값들을 배열 컬렉션에 담는 축약 형태를 가리킨다. 배열 표현식은 대괄호로 둘러싸고, 콤마로 값들을 구분하는 형태로 하여 여러개의 값들을 표현한다.
 
@@ -52,11 +52,9 @@ var shoppingList = ["Eggs", "Mink"]
 배열 표현식의 모든 값들이 모두 같은 타입이기 때문에 스위프트는 `String[]`이 `shoppingList` 변수의 사용에 맞는 타입이라고 추정할 수 있다.
 
 
-## 배열의 접근 및 수정 Accessing and Modifying an Array ##
+### 배열의 접근 및 수정 Accessing and Modifying an Array ###
 
 배열은 메소드와 프로퍼티를 통해 접근과 수정이 가능하다. 혹은 subscript 문법을 사용할 수도 있다.
-
-To find out the number of items in an array, check its read-only count property:
 
 배열 안에 값이 몇 개나 있는지를 확인하기 위해 일기 전용 속성인 `count` 프로퍼티를 사용한다:
 
@@ -128,13 +126,6 @@ shoppingList[4...6] = ["Bananas", "Apples"]
 // shoppingList now contains 6 items
 ```
 
-N O T E
-You can’t use subscript syntax to append a new item to the end of an array. If you try to use subscript
-syntax to retrieve or set a value for an index that is outside of an array’s existing bounds, you will trigger a
-runtime error. However, you can check that an index is valid before using it, by comparing it to the array’s
-count property. Except when count is 0 (meaning the array is empty), the largest valid index in an array will
-always be count - 1, because arrays are indexed from zero.
-
 > **참고:**
 > Subscript 문법을 사용해서 새 값을 배열의 마지막에 추가하는 것은 안된다. 만약에 배열의 크기보다 큰 인덱스 값을 사용해서 배열에 접근하려 한다면 런타임 에러를 확인할 수 있을 것이다. 하지만 유효한 인덱스 값은 사용 전에 배열의 `count` 프로퍼티를 이용하여 확인이 가능하다. `count` 프로퍼티 값이 `0`인 경우 &ndash; 빈 배열인 경우 &ndash; 를 제외하면 배열에서 가장 큰 인덱스 값은 항상 `count - 1`이 될 것이다. 인덱스는 항상 `0`에서 시작하기 때문이다.
 
@@ -176,4 +167,103 @@ let apples = shoppingList.removeLast()
 // shoppingList now contains 5 items, and no cheese
 // the apples constant is now equal to the removed "Apples" string
 ```
+
+### 배열에서 반복문 사용하기 Iterating Over an Array ###
+
+`for-in` 반복문을 사용하면 배열 안의 모든 값들에 접근할 수 있다:
+
+```
+for item in shoppingList {
+println(item)
+}
+
+// Six eggs
+// Milk
+// Flour
+// Baking Powder
+// Bananas
+```
+
+만약 배열 안의 개별적인 값들과 그에 해당하는 인덱스가 함께 필요하다면 전역 함수인 `enumerate`를 사용해서 배열을 돌릴 수 있다. `enumerate` 함수는 배열내 각각의 값에 대해 인덱스와 결합한 튜플 값을 반환한다. 반복문을 돌리는 도중 이 튜플을 변수나 상수로 분리하여 사용할 수 있다:
+
+```
+for (index, value) in enumerate(shoppingList) {
+println("Item \(index + 1): \(value)")
+}
+
+// Item 1: Six eggs
+// Item 2: Milk
+// Item 3: Flour
+// Item 4: Baking Powder
+// Item 5: Bananas
+```
+
+`for-in` 반복문에 대해서는 "For 반복문"\*링크필요\* 항목을 참고하도록 하자.
+
+
+### 배열의 생성과 초기화 Creating and Initializing an Array ###
+
+배열의 초기화 문법을 이용하면 초기값 할당 없이 특정 타입을 가진 빈 배열을 만들 수 있다:
+
+```
+var someInts = Int[]()
+println("someInts is of type Int[] with \(someInts.count) items.")
+
+// prints "someInts is of type Int[] with 0 items."
+```
+
+`someInts` 변수의 타입은 `Int[]`로 추정 가능한데, 이것은 `Int[]`로 초기화를 했기 때문이다.
+
+또한 만약 컨텍스트 상에서 함수의 인자라든가 이미 타입 선언이 된 변수 혹은 상수라든가 하는 식으로 해서 이미 타입 정보를 갖고 있다면, 빈 배열을 곧바로 빈 배열 표현식을 이용하여 만들 수 있다. 빈 배열 표현식은 `[]`와 같이 대괄호만을 이용한다:
+
+```
+someInts.append(3)
+
+// someInts now contains 1 value of type Int
+
+someInts = []
+
+// someInts is now an empty array, but is still of type Int[]
+```
+
+스위프트의 `Array` 타입도 특정 크기와 기본 값을 갖는 배열을 만들 수 있는 생성자를 제공한다. 배열에 들어갈 수 있는 값의 갯수(`count` 인자)와 기본 값(`repeatedValue` 인자)을 생성자에 제공하여 배열을 만들 수 있다:
+
+```
+var threeDoubles = Double[](count: 3, repeatedValue: 0.0)
+
+// threeDoubles is of type Double[], and equals [0.0, 0.0, 0.0]
+```
+
+생성자를 사용할 때 기본 값에서 타입을 추정하기 때문에 배열 생성시 굳이 타입 지정을 할 필요가 없다:
+
+```
+var anotherThreeDoubles = Array(count: 3, repeatedValue: 2.5)
+
+// anotherThreeDoubles is inferred as Double[], and equals [2.5, 2.5, 2.5]
+```
+
+마지막으로 이미 존재하는 같은 타입의 두 배열을 `+` 연산자를 통해 합치는 것만으로 새로운 배열을 생성할 수도 있다. 이렇게 만들어진 새로운 배열의 타입은 합치기 전 두 배열의 타입으로부터 추정 가능하다:
+
+```
+var sixDoubles = threeDoubles + anotherThreeDoubles
+
+// sixDoubles is inferred as Double[], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+```
+
+
+## 딕셔너리 Dictionaries ##
+
+딕셔너리는 같은 타입을 가진 여러개의 값을 저장하는 하나의 컨테이너이다. 각각의 값은 유일한 키 값에 물려 있으며, 이 키 값은 딕셔너리 안에서 해당 값을 찾기 위한 식별자의 역할을 한다. 배열의 값들과 달리 딕셔너리 안에 저장된 값은 어떤 순서가 정해져 있지 않다. 실제로 사전에서 어떤 단어의 정의를 찾는 것과 매우 같은 방식으로 딕셔너리 안에 정의된 식별자를 이용해서 값을 찾는다.
+
+스위프트의 딕셔너리는 특정한 타입의 키와 그에 따른 값을 저장한다. 이는 Objective-C에서 제공하는 `NSDictionary`와 `NSMutableDictionary` 클라스와는 다르다. `NSDictionary`와 `NSMutableDictionary` 클라스는 어느 종류의 객체든 키와 값으로 저장이 가능한 반면 그 저장된 객체의 속성에 대한 어떠한 정보도 제공하지 않는다. 스위프트에서는 특정 딕셔너리에 저장할 수 있는 키 타입과 밸류 타입은 항상 명시적인 타입 선언을 하거나 타입 추정을 통해 확인한다.
+
+스위프트의 딕셔너리 타입은 `Dictionary<KeyType, VaueType>` 형태로 쓰인다. 여기서 `KeyType`은 딕셔너리의 키 값으로 쓰이는 값에 대한 타입이고, `ValueType`은 딕셔너리의 키 값에 맞추어 저장하고자 하는 밸류의 타입을 정의하는 것이다.
+
+The only restriction is that KeyType must be hashable—that is, it must provide a way to
+make itself uniquely representable. All of Swift’s basic types (such as String, Int, Double, and
+Bool) are hashable by default, and all of these types can be used as the keys of a
+dictionary. Enumeration member values without associated values (as described in
+Enumerations) are also hashable by default.
+
+딕셔너리가 갖고 있는 유일한 제약사항은 반드시 `KeyType`은 해시 가능한 타입이어야 한다. 즉, 그 자체로 유일하게 표현이 가능한 방법을 제공해야 한다는 것이다. 스위프트의 모든 기본 타입들 &ndash; `String`, `Int`, `Double`, `Bool` &ndash; 은 기본적으로 해시 가능한 것들이므로 딕셔너리의 키 타입으로 사용 가능하다. 연관된 값이 없는 열거형의 멤버 값들 역시도 기본적으로 해시 가능한 타입이다. ("Enumerations"\*링크필요\* 참조)
 
