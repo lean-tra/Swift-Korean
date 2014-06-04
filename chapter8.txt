@@ -229,43 +229,35 @@ join("hello", "world", joiner: "-")
 >N O T E
 함수를 정의할때 명시적인 외부 이름을 쓰는 것 대신에 밑줄(`_`)을 씀으로써 이 동작을 수행하지 않게 할 수 있다. 하지만 기본값을 가진 파라메터에 적절한 외부 이름을 제공하는것은 언제나 바람직하다.
 
-## Variadic Parameters
-A variadi c parameter accepts zero or more values of a speci fied type. You use a variadi c
-parameter to speci fy that the parameter can be passed a varying number of input values
-when the function i s cal led. Wri te variadi c parameters by inserting three period
-characters (. . .) after the parameter’s type name.
-The values passed to a variadi c parameter are made avai lable wi thin the function’s body
-as an array of the appropriate type. For example, a variadi c parameter wi th a name of
-numbers and a type of Doubl e. . .  i s made avai lable wi thin the function’s body as a constant
-array cal led numbers of type Doubl e[].
-The example below cal culates the ari thmeti c mean (al so known as the average) for a l i st
-of numbers of any length:
-func ari thmeti cMean(numbers: Doubl e. . . ) -> Doubl e {
-var total : Doubl e = 0
-for number i n numbers {
-total  += number
+## 가변(Variadic) 파라메터
+가변 파라메터는 특정 타입의 값을 0개나 그 이상 받을 수 있습니다. 가변 파라메터를 사용함으로써 함수 호출시 입력 값들이 임의의 갯수가 될수 있다고 정할 수 있습니다. 파라메터의 타입 이름의 뒤에 마침표 세개(`...`)를 삽입하는 것으로 가변 파라메터를 작성할 수 있습니다.
+가변 파라메터로 함수의 내부에 전달된 값들은 적절한 타입의 배열(`array`)로 만들어진다. 예를 들어 `numbers`라는 이름의 가변 파라메터의 타입이 `Double...`이라면 함수의 내부에서는 `Double[]`타입의 `numbers` 이름을 가진 배열로 만들어지는 것이다.
+밑의 예제는 평균이라 불리는 산술 평균(arithmetic mean)을 임의의 갯수를 가진 숫자의 목록에서 구하는 것이다.
+```
+func arithmeticMean(numbers: Double...) -> Double {
+ 	 var total : Double = 0
+	  for number in numbers {
+  		total += number
+	}
+	return total / Double(numbers.count)
 }
-return total  / Doubl e(numbers. count)
-}
-ari thmeti cMean(1,  2,  3,  4,  5)
-// returns 3. 0,  w hi ch i s the ari thmeti c mean of these fi ve numbers
-meti cMean(3,  8,  19)
-turns 10. 0,  w hi ch i s the ari thmeti c mean of these three numbers
+arithmeticMean(1, 2, 3, 4, 5)
+// returns 3.0, which is the arithmetic mean of these five numbers
+arithmeticMean(3, 8, 19)
+// returns 10.0, which is the arithmetic mean of these three numbers
+```
 > N O T E
-A functi on may have at most one vari adi c parameter,  and i t must al w ays appear l ast i n the parameter l i st,  to
-avoi d ambi gui ty w hen cal l i ng the functi on w i th mul ti pl e parameters.
-If your functi on has one or more parameters w i th a defaul t val ue,  and al so has a vari adi c parameter,  pl ace
-the vari adi c parameter after al l  the defaul ted parameters at the very end of the l i st.
+함수는 최대 한개의 가변 파라메터를 가질 수 있다. 그리고 가변 파라메터는 언제나 파라메터 목록의 마지막에 배치되어야 한다. 이렇게 함으로써 복수의 파라메터를 가진 함수를 호출할때 생기는 모호함을 피할 수 있다.
+만약 함수의 파라메터중 하나 이상의 파라메터가 기본값을 가지고, 그와 동시에 가변 파라메터를 가진다면 가변 파라메터는 기본 값을 가지는 파라메터의 맨 마지막에 두어라.
 
-## Constant and Variable Parameters
-Function parameters are constants by defaul t. Trying to change the value of a function
-parameter from wi thin the body of that function resul ts in a compi le-time error. Thi s
-means that you can’t change the value of a parameter by mi stake.
+## 상수(Constant)와 가변 파라메터
+함수의 파라메터들은 기본적으로 상수들입니다. 함수의 내부에서 파라메터의 값을 바꾸려 시도하는 것은 컴파일 에러를 냅니다. 이렇게 함으로써 실수로 파라메터를 바뀌지 않게 합니다.
 However, sometimes i t i s useful  for a function to have a variable copy of a parameter’s
 value to work wi th. You can avoid defining a new variable yoursel f wi thin the function by
 speci fying one or more parameters as variable parameters instead. Variable parameters
 are avai lable as variables rather than as constants, and give a new modi fiable copy of the
 parameter’s value for your function to work wi th.
+하지만 때로는 함수가 파라메터의 값을 다양하게 복사하여 사용하는 것이 유용할때가 있습니다. 새로운 변수(variable)를 정의하지 않고 
 Define variable parameters by prefixing the parameter name wi th the keyword var:
 func al i gnRi ght(var stri ng: Stri ng,  count: Int,  pad: Character) -> Stri ng {
 l et amountT oPad = count -  countEl ements(stri ng)
