@@ -203,5 +203,5 @@ default:
 ```
 
 >NOTE
-The cases of a switch statement use the forced version of the type cast operator (as, not as?) to check and
-cast to a specific type. This check is always safe within the context of a switch case statement.
+스위치문의 case항목들은 강제로 변경된 형태의 를 사용한다.The cases of a switch statement use the forced version of the type cast operator (as, not as?) to check and cast to a specific type.
+이런 체크는 스위치 문의 문맥안에 있는 이상 항상 안전하다. 
