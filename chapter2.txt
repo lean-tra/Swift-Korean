@@ -556,7 +556,27 @@ let bDescription = b.simpleDescription
 >실험
 프로토콜을 사용하는 열거형을 만들어보자.
 
-구조체를 수정하기 위해 사용되는 메서드를 표시하기 위해 SimpleStructure 선언부에 사용되는 mutating 키워드를 살펴봅시다. 
+구조체를 수정하기 위해 사용되는 메서드를 표시하기 위해 SimpleStructure 선언부에 사용되는 mutating 키워드를 살펴봅시다. SimpleClass에는 mutating으로 표시된 메서드가 필요하지 않습니다. 왜냐하면 클래스 안에 있는 모든 메서드들은 항상 클래스를 수정할 수 있기 때문입니다.
+
+extension 키워드를 사용해서 기존의 타입들에 새로운 메서드나 속성들을 비교하기 위한 기능들을 추가할 수 있습니다. 타입이 선언된 곳 어디서든 혹은 라이브러리나 프레임워크에서 불러온 타입들에 extension 키워드를 사용해 프로토콜을 적용할 수 있습니다.
+
+```c
+extension Int: ExampleProtocol {
+    var simpleDescription: String {
+    return "The number \(self)"
+    }
+    mutating func adjust() {
+        self += 42
+    }
+}
+7.simpleDescription
+```
+
+>실험
+extension을 사용해 Double 타입에 absoluteValue 속성을 추가해보자.
+
+
+
 
 
 
