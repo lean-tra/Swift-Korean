@@ -301,6 +301,33 @@ func를 사용해 함수를 선언할 수 있습니다. 함수의 이름과 괄�
 
 하위 클래스는 클래스명 뒤에 상위 클래스의 이름을 세미콜론으로 구분해 포함합니다. 꼭 기본 루트 클래스가 필요한 것은 아니기 때문에 상위 클래스를 포함해도 되고 생략해도 됩니다.
 
+하위 클래스에서 상위 클래스에서 구현된 메서드를 오버라이드(override) 하려면 override 키워드를 이용해 표시해줘야 합니다. override키워드를 사용하지 않고 어떤 메서드를 갑자기 오버라이드하면 컴파일러에서 에러로 인식합니다. 또 override 키워드를 사용했는데 실제로 상위 클래스에는 해당 메서드가 없다면 이것 또한 컴파일러가 잡아냅니다.
+
+```c
+class Square: NamedShape {
+    var sideLength: Double
+    
+    init(sideLength: Double, name: String) {
+        self.sideLength = sideLength
+        super.init(name: name)
+        numberOfSides = 4
+    }
+    
+    func area() ->  Double {
+        return sideLength * sideLength
+    }
+    
+    override func simpleDescription() -> String {
+        return "A square with sides of length \(sideLength)."
+    }
+}
+let test = Square(sideLength: 5.2, name: "my test square")
+test.area()
+test.simpleDescription()
+```
+
+
+
 
 
 
