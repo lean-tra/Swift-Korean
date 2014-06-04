@@ -1,4 +1,5 @@
-# 12 속성
+# 12 속성 (Properties)
+> Translator : 이름 (메일주소)
 
 Properties
 Properties associate values wi th a parti cular class, structure, or enumeration. Stored
