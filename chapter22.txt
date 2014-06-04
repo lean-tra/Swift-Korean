@@ -15,3 +15,37 @@ Swift 의 확장이 할수있는 것:
 만약 기존 타입에 새로운 기능성을 추가하기 위해 확장을 정의 한다면, 확장이 정의 되기 이전에 생성된 해당 타입의 모든 인스턴스들도 새 기능성이 적용이 됩니다. 
 
 ## 확장 문법
+`extension` 키워드로 확장을 선언합니다:
+```c
+extension SomeType {
+    // SomeType에 추가할 새 기능
+}
+```
+확장은 기존의 타입을 하나 이상의 프로토콜을 적용하기 위해서 확장시킬 수 있습니다. 이 경우 클래스 또는 구조체와 같은 방식으로 적용시킬 프로토콜 이름을 적습니다:
+```c
+extension SomeType: SomeProtocol, AnotherProtocol {
+    // 프로토콜의 요구사항을 이곳에 구현
+}
+```
+확장으로 프로토콜 준수의 추가는 Adding Protocol Conformance with an Extension 에 설명 되어 있습니다.
+
+### Computed Properties
+확장은 연산 인스턴스 속성과 연산 타입 속성을 기존의 타입에 추가할 수 있습니다. 이 예제는 거리 단위를 제공하기 위해 다섯개의 연산 인스턴스 속성을 Swift의 내장 Double 타입에 추가합니다. 
+```c
+extension Double {
+    var km: Double { return self * 1_000.0 }
+    var m: Double { return self }
+    var cm: Double { return self / 100.0 }
+    var mm: Double { return self / 1_000.0 }
+    var ft: Double { return self / 3.28084 }
+}
+let oneInch = 25.4.mm
+println("One inch is \(oneInch) meters")
+// prints "One inch is 0.0254 meters"
+let threeFeet = 3.ft
+println("Three feet is \(threeFeet) meters")
+// prints "Three feet is 0.914399970739201 meters"
+```
+이러한 연산 속성들은 Double 값이 특정 길이의 단위로 고려되어짐을 나타냅니다. 연산 속성들로 구현되었지만 부동소수점 리터럴 값에 점 문법으로 속성의 이름을 덧붙여 리터럴 값을 거리값으로 변환시킬 수 있습니다.
+
+ㅇ{를 들어 
