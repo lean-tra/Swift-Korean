@@ -103,3 +103,166 @@ if문 안에 조건은 꼭 불리언(Boolean) 표현이어야 합니다. 이것�
 
 스위치(Switch) 구문에는 정수형 값이나 동등 비교연산 뿐만 아니라 어떤 종류의 데이터든 사용할 수 있고 다양한 비교 연산자들을 사용할 수 있습니다.
 
+  1|  let vegetable = "red pepper"
+  2|  switch vegetable {
+  3|  case "celery":
+  4|      let vegetableComment = "Add some raisins and make ants on a log."
+  5|  case "cucumber", "watercress":
+  6|      let vegetableComment = "That would make a good tea sandwich."
+  7|  case let x where x.hasSuffix("pepper"):
+  8|      let vegetableComment = "Is it a spicy \(x)?"
+  9|  default:
+10|      let vegetableComment = "Everything tastes good in soup."
+11|  }
+
+	실험
+    스위치 구문에서 default의 경우를 제거해 보자. 어떤 에러가 발생하는가?
+    
+스위치 구문안의 일치하는 경우의 코드를 실행하고 나면 프로그램은 스위치 구문을 빠져나옵니다. 실행한 코드 이후에 나오는 내용은 실행하지 않기 때문에 각 경우의 코드 끝마다 빠져나오도록 명시적으로 써주지 않아도됩니다.(*역자 주: 보통 사용되는 break를 굳이 쓸 필요가 없다는 것입니다.)
+
+for-in 문을 사용하면 각각 키-값 쌍으로 사용할 수 있는 이름들의 쌍을 이용해 딕셔너리에 있는 요소들을 반복처리할 수 있습니다.
+
+   1|  let interestingNumbers = [
+   2|      "Prime": [2, 3, 5, 7, 11, 13],
+   3|      "Fibonacci": [1, 1, 2, 3, 5, 8],
+   4|      "Square": [1, 4, 9, 16, 25],
+   5|  ]
+   6|  var largest = 0
+   7|  for (kind, numbers) in interestingNumbers {
+   8|      for number in numbers {
+   9|          if number > largest {
+ 10|              largest = number
+ 11|          }
+ 12|      }
+ 13|  }
+ 14|  largest
+ 
+ 	실험
+    계속 알아 보기 위해서 기존의 제일 큰 값만큼 큰 값을 가지는 요소를 추가해보자.
+    
+조건문이 변경될 때까지 코드 블록을 반복 실행하기 위해서 while 문을 사용해 봅시다.
+
+반복문이 적어도 한번은 실행될 수 있도록 보장하기 위해서 조건문을 반복문 끝에 쓸수도 있습니다.
+
+   1|  var n = 2
+   2|  while n < 100 {
+   3|      n = n * 2
+   4|  }
+   5|  n
+   6|   
+   7|  var m = 2
+   8|  do {
+   9|      m = m * 2
+ 10|  } while m < 100
+ 11|  m
+ 
+ 반복문안에서 ..을 사용해 인덱스의 범위를 만들어 사용하거나 명시적으로 초기화, 조건문, 증감식을 사용하는 것 또한 가능합니다. 아래쪽에 나오는 두가지 반복문은 동일한 일을 수행합니다.
+ 
+   1|   var firstForLoop = 0
+   2|  for i in 0..3 {
+   3|      firstForLoop += i
+   4|  }
+   5|  firstForLoop
+   6|   
+   7|  var secondForLoop = 0
+   8|  for var i = 0; i < 3; ++i {
+   9|      secondForLoop += 1
+ 10|  }
+ 11|  secondForLoop
+ 
+ ..을 사용해서 범위를 지정하면 제일 나중값은 제외가 됩니다. 대신 ...을 사용하면 양쪽 끝값 모두 포함하게 됩니다.
+ 
+ ##함수(Functions)와 클로저(Closures)
+ 
+func를 사용해 함수를 선언할 수 있습니다. 함수의 이름과 괄호안에 인자들을 넣어서 함수를 호출할 수 있습니다. 매개변수들의 이름과 분리해서 ->를 사용해 타입을 써주면 함수 반환값의 타입을 지정할 수 있습니다.
+
+   1|  func greet(name: String, day: String) -> String {
+   2|      return "Hello \(name), today is \(day)."
+   3|  }
+   4|  greet("Bob", "Tuesday")
+   
+
+	실험
+    매개변수 day를 제거하고 오늘의 스페셜 런치 매개변수를 greeting에 추가해보자.
+    
+    튜플(tuple)을 사용하면 여러개의 값을 반환할 수 있습니다.
+    
+   1|  func getGasPrices() -> (Double, Double, Double) {
+   2|      return (3.59, 3.69, 3.79)
+   3|  }
+   4|  getGasPrices()
+   
+   함수는 배열을 이용해서 여러개의 값을 인자로 받는 것도 가능합니다.
+   
+   1|  func sumOf(numbers: Int...) -> Int {
+   2|      var sum = 0
+   3|      for number in numbers {
+   4|          sum += number
+   5|      }
+   6|      return sum
+   7|  }
+   8|  sumOf()
+   9|  sumOf(42, 597, 12)
+   
+	실험
+    인자들의 평균값을 계산하는 함수를 만들어보자.
+    
+함수는 다른 것에 포함될 수도 있습니다. 내장된(Nested) 함수는 감싸고 있는 함수에서 선언된 변수에 접근할 수 있습니다. 길어지고 복잡한 함수의 코드를 정리하기 위해 내장된 함수를 사용할 수 있습니다.
+    
+   1|  func returnFifteen() -> Int {
+   2|      var y = 10
+   3|      func add() {
+   4|          y += 5
+   5|      }
+   6|      add()
+   7|      return y
+   8|  }
+   9|  returnFifteen()
+   
+함수는 최상위 타입입니다. 이것은 어떤 함수가 다른 함수를 반환값형태로  반환할 수 있다는 것을 의미합니다.
+   
+   1|  func makeIncrementer() -> (Int -> Int) {
+   2|      func addOne(number: Int) -> Int {
+   3|          return 1 + number
+   4|      }
+   5|      return addOne
+   6|  }
+   7|  var increment = makeIncrementer()
+   8|  increment(7)
+   
+또 함수는 다른 함수를 인자로 받을 수 있습니다.
+
+   1|  func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
+   2|      for item in list {
+   3|          if condition(item) {
+   4|              return true
+   5|          }
+   6|      }
+   7|      return false
+   8|  }
+   9|  func lessThanTen(number: Int) -> Bool {
+  10|      return number < 10
+  11|  }
+  12|  var numbers = [20, 19, 7, 12]
+  13|  hasAnyMatches(numbers, lessThanTen)
+  
+함수는 실제로는 클로저의 특별한 예입니다. 중괄호로 묶기만 해서 이름없이 클로저를 사용할 수도 있습니다. in을 사용해 몸통에서 인자와 반환값 타입을 분리해 쓸 수 있습니다.
+  
+   1|  numbers.map({
+   2|      (number: Int) -> Int in
+   3|      let result = 3 * number
+   4|      return result
+   5|      })
+   
+	실험
+    모든 홀수값에 대해 0을 반환하도록 클로저를 수정해보자.
+    
+클로저를 간결하게 쓰기 위한 몇가지 옵션이 있습니다. 델리게이트(delegate)를 위한 콜백같이 이미 클로저의 타입을 아는 경우라면 매개변수의 타입, 반환값 타입을 모두 생략하거나 선택적으로 생략할 수 있습니다. 한줄짜리 구문을 가진 클로저라면 구문만 가지고도 반환 타입을 추측할 수 있습니다.
+
+	numbers.map({ number in 3 * number })
+    
+매개변수의 이름 대신에 번호로 참조하는 것은 클로저를 짧게 만드는데 특히 유용합니다. 이때 클로저는 함수의 바로 뒤에 중괄호를 이용해 인자로 전달됩니다.
+
+	sort([1, 5, 3, 12, 2]) { $0 > $1 }
+    
+##객체(Objects)와 클래스(Classes)
