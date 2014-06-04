@@ -1,3 +1,229 @@
 # 20 타입 변환
 
-Write here...
+타입변환(Type Casting)
+타입 변환이란 인스탄스(instance)의 타입을 체크하기 위한 방법이며, 또한 
+and/or to treat that instance as if
+it is a different superclass or subclass from somewhere else in its own class hierarchy.
+Swift에서 타입 변환은 'is'와 'as'라는 연산자로 구현할 수 있으며, 이 두 연산자는 값의 타입을 체크하거나 다른 타입으로 변환하는 간단하고 표현적인 방법을 제공합니다.
+또한 해당 타입이 프로토콜에 적합하지 아닌지 체크하기 위해서 타입 변환을 사용할 수 있으며 보다 자세한 사항은 [Protocol Conformance](링크)를 참조하시기 바랍니다.
+
+**타입 캐스팅을 위한 클래스 계층 정의(Defining a Class Hierarchy for Type Casting)**
+
+타입 캐스팅을 
+You can use type casting with a hierarchy of classes and subclasses to check the type of a
+particular class instance and to cast that instance to another class within the same
+hierarchy. 
+아래의 세가지의 코드조각(code snippets)는 타입 캐스팅이 사용되는 예제를 보여주기 위한 계층적인 클래스들과 각각의 클래스들의 인스턴스를 포함하는 배열(array)를 정의하고 있습니다.
+첫번째 코드 조각은 MediaItem 새로운 기본 클래스(base calss)를 정의하고 있습니다. 이 클래스는 디지털 미디어 라이브러리에 있는 모든 아이템들을 위한 기본적인 기능을 제공합니다. 특히   문자열(String)타입의 name 속성(Property)를 선언하고, initializer를 통해서 'name'을 초기화 합니다(이것은 모든 미디어 아이템(영화나 노래)들이 이름을 가지고 있다고 가정합니다)
+/////
+class MediaItem {
+ var name: String
+ init(name: String) {
+ self.name = name
+ }
+}
+////
+다음 코드 조각은 MediaItem의 두가지 하위클래스(subclasses)들입니다. 첫번째 하위클래스인 Moive는 내부적으로 영화에 관한 추가적인 데이터를 가지고 있는데. 이는 'director'라는 속성 및 초기화 부분을 MediaItem클래스의 initalizer의 윗부분에 추가하는것으로 더할 수 있으며. 두번째 하위 클래스인 'Song'도 artist 속성의 관한 내용을 선언하고 base class의 윗부분에서 이를 초기화 한다:
+/////
+class Movie: MediaItem { 
+var director: String
+ init(name: String, director: String) {
+ self.director = director
+ super.init(name: name)
+ }
+}
+ 
+class Song: MediaItem {
+var artist: String
+init(name: String, artist: String) {
+ self.artist = artist
+ super.init(name: name)
+ }
+ }
+ ///
+ 마지막 코드조각은 2개의 Movie 인스탄스와 3개의 Song 인스탄스를 포함하는 library로 불리는 상수형 배열(constant array)를 만든다.
+ library배열의 타입은 각각의 배열 내부의 콘텐츠를 초기화 하는 타입으로 추정할 할 수 있다.
+Swift의 타입 체커는 Movie나 Song이 공통의 상위 클래스(superclass)인 MediaItem을 가진다고 추정할 수 있고, 따라서 library의 array는  MediaItem[]로 추정할 수 있다 :
+/////
+let library = [
+ Movie(name: "Casablanca", director: "Michael Curtiz"),
+ Song(name: "Blue Suede Shoes", artist: "Elvis Presley"),
+ Movie(name: "Citizen Kane", director: "Orson Welles"),
+ Song(name: "The One And Only", artist: "Chesney Hawkes"),
+ Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
+]
+// the type of "library" is inferred to be MediaItem[]
+/////
+library에 저장된 요소들은 해당 Scenes뒤에서는 여전히 Movie와 Song인스탄스이다. 그러나 만일 네가 이 array의 컨텐츠들을 반복자 등을 이용하여 뽑아낸 다면, 네가 받게된 그 아이템들의 타입은 Song이나 Movie이 아닌 MediaItem일 것이다. 그것들을 원래의 타입으로 작업을 하기 위해얻고 싶다면, 당신은 그들의 타입을 체크하는 것이 필요하고, 또한 그들을 downcast해서 다른 타입으로 변경하여야 한다. 이는 아래서 설명하도록 하겠다.
+
+타입 체크(Checking Type)
+
+어떠한 instance가 확실히 하위클래스 타입인지 아닌지를 체크하기 위해서는 타입 체크 연산자인 'is'를 이용합니다. 이 타입체크용 연산자는 만일 해당 인스탄스가 해당 하위 클래스라면 true를, 아니라면 false를 반환합니다.
+아래의 예시는 library배열에 있는 Movie의 instance의 수와 Song의 instance의 수를 세기 위한movieCount와 songCount라는 두개의 변수를 선언하는 것을 보여줍니다.:
+/////
+var movieCount = 0
+var songCount = 0
+ 
+for item in library {
+ if item is Movie {
+ ++movieCount
+ } else if item is Song {
+ ++songCount
+ }
+("Media library contains \(movieCount) movies and \(songCount) songs")
+// prints "Media library contains 2 movies and 3 songs"
+///
+이 예시에서는 library배열의 모든 아이템에 대해서 작업하며, 각각의 1번의 과정마다 for-in loop는 배열에 MediaItem 상수를 가져오고, 각각의 아이템이 만일 Movie 인스탄스이면 is Movie에서 true를 아니라면 false를 반환하고, 이와 유시하게 아이템이 만일 Song의 인스탄스인지 아닌지에 따라 is Song 체크부분의 리턴값이 결정됩니다. for-in loop의 마지막이 되면, moveCount와 songCount의 값을 보고 전체 MediaItem인스탄스중에 각각의 타입이 얼마만큼의 수가 들어있는지 찾아낼 수 있다.
+
+다운캐스팅( Downcasting )
+
+상수와 변수의 명확한 클래스 타입은 사실은 아마도 the scenes뒤에 있는 하위 클래스의 인스탄스에 속할것이다. 
+당신이 위와 같은 케이스를 믿는 경우, 당신은 타입 변환 연산자인 'as'를 통하여 하위클래스타입으로 다운캐스팅을 시도 할 수 있다.
+다운캐스팅은 실패할 수 있기때문에, 타입 캐스팅연산자는 두가지의 다른 형태를 가집니다.
+하나는 as?와 같은 연산자를 사용하는 optional form으로 다운캐스팅을 시도하여 optional value를 리턴합니다.
+다른 하나는 as와 같은 연산자를 사용하는 forced form으로 다운 캐스팅을 시도하고 강제로 unwrap한 결과를 한번에 합한 작업을 합니다.
+네가 만일 다운캐스트가 성공할지 확신을 가지지 못한다면 타입변환 연산자인 as?를 이용하는 optional form을 사용한다. 위 연산자를 사용하는 form은 항상 optional value를 리턴하며 그래서 만일 다운 캐스트가 가능하지 않은 경우에는 nil을 리턴할 수 있도록 할 수 있다. 이 것은 당신이 다운 캐스팅의 성공 유무를 체크할 수 있도록 하게 한다.
+오직 당신이 다운캐스트가 항상 성공할 것이라는 확신이 있다면 타입 변환 연산자인 as를 이용하는 forced form을 사용할 수 있다. 위의 연산자를 사용하는 form은 만일 올바르지 않은 클래스 타입으로 다운캐스팅을 시도했을 시에 런타임 에러를 발생시킨다.
+아래의 예시는 
+Use the forced form of the type cast operator (as) only when you are sure that the
+downcast will always succeed. This form of the operator will trigger a runtime error if you
+try to downcast to an incorrect class type.
+The example below iterates over each MediaItem in library, and prints an appropriate
+description for each item. To do this, it needs to access each item as a true Movie or Song,
+and not just as a MediaItem. This is necessary in order for it to be able to access the director
+or artist property of a Movie or Song for use in the description.
+In this example, each item in the array might be a Movie, or it might be a Song. You don’t
+know in advance which actual class to use for each item, and so it is appropriate to use
+the optional form of the type cast operator (as?) to check the downcast each time through
+the loop:
+/////
+for item in library {
+ if let movie = item as? Movie {
+ println("Movie: '\(movie.name)', dir. \(movie.director)")
+ } else if let song = item as? Song {
+ println("Song: '\(song.name)', by \(song.artist)")
+ }
+}
+ 
+// Movie: 'Casablanca', dir. Michael Curtiz
+// Song: 'Blue Suede Shoes', by Elvis Presley
+// Movie: 'Citizen Kane', dir. Orson Welles
+// Song: 'The One And Only', by Chesney Hawkes
+// Song: 'Never Gonna Give You Up', by Rick Astley
+/////
+The example starts by trying to downcast the current item as a Movie. Because item is aMediaItem instance, it’s possible that it might be a Movie; equally, it’s also possible that it
+might a Song, or even just a base MediaItem. Because of this uncertainty, the as? form of the
+type cast operator returns an optional value when attempting to downcast to a subclass
+type. The result of item as Movie is of type Movie?, or “optional Movie”.
+Downcasting to Movie fails when applied to the two Song instances in the library array. To
+cope with this, the example above uses optional binding to check whether the optional
+Movie actually contains a value (that is, to find out whether the downcast succeeded.) This
+optional binding is written “if let movie = item as? Movie”, which can be read as:
+“Try to access item as a Movie. If this is successful, set a new temporary constant called
+movie to the value stored in the returned optional Movie.”
+If the downcasting succeeds, the properties of movie are then used to print a description
+for that Movie instance, including the name of its director. A similar principle is used to check
+for Song instances, and to print an appropriate description (including artist name) whenever
+a Song is found in the library.
+
+NO T E
+Casting does not actually modify the instance or change its values. The underlying instance remains the same;
+it is simply treated and accessed as an instance of the type to which it has been cast.
+
+Type Casting for Any and AnyObject
+
+Swift provides two special type aliases for working with non-specific types:
+
+AnyObject can represent an instance of any class type.
+Any can represent an instance of any type at all, apart from function types.
+
+NO T E
+Use Any and AnyObject only when you explicitly need the behavior and capabilities they provide. It is always
+better to be specific about the types you expect to work with in your code.
+
+
+AnyObject
+When working with Cocoa APIs, it is common to receive an array with a type of AnyObject[],
+or “an array of values of any object type”. This is because Objective-C does not have
+explicitly typed arrays. However, you can often be confident about the type of objects
+contained in such an array just from the information you know about the API that
+provided the array.
+In these situations, you can use the forced version of the type cast operator (as) to
+downcast each item in the array to a more specific class type than AnyObject, without the
+need for optional unwrapping.
+The example below defines an array of type AnyObject[] and populates this array with three
+instances of the Movie class:
+let someObjects: AnyObject[] = [
+ Movie(name: "2001: A Space Odyssey", director: "Stanley Kubrick"),
+ Movie(name: "Moon", director: "Duncan Jones"),
+ Movie(name: "Alien", director: "Ridley Scott")
+]
+Because this array is known to contain only Movie instances, you can downcast and unwrap
+directly to a non-optional Movie with the forced version of the type cast operator (as):
+for object in someObjects {
+ let movie = object as Movie
+ println("Movie: '\(movie.name)', dir. \(movie.director)")
+}
+// Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
+// Movie: 'Moon', dir. Duncan Jones
+// Movie: 'Alien', dir. Ridley Scott
+For an even shorter form of this loop, downcast the someObjects array to a type of Movie[]
+instead of downcasting each item:
+for movie in someObjects as Movie[] {
+ println("Movie: '\(movie.name)', dir. \(movie.director)")
+}
+// Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
+// Movie: 'Moon', dir. Duncan Jones// Movie: 'Alien', dir. Ridley Scott
+
+Any
+
+Here’s an example of using Any to work with a mix of different types, including non-class
+types. The example creates an array called things, which can store values of type Any:
+var things = Any[]()
+ 
+things.append(0)
+things.append(0.0)
+things.append(42)
+things.append(3.14159)
+things.append("hello")
+things.append((3.0, 5.0))
+things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
+The things array contains two Int values, two Double values, a String value, a tuple of type
+(Double, Double), and the movie “Ghostbusters”, directed by Ivan Reitman.
+You can use the is and as operators in a switch statement’s cases to discover the specific
+type of a constant or variable that is known only to be of type Any or AnyObject. The
+example below iterates over the items in the things array and queries the type of each
+item with a switch statement. Several of the switch statement’s cases bind their matched
+value to a constant of the specified type to enable its value to be printed:
+for thing in things {
+ switch thing {
+ case 0 as Int:
+ println("zero as an Int")
+ case 0 as Double:
+ println("zero as a Double")
+ case let someInt as Int:
+ println("an integer value of \(someInt)") case let someDouble as Double where someDouble > 0:
+ println("a positive double value of \(someDouble)")
+case is Double:
+ println("some other double value that I don't want to print")
+case let someString as String:
+ println("a string value of \"\(someString)\"")
+case let (x, y) as (Double, Double):
+ println("an (x, y) point at \(x), \(y)")
+ 
+ 
+case let movie as Movie:
+ println("a movie called '\(movie.name)', dir. \(movie.director)")
+default:
+ println("something else")
+// zero as an Int
+// zero as a Double
+// an integer value of 42
+// a positive double value of 3.14159
+// a string value of "hello"
+// an (x, y) point at 3.0, 5.0
+// a movie called 'Ghostbusters', dir. Ivan Reitman
+
+NO T E
+The cases of a switch statement use the forced version of the type cast operator (as, not as?) to check and
+cast to a specific type. This check is always safe within the context of a switch case statement.
