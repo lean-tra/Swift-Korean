@@ -575,6 +575,18 @@ extension Int: ExampleProtocol {
 >실험
 extension을 사용해 Double 타입에 absoluteValue 속성을 추가해보자.
 
+  프로토콜 이름은 다른 알려진 변수들 처럼 지정할 수 있습니다. 예를 들면 객체들의 모음을 만들 때, 모든 객체는 다른 타입을 가지지만 하나의 프로토콜을 따릅니다. 프로토콜 타입인 값들을 가지고 작업할 때 프로토콜 외부에서 메서드를 정의하는 것은 불가능 합니다.
+
+```c
+let protocolValue: ExampleProtocol = a
+protocolValue.simpleDescription
+// protocolValue.anotherProperty  // Uncomment to see the error
+```
+
+protocalValue 변수가 실행시 SimpleClass 타입이더라도 컴파일러는 주어진ExampleProtocal 타입으로 취급합니다. 이것은 프로토콜 관습 외에도 클래스에서 구현된 메서드나 속성에 실수로 접근할 수는 없다는 것을 의미합니다.
+
+
+
 
 
 
