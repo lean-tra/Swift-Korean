@@ -1,3 +1,123 @@
 # 24 제네릭
 
-Write here...
+Generic code enables you to write flexible, reusable functions and types that can work with any type, subject to requirements that you define. You can write code that avoids duplication and expresses its intent in a clear, abstracted manner.
+
+Generics are one of the most powerful features of Swift, and much of the Swift standard library is built with generic code. In fact, you’ve been using generics throughout this Language Guide, even if you didn’t realize it. For example, Swift’s `Array` and `Dictionary` types are both generic collections. You can create an array that holds `Int` values, or an array that holds `String` values, or indeed an array for any other type that can be created in Swift. Similarly, you can create a dictionary to store values of any specified type, and there are no limitations on what that type can be.
+
+‌
+## The Problem That Generics Solve
+Here’s a standard, non-generic function called `swapTwoInts`, which swaps two `Int` values:
+
+```
+func swapTwoInts(inout a: Int, inout b: Int) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+}
+```
+
+This function makes use of in-out parameters to swap the values of `a` and `b`, as described in [In-Out Parameters](#).
+
+The `swapTwoInts` function swaps the original value of `b` into `a`, and the original value of `a` into `b`. You can call this function to swap the values in two `Int` variables:
+
+```
+var someInt = 3
+var anotherInt = 107
+println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+// prints "someInt is now 107, and anotherInt is now 3"
+```
+
+The `swapTwoInts` function is useful, but it can only be used with `Int` values. If you want to swap two `String` values, or two `Double` values, you have to write more functions, such as the `swapTwoStrings` and `swapTwoDoubles` functions shown below:
+
+```
+func swapTwoStrings(inout a: String, inout b: String) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+}
+ 
+func swapTwoDoubles(inout a: Double, inout b: Double) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+}
+```
+
+You may have noticed that the bodies of the `swapTwoInts`, `swapTwoStrings`, and `swapTwoDoubles` functions are identical. The only difference is the type of the values that they accept (`Int`, `String`, and `Double`).
+
+It would be much more useful, and considerably more flexible, to write a single function that could swap two values of any type. This is the kind of problem that generic code can solve. (A generic version of these functions is defined below.)
+
+> **NOTE**
+> In all three functions, it is important that the types of `a` and `b` are defined to be the same as each other. If `a` and `b` were not of the same type, it would not be possible to swap their values. Swift is a type-safe language, and does not allow (for example) a variable of type `String` and a variable of type `Double` to swap values with each other. Attempting to do so would be reported as a compile-time error.
+
+## Generic Functions
+*Generic functions* can work with any type. Here’s a generic version of the `swapTwoInts` function from above, called `swapTwoValues`:
+```
+func swapTwoValues<T>(inout a: T, inout b: T) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+}
+```
+
+The body of the `swapTwoValues` function is identical to the body of the `swapTwoInts` function. However, the first line of `swapTwoValues` is slightly different from `swapTwoInts`. Here’s how the first lines compare:
+
+```
+func swapTwoInts(inout a: Int, inout b: Int)
+func swapTwoValues<T>(inout a: T, inout b: T)
+```
+
+The generic version of the function uses a placeholder type name (called `T`, in this case) instead of an actual type name (such as `Int`, `String`, or `Double`). The placeholder type name doesn’t say anything about what `T` must be, but it does say that both `a` and `b` must be of the same type `T`, whatever `T` represents. The actual type to use in place of `T` will be determined each time the `swapTwoValues` function is called.
+
+The other difference is that the generic function’s name (`swapTwoValues`) is followed by the placeholder type name (`T`) inside angle brackets (`<T>`). The brackets tell Swift that `T` is a placeholder type name within the `swapTwoValues` function definition. Because `T` is a placeholder, Swift does not look for an actual type called `T`.
+
+The `swapTwoValues` function can now be called in the same way as `swapTwoInts`, except that it can be passed two values of any type, as long as both of those values are of the same type as each other. Each time `swapTwoValues` is called, the type to use for `T` is inferred from the types of values passed to the function.
+
+In the two examples below, `T` is inferred to be `Int` and `String` respectively:
+
+```
+var someInt = 3
+var anotherInt = 107
+swapTwoValues(&someInt, &anotherInt)
+// someInt is now 107, and anotherInt is now 3
+ 
+var someString = "hello"
+var anotherString = "world"
+swapTwoValues(&someString, &anotherString)
+// someString is now "world", and anotherString is now "hello"
+```
+
+> **NOTE**
+> The `swapTwoValues` function defined above is inspired by a generic function called `swap`, which is part of the Swift standard library, and is automatically made available for you to use in your apps. If you need the behavior of the `swapTwoValues` function in your own code, you can use Swift’s existing `swap` function rather than providing your own implementation.
+
+## Type Parameters
+In the `swapTwoValues` example above, the placeholder type `T` is an example of a type parameter. Type parameters specify and name a placeholder type, and are written immediately after the function’s name, between a pair of matching angle brackets (such as `<T>`).
+
+Once specified, a type parameter can be used to define the type of a function’s parameters (such as the `a` and `b` parameters of the `swapTwoValues` function); or as the function’s return type; or as a type annotation within the body of the function. In each case, the placeholder type represented by the type parameter is replaced with an actual type whenever the function is called. (In the `swapTwoValues` example above, `T` was replaced with `Int` the first time the function was called, and was replaced with `String` the second time it was called.)
+
+You can provide more than one type parameter by writing multiple type parameter names within the angle brackets, separated by commas.
+
+## Naming Type Parameters
+In simple cases where a generic function or generic type needs to refer to a single placeholder type (such as the `swapTwoValues` generic function above, or a generic collection that stores a single type, such as `Array`), it is traditional to use the single-character name `T` for the type parameter. However, you are can use any valid identifier as the type parameter name.
+
+If you are defining more complex generic functions, or generic types with multiple parameters, it can be useful to provide more descriptive type parameter names. For example, Swift’s `Dictionary` type has two type parameters—one for its keys and one for its values. If you were writing `Dictionary` yourself, you might name these two type parameters `KeyType` and `ValueType` to remind you of their purpose as you use them within your generic code.
+
+> **NOTE**
+> Always give type parameters UpperCamelCase names (such as T and KeyType) to indicate that they are a placeholder for a type, not a value.
+
+## Generic Types
+In addition to generic functions, Swift enables you to define your own generic types. These are custom classes, structures, and enumerations that can work with any type, in a similar way to `Array` and `Dictionary`.
+
+This section shows you how to write a generic collection type called `Stack`. A stack is an ordered set of values, similar to an array, but with a more restricted set of operations than Swift’s `Array` type. An array allows new items to be inserted and removed at any location in the array. A stack, however, allows new items to be appended only to the end of the collection (known as pushing a new value on to the stack). Similarly, a stack allows items to be removed only from the end of the collection (known as popping a value off the stack).
+
+> **NOTE**
+> The concept of a stack is used by the `UINavigationController` class to model the view controllers in its navigation hierarchy. You call the `UINavigationController` class `pushViewController:animated:` method to add (or push) a view controller on to the navigation stack, and its `popViewControllerAnimated:` method to remove (or pop) a view controller from the navigation stack. A stack is a useful collection model whenever you need a strict “last in, first out” approach to managing a collection.
+
+The illustration below shows the push / pop behavior for a stack:
+
+ 
+1. There are currently three values on the stack.
+2. A fourth value is “pushed” on to the top of the stack.
+3. The stack now holds four values, with the most recent one at the top.
+4. The top item in the stack is removed, or “popped”.
+5. After popping a value, the stack once again holds three values.
