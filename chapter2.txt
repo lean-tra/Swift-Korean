@@ -298,6 +298,152 @@ func를 사용해 함수를 선언할 수 있습니다. 함수의 이름과 괄�
 
 인자의 name과 속성의 name을 구분하기 위해서 self 키워드가 어떻게 사용되는지 주의해서 봅시다.  클래스의 인스턴스를 만들 때 초기화자에 인자를 전달하는 방식은 함수에 전달하는 방식과 동일합니다. 모든 속성은 numberOfSides 처럼 값을 선언 할 때 혹은 name처럼 클래스를 초기화 할 때 처럼 적어도 둘중에 한가지 방법을 통해 값을 할당해줘야 합니다.
 
+오브젝트를 해제하기전 정리 작업이 필요하다면 deinit을 사용해서 디이니셜라이저(deinitializer)를 만들 수 있습니다.
+
+하위 클래스는 클래스명 뒤에 상위 클래스의 이름을 세미콜론으로 구분해 포함합니다. 꼭 기본 루트 클래스가 필요한 것은 아니기 때문에 상위 클래스를 포함해도 되고 생략해도 됩니다.
+
+하위 클래스에서 상위 클래스에서 구현된 메서드를 오버라이드(override) 하려면 override 키워드를 이용해 표시해줘야 합니다. override키워드를 사용하지 않고 어떤 메서드를 갑자기 오버라이드하면 컴파일러에서 에러로 인식합니다. 또 override 키워드를 사용했는데 실제로 상위 클래스에는 해당 메서드가 없다면 이것 또한 컴파일러가 잡아냅니다.
+
+```c
+class Square: NamedShape {
+    var sideLength: Double
+    
+    init(sideLength: Double, name: String) {
+        self.sideLength = sideLength
+        super.init(name: name)
+        numberOfSides = 4
+    }
+    
+    func area() ->  Double {
+        return sideLength * sideLength
+    }
+    
+    override func simpleDescription() -> String {
+        return "A square with sides of length \(sideLength)."
+    }
+}
+let test = Square(sideLength: 5.2, name: "my test square")
+test.area()
+test.simpleDescription()
+```
+
+	실험
+    NamedShape클래스의 또 다른 하위 클래스인 Circle을 만들어보자. 이 클래스는 이니셜 라이저를 통해 radius와 name을 인자로 받는다. Circle 클래스 안에 area, describe 함수를 구현해보자.
+
+저장되어 있는 간단한 속성 외에도 속성은 getter와 setter를 가질 수 있습니다.
+
+```c
+class EquilateralTriangle: NamedShape {
+    var sideLength: Double = 0.0
+    
+    init(sideLength: Double, name: String) {
+        self.sideLength = sideLength
+        super.init(name: name)
+        numberOfSides = 3
+    }
+    
+    var perimeter: Double {
+    get {
+        return 3.0 * sideLength
+    }
+    set {
+        sideLength = newValue / 3.0
+    }
+    }
+    
+    override func simpleDescription() -> String {
+        return "An equilateral triagle with sides of length \(sideLength)."
+    }
+}
+var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
+triangle.perimeter
+triangle.perimeter = 9.9
+triangle.sideLength
+```
+perimeter의 setter안에서는 newValue라는 이름이 새로운 값을 나타내고 있습니다. 반면에 명시적으로 set 뒤에 괄호를 이용해 명시적으로 이름을 지정해 줄수도 있습니다.
+
+EquilateralTriangle 클래스의 이니셜라이저는 세가지의 다른 단계를 가지고 있음을 살펴봅시다.
+
+1. 하위 클래스에서 선언한 속성의 값을 지정합니다.
+2. 상위 클래스의 이니셜라이저를 호출합니다.
+3. 상위 클래스에 의해 정의된 속성값을 변경합니다. 어떤 메서드나 setter,getter를 사용하지 않고도 가능 하다는 것이 중요한점 입니다.
+
+속성의 값을 계산할 필요는 없지만 새로운 값을 할당하기  전이나 후에 수행해야할 코드가 있다면 willSet, didSet을 사용할 수 있습니다. 예를 들면 아래쪽에 나오는 클래스에서는 삼각형의 빗면의 길이가 사각형의 옆면의 길이와 항상 동일하다는 것을 보장합니다.
+
+```c
+class TriangleAndSquare {
+    var triangle: EquilateralTriangle {
+    willSet {
+        square.sideLength = newValue.sideLength
+    }
+    }
+    var square: Square {
+    willSet {
+        triangle.sideLength = newValue.sideLength
+    }
+    }
+    init(size: Double, name: String) {
+        square = Square(sideLength: size, name: name)
+        triangle = EquilateralTriangle(sideLength: size, name: name)
+    }
+}
+var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
+triangleAndSquare.square.sideLength
+triangleAndSquare.triangle.sideLength
+triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
+triangleAndSquare.triangle.sideLength
+```
+
+클래스에 있는 메서드들은 함수와는 다른 중요한 특징이 한가지 있습니다.함수에서 사용되는 매개변수의 이름들은 함수 내부에서만 사용합니다. 그러나 메서드에 사용되는 매개변수의 이름은 메서드를 호출할 때도 사용됩니다(첫번째 매개변수의 이름은 제외하고). 기본적으로 메서드는 호출할 때 혹은 메서드에서 사용되는 이름과 동일한 매개변수 이름을 갖습니다. 하지만 메서드 내부에서 사용될 두번째 이름을 특별히 정해줄 수도 있습니다.
+
+```c
+class Counter {
+    var count: Int = 0
+    func incrementBy(amount: Int, numberOfTimes times: Int) {
+        count += amount * times
+    }
+}
+var counter = Counter()
+counter.incrementBy(2, numberOfTimes: 7)
+```
+옵션 값을 사용할 때는 메서드나 속성, 서브스크립트 앞에 ?를 쓸 수 있습니다.  만약 ? 앞에 값이 nil 이라면 ? 이후에 나오는 모든 것은 무시되고 표현의 값들은 nil을 갖습니다. 반면에 값이 있는 경우라면 ? 이후의 모든 그 값을 기준으로 동작합니다. 양쪽 경우 모두 옵션 값으로 사용됩니다.
+
+##열거형(Enumerations)과 구조체(Structures)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+
+
+
+
 
 
 
