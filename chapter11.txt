@@ -103,7 +103,7 @@ let vga = Resolution(width: 640, height: 480)
 ```
 구조체완 달리 클래스 인스턴스의 경우에는 기본 멤버초기자를 받지 않습니다. 초기자의 자세한 사항은 `Initialization`을 참조해주십시오.
 
-# 구조체와 열거형은 값형식
+## 구조체와 열거형은 값형식
 갑형식(*value type*)은 함수에 매개변수로 넘겨지거나 변수나 상수에 할당될때 값을 복사하는 형입니다.
 
 사실 여러분은 지금까지 전 챕터에서 값형식을 광범위하게 사용했습니다. 사실 스위프트에서 기본 형- 정수, 실수, 불리언, 문자열, 배열과 딕셔너리-은 전부 값형식이고 구조체로 구현되어있습니다.
@@ -150,4 +150,33 @@ if rememberedDirection == .West {
 // "The remembered direction is still .West" 출력
 ```
 `rememberedDirection`에 `currentDirection`의 값이 할당될때 실제적으로는 값의 복사가 이루어집니다. 그러므로 `currentDirection`의 값이 변경된후에도 `rememberedDirection`에 복사되어서 저장된 원래 값에는 어떠한 영향도 미치지 않습니다.
+
+## 클래스는 참조형식
+값형식과는 달리 참조형식(*reference type*)은 함수에 인자로 전달되때나 상수나 변수에 할당될때 복사가 이루어지지 않습니다. 동일한 인스턴스의 레퍼런스(reference)가 복사대신 사용됩니다.
+
+위에서 정의한 `VideoMode` 클래스의 사용을 통한 예제를 살펴보도록 하겠습니다.
+```
+let tenEighty = VideoMode()
+tenEighty.resolution = hd
+tenEighty.interlaced = true
+tenEighty.name = "1080i"
+tenEighty.frameRate = 25.0
+```
+이 예제에서 우리는 `tenEighty`라는 상수를 선언하고 새로 생성된 `VideoMode` 클래스의 인스턴스를 할당했습니다. 비디오 모드는 전에 설정했던 1920 x 1080의 HD 해상도의 복사된 값을 할당했습니다. 또한 interlaced를 설정하고 name에 "1080i"를 주었습니다. 그리고 마지막으로 프레임 레이트를 초당 25.0로 설정했습니다.
+
+다음으로 `tenEighty`를 `alsoTenEighty'라는 새로운 상수에 할당하고 `alsoTenEighty`의 프레임 레이트의 값을 수정하겠습니다.
+```
+let alsoTenEighty = tenEighty
+asloTenEighty.frameRate = 30.0
+```
+클래스는 참조형식이기때문에 `tenEighty`와 `alsoTenEighty`는 실제적으로 동일한 `VideoMode` 인스턴스를 참조하고 있습니다. 그들은 단지 동일한 인스턴스를 참조하는 서로 다른 이름일뿐입니다.
+
+아래의 예제코드를 통해 `tenEighty`의 `framerate` 프로퍼티가 새로운 프레임 레이트 값인 30.0임을 확인할수 있습니다.
+```
+println("The frameRate property of tenEighty is now
+		\(tenEighty.frameRate)")
+// "The frameRate property of tenEighty is now 30.0" 출력
+```
+`tenEighty`와 `alsoTenEighty`가 변수가 아니라 상수로 선언되었음을 주의깊게 보십시오. `tenEighty`와 `alsoTenEighty` 상수의 그자체는 실제적으로 바뀌지 않기때문에 여러분은 여전히 tenEighty.frameRate과 alsoTenEighty.frameRate의 값을 바꿀수 있습니다. 
+`tenEighty`와 `alsoTenEighty` 자체는 `VideoMode` 인스턴스를 "저장"하지 않고 `VideoMode` 인스턴스를 참조만 합니다. 바뀌는것은 참조되고 있는 `VideoMode`의 `frameRate`프로퍼티이지 `VideoMode`를 참조하고 있는 상수의 값은 변하지 않습니다.
 
