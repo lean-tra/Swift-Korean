@@ -519,6 +519,44 @@ ServerResponse에 세번째 경우를 추가하고 스위치문에도 추가해�
 
 ##프로토콜(Protocols)와 확장(Extensions)##
 
+프로토콜을 선언하기 위해 protocol 키워드를 사용하자
+
+```c
+protocol ExampleProtocol {
+    var simpleDescription: String { get }
+    mutating func adjust()
+}
+```
+
+클래스, 열거형, 구조체 모두에 프로토콜을 사용할 수 있다.
+
+```c
+class SimpleClass: ExampleProtocol {
+    var simpleDescription: String = "A very simple class."
+    var anotherProperty: Int = 69105
+    func adjust() {
+        simpleDescription += "  Now 100% adjusted."
+    }
+}
+var a = SimpleClass()
+a.adjust()
+let aDescription = a.simpleDescription
+ 
+struct SimpleStructure: ExampleProtocol {
+    var simpleDescription: String = "A simple structure"
+    mutating func adjust() {
+        simpleDescription += " (adjusted)"
+    }
+}
+var b = SimpleStructure()
+b.adjust()
+let bDescription = b.simpleDescription
+```
+
+>실험
+프로토콜을 사용하는 열거형을 만들어보자.
+
+구조체를 수정하기 위해 사용되는 메서드를 표시하기 위해 SimpleStructure 선언부에 사용되는 mutating 키워드를 살펴봅시다. 
 
 
 
@@ -537,16 +575,6 @@ ServerResponse에 세번째 경우를 추가하고 스위치문에도 추가해�
 
 
 
-
-
-
-
-
-
-
-    
-    
-    
 
 
 
