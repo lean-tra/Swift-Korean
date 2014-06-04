@@ -3,10 +3,8 @@
 
 ## 타입변환(Type Casting)
 
-타입 변환이란 인스탄스(instance)의 타입을 체크하기 위한 방법이며, 또한 
-and/or to treat that instance as if
-it is a different superclass or subclass from somewhere else in its own class hierarchy.
-Swift에서 타입 변환은 'is'와 'as'라는 연산자로 구현할 수 있으며, 이 두 연산자는 값의 타입을 체크하거나 다른 타입으로 변환하는 간단하고 표현적인 방법을 제공합니다.
+타입 변환이란 인스턴스(instance)의 타입을 체크하기 위한 방법이며, 또한 이것은 인스턴스를 마치 해당 클래스가 가친 계층구조에서 온 상위클래스나 하위클래스처럼 다룬다.
+Swift에서 타입 변환은 `is`와 `as`라는 연산자로 구현할 수 있으며, 이 두 연산자는 값의 타입을 체크하거나 다른 타입으로 변환하는 간단하고 표현적인 방법을 제공합니다.
 또한 해당 타입이 프로토콜에 적합하지 아닌지 체크하기 위해서 타입 변환을 사용할 수 있으며 보다 자세한 사항은 [Protocol Conformance](링크)를 참조하시기 바랍니다.
 
 ## 타입 캐스팅을 위한 클래스 계층 정의(Defining a Class Hierarchy for Type Casting)
@@ -16,7 +14,7 @@ You can use type casting with a hierarchy of classes and subclasses to check the
 particular class instance and to cast that instance to another class within the same
 hierarchy. 
 아래의 세가지의 코드조각(code snippets)는 타입 캐스팅이 사용되는 예제를 보여주기 위한 계층적인 클래스들과 각각의 클래스들의 인스턴스를 포함하는 배열(array)를 정의하고 있습니다.
-첫번째 코드 조각은 MediaItem 새로운 기본 클래스(base calss)를 정의하고 있습니다. 이 클래스는 디지털 미디어 라이브러리에 있는 모든 아이템들을 위한 기본적인 기능을 제공합니다. 특히   문자열(String)타입의 name 속성(Property)를 선언하고, initializer를 통해서 'name'을 초기화 합니다(이것은 모든 미디어 아이템(영화나 노래)들이 이름을 가지고 있다고 가정합니다)
+첫번째 코드 조각은 MediaItem이라는 새로운 기본 클래스(base class)를 정의하고 있습니다. 이 클래스는 디지털 미디어 라이브러리에 있는 모든 아이템들을 위한 기본적인 기능을 제공합니다. 특히   문자열(String)타입의 name 속성(Property)를 선언하고, initializer를 통해서 'name'을 초기화 합니다(이것은 모든 미디어 아이템(영화나 노래)들이 이름을 가지고 있다고 가정합니다)
 
 ```c
 class MediaItem {
@@ -45,9 +43,9 @@ init(name: String, artist: String) {
  }
  }
 ```
- 마지막 코드조각은 2개의 Movie 인스탄스와 3개의 Song 인스탄스를 포함하는 library로 불리는 상수형 배열(constant array)를 만든다.
- library배열의 타입은 각각의 배열 내부의 콘텐츠를 초기화 하는 타입으로 추정할 할 수 있다.
-Swift의 타입 체커는 Movie나 Song이 공통의 상위 클래스(superclass)인 MediaItem을 가진다고 추정할 수 있고, 따라서 library의 array는  MediaItem[]로 추정할 수 있다 :
+마지막 코드조각은 2개의 Movie 인스탄스와 3개의 Song 인스턴스를 포함하는 library로 불리는 상수형 배열(constant array)를 만든다.
+library배열의 타입은 각각의 배열 내부의 콘텐츠를 초기화 하는 타입으로 추정할 수 있다.
+Swift의 타입 체커는 Movie나 Song이 공통의 상위 클래스(superclass)인 MediaItem을 가진다고 추정할 수 있고, 따라서 library의 타입은  MediaItem[]로 추정할 수 있다 :
 ```c
 let library = [
  Movie(name: "Casablanca", director: "Michael Curtiz"),
@@ -58,12 +56,12 @@ let library = [
 ]
 // the type of "library" is inferred to be MediaItem[]
 ```
-library에 저장된 요소들은 해당 Scenes뒤에서는 여전히 Movie와 Song인스탄스이다. 그러나 만일 네가 이 array의 컨텐츠들을 반복자 등을 이용하여 뽑아낸 다면, 네가 받게된 그 아이템들의 타입은 Song이나 Movie이 아닌 MediaItem일 것이다. 그것들을 원래의 타입으로 작업을 하기 위해얻고 싶다면, 당신은 그들의 타입을 체크하는 것이 필요하고, 또한 그들을 downcast해서 다른 타입으로 변경하여야 한다. 이는 아래서 설명하도록 하겠다.
+library에 저장된 요소들은 해당 Scenes뒤에서는 여전히 Movie와 Song인스탄스이다. 그러나 만일 네가 이 array의 컨텐츠들을 반복자 등을 이용하여 뽑아낸 다면, 네가 받게된 그 아이템들의 타입은 Song이나 Movie이 아닌 MediaItem일 것이다. 그것들을 원래의 타입으로 작업을 하기 위해얻고 싶다면, 당신은 그들의 타입을 체크하는 것이 필요하고, 또한 그들을 다운캐스트해서 다른 타입으로 변경하여야 한다. 이는 아래서 설명하도록 하겠다.
 
 ## 타입 체크(Checking Type)
 
-어떠한 instance가 확실히 하위클래스 타입인지 아닌지를 체크하기 위해서는 타입 체크 연산자인 'is'를 이용합니다. 이 타입체크용 연산자는 만일 해당 인스탄스가 해당 하위 클래스라면 true를, 아니라면 false를 반환합니다.
-아래의 예시는 library배열에 있는 Movie의 instance의 수와 Song의 instance의 수를 세기 위한movieCount와 songCount라는 두개의 변수를 선언하는 것을 보여줍니다.:
+어떠한 인스턴스가 확실히 하위클래스 타입인지 아닌지를 체크하기 위해서는 타입 체크 연산자인 `is`를 이용합니다. 이 타입체크용 연산자는 만일 해당 인스탄스가 해당 하위 클래스라면 `true`를, 아니라면 `false`를 반환합니다.
+아래의 예시는 library배열에 있는 Movie의 인스턴스의 수와 Song의 인스턴스의 수를 세기 위한movieCount와 songCount라는 두개의 변수를 선언하는 것을 보여줍니다.:
 ```c
 var movieCount = 0
 var songCount = 0
@@ -105,7 +103,7 @@ for item in library {
 // Song: 'The One And Only', by Chesney Hawkes
 // Song: 'Never Gonna Give You Up', by Rick Astley
 ```
-이 예시는 현재 아이템이 Movie라고 생각하고 다운 캐스팅을 시도하는 것으로 시작합니다. 아이템이 MediaItem 인스탄스이므로 이 아이템은 Movie일 수 있습니다, 또한 똑같은 이유로 Song도 가능합니다, 혹은 오로지 단순히 MediaItem일수도 있습니다. 이것이 불확실 하기 때문에, as? 타입변환 연산자를 사용하여 하위 클래스로의 다운캐스팅을 시도시에 optional value를 반환합니다. 그 결과 item as Moive의 결과는 Move? 타입, 즉 optional Movie이 됩니다.
+이 예시는 현재 아이템이 Movie라고 생각하고 다운 캐스팅을 시도하는 것으로 시작합니다. 아이템이 MediaItem 인스탄스이므로 이 아이템은 Movie일 수 있습니다, 또한 똑같은 이유로 Song도 가능합니다, 혹은 오로지 단순히 MediaItem일수도 있습니다. 이것이 불확실 하기 때문에, `as?` 타입변환 연산자를 사용하여 하위 클래스로의 다운캐스팅을 시도시에 optional value를 반환합니다. 그 결과 item as Moive의 결과는 Move? 타입, 즉 optional Movie이 됩니다.
 library 배열안의 두개의 Song 인스탄스에 해당 내용을 적용하여 Movie로 다운캐스팅을 할경우 실패한다.  이것에 대처하기 위해, 위의 예시에서는 결과로 나온 optional Movie값이 실제로 값을 가지고 있는지 체크하기 위한(이 경우는 다운캐스팅이 성공했는지 아닌지 찾는 과정이다) optional binding을 사용한다. 
 이 optional binding 은 "if let movie = is as? Moive"와 같이 적히며, 이는 다음과 같이 해석될 수 있다: "해당 아이템을 Movie로 생각하고 접근을 시도한다. 만일 해당 작업이 상공하면, 반환된 optional Movie값을 저장할 movie라고 불리는 새로운 임시 상수값을 설정한다.
 만일 다운 캐스팅이 성공한다면, movie의 속성들을 가지고 director와 같은 Moive 인스탄스를 위한 설명을 출력하는데 사용할 수 있습니다. 
@@ -118,16 +116,16 @@ library 배열안의 두개의 Song 인스탄스에 해당 내용을 적용하�
 
 Swift는 특정한 타입을 가지지 않는 상태로 작업하기 위한 두가지의 특별한 타입을 제공합니다:
 
-AnyObject 는 어떠한 클래스타입의 인스탄스라도 표현할 수 있습니다
-Any 는 함수형의 타입을 제외하고는 어떠한 타입의 인스탄스라도 표현할 수 있습니다.
+`AnyObject`는 어떠한 클래스타입의 인스턴스라도 표현할 수 있습니다
+`Any`는 함수형의 타입을 제외하고는 어떠한 타입의 인스턴스라도 표현할 수 있습니다.
 
 >NOTE
-Any나 AnyObject는 오로지 당신이 명시적으로 behavior나 그들이 제공하는 능력들이 필요한 경우에만 사용합니다. 이는 항상 당신의 코드 속에서당신이 예상한 특정한 형태의 타입으로 작동하는 것이 더 낫습니다.
+`Any`나 `AnyObject`는 오로지 당신이 명시적으로 behavior나 그들이 제공하는 능력들이 필요한 경우에만 사용합니다. 이는 항상 당신의 코드 속에서당신이 예상한 특정한 형태의 타입으로 작동하는 것이 더 낫습니다.
 
 ## AnyObject
 
-Cocoa APIS를 이용하여 작업을 할때, 보통 AnyObject[] 타입의 배열를(any object 타입의 값을 가진 배열) 받는것이 일반적입니다. 이것은 Objctive-C가 명시적인 타입의 배열을 가지지 못하기 때문입니다. 그러나 당신이 종종  당신이 알고있는 API가 제공하는 array를 포함한 여러가지 정보를 포함한 오브젝트들의 타입에 대해서 자신이 있을 수 있다.
-이러한 상황에서, 당신은 optional unwrapping이 필요하지 않은 경우에 한하여 배열의 각각의 아이템을 특정한 클래스의 타입으로 바꾸는 다운캐스팅을하기 위한 타입 변환 연산자 as로 강제로 변경한 형태를 사용할 수 있습니다.
+Cocoa APIS를 이용하여 작업을 할때, 보통 `AnyObject`[] 타입의 배열을(`AnyObject` 타입의 값을 가진 배열) 받는것이 일반적입니다. 이것은 Objective-C가 명시적인 타입의 배열을 가지지 못하기 때문입니다. 그러나 당신이 종종  당신이 알고있는 API가 제공하는 배열을 포함한 여러가지 정보를 포함한 오브젝트들의 타입에 대해서 자신이 있을 수 있다.
+이러한 상황에서, 당신은 optional unwrapping이 필요하지 않은 경우에 한하여 배열의 각각의 아이템을 특정한 클래스의 타입으로 바꾸는 다운캐스팅을하기 위한 타입 변환 연산자 `as`로 강제로 변경한 형태를 사용할 수 있습니다.
 ```c
 let someObjects: AnyObject[] = [
  Movie(name: "2001: A Space Odyssey", director: "Stanley Kubrick"),
@@ -135,7 +133,7 @@ let someObjects: AnyObject[] = [
  Movie(name: "Alien", director: "Ridley Scott")
 ]
 ```
-이 배열은 오로지 Moive 인스턴스만 가지는 것을 이미 알고 있으므로, 당신은 다운캐스팅 및 타입 변환 연산자 'as'를 이용하여 non-optional Moive로 강제로 형태를 바꾸는 unwrap를 할 수 있습니다.
+이 배열은 오로지 Moive 인스턴스만 가지는 것을 이미 알고 있으므로, 당신은 다운캐스팅 및 타입 변환 연산자 `as`를 이용하여 non-optional Moive로 강제로 형태를 바꾸는 unwrap를 할 수 있습니다.
 ```c
 for object in someObjects {
  let movie = object as Movie
@@ -145,7 +143,7 @@ for object in someObjects {
 // Movie: 'Moon', dir. Duncan Jones
 // Movie: 'Alien', dir. Ridley Scott
 ```
-루프를 조금더 짧게 만들기 위해서, 각 아이템을 다운캐스팅하는 대신에 Movie[] someObjects 배열을 Movie[]타입으로 다운 캐스팅 할 수있습니다:
+루프를 조금더 짧게 만들기 위해서, 각 아이템을 다운캐스팅하는 대신에 someObjects 배열을 Movie[]타입으로 다운 캐스팅 할 수도 있습니다:
 ```c
 for movie in someObjects as Movie[] {
  println("Movie: '\(movie.name)', dir. \(movie.director)")
@@ -156,7 +154,7 @@ for movie in someObjects as Movie[] {
 
 ## Any
 
-이곳에 non-class타입을 포함한 여러가지 다른 타입을 섞어서 작업하기 위한 Any를 사용한 예제가 있다. 이 예제는 Any타입의 값을 저장할 수 있는 thing이라고 불리는 한 배열을 생성한다.
+이곳에 non-class타입을 포함한 여러가지 다른 타입을 섞어서 작업하기 위한 Any를 사용한 예제가 있다. 이 예제는 `Any`타입의 값을 저장할 수 있는 thing이라는 한 배열을 생성한다.
 ```c
 var things = Any[]()
  
@@ -168,32 +166,34 @@ things.append("hello")
 things.append((3.0, 5.0))
 things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
 ```
-thing배열은 두개의 int 값, 두개의 Double값, 하나의 String값, 하나의 (Double,Double)타입의 tople, 그리고 "Ghostbusters"의 name과 "Ivan Retiman"의 director속성을 가진 Moive를 한개 가지고 있다.
-당신은 Any나 AnyObject로 알고있는 변수에서 특정한 타입의 상수나 변수 찾기 위한 스위치 구문의 case 항목에 `is`와 `as` 연산자를 사용할수 있습니다.
+thing배열은 두개의 `int` 값, 두개의 `Double`값, 하나의 `String`값, 하나의 (`Double`,`Double`)타입의 tuple, 그리고 "Ghostbusters"의 name과 "Ivan Retiman"의 director속성을 가진 Moive를 한개 가지고 있다.
+당신은 `Any`나 `AnyObject`로 알고있는 변수에서 특정한 타입의 상수나 변수 찾기 위한 스위치 구문의 `case` 항목에 `is`와 `as` 연산자를 사용할수 있습니다.
 아래의 예제는 아이템들의 things 배열의 각 아이템을 반복하면서 스위치 문을 통해서 각각의 타입을 요청한다.
-몇몇의 스위치문의 case항목에서 올바르게 맞는 값과 타입을 가지는 상수의 경우는 해당 값과 형태를 출력한다:
+몇몇의 `switch`문의 `case`항목에서 비교항목과 동일한 값과 타입을 가지는 상수의 경우는 해당 값과 형태를 출력한다:
 ```c
 for thing in things {
- switch thing {
- case 0 as Int:
- println("zero as an Int")
- case 0 as Double:
- println("zero as a Double")
- case let someInt as Int:
- println("an integer value of \(someInt)") case let someDouble as Double where someDouble > 0:
- println("a positive double value of \(someDouble)")
-case is Double:
- println("some other double value that I don't want to print")
-case let someString as String:
- println("a string value of \"\(someString)\"")
-case let (x, y) as (Double, Double):
- println("an (x, y) point at \(x), \(y)")
+    switch thing {
+    case 0 as Int:
+        println("zero as an Int")
+    case 0 as Double:
+        println("zero as a Double")
+    case let someInt as Int:
+        println("an integer value of \(someInt)")
+    case let someDouble as Double where someDouble > 0:
+        println("a positive double value of \(someDouble)")
+    case is Double:
+        println("some other double value that I don't want to print")
+    case let someString as String:
+        println("a string value of \"\(someString)\"")
+    case let (x, y) as (Double, Double):
+        println("an (x, y) point at \(x), \(y)")
+    case let movie as Movie:
+        println("a movie called '\(movie.name)', dir. \(movie.director)")
+    default:
+        println("something else")
+    }
+}
  
- 
-case let movie as Movie:
- println("a movie called '\(movie.name)', dir. \(movie.director)")
-default:
- println("something else")
 // zero as an Int
 // zero as a Double
 // an integer value of 42
@@ -204,4 +204,4 @@ default:
 ```
 
 >NOTE
-스위치문의 case항목들은 체크 및 특정한 타입으로의 변환을 위해서 as나 as?를 통해서 강제로 변경된 형태를 사용한다. 이런 체크는 스위치 문의 문맥안에 있는 이상 항상 안전하다. 
+`switch`문의 `case`항목들은 체크 및 특정한 타입으로의 변환을 위해서 `as`나 `as?`를 통해서 강제로 변경된 형태를 사용한다. 이런 체크는 `switch`문의 문맥안에 있는 이상 항상 안전하다. 
