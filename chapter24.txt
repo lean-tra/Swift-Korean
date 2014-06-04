@@ -422,14 +422,41 @@ The function’s type parameter list places the following requirements on the tw
 - The `ItemType` for `C1` must be the same as the `ItemType` for `C2` (written as `C1.ItemType == C2.ItemType`).
 - The `ItemType` for `C1` must conform to the `Equatable` protocol (written as `C1.ItemType: Equatable`).
 
-The third and fourth requirements are defined as part of a where clause, and are written after the where keyword as part of the function’s type parameter list.
+The third and fourth requirements are defined as part of a `where` clause, and are written after the where keyword as part of the function’s type parameter list.
 
 These requirements mean:
 
-someContainer is a container of type C1.
-anotherContainer is a container of type C2.
-someContainer and anotherContainer contain the same type of items.
-The items in someContainer can be checked with the not equal operator (!=) to see if they are different from each other.
-The third and fourth requirements combine to mean that the items in anotherContainer can also be checked with the != operator, because they are exactly the same type as the items in someContainer.
+- `someContainer` is a container of type `C1`.
+- `anotherContainer` is a container of type `C2`.
+- `someContainer` and `anotherContainer` contain the same type of items.
+- The items in `someContainer` can be checked with the not equal operator (`!=`) to see if they are different from each other.
 
-These requirements enable the allItemsMatch function to compare the two containers, even if they are of a different container type.
+The third and fourth requirements combine to mean that the items in `anotherContainer` can also be checked with the `!=` operator, because they are exactly the same type as the items in `someContainer`.
+
+These requirements enable the `allItemsMatch` function to compare the two containers, even if they are of a different container type.
+
+The `allItemsMatch` function starts by checking that both containers contain the same number of items. If they contain a different number of items, there is no way that they can match, and the function returns `false`.
+
+After making this check, the function iterates over all of the items in `someContainer` with a `for-in` loop and the half-closed range operator (`..`). For each item, the function checks whether the item from `someContainer` is not equal to the corresponding item in `anotherContainer`. If the two items are not equal, then the two containers do not match, and the function returns `false`.
+
+If the loop finishes without finding a mismatch, the two containers match, and the function returns `true`.
+
+Here’s how the `allItemsMatch` function looks in action:
+
+```
+var stackOfStrings = Stack<String>()
+stackOfStrings.push("uno")
+stackOfStrings.push("dos")
+stackOfStrings.push("tres")
+ 
+var arrayOfStrings = ["uno", "dos", "tres"]
+ 
+if allItemsMatch(stackOfStrings, arrayOfStrings) {
+    println("All items match.")
+} else {
+    println("Not all items match.")
+}
+// prints "All items match."
+```
+
+The example above creates a `Stack` instance to store `String` values, and pushes three strings onto the stack. The example also creates an `Array` instance initialized with an array literal containing the same three strings as the stack. Even though the stack and the array are of a different type, they both conform to the `Container` protocol, and both contain the same type of values. You can therefore call the `allItemsMatch` function with these two containers as its arguments. In the example above, the `allItemsMatch` function correctly reports that all of the items in the two containers match.
