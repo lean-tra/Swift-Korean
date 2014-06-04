@@ -238,3 +238,69 @@ if question {
 	answer2
 }
 ```
+이것은 테이블 행의 픽셀 높이를 계산하는 예제입니다. 행의 헤더가 있다면 컨텐츠의 높이가 50 픽셀이상이고 행의 헤더가 없다면 20픽셀 보다 큰것입니다.: 
+
+```
+let contentHeight = 40
+let hasHeader = true 
+let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+// rowHeight 는 90과 같다
+```
+
+위의 예제코드는 아래 코드의 속기입니다.
+```
+let contentHeight = 40
+let hasHeader = true
+var rowHeight = contentHeight
+if hasHeader {
+	rowHeight = rowHeight + 50
+} else {
+	rowHeight = rowHeight + 20
+}
+
+```
+
+첫번째 예제의 삼항 조건 연산자의 사용은 `rowheight`에 단 한줄의 코드에 올바른 값으로 설정될 수 있음을 의미합니다. 이것은 두 번째 예제코드보다 간결하고 그 값이 `if` 문 내에서 수정될 필요가 없기 떄문에 이것은 `rowheight`가 변수가 될 필요성이 없어집니다.
+
+삼항 조건 연산자는 두 식의 어떤 결정을 고려하는것을 위해 효율적인 속기를 제공합니다. 그러나 삼항 조건 연산자는 주의해서 다뤄야 합니다. 남용하면 그 간결함은 읽기 어려운 코드로 이어질 수 있습니다. 하나의 복합 문에 삼항 조건 연산자와 다중 인스턴스를 결합하는것을 피하세요.
+
+## 범위 연산자
+Swift는 두 개의 범위연산자를 지원하며 이 축약어는 값의 범위를 표현합니다.
+
+### 폐쇄 범위 연산자
+폐쇄 범위 연산자(`a...b`)는 `a`에서 `b` 까지의 범위를 정의합니다. 그리고 `a`와 `b`의 값을 포함합니다.
+
+폐쇄 범위 연산자는 `for-in` 루프와 같이 사용하고자 하는 값 범위에서 반복할때 폐쇄 범위 연산자는 유용합니다.
+
+```
+for index in 1...5 {
+	println("\(index) time 5 is \(index * 5)")
+}
+// 1번쨰 반복 5 is 5
+// 2번쨰 반복 5 is 10
+// 3번쨰 반복 5 is 15
+// 4번쨰 반복 5 is 20
+// 5번쨰 반복 5 is 25
+```
+`for-in` 루프에 대해서는 Control Flow 항목을 참조하시오 // 링크
+
+### 반 폐쇄 범위 연산자
+반 폐쇄 범위 연산자 (`a..b`)는 a 에서 b 로 실행되는 범위를 정의하지만 b가 포함되어 있지 않습니다. 그것은 최종값이 아니며 처음 값을 포함하고 있기 때문에 반폐쇄라고 합니다.
+
+반 폐쇄 범위는 특히 0을 기반으로한 목록 또는 배열로 작업할때 유용합니다. 그것은 리스트의 길이(포함안되는)까지 계산하는데 유용합니다.
+```
+let names = ["Anna", "Alex", "Brian", "Jack"]
+let count = name.count
+for i in 0.count {
+	println("Person \(i + 1) is called \(names[i]")
+}
+// Person 1 is called Anna
+// Person 2 is called Alex
+// Person 3 is called Brian
+// Person 4 is called Jack
+```
+배열에는 4개의 항목이 포함되어있습니다. 하지만 반 폐쇄 범위기 때문에 `0..count` 는 단지 3까지만 카운트 합니다. (배열의 마지막 항목의 인덱스)
+arrays에 대해 더 참조하고 싶다면 Arrays 항목 를 참조하시오 // 링크
+
+## 논리 연산자
+
