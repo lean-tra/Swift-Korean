@@ -1,5 +1,5 @@
 # 13 메서드 (Methods)
-> Translator : 이름 (메일주소)
+> Translator : 북극산펭귄 (say8425@gmail.com)
 
 #Methods
 
