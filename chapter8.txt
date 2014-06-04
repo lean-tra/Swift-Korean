@@ -279,7 +279,6 @@ let paddedString = alignRight(originalString, 10, "-")
 ###In-Out 파라메터
 위에 설명된것과 같이 가변 파라메터는 오직 함수 자신의 내부에서만 변경 될 수 있다. 만약 함수가 파라메터의 값을 변경하고 그 변경이 함수 호출이 종료된 후에도 계속되길 원한다면, 파라메터를 _in-out_ 파라메터로 정의하면 된다.
 _in-out_파라메터를 정의하기 위해서는 `inout` 키워드를 파라메터 정의의 시작점에 작성하면 된다. in-out 파라메터의 값은 함수의 _안으로_ 전달 되어, 함수에 의해 변경되고, 함수에서 다시 _나와서_ 원래의 값을 대체한다.
-You can only pass a variable as the argument for an in-out parameter. You cannot pass a constant or a literal value as the argument, because constants and literals cannot be modified. You place an ampersand (&) directly before a variable’s name when you pass it as an argument to an inout parameter, to indicate that it can be modified by the function.
 in-out 파라메터로 넘길 수 있는 값은 인수(argument)뿐이다. 상수나 문자 값은 in-out 파라메터로 넘겨질 수 없다. 상수나 문자값은 변경될 수 없기 때문이다. 인수를 in-out 파라메터로 넘길때 변수의 이름 바로 앞에 앰퍼샌드(`&`)를 붙여서 이 파라메터가 함수에 의해 변경될 수 있음을 표시한다.
 
 >NOTE
