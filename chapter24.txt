@@ -1,4 +1,5 @@
-# 24 제네릭
+# 24 제네릭 (Generics)
+> Translator : 이름 (메일주소)
 
 Generic code enables you to write flexible, reusable functions and types that can work with any type, subject to requirements that you define. You can write code that avoids duplication and expresses its intent in a clear, abstracted manner.
 
