@@ -15,6 +15,10 @@ Note
 {code}
 Residence 인스턴스(Instance)는 기본값이 1인 numberOfRooms 이라는 단 하나의 Int 프로퍼티를 가진다. Person 인스턴스는 Residence? 타입으로 residence 이라는 선택적 프로퍼티를 가진다.
 만약 Person 이라는 인스턴스를 새로 만들면, 선택지가 된 효과에 따라 기본적으로 nil로 설정된다. 아래 코드에서는 john는 nil로 된 residence 프로퍼티를 가질 것이다.
+let jone = Person()
+만약 Person의 residence의 numberOfRooms 프로퍼티를 그 값을 강제로 랩핑 해제를 하려고 느낌표를 붙여서 접근한다면 런타임 에러(Runtime Error)를 유발시킬 것이다. 왜냐하면 해제할 residence 값 자체가 없기 때문이다.
+let roomCount = john.residence.numberOfRooms
+위 코드는 john.residence가 nil이 아닌 값을 성공하며 방 갯수에 적절한 숫자를 담고 있는 Int 값에 roomCount를 설정할 것이다. 그러나 이 코드는 아래 보여지는 것처럼 residence가 nil이라면 항상 런타임 에러를 유발 시킨다. 
 
 
 
