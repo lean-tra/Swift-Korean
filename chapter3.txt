@@ -223,4 +223,12 @@ let pi = 3.14159
 
 Swift는 부동 소수점 수를 위한 타입을 추정할 때 `Float`보다는 항상 `Double`을 선택합니다.
 
+만약 한 표현식 안에 정수와 부동 소수점 수를 결합해서 사용하면 문맥으로부터 `Double` 타입이라고 추정될 것입니다.
+
+```c
+let anotherPi = 3 + 0.14159
+// anotherPi is also inferred to be of type Double
+```
+
+
 
