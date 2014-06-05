@@ -305,3 +305,128 @@ println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 
 >NOTE
 In-out 파라메터는 함수가 값을 반환하는 것과 같지 않다. 위의 `swapTwoInts` 예제는 반환 타입이나 반환값을 정의하고 있지 않다. 하지만 `someInt`와 `anotherInt`의 값을 변경한다. In-out 파라메터는 함수가 함수 밖의 범위(scope)에 영향을 끼칠 수 있는 또다른 방법이다.
+
+##Function Types
+모든 함수들은 특유의 함수 타입을 가지고 있다. 함수 타입은 함수의 파라메터 타입들과 반환 타입으로 구성된다.
+예를 들자면 이렇다:
+```
+func addTwoInts(a: Int, b: Int) -> Int {
+    return a + b
+}
+func multiplyTwoInts(a: Int, b: Int) -> Int {
+    return a * b
+}
+```
+이 예제는 `addTwoInts`와 `multiplyTwoInts`, 두개의 단순한 수학 함수를 정의한다. 함수들은 각각 두개의 `Int`값을 취하고 `Int`값을 계산의 적절한 결과로서 반환한다.
+위 두 함수의 타입은 `(Int, Int) -> Int`다. 이것은 "함수 타입은 `Int`타입의 파라메터가 두개며 반환값의 타입은 `Int`다." 라고 말할 수 있다.
+여기의 또다른 예제는 파라메터나 반환값이 없는 함수다.
+```
+func printHelloWorld() {
+    println("hello, world")
+}
+```
+이 함수의 타입은 `()->()`이며, "함수는 파라메터가 없고 `Void`를 반환한다."고 할 수 있다. 반환값을 정해지지 않은 함수는 언제나 `Void`를 반환하며, 이는 빈 튜플인 `()`로 표시될 수 있다.
+###Using Function Types
+
+You use function types just like any other types in Swift. For example, you can define a constant or variable to be of a function type and assign an appropriate function to that variable:
+
+var mathFunction: (Int, Int) -> Int = addTwoInts
+This can be read as:
+
+“Define a variable called mathFunction, which has a type of ‘a function that takes two Int values, and returns an Int value.’ Set this new variable to refer to the function called addTwoInts.”
+
+The addTwoInts function has the same type as the mathFunction variable, and so this assignment is allowed by Swift’s type-checker.
+
+You can now call the assigned function with the name mathFunction:
+
+println("Result: \(mathFunction(2, 3))")
+// prints "Result: 5"
+A different function with the same matching type can be assigned to the same variable, in the same way as for non-function types:
+
+mathFunction = multiplyTwoInts
+println("Result: \(mathFunction(2, 3))")
+// prints "Result: 6"
+As with any other type, you can leave it to Swift to infer the function type when you assign a function to a constant or variable:
+
+let anotherMathFunction = addTwoInts
+// anotherMathFunction is inferred to be of type (Int, Int) -> Int
+Function Types as Parameter Types
+
+You can use a function type such as (Int, Int) -> Int as a parameter type for another function. This enables you to leave some aspects of a function’s implementation for the function’s caller to provide when the function is called.
+
+Here’s an example to print the results of the math functions from above:
+
+func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
+    println("Result: \(mathFunction(a, b))")
+}
+printMathResult(addTwoInts, 3, 5)
+// prints "Result: 8"
+This example defines a function called printMathResult, which has three parameters. The first parameter is called mathFunction, and is of type (Int, Int) -> Int. You can pass any function of that type as the argument for this first parameter. The second and third parameters are called a and b, and are both of type Int. These are used as the two input values for the provided math function.
+
+When printMathResult is called, it is passed the addTwoInts function, and the integer values 3 and 5. It calls the provided function with the values 3 and 5, and prints the result of 8.
+
+The role of printMathResult is to print the result of a call to a math function of an appropriate type. It doesn’t matter what that function’s implementation actually does—it matters only that the function is of the correct type. This enables printMathResult to hand off some of its functionality to the caller of the function in a type-safe way.
+
+Function Types as Return Types
+
+You can use a function type as the return type of another function. You do this by writing a complete function type immediately after the return arrow (->) of the returning function.
+
+The next example defines two simple functions called stepForward and stepBackward. The stepForward function returns a value one more than its input value, and the stepBackward function returns a value one less than its input value. Both functions have a type of (Int) -> Int:
+
+func stepForward(input: Int) -> Int {
+    return input + 1
+}
+func stepBackward(input: Int) -> Int {
+    return input - 1
+}
+Here’s a function called chooseStepFunction, whose return type is “a function of type (Int) -> Int”. chooseStepFunction returns the stepForward function or the stepBackward function based on a Boolean parameter called backwards:
+
+func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+    return backwards ? stepBackward : stepForward
+}
+You can now use chooseStepFunction to obtain a function that will step in one direction or the other:
+
+var currentValue = 3
+let moveNearerToZero = chooseStepFunction(currentValue > 0)
+// moveNearerToZero now refers to the stepBackward() function
+The preceding example works out whether a positive or negative step is needed to move a variable called currentValue progressively closer to zero. currentValue has an initial value of 3, which means that currentValue > 0 returns true, causing chooseStepFunction to return the stepBackward function. A reference to the returned function is stored in a constant called moveNearerToZero.
+
+Now that moveNearerToZero refers to the correct function, it can be used to count to zero:
+
+println("Counting to zero:")
+// Counting to zero:
+while currentValue != 0 {
+    println("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
+}
+println("zero!")
+// 3...
+// 2...
+// 1...
+// zero!
+Nested Functions
+
+All of the functions you have encountered so far in this chapter have been examples of global functions, which are defined at a global scope. You can also define functions inside the bodies of other functions, known as nested functions.
+
+Nested functions are hidden from the outside world by default, but can still be called and used by their enclosing function. An enclosing function can also return one of its nested functions to allow the nested function to be used in another scope.
+
+You can rewrite the chooseStepFunction example above to use and return nested functions:
+
+func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+    func stepForward(input: Int) -> Int { return input + 1 }
+    func stepBackward(input: Int) -> Int { return input - 1 }
+    return backwards ? stepBackward : stepForward
+}
+var currentValue = -4
+let moveNearerToZero = chooseStepFunction(currentValue > 0)
+// moveNearerToZero now refers to the nested stepForward() function
+while currentValue != 0 {
+    println("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
+}
+println("zero!")
+// -4...
+// -3...
+// -2...
+// -1...
+// zero!
