@@ -214,5 +214,10 @@ let meaningOfLife = 42
 // meaningOfLife is inferred to be of type Int
 ```
 
+이와 비슷하게 부동 소수점 수를 위한 타입을 특정하지 않으면 Swift는 `Double`형 타입을 생성하길 원하다고 추정합니다.
 
+```c
+let pi = 3.14159
+// pi is inferred to be of type Double
+```
 
