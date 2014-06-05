@@ -3,7 +3,7 @@
 
 ## 클로저 (Closures)
 클로저는 사용자의 코드 안에서 전달되거나 사용할 수 있는 기능을 포함한 독립적인 블록(block)입니다. Swift에서의 클로저는 C 및 Objective-C 의 blocks와 유사하며, 다른 언어의 람다(lambda)와도 유사합니다.
-클로저는 자신이 정의된 컨텍스트 (context) 로부터 임의의 상수 및 변수의 레퍼런스를 획득 (capture)하고 저장할 수 있습니다. _(주: 클로저의 경우 클로저 바로 밖의 scope 의 상수 및 변수에 접근할 수 있다는 이야기입니다)_ 이렇게 상수 및 변수를 제약하는 특징때문에 클로저라는 이름이 되었습니다. Swift는 획득 과정의 메모리 관리를 모두 제어해줍니다.
+클로저는 자신이 정의된 컨텍스트 (context) 로부터 임의의 상수 및 변수의 참조(reference) 를 획득 (capture)하고 저장할 수 있습니다. _(주: 클로저의 경우 클로저 바로 밖의 scope 의 상수 및 변수에 접근할 수 있다는 이야기입니다)_ 이렇게 상수 및 변수를 제약하는 특징때문에 클로저라는 이름이 되었습니다. Swift는 획득 과정의 메모리 관리를 모두 제어해줍니다.
 
 > **노트**
 > "획득" 개념에 대해서 익숙하지 않아도 걱정하지 마세요. 아래의 [값 획득하기]() 항목에서 자세히 다룰 것입니다.
@@ -221,10 +221,10 @@ incrementor 함수는 아무 인자도 갖고 있지 않으며, runningTotal 및
 
 이 함수는 amount 값을 수정하지 않기 때문에, incrementor는 amount 안에 보관된 값을 획득하고 그 복사판을 보관합니다. 이 값은 새로운 incrementor 함수에서도 계속 이어져 보관됩니다.
 
-그러나, 이 함수가 runningTotal 변수를 호출시마다 변경하기 때문에, incrementor는 현재 runningTotal의 복사본 대신 값의 레퍼런스를 획득합니다. 레퍼런스 획득은 runningTotal 이 makeIncrementor 가 끝난 이후에도 사라지지 않음을 보증하며, incrementor 함수가 이후 호출될 때도 연속적으로 사용될 수 있음을 보증합니다.
+그러나, 이 함수가 runningTotal 변수를 호출시마다 변경하기 때문에, incrementor는 현재 runningTotal의 복사본 대신 값의 참조를 획득합니다. 참조 획득은 runningTotal 이 makeIncrementor 가 끝난 이후에도 사라지지 않음을 보증하며, incrementor 함수가 이후 호출될 때도 연속적으로 사용될 수 있음을 보증합니다.
 
 > **노트**
-> Swift는 어떤 변수가 레퍼런스로 획득되고 어떤 변수가 복사값으로 획득될지 판단합니다. 사용자는 amount 및 runningTotal 이 incrementor 중첩 함수에서 쓰일지의 여부를 명기할 필요가 없습니다. Swift는 또한 runningTotal 이 더이상 incrementor 함수로부터 필요로하지 않을 때 폐기하는 모든 메모리 관리 과정을 담당합니다.
+> Swift는 어떤 변수가 참조 로 획득되고 어떤 변수가 복사값으로 획득될지 판단합니다. 사용자는 amount 및 runningTotal 이 incrementor 중첩 함수에서 쓰일지의 여부를 명기할 필요가 없습니다. Swift는 또한 runningTotal 이 더이상 incrementor 함수로부터 필요로하지 않을 때 폐기하는 모든 메모리 관리 과정을 담당합니다.
 
 makeIncrementor 의 사용 예입니다.
 
@@ -239,7 +239,7 @@ makeIncrementor 의 사용 예입니다.
     incrementByTen()
     // returns a value of 30
 
-만약 새로운 incrementor 를 생성할 경우, 그 incrementor는 새롭고 독립적인 runningTotal 변수로의 레퍼런스를 갖게 됩니다. 아래의 예제에서, incrementBySeven은 새로운 runningTotal 변수의 레퍼런스를 획득하며, 이 변수는 incrementByTen에서 획득한 변수와 연결되지 않습니다.
+만약 새로운 incrementor 를 생성할 경우, 그 incrementor는 새롭고 독립적인 runningTotal 변수로의 참조를 갖게 됩니다. 아래의 예제에서, incrementBySeven은 새로운 runningTotal 변수의 참조를 획득하며, 이 변수는 incrementByTen에서 획득한 변수와 연결되지 않습니다.
 
     let incrementBySeven = makeIncrementor(forIncrement: 7)
     incrementBySeven()
@@ -248,6 +248,7 @@ makeIncrementor 의 사용 예입니다.
     // returns a value of 40
 
 > **노트**
-> 만약 클로저를 클래스 인스턴스의 프로퍼티로 지정하고, 클로저가 인스턴스 또는 인스턴스의 멤버를 참조하여 인스턴스를 획득할 경우, 클로저와 인스턴스의 강력한 레퍼런스 순환을 만들게 됩니다. Swift는 이러한 강력한 레퍼런스 순환을 깨기 위하여 capture list 사용합니다. 더 많은 정보는 [클로저의 강력한 레퍼런스 순환]() 을 참조하시기 바랍니다.
+> 만약 클로저를 클래스 인스턴스의 프로퍼티로 지정하고, 클로저가 인스턴스 또는 인스턴스의 멤버를 참조하여 인스턴스를 획득할 경우, 클로저와 인스턴스의 강력한 참조 순환을 만들게 됩니다. Swift는 이러한 강력한 참조 순환을 깨기 위하여 capture list 사용합니다. 더 많은 정보는 [클로저의 강력한 참조 순환]() 을 참조하시기 바랍니다.
 
-## 클로저는 레퍼런스 타입 (Closures Are Reference Types)
+## 클로저는 참조 타입 (Closures Are Reference Types)
+위의 예에서, incrementBySeven 및 incrementByTen은 상수입니다. 그러나 클로저로써 이러한 상수들은 여전히 그들이 획득한 runningTotal 변수를 증가시킬 수 있습니다. 이는 함수와 클로저가 참조 타입이기 때문입니다.
