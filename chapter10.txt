@@ -3,7 +3,7 @@
 
 열거형 _(Enumeration)_ 은 관련있는 값들의 그룹에 대한 일반적인 타입을 정의하며, 이를 이용하여 코드 안에서 타입에 안전한 방법으로 작업할 수 있습니다. C에 익숙한 사용자라면, C 열거형은 관련있는 이름을 정수값의 set에 할당하는 것을 알고 있을 것입니다. Swift의 열거형은 훨씬 더 유연하며, 열거형의 각 숫자마다 반드시 값을 제공할 필요가 없습니다. 만약 ("raw" 값으로 알려진) 값이 각 열거형 번호마다 제공될 경우, 그 값들은 문자열, 글자, 어떠한 정수나 부동 소수점 타입이 될 수 있습니다. 
 
-또한, 열거형 멤버들은 각각 다른 멤버 값에 대하여 다른 언어의 union및 비슷한 기능들이 하듯 연관된 값들을 어떤 타입이든 지정할 수 있습니다. 관련있는 멤머들의 일반적인 집합을 하나의 열거형의 부분으로 정의할 수도 있으며, 각각은 그에 연관된 적당한 타입의 값들의 다양한 집합을 가질 수 있습니다.
+또한, 열거형 멤버들은 각각 다른 멤버 값에 대하여 다른 언어의 union및 비슷한 기능들이 하듯 연관된 값들을 어떤 타입이든 지정할 수 있습니다. 관련있는 멤버들의 일반적인 집합을 하나의 열거형의 부분으로 정의할 수도 있으며, 각각은 그에 연관된 적당한 타입의 값들의 다양한 집합을 가질 수 있습니다.
 
 Swift의 열거형은 열거형의 현재 값에 대한 추가적인 정보를 제공하기 위한 계산된 프로퍼티나, 열거형이 표현하는 값들과 연관된 기능들을 제공하는 인스턴스 메소드 같이 전통적으로 클래스 등에서만 지원되는 많은 기능들을 차용하였습니다. 또한 열거형은 초기 멤버 값을 제공하는 initiailizer를 제공할 수 있고, 원래 구현을 넘어서 기능을 확장할 수도 있으며, 표준 기능을 제공하기 위한 프로토콜을 따를 수 있습니다.
 
@@ -86,7 +86,7 @@ Swift의 열거형은 열거형의 현재 값에 대한 추가적인 정보를 �
 
 앞 섹션의 에제는 열거형의 멤버들이 각각의 어떻게 정의되었는지 보여줍니다. 상수 및 변수를 `Planet.Earth` 에 설정할 수 있으며, 나중에 값들을 확인할 수도 있습니다. 그렇지만, 종종 멤버 값들과 함께 연관된 다른 타입의 값들을 저장하는 것이 유용한 경우들이 있습니다. 이는 추가적인 사용자 지정 정보를 멤버 값들마다 저장할수 있게 하며, 코드 안에서 멤버를 사용할 때 마다 정보가 변경되는 것을 허용합니다. 
 
-어떤 특정한 타입의 관련 값을 저장하는 Swift 열거형을 정의 할 수 있으며, 필요한 경우에 열거형의 각 멤보에 따라 값의 형식은 다를 수 있습니다. 이러한 열거형과 유사한 경우들이 다른 언어에서는 차별된 공용체 (discriminated union), 태깅된 공용체 (tagged unions) 및 변형체 (variants) 로 알려져 있습니다.
+어떤 특정한 타입의 관련 값을 저장하는 Swift 열거형을 정의 할 수 있으며, 필요한 경우에 열거형의 각 멤버에 따라 값의 형식은 다를 수 있습니다. 이러한 열거형과 유사한 경우들이 다른 언어에서는 차별된 공용체 (discriminated union), 태깅된 공용체 (tagged unions) 및 변형체 (variants) 로 알려져 있습니다.
 
 예를 들어 재고 추적 시스템이 각 제품을 두가지 타입의 바코드로 추적할 필요가 있다고 해 봅시다. 어떤 제품들은 UPC-A 포맷의 0에서 9 사이의 숫자를 사용하는 1차원 바코드로 레이블링 되어 있습니다. 각 바코드는 열 개의 "확인 번호(identifier)" 숫자가 뒤따르는 "번호 시스템" 숫자를 갖고 있습니다. 이 숫자들 뒤에는 각 코드가 제대로 스캔되었는지를 검증하기 위한 "확인(check)" 숫자가 붙습니다.
 
@@ -108,3 +108,43 @@ enum Barcode {
 이 코드는 다음과 같이 읽을 수 있습니다:
 
 "`(Int, Int, Int)` 타입의 UPCA 값 또는 `String` 타입의 QRCode 값을 가질 수 있는 `Barcode`라는 열거형 타입을 정의합니다."
+
+이 정의는 어떠한 실제 `Int` 및 `String` 값을 제공하지 않습니다. 오직 바코드 상수 및 변수들이 `Barcode.UPCA` 또는 `Barcode.QRCode` 중 하나와 같을 때, 그와 연관된 값들의 타입만을 정의합니다. 
+
+이제 새 바코드는 두가지 타입 중 하나로 생성될 수 있습니다:
+
+		var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
+
+이 예제는 `productBarcode` 라는 새 변수를 생성하고, `Barcode.UPCA` 의 값으로 (8, 8590951226, 3) 튜플 값을 배정합니다. 제공된 "식별자" 값은 바코드로 읽기 좋도록 정수 표현 안의 밑줄 -85909_51226-로 을 갖고 있습니다.
+
+동일한 제품이 다른 형태의 바코드로 배정될 수도 있습니다.
+
+		productBarcode = .QRCode("ABCDEFGHIJKLMNOP")”
+
+이 경우, 원래 `Barcode.UPCA` 및 정수 값은 새로운 `Barcode.QRCode` 와 문자열 값으로 대체됩니다. `Barcode` 타입의 상수 및 변수들은 `.UPCA` 또는 `.QRCode` 중 하나를 (해당되는 값들과 함께) 저장할 수 있지만, 한번에 둘 중 하나만 저장할 수 있습니다.
+
+서로 다른 바코드 타입들은 앞에서와 같이 스위치 구문을 사용하여 체크할 수 있습니다. 그러나, 이번 경우 관련된 값들은 스위치 구분의 일부로 추출될 수 있습니다. 각각의 연관 값들을 `switch`의 case 내용으로 사용하기 위하여 (`let` 접두사와 함께) 상수 또는 (`var` 접두사와 함께) 변수로 추출할 수 있습니다. 
+
+    switch productBarcode {
+    case .UPCA(let numberSystem, let identifier, let check):
+        println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+    case .QRCode(let productCode):
+        println("QR code with value of \(productCode).")
+    }
+    // prints "QR code with value of ABCDEFGHIJKLMNOP."
+
+만약 열거형 멤버들의 모든 연관 값들이 상수로 추출되었거나 모두 변수로 추출되었다면, 간결함을 위하여 멤버 이름 앞에 하나의 `var` 또는 `let` 을 붙일 수 있습니다:
+
+    switch productBarcode {
+    case let .UPCA(numberSystem, identifier, check):
+        println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+    case let .QRCode(productCode):
+        println("QR code with value of \(productCode).")
+    }
+    // prints "QR code with value of ABCDEFGHIJKLMNOP."
+‌
+Raw Values
+The barcode example in Associated Values shows how members of an enumeration can declare that they store associated values of different types. As an alternative to associated values, enumeration members can come prepopulated with default values (called raw values), which are all of the same type.
+
+Here’s an example that stores raw ASCII values alongside named enumeration members:”
+
