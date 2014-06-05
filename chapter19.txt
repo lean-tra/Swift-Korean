@@ -1,4 +1,5 @@
 # 19 선택 연쇄 (Optional Chaining)
+>Translator : 이름 (메일주소)
 
 선택 연쇄(Optional chaining)란 nil이 될 수 있는 선택지(options)를 가진 프로퍼티(property), 메소드(method), 서브 스크립트 (subscript)에 질의하고 호출하는 프로세스를 말한다.  만약 어떤 선택지가 값을 가진다면 프로퍼티, 메소드, 서브스크립트 호출은 성공하고 선택지가 nil이면, 프로퍼티, 메소드, 서브스크립트 호출은 nil을 반환하게 된다.
 여러개의 질의도 함께 엮일 수 있으며, 만약 연쇄(chaining) 중간의 어떤 링크가 nil이라면 조용하게 전체 체인은 실패한다. 
