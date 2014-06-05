@@ -121,3 +121,17 @@ println("The current value of friendlyWelcome is \(friendlyWelcome)")
 문자열 해석에 관한 모든 옵션은 `문자열 해석` 부분에 설명되어 있습니다.
 
 ###주석(Comments)
+
+스스로 상기하기 위해서 혹은 메모하기 위해 코드내에 실행되지 않는 글을 쓰려고 할 때 주석을 사용할 수 있습니다. 작성한 코드를 컴파일 할 때 Swift의 컴파일러는 주석을 무시합니다.
+
+Swift의 주석은 C의 주석과 흡사합니다. 한줄 주석은 /(슬래시)를 두번 연속해서 쓰면 시작됩니다.
+
+	// this is a comment
+
+또 여러줄 주석도 쓸 수 있습니다. 여러줄 주석은 슬래시와 별표를 쓰고(/*) 끝에는 별표와 슬래시(*/)를 순서대로 써주면 됩니다.
+
+```c
+/* this is also a comment,
+but written over multiple lines */
+```
+
