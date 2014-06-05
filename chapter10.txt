@@ -40,11 +40,11 @@ Swift의 열거형은 열거형의 현재 값에 대한 추가적인 정보를 �
 
     var directionToHead = CompassPoint.West
 
-`directionToHead` 타입은 `CompassPoint`의 가능한 값들 중 하나가 초기화 될 때 유추됩니다. `directionToHead`가 `CompassPoint`로 선언되면, 짧은 닷 구문을 사용하여 그 값을 다른 `CompassPoint` 값으로 설정할 수 있습니다:
+`directionToHead` 타입은 `CompassPoint`의 가능한 값들 중 하나가 초기화 될 때 유추됩니다. `directionToHead`가 `CompassPoint`로 선언되면, 짧은 닷 구문을 사용하여 그 값을 다른 `CompassPoint` 값으로 할당할 수 있습니다:
 
     directionToHead = .East
 
-`directionToHead`의 타입은 이미 알려져 있으므로, 값을 설정할 때 타입을 명기하지 않을 수 있습니다. 이러한 부분은 명시적으로 타입된 열거형 값들로 작업할 때 매우 읽기 편한 코드를 만들어줍니다.
+`directionToHead`의 타입은 이미 알려져 있으므로, 값을 할 때 타입을 명기하지 않을 수 있습니다. 이러한 부분은 명시적으로 타입된 열거형 값들로 작업할 때 매우 읽기 편한 코드를 만들어줍니다.
 
 
 ## 열거형의 값들과 스위치 구문간의 대응 (Matching Enumeration Values with a Switch Statement)
@@ -84,7 +84,7 @@ Swift의 열거형은 열거형의 현재 값에 대한 추가적인 정보를 �
 
 ## 관련된 값들 (Associated Values)
 
-앞 섹션의 에제는 열거형의 멤버들이 각각의 어떻게 정의되었는지 보여줍니다. 상수 및 변수를 `Planet.Earth` 에 설정할 수 있으며, 나중에 값들을 확인할 수도 있습니다. 그렇지만, 종종 멤버 값들과 함께 연관된 다른 타입의 값들을 저장하는 것이 유용한 경우들이 있습니다. 이는 추가적인 사용자 지정 정보를 멤버 값들마다 저장할수 있게 하며, 코드 안에서 멤버를 사용할 때 마다 정보가 변경되는 것을 허용합니다. 
+앞 섹션의 에제는 열거형의 멤버들이 각각의 어떻게 정의되었는지 보여줍니다. 상수 및 변수를 `Planet.Earth` 에 할당할 수 있으며, 나중에 값들을 확인할 수도 있습니다. 그렇지만, 종종 멤버 값들과 함께 연관된 다른 타입의 값들을 저장하는 것이 유용한 경우들이 있습니다. 이는 추가적인 사용자 지정 정보를 멤버 값들마다 저장할수 있게 하며, 코드 안에서 멤버를 사용할 때 마다 정보가 변경되는 것을 허용합니다. 
 
 어떤 특정한 타입의 관련 값을 저장하는 Swift 열거형을 정의 할 수 있으며, 필요한 경우에 열거형의 각 멤버에 따라 값의 형식은 다를 수 있습니다. 이러한 열거형과 유사한 경우들이 다른 언어에서는 차별된 공용체 (discriminated union), 태깅된 공용체 (tagged unions) 및 변형체 (variants) 로 알려져 있습니다.
 
@@ -146,9 +146,7 @@ enum Barcode {
 ##  원시 값 (Raw Values)
 연관값들을 사용한 바코드 예제는 어떻게 열거형의 멤버들이 그들이 저장하는 여러 타입의 관련된 값들을 선언하는지에 대해 보여주었습니다. 연관 값들에 대한 다른 방법으로, 열거형 멤버들은 (원시 값들이라고 부르는) 모두 같은 타입인 기본값들로 미리 채워질 수 있습니다.
 
-아래는 ASCII 값들을 
-
-Here’s an example that stores raw ASCII values alongside named enumeration members:
+아래는 원시 ASCII 값들을 이름붙은 열거형 멤버들에 저장하는 예입니다.
 
     enum ASCIIControlCharacter: Character {
         case Tab = "\t"
@@ -156,34 +154,35 @@ Here’s an example that stores raw ASCII values alongside named enumeration mem
         case CarriageReturn = "\r"
     }
 
-Here, the raw values for an enumeration called ASCIIControlCharacter are defined to be of type Character, and are set to some of the more common ASCII control characters. Character values are described in Strings and Characters.
+여기서 `ASCIIControlCharacter` 열거형을 위한 원시 값들은 `Character` 타입이 되도록 정의되었으며, 더 일반적인 ASCII 제어 문자들로 설정되었습니다. `Character` 값들은 [문자열 및 글자]() 에 설명되어 있습니다.
 
-Note that raw values are not the same as associated values. Raw values are set to prepopulated values when you first define the enumeration in your code, like the three ASCII codes above. The raw value for a particular enumeration member is always the same. Associated values are set when you create a new constant or variable based on one of the enumeration’s members, and can be different each time you do so.
+원시 값들은 연관된 값들과 같지 않음을 유의하세요. 원시 값들은 위의 세가지 ASCII 코드들처럼 코드 안에서 처음 열거형을 정의할 때 미리 정의된 값들입니다. 개개의 열거형 멤버들의 원시 값은 언제나 동일합니다. 연관 값들은 새 상수 또는 변수를 열거형의 멤버 중 하나에 기초하여 생성할 때 설정되며, 무엇을 하느냐에 따라 매번 다를 수 있습니다.
 
-Raw values can be strings, characters, or any of the integer or floating-point number types. Each raw value must be unique within its enumeration declaration. When integers are used for raw values, they auto-increment if no value is specified for some of the enumeration members.
+원시 값은 문자열, 글자, 정수 또는 어떠한 부동 소수점 타입이 될 수 있습니다. 각각의 원시 값은 열거형 정의 안에서 반드시 유일해야 합니다. 원시 값으로 정수가 사용되었다면, 열거형 멤버의 일부에 아무 값도 설정되지 않은 경우 자동 증가(Auto-incrementation)할 것입니다.
 
-The enumeration below is a refinement of the earlier Planet enumeration, with raw integer values to represent each planet’s order from the sun:
+아래의 열거형은 태양으로부터의 순서를 원시 정수값으로 표현하는 행성 열거형의 개선된 형태입니다.
 
     enum Planet: Int {
         case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
     }
 
-Auto-incrementation means that Planet.Venus has a raw value of 2, and so on.
+자동 증가는 `Planet.Venus`가 2의 원시 값을 갖는 식으로 진행되는 것을 의미합니다.
 
-Access the raw value of an enumeration member with its toRaw method:
+
+열거형 멤버의 원시 값들을 `toRaw` 메소드로 읽읍시다:
 
     let earthsOrder = Planet.Earth.toRaw()
     // earthsOrder is 3
 
 
-Use an enumeration’s fromRaw method to try to find an enumeration member with a particular raw value. This example identifies Uranus from its raw value of 7:
+열거형의 `fromRaw` 메소드를 사용하여 특정한 원시 값에 해당되는 열거형 멤버를 찾읍시다. 이 예제는 원시값 7에 해당되는 행성이 Uranus임을 판별합니다:
 
     let possiblePlanet = Planet.fromRaw(7)
     // possiblePlanet is of type Planet? and equals Planet.Uranus
 
-Not all possible Int values will find a matching planet, however. Because of this, the fromRaw method returns an optional enumeration member. In the example above, possiblePlanet is of type Planet?, or “optional Planet.”
+모든 `Int` 값들이 해당되는 행성을 찾을 수 있는 것은 아닙니다. 그러므로, `fromRaw` 메소드는 추가적인 열거형 멤버를 반환합니다. 위의 예에서, `possiblePlanet` 은 `Planet?` 타입이거나 "optional `Planet`" 타입입니다.
 
-If you try to find a Planet with a position of 9, the optional Planet value returned by fromRaw will be nil:
+만약 9번째 위치에 있는 행성을 찾는다면, `fromRaw`가 반환하는 추가적 `Planet` 값은 `nil` 이 될 것입니다:
 
     let positionToFind = 9
     if let somePlanet = Planet.fromRaw(positionToFind) {
@@ -197,6 +196,9 @@ If you try to find a Planet with a position of 9, the optional Planet value retu
         println("There isn't a planet at position \(positionToFind)")
     }
     // prints "There isn't a planet at position 9"
+
+이 예제는 9의 원시값에 해당되는 행성을 읽기 위해 추가적인 바인딩을 사용합니다. `if let somePlanet = Planet.fromRaw(9)` 는 추가적인 `Planet`을 찾아내고, 찾을 수 있는 경우 추가적인 `Planet`의 내용을 `somePlanet`에 할당합니다.
+
 
 This example uses optional binding to try to access a planet with a raw value of 9. The statement if let somePlanet = Planet.fromRaw(9) retrieves an optional Planet, and sets somePlanet to the contents of that optional Planet if it can be retrieved. In this case, it is not possible to retrieve a planet with a position of 9, and so the else branch is executed instead.
 
