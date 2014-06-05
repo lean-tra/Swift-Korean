@@ -270,6 +270,11 @@ let hexadecimalDouble = 0xC.3p0
 
 숫자의 문자표현은 좀 더 쉽게 읽을 수 있도록 추가 형식을 포함하기도 합니다. 정수나 소수 모두 좀 더 읽기 쉽도록 여분의 0이나 _(underscores)를 포함할 수 있습니다. 두 양식 모두 문자표현의 실제 값에는 영향을 주지 않습니다.
 
+```c
+let paddedDouble = 000123.456
+let oneMillion = 1_000_000
+let justOverOneMillion = 1_000_000.000_000_1
+```
 
 
 
