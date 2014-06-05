@@ -1,8 +1,5 @@
 # 19 옵션 연쇄 (Optional Chaining)
-> Translator : 이름 (메일주소)
-
-Write here...
-
+> Translator : 허혁 (hyukhur@gmail.com)
 
 선택 연쇄(Optional chaining)란 nil이 될 수 있는 선택지(options)를 가진 프로퍼티(property), 메소드(method), 서브 스크립트 (subscript)에 질의하고 호출하는 프로세스를 말한다.  만약 어떤 선택지가 값을 가진다면 프로퍼티, 메소드, 서브스크립트 호출은 성공하고 선택지가 nil이면, 프로퍼티, 메소드, 서브스크립트 호출은 nil을 반환하게 된다.
 여러개의 질의도 함께 엮일 수 있으며, 만약 연쇄(chaining) 중간의 어떤 링크가 nil이라면 조용하게 전체 체인은 실패한다. 
@@ -63,3 +60,90 @@ Person 클래스는 이전과 동일한 방법으로 정의한다.
     var residence: Residence?
 }
 
+Residence 클래스는 이전보다 조금 복잡해졌다. 이번에는 Residence 클래스에 Room[] 타입의 빈 배열로 초기화된 rooms라는 변수 프로퍼티를 선언한다.
+>‘class Residence {
+    var rooms = Room[]()
+    var numberOfRooms: Int {
+    return rooms.count
+    }
+    subscript(i: Int) -> Room {
+        return rooms[i]
+    }
+    func printNumberOfRooms() {
+        println("The number of rooms is \(numberOfRooms)")
+    }
+    var address: Address?
+}’
+
+이번 버전 Residence는 Room 인스턴스 배열을 저장하기 때문에, 그 numberOfRooms 프로퍼티는 저장된 프로퍼티가 아닌 계산된 프로퍼티로 구현했다. 계산된 numberOfRooms 프로퍼티는 단순히 rooms 배열에서 count 프로퍼티의 값을 반환한다.
+그 rooms 배열에 접근하기 위한 바로가기로 이번 버전 Residence는 읽기만 가능한 서브 스크립트를 제공하는데 서브스크립트에게 전달받는 인덱스(index)가 적합할 것이라는 가정으로 시작해보겠다. 만약 인덱스가 적합하다면, 서브스크립트는 rooms 배열의 요청받은 인덱스의 방정보를 반환할 것이다.
+또한 이번 버전 Residence는 printNumberOfRooms라는 이름의 메소드를 제공하는데 단순히 Residence에 방 갯수를 출력한다.
+마지막으로 Residence에 Address?이란 타입으로 address라는 선택적 프로퍼티를 선언한다. 이를 위한 Address 클래스 타입은 밑에 정의하겠다.
+rooms 배열에 사용하는 Room 클래스는 name이라는 프로퍼티 하나를 가지는 간단한 클래스인데 이는 적절한 방이름을 설정하기 위한 초기화 역할(initializer)을 한다.
+>class Room {
+    let name: String
+    init(name: String) { self.name = name }
+}
+
+이 모델의 마지막 클래스는 Address이다. 이 클래스는 String? 타입의 선택적 프로퍼티를 3개 가지고 있다. 그 중 2개는 buildingName과 buildingNumber 인데 주소를 구성하는 특정 빌딩에 대한 구분을 짓기 위한 대체 수단이다. 3번째 프로퍼티인 street는 그 주소의 도로이름에 사용한다.
+>class Address {
+    var buildingName: String?
+    var buildingNumber: String?
+    var street: String?
+    func buildingIdentifier() -> String? {
+        if buildingName {
+            return buildingName
+        } else if buildingNumber {
+            return buildingNumber
+        } else {
+            return nil
+        }
+    }
+}
+
+또한 Address 클래스는 String? 반환값을 가지는 buildingIdentifer 이란 이름의 메소드를 제공한다. 이 메소드는 buildingName과 buildingNumber 프로퍼티를 확인해서 만약 buildingName이 값을 가진다면 그 값을 혹은 buildingNumber이 값을 가진다면 그 값을, 둘다 값이 없다면 nil을 반환한다.
+
+##선택 연쇄를 통한 프로퍼티 호출
+강제 랩핑 해제(Forced Unwrapping) 대안으로써 선택 연쇄에서 봤던 것처럼 선택 연쇄를 선택적 값에 대한 프로퍼티 접근에 접근할 수 있는지 만약 프로퍼티 접근이 가능한지 확인하기 위해 사용할 수 있다. 그러나 선택 연쇄를 통해 프로퍼티의 값을 설정하는 것은 할 수 없다.
+위에 정의한 새로운 Person 인스턴스를 사용해 클래스를 만들어 이전처럼 numberOfRooms 프로퍼티에 접근하기를 시도해본다.
+>let john = Person()
+if let roomCount = john.residence?.numberOfRooms {
+    println("John's residence has \(roomCount) room(s).")
+} else {
+    println("Unable to retrieve the number of rooms.")
+}
+// prints "Unable to retrieve the number of rooms."
+
+john.residence가 nil이기 때문에 이 선택 연쇄를 예전과 동일한 방식으로 호출했지만 에러 없이 실패한다.
+
+##선택연쇄를 통한 메소드 호출
+선택 연쇄를 사용해서 선택적 값을 호출하고 메소드 호출이 성공했는지 여부를 확인해볼 수 있다. 설렁 메소드가 반환값을 정의하지 않더라고 할 수 있다.
+Residence 클래스에 있는 printNumberOfRooms 메소드는 numberOfRooms의 현재 값을 출력한다. 그 메소드는 다음과 같을 것이다.
+>func printNumberOfRooms() {
+    println("The number of rooms is \(numberOfRooms)")
+}
+
+이 메소드는 반환값을 명시하지 않았다. 그러나 반환형이 없는 함수와 메소드는 Functions Without Return Values에 나와 있는 것처럼 암시적으로 Void 타입을 반환하게 된다.
+만약 선택 연쇄에 있는 선택지 값에 이 메소드를 호출한다면, 메소드 반환형은 Void가 아니라 Void?이 될 것이다. 선택 연쇄를 통해 호출될 때 선택적 타입은 항상 반환 값을 가지기 때문이다. 이는 메소드가 반환값이 정의되어 있지 않더라도 printNumberOfRooms 메소드를 호출이 가능한지를 if문을 써서 확인할 수 있게 한다. printNumberOfRooms에서 암시적 반환값은 만약 메소드가 선택 연쇄를 통해 성공적으로 호출되었다면 Void와 동일할 것이고 그렇지 않다면 nil과 동일할 것이다.
+>if john.residence?.printNumberOfRooms() {
+    println("It was possible to print the number of rooms.")
+} else {
+    println("It was not possible to print the number of rooms.")
+}
+// prints "It was not possible to print the number of rooms."
+
+##선택 연쇄를 통한 서브스크립트 호출
+선택적값에 대한 서브스크립트에서 값을 가져와서 서브스크립트 호출이 성공했는지 확인하기 위해 선택 연쇄를 사용할 수 있다. 그러나 선택 연쇄를 통해 서브스크립트로 값을 설정하는 것은 할 수 없다.
+
+>노트
+선택연쇄를 통해 선택적값에 대한 서브스크립트를 접근할 때 서브스크립트 괄호(brace) 앞에 물음표를 놓아야 한다. 뒤가 아니다. 선택연쇄 물음표는 항상 선택적인 표현식의 뒤에 바로 따라나와야 한다.
+
+아래 예는 Residence 클래스에 정의되어 있는 서브스크립트를 사용하는 john.residence 프로퍼티의 rooms 배열에 있는 첫번째 방이름을 검색하려고 하는 것이다. john.residence가 현재 nil이기 때문에 서브스크립트는 실패한다.
+>if let firstRoomName = john.residence?[0].name {
+    println("The first room name is \(firstRoomName).")
+} else {
+    println("Unable to retrieve the first room name.")
+}
+// prints "Unable to retrieve the first room name."
+
+선택연쇄 물음표
