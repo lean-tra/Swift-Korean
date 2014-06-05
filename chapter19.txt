@@ -60,3 +60,45 @@ Person 클래스는 이전과 동일한 방법으로 정의한다.
     var residence: Residence?
 }
 
+Residence 클래스는 이전보다 조금 복잡해졌다. 이번에는 Residence 클래스에 Room[] 타입의 빈 배열로 초기화된 rooms라는 변수 프로퍼티를 선언한다.
+>‘class Residence {
+    var rooms = Room[]()
+    var numberOfRooms: Int {
+    return rooms.count
+    }
+    subscript(i: Int) -> Room {
+        return rooms[i]
+    }
+    func printNumberOfRooms() {
+        println("The number of rooms is \(numberOfRooms)")
+    }
+    var address: Address?
+}’
+
+이번 버전 Residence는 Room 인스턴스 배열을 저장하기 때문에, 그 numberOfRooms 프로퍼티는 저장된 프로퍼티가 아닌 계산된 프로퍼티로 구현했다. 계산된 numberOfRooms 프로퍼티는 단순히 rooms 배열에서 count 프로퍼티의 값을 반환한다.
+그 rooms 배열에 접근하기 위한 바로가기로 이번 버전 Residence는 읽기만 가능한 서브 스크립트를 제공하는데 서브스크립트에게 전달받는 인덱스(index)가 적합할 것이라는 가정으로 시작해보겠다. 만약 인덱스가 적합하다면, 서브스크립트는 rooms 배열의 요청받은 인덱스의 방정보를 반환할 것이다.
+또한 이번 버전 Residence는 printNumberOfRooms라는 이름의 메소드를 제공하는데 단순히 Residence에 방 갯수를 출력한다.
+마지막으로 Residence에 Address?이란 타입으로 address라는 선택적 프로퍼티를 선언한다. 이를 위한 Address 클래스 타입은 밑에 정의하겠다.
+rooms 배열에 사용하는 Room 클래스는 name이라는 프로퍼티 하나를 가지는 간단한 클래스인데 이는 적절한 방이름을 설정하기 위한 초기화 역할(initializer)을 한다.
+>class Room {
+    let name: String
+    init(name: String) { self.name = name }
+}
+
+이 모델의 마지막 클래스는 Address이다. 이 클래스는 String? 타입의 선택적 프로퍼티를 3개 가지고 있다. 그 중 2개는 buildingName과 buildingNumber 인데 주소를 구성하는 특정 빌딩에 대한 구분을 짓기 위한 대체 수단이다. 3번째 프로퍼티인 street는 그 주소의 도로이름에 사용한다.
+>class Address {
+    var buildingName: String?
+    var buildingNumber: String?
+    var street: String?
+    func buildingIdentifier() -> String? {
+        if buildingName {
+            return buildingName
+        } else if buildingNumber {
+            return buildingNumber
+        } else {
+            return nil
+        }
+    }
+}
+
+또한 Address 클래스는 String? 반환값을 가지는 buildingIdentifer 이란 이름의 메소드를 제공한다. 이 메소드는 buildingName과 buildingNumber 프로퍼티를 확인해서 만약 buildingName이 값을 가진다면 그 값을 혹은 buildingNumber이 값을 가진다면 그 값을, 둘다 값이 없다면 nil을 반환한다.
