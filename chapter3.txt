@@ -159,3 +159,9 @@ let cat = "🐱"; println(cat)
 Swift는 8, 16, 32, 64 비트 형태로 부호있는 정수와 부호없는 정수를 지원합니다. 정수형은 부호 없는 8비트 정수형 `UInt8`, 부호있는 32비트 정수형 `Int32` 처럼 C와 비슷한 관습을 따른 이름을 갖고 있습니다.  Swift의 다른 모든 타입과 마찬가지고 정수형 타입명 역시 대문자로 시작합니다.
 
 ####정수범위
+각 정수형 타입에 최대값과 최소값은 `min`과 `max` 속성을 가지고 접근할 수 있습니다.
+
+```c
+let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
+let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
+```
