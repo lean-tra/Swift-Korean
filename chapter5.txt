@@ -117,4 +117,20 @@ for-in 루프에 대해서는 For Loops 를 참조하십시오 // 링크
 let yenSign: Character = "¥"
 ```
 
+## 문자 세기 (Counting Characters)
+문자열의 문자의 수를 검색하려면 전역 함수인 countElements를 호출하여 함수의 유일한 매개변수인 문자열을 전달합니다.
+
+```
+let unusualMenagerie = "Koala , Snail , Penguin , Dromedary"
+println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
+// prints "unusualMenagerie has 40 characters"
+```
+
+> NOTE
+>
+> 다른 유니코드 문자와 같은 유니코드 문자의 다른 표현은 메모리의 저장된 다른 양을 필요로 할 수 있습니다. 이때문에 Swift의 문자는 각 문자의 표현에서 동일한 양의 메모리를 차지하지 않습니다. 결과에 따라 문자열의 길이는 차례로 그 문자의 각각 반복하지 않고는 계산될 수 없다. 당신이 특히 긴 문 자열 값으로 작업하는 경우 `CountElements` 기능이 해당 문자열에 대한 정확한 글자수를 계산하기 위해 문자열에서 문자 세기를 반복해야한다는 것을 인식해야합니다.
+>
+>또한 `countElements`에 의해 반환된 문자수는 항상 같은 문자가 포함되어있는 `NSSString` 의 길이 속성과 동일하지 않습니다. 길이는 `NSString`을 기초로한 문자열 UTF-16 표현내의 16비트 유닛 숫자에 기반하고 문자열에서 유니코드 문자의 수에 기반하지는 않습니다.
+이 사실을 반영하기 위해 길이 속성은 Swift가 NSString 문자열 값에 접근할때 utf16count 라고 합니다.
+
 
