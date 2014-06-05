@@ -150,6 +150,8 @@ this is the end of the first multiline comment */
 
 ```c
 let cat = "🐱"; println(cat)
-// prints "🐱"
+// prints ":fox:"
 ```
 
+###정수(Integers)
+정수는 `42`나 `-23`같이 소수점 단위가 없는 숫자들 전체 입니다.
