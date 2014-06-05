@@ -260,3 +260,6 @@ makeIncrementor 의 사용 예입니다.
     let alsoIncrementByTen = incrementByTen
     alsoIncrementByTen()
     // returns a value of 50
+    
+    
+    
