@@ -209,5 +209,9 @@ Swift는 타입 추정 때문에 C나 Objective-C에 비해 타입을 지정해�
 
 예를 들면, 타입을 명시하지 않고 새로운 상수를 선언할 때 `42`라는 문자그대로의 값을 할당하면 Swift는 정수형처럼 보이는 숫자를 가지고 초기화를 했기 때문에 상수가 `Int`값을 갖기를 원한다고 추정합니다. 
 
+```c
+let meaningOfLife = 42
+// meaningOfLife is inferred to be of type Int
+```
 
 
