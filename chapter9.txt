@@ -114,7 +114,23 @@ Swift는 자동으로 단축 인자 이름을 인라인 클로저에 제공하�
 
 연산자 함수에 대해 더 많은 내용은 [연산자 함수]() 항목을 참조하시기 바랍니다.
 
-( Trailing Closures )
+## 후행 클로저 ( Trailing Closures )
 
-만약 클로저 표현식을 함수에 함수의 마지막 인자로 전달할 때 클로저 표현식이 긴 경우, 대신에 (Trailing closure) 를 작성하는 것이 유용할 수 있습니다. 
+만약 클로저 표현식을 함수에 함수의 마지막 인자로 전달할 때 클로저 표현식이 긴 경우, 대신에 후행 클로저 (Trailing closure) 를 작성하는 것이 유용할 수 있습니다. 후행 클로저는 함수 호출 괄호의 밖 (또는 뒤) 에 쓰여져서 함수를 지원하는 클로저 표현식입니다.
+
+> func someFunctionThatTakesAClosure(closure: () -> ()) {
+>     // function body goes here
+> }
+> 
+> // here's how you call this function without using a trailing closure:
+> 
+> someFunctionThatTakesAClosure({
+>     // closure's body goes here
+>     })
+>  
+> // here's how you call this function with a trailing closure instead:
+>  
+> someFunctionThatTakesAClosure() {
+>     // trailing closure's body goes here
+> }
 
