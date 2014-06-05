@@ -102,3 +102,19 @@ rooms 배열에 사용하는 Room 클래스는 name이라는 프로퍼티 하나
 }
 
 또한 Address 클래스는 String? 반환값을 가지는 buildingIdentifer 이란 이름의 메소드를 제공한다. 이 메소드는 buildingName과 buildingNumber 프로퍼티를 확인해서 만약 buildingName이 값을 가진다면 그 값을 혹은 buildingNumber이 값을 가진다면 그 값을, 둘다 값이 없다면 nil을 반환한다.
+
+##선택 연쇄를 통한 프로퍼티 호출
+강제 랩핑 해제(Forced Unwrapping) 대안으로써 선택 연쇄에서 봤던 것처럼 선택 연쇄를 선택적 값에 대한 프로퍼티 접근에 접근할 수 있는지 만약 프로퍼티 접근이 가능한지 확인하기 위해 사용할 수 있다. 그러나 선택 연쇄를 통해 프로퍼티의 값을 설정하는 것은 할 수 없다.
+위에 정의한 새로운 Person 인스턴스를 사용해 클래스를 만들어 이전처럼 numberOfRooms 프로퍼티에 접근하기를 시도해본다.
+>let john = Person()
+if let roomCount = john.residence?.numberOfRooms {
+    println("John's residence has \(roomCount) room(s).")
+} else {
+    println("Unable to retrieve the number of rooms.")
+}
+// prints "Unable to retrieve the number of rooms."
+
+john.residence가 nil이기 때문에 이 선택 연쇄를 예전과 동일한 방식으로 호출했지만 에러 없이 실패한다.
+
+##선택연쇄를 통한 메소드 호출
+
