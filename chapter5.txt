@@ -163,4 +163,37 @@ welcome += character1
 >
 > 문자 값은 하나의 문자만을 포함해야만 하기 떄문에 기존의 문자변수에 문자열이나 문자를 추가 할 수 없습니다.
 
+## 문자열 삽입
+
+문자열 삽입은 상수, 변수, 리터럴 그리고 표현식의 혼합을 이용, 문자열 안에 문자 값을 포함하여 새로운 문자열 값을 만드는 방법입니다. 문자열 리터럴에 삽입된 각 항목은 백슬래시가 앞에 한 쌍의 괄호로 싸여있습니다.
+```
+let multiplier = 3
+let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
+// message is "3 times 2.5 is 7.5"
+```
+위의 예에서 `multiplier`의 값은 `\(multiplier)` 문자열 리터럴로 삽입됩니다. 이 플레이스 홀더는 실제 문자열 삽입이 평가(evaluate)될때 `multiplier`의 실제 값으로 치환됩니다.
+
+`multiplier`의 값은 큰 문자열 표현식의 후의 일부입니다. 이 표현식은 `Double(mutiplier) * 2.5` 의 값을 계산하고 문자열로 결과 (`7.5`)를 삽입합니다. 이 경우에 문자열 리터럴 내부에 포함된 경우 표현은 `\(Double(multiplier) * 2.5)`로 기록됩니다.
+
+
+> NOTE
+>
+> 문자열에 삽입된 괄호안에 쓰는 표현으로 이스케이프 큰 따옴표 (`"`) 또는 백 슬래시(`\`)와 캐리지 리턴 및 줄바꿈을 포함할 수 없습니다.
+
+## 문자열 비교
+Swift는 문자열 값을 비교하는 세가지 방법을 제공합니다 : 문자열 같음, 접두사 같음, 접미사 같음 // 디스커션에 올림
+
+### String Equality 
+두개의 문자열 값이 동일한 순서로 포함되어 있는 경우 두개의 문자열 값이 동일한 것으로 간주됩니다.
+
+```
+let quotation = "We're a lot alike, you and I."
+let sameQuotation = "We're a lot alike, you and I."
+if quotation == sameQuotation {
+	pinrtln("These two strings are considered equal")
+}
+// prints "These two strings are considered equal"
+```
+
+
 
