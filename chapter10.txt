@@ -44,7 +44,7 @@ Swift의 열거형은 열거형의 현재 값에 대한 추가적인 정보를 �
 
     directionToHead = .East
 
-`directionToHead`의 타입은 이미 알려져 있으므로, 값을 할 때 타입을 명기하지 않을 수 있습니다. 이러한 부분은 명시적으로 타입된 열거형 값들로 작업할 때 매우 읽기 편한 코드를 만들어줍니다.
+`directionToHead`의 타입은 이미 알려져 있으므로, 값을 할당할 때 타입을 명기하지 않을 수 있습니다. 이러한 부분은 명시적으로 타입된 열거형 값들로 작업할 때 매우 읽기 편한 코드를 만들어줍니다.
 
 
 ## 열거형의 값들과 스위치 구문간의 대응 (Matching Enumeration Values with a Switch Statement)
@@ -154,9 +154,9 @@ enum Barcode {
         case CarriageReturn = "\r"
     }
 
-여기서 `ASCIIControlCharacter` 열거형을 위한 원시 값들은 `Character` 타입이 되도록 정의되었으며, 더 일반적인 ASCII 제어 문자들로 설정되었습니다. `Character` 값들은 [문자열 및 글자]() 에 설명되어 있습니다.
+여기서 `ASCIIControlCharacter` 열거형을 위한 원시 값들은 `Character` 타입이 되도록 정의되었으며, 더 일반적인 ASCII 제어 문자들로 할당되었습니다. `Character` 값들은 [문자열 및 글자]() 에 설명되어 있습니다.
 
-원시 값들은 연관된 값들과 같지 않음을 유의하세요. 원시 값들은 위의 세가지 ASCII 코드들처럼 코드 안에서 처음 열거형을 정의할 때 미리 정의된 값들입니다. 개개의 열거형 멤버들의 원시 값은 언제나 동일합니다. 연관 값들은 새 상수 또는 변수를 열거형의 멤버 중 하나에 기초하여 생성할 때 설정되며, 무엇을 하느냐에 따라 매번 다를 수 있습니다.
+원시 값들은 연관된 값들과 같지 않음을 유의하세요. 원시 값들은 위의 세가지 ASCII 코드들처럼 코드 안에서 처음 열거형을 정의할 때 미리 정의된 값들입니다. 개개의 열거형 멤버들의 원시 값은 언제나 동일합니다. 연관 값들은 새 상수 또는 변수를 열거형의 멤버 중 하나에 기초하여 생성할 때 할당되며, 무엇을 하느냐에 따라 매번 다를 수 있습니다.
 
 원시 값은 문자열, 글자, 정수 또는 어떠한 부동 소수점 타입이 될 수 있습니다. 각각의 원시 값은 열거형 정의 안에서 반드시 유일해야 합니다. 원시 값으로 정수가 사용되었다면, 열거형 멤버의 일부에 아무 값도 설정되지 않은 경우 자동 증가(Auto-incrementation)할 것입니다.
 
@@ -197,8 +197,4 @@ enum Barcode {
     }
     // prints "There isn't a planet at position 9"
 
-이 예제는 9의 원시값에 해당되는 행성을 읽기 위해 추가적인 바인딩을 사용합니다. `if let somePlanet = Planet.fromRaw(9)` 는 추가적인 `Planet`을 찾아내고, 찾을 수 있는 경우 추가적인 `Planet`의 내용을 `somePlanet`에 할당합니다.
-
-
-This example uses optional binding to try to access a planet with a raw value of 9. The statement if let somePlanet = Planet.fromRaw(9) retrieves an optional Planet, and sets somePlanet to the contents of that optional Planet if it can be retrieved. In this case, it is not possible to retrieve a planet with a position of 9, and so the else branch is executed instead.
-
+이 예제는 9의 원시값에 해당되는 행성을 읽기 위해 추가적인 바인딩을 사용합니다. `if let somePlanet = Planet.fromRaw(9)` 는 추가적인 `Planet`을 찾아내고, 찾을 수 있는 경우 추가적인 `Planet`의 내용을 `somePlanet`에 할당합니다. 이 경우, `9`의 위치에 있는 행성을 찾는 것은 불가능하기 때문에 `else` 브렌치가 대신 실행됩니다.
