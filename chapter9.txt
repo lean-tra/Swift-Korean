@@ -3,7 +3,7 @@
 
 ## 클로저 (Closures)
 클로저는 사용자의 코드 안에서 전달되거나 사용할 수 있는 기능을 포함한 독립적인 블록(block)입니다. Swift에서의 클로저는 C 및 Objective-C 의 blocks와 유사하며, 다른 언어의 람다(lambda)와도 유사합니다.
-클로저는 자신이 정의된 컨텍스트 (context) 로부터 임의의 상수 및 변수의 레퍼런스를 획득 (capture)하고 저장할 수 있습니다. _(주: 클로저의 경우 클로저 바로 밖의 scope 의 상수 및 변수에 접근할 수 있다는 이야기입니다)_ 이렇게 상수 및 변수를 제약하는 특징때문에 클로저라는 이름이 되었습니다. Swift는 획득 과정의 메모리 관리를 모두 제어해줍니다.
+클로저는 자신이 정의된 컨텍스트 (context) 로부터 임의의 상수 및 변수의 참조(reference) 를 획득 (capture)하고 저장할 수 있습니다. _(주: 클로저의 경우 클로저 바로 밖의 scope 의 상수 및 변수에 접근할 수 있다는 이야기입니다)_ 이렇게 상수 및 변수를 제약하는 특징때문에 클로저라는 이름이 되었습니다. Swift는 획득 과정의 메모리 관리를 모두 제어해줍니다.
 
 > **노트**
 > "획득" 개념에 대해서 익숙하지 않아도 걱정하지 마세요. 아래의 [값 획득하기]() 항목에서 자세히 다룰 것입니다.
@@ -187,4 +187,79 @@ number 변수는 이후 10으로 나눠집니다. 이 변수가 정수이기 때
 이 예제에서 사용한 후행 클로저 구문은 전체 클로저를 map 함수의 외부 괄호로 전체 클로저를 감쌀 필요 없이, 클로저의 기능을 클로저가 지원하는 함수의 바로 뒤에서 깔끔하게 캡슐화합니다.
 
 ## 값 획득하기 (Capturing Values)
+클로저는 자신이 정의된 주변 컨텍스트로부터 상수 및 변수의 값을 획득할 수 있습니다. 클로저는 이러한 상수와 변수들을 원래 상수와 변수들이 정의된 범위 (scope) 가 더이상 존재하지 않는 경우에조차도 값을 참조하거나 수정할 수 있습니다.
 
+Swift에서 클로저의 가장 간단한 형태는 다른 함수의 본문 안에 작성된 중첩 함수입니다. 중첩 함수는 바깥 함수의 모든 인자를 획득할 수 있으며, 또한 바깥 함수 내에서 정의된 모든 상수 및 변수를 획득할 수 있습니다.
+
+아래는 Incrementor라는 중첩 함수를 포함한 makeIncrementor 예입니다. 중첩된 incrementor 함수는 runningTotal 및 amount 의 두 값을 자신을 둘러싼 컨텍스트로부터 획득합니다. 이 두 값을 획득한 후, incrementor는 호출될 때 마다 runningTotal 을 amount 만큼 증가시키는 클로저로써 makeIncrementor 로부터 반환됩니다.
+
+    func makeIncrementor(forIncrement amount: Int) -> () -> Int {
+        var runningTotal = 0
+        func incrementor() -> Int {
+            runningTotal += amount
+            return runningTotal
+        }
+        return incrementor
+    }
+
+makeIncrementor 의 반환 타입은 () -> Int 입니다. 이는 간단한 값 대신 함수를 반환함을 의미합니다. 반환되는 함수는 인자가 하나도 없으며, 호출될 때 마다 Int 값을 반환합니다. 어떻게 함수가 다른 함수를 반환할 수 있는가에 대해서는 [반환 타입으로서의 함수 타입]() 을 참조하시기 바랍니다.
+
+makeIncrementor 함수는 runningTotal 정수 변수를 정의하며, 이 변수는 현재 실행중인 incrementor 의 총합을 보관하고 반환될 변수입니다. 이 변수는 0으로 초기화됩니다.
+
+makeIncrementor 함수는 Int 인자를 외부 이름인 forIncrement 와 지역 이름인  amount 로 받습니다. 이 인자로 전달된 인수는 runningTotal 이 incrementor 함수가 호출될 때 마다 얼마만큼씩 증가해야 할 지 지정합니다.
+
+makeIncrementor 는 incrementor라는 실제 증가를 수행하는 중첩 함수를 정의합니다. 이 함수는 간단하게 amount 를 runningTotal 에 더하고, 결과값을 반환합니다.
+
+고립된 상황을 생각해보면, 중첩함수 incrementor는 독특하게 보입니다.
+
+    func incrementor() -> Int {
+        runningTotal += amount
+        return runningTotal
+    }
+
+incrementor 함수는 아무 인자도 갖고 있지 않으며, runningTotal 및 amount 를 함수 내에서 참조합니다. 이 함수는 자신을 둘러싼 함수로부터 runningTotal 및 amount를 획득하고 함수 안에서 그 값들을 ㄱ사용합니다.
+
+이 함수는 amount 값을 수정하지 않기 때문에, incrementor는 amount 안에 보관된 값을 획득하고 그 복사판을 보관합니다. 이 값은 새로운 incrementor 함수에서도 계속 이어져 보관됩니다.
+
+그러나, 이 함수가 runningTotal 변수를 호출시마다 변경하기 때문에, incrementor는 현재 runningTotal의 복사본 대신 값의 참조를 획득합니다. 참조 획득은 runningTotal 이 makeIncrementor 가 끝난 이후에도 사라지지 않음을 보증하며, incrementor 함수가 이후 호출될 때도 연속적으로 사용될 수 있음을 보증합니다.
+
+> **노트**
+> Swift는 어떤 변수가 참조 로 획득되고 어떤 변수가 복사값으로 획득될지 판단합니다. 사용자는 amount 및 runningTotal 이 incrementor 중첩 함수에서 쓰일지의 여부를 명기할 필요가 없습니다. Swift는 또한 runningTotal 이 더이상 incrementor 함수로부터 필요로하지 않을 때 폐기하는 모든 메모리 관리 과정을 담당합니다.
+
+makeIncrementor 의 사용 예입니다.
+
+		let incrementByTen = makeIncrementor(forIncrement: 10)
+
+이 예제는 호출될 때 마다  runningTotal에 10씩을 더하는 증가 함수를 참조하는 incrementByTen 을 정의합니다. 이 함수를 여러번 부르면 동작을 볼 수 있습니다.
+
+    incrementByTen()
+    // returns a value of 10
+    incrementByTen()
+    // returns a value of 20
+    incrementByTen()
+    // returns a value of 30
+
+만약 새로운 incrementor 를 생성할 경우, 그 incrementor는 새롭고 독립적인 runningTotal 변수로의 참조를 갖게 됩니다. 아래의 예제에서, incrementBySeven은 새로운 runningTotal 변수의 참조를 획득하며, 이 변수는 incrementByTen에서 획득한 변수와 연결되지 않습니다.
+
+    let incrementBySeven = makeIncrementor(forIncrement: 7)
+    incrementBySeven()
+    // returns a value of 7
+    incrementByTen()
+    // returns a value of 40
+
+> **노트**
+> 만약 클로저를 클래스 인스턴스의 프로퍼티로 지정하고, 클로저가 인스턴스 또는 인스턴스의 멤버를 참조하여 인스턴스를 획득할 경우, 클로저와 인스턴스의 강력한 참조 순환을 만들게 됩니다. Swift는 이러한 강력한 참조 순환을 깨기 위하여 capture list 사용합니다. 더 많은 정보는 [클로저의 강력한 참조 순환]() 을 참조하시기 바랍니다.
+
+## 클로저는 참조 타입 (Closures Are Reference Types)
+위의 예에서, incrementBySeven 및 incrementByTen은 상수입니다. 그러나 클로저로써 이러한 상수들은 여전히 그들이 획득한 runningTotal 변수를 증가시킬 수 있습니다. 이는 함수와 클로저가 참조 타입이기 때문입니다.
+
+함수나 클로저를 상수에 할당하는 것은, 실제로는 그 상수에 함수나 클로저를 가리키는 참조를 할당하는 것입니다. 위의 예에서, incrementByTen이 참조하는 것은 클로저를 가리키는 상수이며, 클로저 그 자체의 내용은 아닙니다.
+
+이는 또한 클로저를 두 개의 다른 상수나 변수에 할당하면, 두 상수나 변수들이 동일한 클로저를 참조하게 되는 것을 의미합니다.
+
+    let alsoIncrementByTen = incrementByTen
+    alsoIncrementByTen()
+    // returns a value of 50
+    
+    
+    
