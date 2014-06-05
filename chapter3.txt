@@ -49,4 +49,10 @@ var currentLoginAttempt = 0
 
 "`String`타입의 변수 welcomeMessage를 선언한다."
 
-"`String`타입의" 라는 말은 "어떤 `String`값이든 저장할 수 있다."라는 의미 입니다. 
+"`String`타입의" 라는 말은 "어떤 `String`값이든 저장할 수 있다."라는 의미 입니다. "어떤타입의"(혹은 "어떤 종류의") 라는 것은 그것이 저장될 수 있다 라는 의미로 생각하면 됩니다.
+
+이제 `welcomeMessage`변수에는 오류없이 어떤 문자열 값이든 저장할 수 있습니다.
+
+	welcomeMessage = "Hello"
+    
+>노트
