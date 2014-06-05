@@ -118,3 +118,6 @@ println("The current value of friendlyWelcome is \(friendlyWelcome)")
 ```
 
 >노트
+문자열 해석에 관한 모든 옵션은 `문자열 해석` 부분에 설명되어 있습니다.
+
+###주석(Comments)
