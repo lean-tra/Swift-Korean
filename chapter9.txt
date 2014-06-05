@@ -252,3 +252,11 @@ makeIncrementor 의 사용 예입니다.
 
 ## 클로저는 참조 타입 (Closures Are Reference Types)
 위의 예에서, incrementBySeven 및 incrementByTen은 상수입니다. 그러나 클로저로써 이러한 상수들은 여전히 그들이 획득한 runningTotal 변수를 증가시킬 수 있습니다. 이는 함수와 클로저가 참조 타입이기 때문입니다.
+
+함수나 클로저를 상수에 할당하는 것은, 실제로는 그 상수에 함수나 클로저를 가리키는 참조를 할당하는 것입니다. 위의 예에서, incrementByTen이 참조하는 것은 클로저를 가리키는 상수이며, 클로저 그 자체의 내용은 아닙니다.
+
+이는 또한 클로저를 두 개의 다른 상수나 변수에 할당하면, 두 상수나 변수들이 동일한 클로저를 참조하게 되는 것을 의미합니다.
+
+    let alsoIncrementByTen = incrementByTen
+    alsoIncrementByTen()
+    // returns a value of 50
