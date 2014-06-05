@@ -92,3 +92,19 @@ languageName = "Swift++"
 
 
 ### 상수와 변수의 출력
+`println` 함수를 사용하면 상수와 변수의 현재 값을 출력할 수 있습니다.
+
+```c
+println(friendlyWelcome)
+// prints "Bonjour!
+```
+
+`println`은 출력하기 적절하게 줄단위로 끊어서 값을 출력해주는 전역 함수 입니다. Xcode에서 작업을 하고 있다면 `println`을 사용하면 Xcode의 "console"창에  결과가 나옵니다. (다음으로 `print` 함수는 `println`함수와 동일한 기능을 수행하지만 값을 출력하기 위해 한줄의 끝을 표시해줄 필요가 없습니다.)
+
+`println`함수는 전달된 어떤 `String`값이든 출력해줍니다.
+
+```c
+println("This is a string")
+// prints "This is a string
+```
+
