@@ -221,3 +221,6 @@ let pi = 3.14159
 // pi is inferred to be of type Double
 ```
 
+Swift는 부동 소수점 수를 위한 타입을 추정할 때 `Float`보다는 항상 `Double`을 선택합니다.
+
+
