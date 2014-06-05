@@ -108,3 +108,5 @@ println("This is a string")
 // prints "This is a string
 ```
 
+`println`함수는 코코아의 `NSLog`함수와 비슷한 방식으로 복잡한 로그 메시지를 출력하는 것도 가능합니다. 메시지에는 상수와 변수의 현재값을 포함할 수 있습니다.
+
