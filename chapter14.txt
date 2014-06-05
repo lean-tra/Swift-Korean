@@ -1,10 +1,9 @@
-# 14 서브 스크립트 (Subscripts)
+# 14 서브스크립트 (Subscripts)
 > Translator : 이름 (메일주소)
 
- Class, Structures, 그리고 enumeratione의 경우 subscripts을 통해서 정의할 수 있습니다.
- subscripts는 collection, list, sequence의 memberelements에 접근하기 위한 일종의 바로가기입니다. 또한 subscirpts를 사용하면 추가적인 method들을 사용하지 않고도 값을 지정하거나 검색할 수 있습니다. 예를들어서  someArray[index] 나 someDictionary[key]를 사용하여 값에 접근할 수 있습니다.
+ 클래스, 구조체 그리고 열거형은 collection, list, sequence의 member element에 접근하기 위한 축약형인 서브스크립트로 정의할 수 있습니다. 또한 값의 설정이나 검색을 위한 별도의 메서드(seperate method)없이 index를 통해서 값을 설정하거나 검색하기 위해 서브스크립트를 사용할 수있습니다. 예를 들어서  someArray[index] 나 someDictionary[key]를 사용하여 해당하는 Array와 Dictionary의 내부값에 접근할 수 있습니다.
  
- 한 타입을 위해서 여러개의 subscript를 선언할 수도 있고, 또한 적절한 subscript overload의 사용은 subscript로 넘기는 index value의 type을 기본으로 하여 선택된다.
+ 한 타입을 위해서 여러개의 subscript를 정의 할 수도 있고, 또한 적절한 subscript overload의 사용은 subscript로 넘기는 index value의 type을 기본으로 하여 선택된다.
 subscripts는 1차원에 제한되지 않고, 당신의 원하는 타입 형태에 따라서 다수의 input parameter를 가진 subscripts를 선언할 수 있습니다.
 
 Subscript 문법
