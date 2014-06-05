@@ -117,4 +117,11 @@ if let roomCount = john.residence?.numberOfRooms {
 john.residence가 nil이기 때문에 이 선택 연쇄를 예전과 동일한 방식으로 호출했지만 에러 없이 실패한다.
 
 ##선택연쇄를 통한 메소드 호출
+선택 연쇄를 사용해서 선택적 값을 호출하고 메소드 호출이 성공했는지 여부를 확인해볼 수 있다. 설렁 메소드가 반환값을 정의하지 않더라고 할 수 있다.
+Residence 클래스에 있는 printNumberOfRooms 메소드는 numberOfRooms의 현재 값을 출력한다. 그 메소드는 다음과 같을 것이다.
+>func printNumberOfRooms() {
+    println("The number of rooms is \(numberOfRooms)")
+}
 
+이 메소드는 반환값을 명시하지 않았다. 그러나 반환형이 없는 함수와 메소드는 Functions Without Return Values에 나와 있는 것처럼 암시적으로 Void 타입을 반환하게 된다.
+만약 선택 연쇄에 있는 선택지 값에 이 메소드를 호출한다면, 메소드 반환형은 Void가 아니라 Void?이 될 것이다. 선택 연쇄를 통해 호출될 때 선택적 타입은 항상 반환 값을 가지기 때문이다. 이는 if 문에서 사용해서 printNumberOfRooms 메소드를 호출할 수 
