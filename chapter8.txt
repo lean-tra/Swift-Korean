@@ -403,13 +403,10 @@ println("zero!")
 // 1...
 // zero!
 ```
-##중첩 함수들
-
-All of the functions you have encountered so far in this chapter have been examples of global functions, which are defined at a global scope. You can also define functions inside the bodies of other functions, known as nested functions.
-
-Nested functions are hidden from the outside world by default, but can still be called and used by their enclosing function. An enclosing function can also return one of its nested functions to allow the nested function to be used in another scope.
-
-You can rewrite the chooseStepFunction example above to use and return nested functions:
+##중첩된 함수들
+여기까지 이 챕터에서 마주친 모든 함수들은 모두 전역 범위(global scope)에 정의된  _전역 함수_의 예제였다. 또한 _중첩된 함수_라 불리는, 함수 내부에 다른 함수를 정의할 수 있다.
+중첩 함수는 범위 밖의 세계에서 기본적으로 숨겨져 있다. 하지만 감싸고 있는 함수에 의해 여전히 이용될 수 있다. 감싸고 있는 함수는 중첩된 함수들을 반환하여 다른 범위에서 함수가 사용될 수 있게 할 수 있다.
+위 예제의 `chooseStepFunction`을 다음과 같이 중첩된 함수를 이용하여 재작성 할 수 있다.
 ```
 func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
     func stepForward(input: Int) -> Int { return input + 1 }
