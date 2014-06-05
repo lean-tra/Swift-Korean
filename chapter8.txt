@@ -1,5 +1,5 @@
 # 08 함수 (Functions)
-> Translator : Quartet( ungsik.yun@gmail.com)
+> Translator : Quartet( ungsik.yun@gmail.com )
 
 함수는 특정 일을 수행하는 자기 완결성(Self-contained)을 가진 코드들의 집합입니다. 당신은 함수의 이름을 지으면서 이 함수가 무엇을 하는지 식별하게 할 수 있습니다. 그리고 그 이름으로 함수를 "호출(Call)"하여 필요할때 함수의 일을 수행하게 만들 수 있습니다.
 스위프트(Swift)의 함수 문법은 파라메터가 없는 C스타일의 함수에서부터 지역 파라메터와 파라메터 이름 각각에 대한 외부 파라메터를 가지고 있는 복잡한 오브젝티브-C 스타일의 함수까지 전부 표현할 수 있습니다. 파라메터는 기본 값을 가질수 있어 단순한 함수 호출에 쓰일수 있습니다. 또한 In-out 파라메터로서 변수를 넘겨 변수가 함수의 실행후에 파라메터가 변경되게 할 수도 있습니다.
@@ -42,33 +42,33 @@ println(sayHelloAgain("Anna"))
 ### 파라메터 복수 입력
 함수는 괄호 안에서 콤마로 구분되는 복수의 입력 파라메터를 가질수 있습니다. 
 이 함수는 반개영역(half-open range)의 시작과 끝의 인덱스를 받아 얼마나 많은 요소(elements)들이 영역안에 있는지 계산합니다:
-
-    func halfOpenRangeLength(start: Int, end: Int) -> Int {
-    	return end - start
-    }
-    println(halfOpenRangeLength(1, 10))
-    // prints "9"
-
+```
+func halfOpenRangeLength(start: Int, end: Int) -> Int {
+	return end - start
+}
+println(halfOpenRangeLength(1, 10))
+// prints "9"
+```
 ### 파라메터가 없는 함수
 함수에 입력 파라메터를 정의할 필요는 없습니다. 밑의 예제는 입력 파라메터가 없는 함수입니다. 이 함수는 호출될때마다 언제나 같은 메시지를 반환합니다.
-
-    func sayHelloWorld() -> String {
-	    return "hello, world"
-    }
-    println(sayHelloWorld())
-    // prints "hello, world"
-    
+```
+func sayHelloWorld() -> String {
+	return "hello, world"
+}
+println(sayHelloWorld())
+// prints "hello, world"
+``` 
 함수 정의는 아무런 파라메터를 받지 않는다고 해도 함수 이름뒤에 여전히 괄호를 포함해야 합니다. 함수가 호출될 때도 함수 이름뒤에 빈 괄호 한쌍이 따라와야합니다.
 
 ### 반환값이 없는 함수
 함수에 반환 타입을 정의할 필요는 없습니다. 밑의 예제는 `sayHello`의 `waveGoodbye`라 불리는 버전입니다. 값을 반환하지 않고 자신만의 `String`값을 출력합니다.
-
-    func sayGoodbye(personName: String) {
-	    println("Goodbye, ` \(personName)! ")
-    }
-    sayGoodbye("Dave")
-    // prints "Goodbye, Dave!"
-    
+```
+func sayGoodbye(personName: String) {
+	println("Goodbye, ` \(personName)! ")
+}
+sayGoodbye("Dave")
+// prints "Goodbye, Dave!"
+```    
 반환값을 필요로 하지 않기 때문에 함수 정의는 반환 화살표(return arrow)나 반환 타입을 포함하지 않습니다.
 
 > NOTE
@@ -81,7 +81,7 @@ func printAndCount(stringToPrint: String) -> Int {
   return countElements(stringToPrint)
 }
 func printWithoutCounting(stringToPrint: String) {
-	printAndCount(stringToPrint)
+  printAndCount(stringToPrint)
 }
 printAndCount("hello, world")
 // prints "hello, world" and returns a value of 12
@@ -144,16 +144,16 @@ func someFunction(external ParameterName localParameterName: Int) {
 만약 외부 파라메터 이름이 파라메터에 대해 제공된다면, 외부 파라메터 이름은 언제나 함수 호출시에 사용되어야 합니다.
 
 예를 들어 다음과 같은 함수가 있다고 합시다. 이 함수는 두 문자열 사이에  `joiner` 문자열을 삽입해 연결하는 함수입니다.
-
+```
     func join(s1: String,  s2: String,  joiner: String) -> String {
   		  return s1 + joiner + s2
     }
-    
+```    
 이 함수를 호출할때 함수로 전달되는 세 문자열의 목적이 불분명합니다.
-
+```
     join("hello", "world", ", ")
     // returns "hello, world"
-
+```
 문자열 값들의 목적을 명확하게 하기 위해, 외부 파라메터를 join함수의 각각의 파라메터에 정의합니다.
 
 ```
@@ -164,10 +164,10 @@ func join(string s1: String,  toString s2: String,  withJoiner joiner: String) -
  
 이 버전의 join 함수에서는 첫번째 파라메터의 외부 이름은 `string`이며 지역 이름은 `s1`이다. 두번째 파라메터는 외부 이름으로 `toString`을 쓰고 지역 이름은 `s2`이다. 그리고 세번째 파라메터는 외부 이름으로 `withJoiner`를 쓰고 지역 이름은 `joiner`이다.
 이제 외부 파라메터 이름을 사용하여 함수를 호출할때 명확하고 애매하지 않은 방법으로 호출할 수 있게 되었다.
-
+```
     join(string: "hello",  toString: "world",  withJoiner: ", ")
     // returns "hello, world"
-    
+```    
 외부 파라메터 이름의 사용은 이 두번째 join함수를 명시적이며 말이 되는(sentence-like) 방법으로 사용자들이 호출할 수 있게 합니다. 함수 몸체는 여전히 가독성이 좋고 명확한 의도를 가진채 말이죠. (whi le sti l l providing a function body that is readable and clear in intent.)
 
 >NOTE
@@ -305,3 +305,125 @@ println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 
 >NOTE
 In-out 파라메터는 함수가 값을 반환하는 것과 같지 않다. 위의 `swapTwoInts` 예제는 반환 타입이나 반환값을 정의하고 있지 않다. 하지만 `someInt`와 `anotherInt`의 값을 변경한다. In-out 파라메터는 함수가 함수 밖의 범위(scope)에 영향을 끼칠 수 있는 또다른 방법이다.
+
+##함수 타입
+모든 함수들은 특유의 함수 타입을 가지고 있다. 함수 타입은 함수의 파라메터 타입들과 반환 타입으로 구성된다.
+예를 들자면 이렇다:
+```
+func addTwoInts(a: Int, b: Int) -> Int {
+    return a + b
+}
+func multiplyTwoInts(a: Int, b: Int) -> Int {
+    return a * b
+}
+```
+이 예제는 `addTwoInts`와 `multiplyTwoInts`, 두개의 단순한 수학 함수를 정의한다. 함수들은 각각 두개의 `Int`값을 취하고 `Int`값을 계산의 적절한 결과로서 반환한다.
+위 두 함수의 타입은 `(Int, Int) -> Int`다. 이것은 "함수 타입은 `Int`타입의 파라메터가 두개며 반환값의 타입은 `Int`다." 라고 말할 수 있다.
+여기의 또다른 예제는 파라메터나 반환값이 없는 함수다.
+```
+func printHelloWorld() {
+    println("hello, world")
+}
+```
+이 함수의 타입은 `()->()`이며, "함수는 파라메터가 없고 `Void`를 반환한다."고 할 수 있다. 반환값을 정해지지 않은 함수는 언제나 `Void`를 반환하며, 이는 빈 튜플인 `()`로 표시될 수 있다.
+
+###함수 타입을 사용하기
+스위프트의 다른 타입들처럼 함수 타입 역시 사용될 수 있다. 예를들어 함수 타입의 상수나 변수를 만들어서 적절한 함수를 할당할 수 있다.
+```
+var mathFunction: (Int, Int) -> Int = addTwoInts
+```
+위 코드는 "두개의 `Int` 값을 취하며 `Int`값을 반환하는 함수 타입 `mathFuntion`을 정의한다. 이 새로운 변수가 `addTwoInts` 함수를 참조(refer)하도록 한다."고 할 수 있다.
+`addTwoInts` 함수는 `mathFunction`변수와 같은 타입이다. 따라서 스위프트의 타입 체커에 의해 할당이 허용된다.
+이제 `mathFunction`을 이용해 할당된 함수를 호출할 수 있다.
+```
+println("Result: \(mathFunction(2, 3))")
+// prints "Result: 5"
+```
+함수 타입이 아닌 변수가 그러하듯이, 일치하는 타입의 다른 함수 또한 같은 변수에 할당 될 수 있다.
+```
+mathFunction = multiplyTwoInts
+println("Result: \(mathFunction(2, 3))")
+// prints "Result: 6"
+```
+다른 타입과 마찬가지로, 함수를 상수나 변수에 할당할때 스위프트가 타입을 추론하게 내버려 둘 수 있다.
+```
+let anotherMathFunction = addTwoInts
+// anotherMathFunction is inferred to be of type (Int, Int) -> Int페
+```
+###파라메터 타입으로서의 함수 타입
+`(Int, Int) -> Int`와 같은 함수 타입을 파라메터 타입으로 함수에 이용할 수 있다. 이로서 함수 구현의 일부를 함수가 호출 될때 함수를 호출하는 쪽에 맡기는 것이 가능하게 된다.
+이 예제는 위에서 가져온 수학 함수의 결과를 출력한다.
+```
+func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
+    println("Result: \(mathFunction(a, b))")
+}
+printMathResult(addTwoInts, 3, 5)
+// prints "Result: 8"
+```
+이 예제는 세개의 파라메터를 가지는 `printMathResult`함수를 정의한다. 첫번째 파라메터는 타입이 `(Int, Int) -> Int`인 `mathFunction`이다. 함수 타입이 맞는 함수라면 인수로서 첫번째 파라메터에 어느것이나 넘길 수 있다. 두번째와 세번째 파라메터는 `a`와 `b`이며 둘 다 `Int`타입이다. 이 둘은 제공된 수학 함수의 두 입력값으로 사용된다.
+`printMathResult` 함수가 호출되면 `addTwoInts`함수와, 정수 값으로 `3`과 `5`를 넘긴다. 이 함수는 제공받은 함수를 호출할때 `3`과 `5`를 이용한다. 그리고 결과인 `8`을 출력한다. 
+`printMathResult`의 역할은 적절한 타입의 수학 함수의 실행 결과를 출력하는 것이다. 이 함수는 넘겨받는 함수의 구현이 실제로 무엇을 하는지 상관하지 않는다. 오직 함수가 정확하게 일치하는 타입인지만 본다. 이로서 `printMathResult`함수가 타입에 안전한 방식(type-safe way)으로 자신의 기능의 일부를 호출자에게 넘길 수 있게 한다.
+
+###함수 타입과 반환 타입
+함수 타입을 다른 함수의 반환 타입으로 사용할 수 있다. 이는 완전한 함수 타입을 반환할 함수 정의의 반환 화살표 (`->`)바로 뒤에 작성함으로서 할 수 있다.
+다음 예제는 두개의 간단한 함수인 `stepForward`와 `stepBackward`를 정의하고 있다. `stepForward`함수는 입력값보다 1이 더 큰 값을 반환하고 `stepBackward`함수는 입력 값보다 1이 작은 값을 반환한다. 두 함수의 타입은 모두 `(Int) -> Int`다.
+```
+func stepForward(input: Int) -> Int {
+    return input + 1
+}
+func stepBackward(input: Int) -> Int {
+    return input - 1
+}
+```
+여기 `chooseStepFunction` 함수가 있다.  이 함수의 반환 타입은 "`(Int) -> Int`를 반환하는 함수"다. `chooseStepFunction`은 `backwards` 불리언 파라메터에 따라 `stepForward`함수와 `stepBackward`함수중 하나를 반환한다.
+```
+func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+    return backwards ? stepBackward : stepForward
+}
+```
+`chooseStepFunction`를 이용하여 어느 한쪽 방향으로 나아가는(증가 또는 감소하는) 함수를 얻을 수 있다.
+```
+var currentValue = 3
+let moveNearerToZero = chooseStepFunction(currentValue > 0)
+// moveNearerToZero now refers to the stepBackward() function
+```
+앞서 한 예제들은 `currentValue`변수에 따라 점진적으로 0이 되기 위해 필요한 증가나 감소 방향을 산출한다. `currentValue > 0`은 `true`를 반환하여,  `chooseStepFunction`이 `stepBackward`함수를 반환하게 한다. 반환된 함수에 대한 참조(reference)는 `moveNearerToZero` 상수에 저장된다.
+Now that moveNearerToZero refers to the correct function, it can be used to count to zero:
+이제 `moveNearerToZero`가 올바른 함수를 참조하기에, 이를 0까지 세는데 이용할 수 있다.
+```
+println("Counting to zero:")
+// Counting to zero:
+while currentValue != 0 {
+    println("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
+}
+println("zero!")
+// 3...
+// 2...
+// 1...
+// zero!
+```
+##중첩된 함수들
+여기까지 이 챕터에서 마주친 모든 함수들은 모두 전역 범위(global scope)에 정의된  _전역 함수_의 예제였다. 또한 _중첩된 함수_라 불리는, 함수 내부에 다른 함수를 정의할 수 있다.
+중첩 함수는 범위 밖의 세계에서 기본적으로 숨겨져 있다. 하지만 감싸고 있는 함수에 의해 여전히 이용될 수 있다. 감싸고 있는 함수는 중첩된 함수들을 반환하여 다른 범위에서 함수가 사용될 수 있게 할 수 있다.
+위 예제의 `chooseStepFunction`을 다음과 같이 중첩된 함수를 이용하여 재작성 할 수 있다.
+```
+func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+    func stepForward(input: Int) -> Int { return input + 1 }
+    func stepBackward(input: Int) -> Int { return input - 1 }
+    return backwards ? stepBackward : stepForward
+}
+var currentValue = -4
+let moveNearerToZero = chooseStepFunction(currentValue > 0)
+// moveNearerToZero now refers to the nested stepForward() function
+while currentValue != 0 {
+    println("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
+}
+println("zero!")
+// -4...
+// -3...
+// -2...
+// -1...
+// zero!
+```
