@@ -94,7 +94,7 @@ sort 함수는 두 매개변수를 받습니다.
 
 단일 표현식 클로저는 앞의 예에서 정의할 때 return 키워드를 생략하여 단일 표현식의 결과를 암시적으로 반환할 수 있습니다. 
 
-  reversed = sort(names, { s1, s2 in s1 > s2 } )
+	reversed = sort(names, { s1, s2 in s1 > s2 } )
 
 sort 함수의 두번째 인자의 함수 형은 클로저가 Bool 값을 반드시 반환해야 함을 명확하게 해 줍니다. 클로저의 내용이 Bool 값을 반환하는 단일 표현식 (s1 > s2) 이기 때문에, 이 경우 애매모호함이 발생하지 않으며, return 키워드는 생략이 가능합니다.
 
@@ -103,14 +103,14 @@ Swift는 자동으로 단축 인자 이름을 인라인 클로저에 제공하�
 
 만약 이러한 단축 인자 이름들을 클로저 표현식에서 사용할 경우, 클로저 인자 리스트를 클로저의 정의에서 생략할 수 있으며, 단축 인자들의 번호 및 타입은 기대되는 함수 타입으로부터 추정될 것입니다. 클로저 표현식이 클로저 내용에 완전히 표현될 수 있으므로 in 키워드 또한 생략할 수 있습니다:
 
-  reversed = sort(names, { $0 > $1 } )
+	reversed = sort(names, { $0 > $1 } )
 
 여기서 $0 와 $1 은 클로저의 첫번째와 두번째 String 매개변수를 가리킵니다.
 
 ## 연산자 함수들 ( Operator Functions )
 사실 위의 클로저 표현식은 _더 짧아질 수도_ 있습니다. Swift 의 String 타입은 String에 특화된 크기 비교 연산자 (>) 를 두 String 인자를 갖는 함수로 정의하고 있으며, Bool 타입을 반환합니다. 이 연산자는 sort 함수의 두번째 인자를 위해 필요한 함수형과 정확히 칠치합니다. 그러므로, 이 크기 비교 연산자를 바로 전달하면 Swift 는 사용자가 String 전용의 구현체를 사용하려고 한다고 유추합니다.
 
-  reversed = sort(names, > )
+	reversed = sort(names, > )
 
 연산자 함수에 대해 더 많은 내용은 [연산자 함수]() 항목을 참조하시기 바랍니다.
 
@@ -118,23 +118,59 @@ Swift는 자동으로 단축 인자 이름을 인라인 클로저에 제공하�
 
 만약 클로저 표현식을 함수에 함수의 마지막 인자로 전달할 때 클로저 표현식이 긴 경우, 대신에 후행 클로저 (Trailing closure) 를 작성하는 것이 유용할 수 있습니다. 후행 클로저는 함수 호출 괄호의 밖 (또는 뒤) 에 쓰여져서 함수를 지원하는 클로저 표현식입니다.
 
-  func someFunctionThatTakesAClosure(closure: () -> ()) {
+	func someFunctionThatTakesAClosure(closure: () -> ()) {
       // function body goes here
-  }
+	}
+  	// here's how you call this function without using a trailing closure:
   
-  // here's how you call this function without using a trailing closure:
-  
-  someFunctionThatTakesAClosure({
+ 	someFunctionThatTakesAClosure({
       // closure's body goes here
       })
    
-  // here's how you call this function with a trailing closure instead:
+	// here's how you call this function with a trailing closure instead:
    
-  someFunctionThatTakesAClosure() {
+	someFunctionThatTakesAClosure() {
      // trailing closure's body goes here
-  }
+	}
 
 > **노트**
 > 클로저 표현식이 함수의 하나뿐인 인자이며 이 표현식을 후행 클로저로 작성할 경우, 함수를 호출할때 함수 이름의 뒤에 괄호쌍 () 을 쓸 필요는 없습니다.
+
+위의 [클로저 표현식 문법]()의 문자열 정렬 클로저는 sort 함수의 괄호 밖에 후행 클로저로 작성될 수도 있습니다.
+
+	reversed = sort(names) { $0 > $1 }
+
+후행 클로저는 클로저가 충분히 길어서 줄 안이나 한 줄 정도로 기술할 수 없는 경우에 아주 유용합니다. 예를 들어, Swift의 Array 타입은 클로저 표현식을 하나의 인자로 받는 map 메소드를 제공합니다. 클로저는 행렬 안의 각 아이템마다 한 번씩 호출되고, 그 아이템의 (다른 타입일 수도 있는) 새롭게 매핑된 값을 반환합니다. 매핑의 동작과 반환값의 타입은 클로저에 의하여 지정됩니다.
+
+map 메소드는 제공된 클로저를 각 행렬 항목마다 적용한 후, 새롭게 매핑된 값들이 원래 행렬의 해당 값들의 순서와 같도록 배치된 새 행렬을 반환합니다.
+
+Int 값들로 구성된 행렬을 String 값들로 구성된 행렬로 변환하는 map 메소드를 후행 클로저와 함께 사용하는 예를 보겠습니다. 행렬 [16,58,510] 이 새로운 행렬인 ["OneSix", "FiveEight", "FiveOneZero"] 를 생성하기 위해 사용되었습니다.
+
+    let digitNames = [
+        0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
+        5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
+    ]
+    let numbers = [16, 58, 510]
+
+위의 코드는 정수와 그 수들의 영어 표현사이의 매핑 사전을 생성합니다. 또한 문자열로 변환될 정수 행렬도 정의합니다.
+
+이제 numbers 행렬을 map 메소드에 후행 클로저를 클로저 표현식으로 전달하는 방법으로 String 값의 행렬을 생성하기 위해 사용할 수 있습니다. map 메소드가 단 하나의 인자만을 받으므로 numbers.map 을 호출할 때 map 뒤에 어떤 괄호도 필요하지 않음을 기억하세요. 후행 클로저가 이 인자로 제공됩니다.
+
+    let strings = numbers.map {
+        (var number) -> String in
+        var output = ""
+        while number > 0 {
+            output = digitNames[number % 10]! + output
+            number /= 10
+        }
+        return output
+    }
+    // strings is inferred to be of type String[]
+    // its value is ["OneSix", "FiveEight", "FiveOneZero"]
+
+
+map 함수는 클로저 표현식을 각 행렬의 항목마다 호출합니다. 클로저의 입력 인자, number, 의 타입을 지정할 필요는 없는데, 이는 타입을 매핑될 배열의 값으로부터 추측할 수 있기 때문입니다.
+
+이 예제에서, 클로저의 number 인자는 [상수 및 변수 파라미터]() 에서 설명한 변수 인자 (variable parameter) 로 정의되었으므로, 인자의 값이 새로운 지역 변수를 정의하고 number 값을 그 변수에 할당하는 방법 대신 클로저 본문에서 변경될 수 있습니다. 또한 클로저 표현식은 매핑된 결과 배열의 타입을 지시하기 위해 String 의 반환 타입을 지정합니다.
 
 
