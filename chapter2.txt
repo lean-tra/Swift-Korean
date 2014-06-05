@@ -55,10 +55,12 @@ let appleSummary = "I have \(apples) apples."
 let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 ```
 
->실험
-문자열안에 \()를 이용해 실수형 계산을 포함하도록 해보고, 인사말 안에 누군가의 이름을 넣어보자.
+과 같습니다.
 
-배열과 딕셔너리는 대괄호([])를 이용해 만들 수 있습니다. 그리고 대괄호 안에 인덱스나 키를 이용해 각각의 요소에 접근할 수 있습니다.
+>실습
+`\()` 를 이용해 문자열 안에 실수형 계산을 포함하도록 해보고, 인사말 안에 누군가의 이름을 넣어보자.
+
+배열(array)과 딕셔너리(dictionary)는 대괄호([])를 이용해 만들 수 있습니다. 그리고 대괄호 안에 인덱스(index)나 키(key)를 이용해 각각의 요소에 접근할 수 있습니다.
 
 ```c
 var shoppingList = ["catfish", "water", "tulips", "blue paint"]
@@ -78,11 +80,14 @@ let emptyArray = String[]()
 let emptyDictionary = Dictionary<String, Float>()
 ```
 
-타입 정보를 추론할 수 없다면 빈 배열은 []로 빈 딕셔너리는 [:]로 쓸 수 있습니다. 예를 들어 변수에 새로운 값을 할당하거나 함수에 인자로 넘겨줄 때
+타입 정보를 추론할 수 없다면 빈 배열은 []로 빈 딕셔너리는 [:]로 표기할 수 있습니다. 예를 들어 변수에 새로운 값을 할당하거나 함수에 인자(argument)로 넘겨줄 때
 
 ```c
 shoppingList = [] //쇼핑을 가서 모든 것을 샀다.
 ```
+
+와 같이 표현하면 됩니다.
+
 
 ##흐름 제어
 if와 switch를 사용해서 조건문을 만들 수 있고 for-in, for, while, do-while을 이용해서 반복문을 만들 수 있습니다. 조건문과 반복문을 괄호로 감싸는 것은 선택사항입니다. 중괄호로 몸통을 감싸는 것은 필수입니다.
