@@ -230,5 +230,5 @@ let anotherPi = 3 + 0.14159
 // anotherPi is also inferred to be of type Double
 ```
 
-
+문자 그대로의 `3`은 스스로 어떤 타입인지 명시되어 있지 않습니다. 또 덧셈 부분에 부동 소수점 수가 존재하기 때문에 `Double`이 출력 지정 타입으로 추정됩니다.
 
