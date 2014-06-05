@@ -1,4 +1,4 @@
 # 05 문자열과 문자 (Strings and Characters)
-> Translator : 이름 (메일주소)
+> Translator : 해탈 (kimqqyun@gmail.com)
 
-Write here...
+
