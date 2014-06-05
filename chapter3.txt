@@ -135,3 +135,11 @@ Swift의 주석은 C의 주석과 흡사합니다. 한줄 주석은 /(슬래시)
 but written over multiple lines */
 ```
 
+C의 여러줄 주석과는 다르게 Swift에서는 여러줄 주석 안에 다른 여러줄 주석을 쓸 수 있습니다.  내부 여러줄 주석을 쓰려면 첫번째 여러줄 주석 부분을 시작하고 두번째 여러줄 주석을 첫번째 주석 안에서 시작합니다. 그리고 두번째 주석을 닫아준 후 첫번째 주석을 닫아주면 됩니다.
+
+```c
+/* this is the start of the first multiline comment
+/* this is the second, nested multiline comment */
+this is the end of the first multiline comment */
+```
+
