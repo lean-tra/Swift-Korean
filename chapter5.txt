@@ -49,3 +49,36 @@ let sparklingHeart = "\U0001F496"  // 💖, Unicode scalar U+1F496
 
 ## 빈 문자의 초기화 (Initializing an Empty String)
 
+긴 문자 열을 만들기 위한 포인트를 위해 빈 문자열 값을 만들려면 빈 문자열 리터럴을 변수에 할당하거나 초기화 문법을 사용하여 새 문자열 인스턴스를 초기화합니다.
+
+```
+var emptyString = ""               // 빈 문자열 리터럴
+var anotherEmptyString = String()  // 초기화 문법
+// 두 문자열 모두 비어있으며 서로 똑같다.
+
+```
+
+`isEmpty`의 불리언 속성을 체크하여 문자열 값이 비어있는지 여부를 확인할 수 있습니다.
+```
+if emptyString.isEmpty {
+    println("여기엔 아무것도 보이지 않습니다.")
+}
+// prints 여긴 아무것도 보이지 않습니다."
+```
+
+## 문자열 가변성
+
+특정 문자열을 변수에 할당하여(수정될 수 있는 경우) 수정(또는 변경)할 수 있는지를 나타내거나 상수(수정될 수 없는 경우)를 말합니다.
+```
+var variableString = "Horse"
+variableString += " and carriage"
+// variableString 은 "Horse and carriage" 입니다.
+
+let constantString = "Highlander"
+constantString += " and another Highlander"
+// 컴파일 에러 - 상수 문자열은 변경될 수 없습니다.
+```
+
+> NOTE
+> 이 방법은 Objective-C 또는 Cocoa에서 다른 방법으로 접근하는데 문자열이 변경될수 있는지 여부를 나타내기 위해 두 개의 클래스 (NSString 또는 NSMutableString) 사이에서 선택할 수 있습니다.
+
