@@ -174,3 +174,4 @@ let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
 - 32비트 플랫폼에서 `Int`는 `Int32`와 동일한 크기를 갖습니다.
 - 64비트 플랫폼에서 `Int`는 `Int64`와 동일한 크기를 갖습니다.
 
+정수형의 특정 크기가 필요한 것이 아니라면 코드 내에서 항상 `Int`를 사용하면 됩니다. 이것은 코드가 일관성과 범용성을 갖도록 합니다.
