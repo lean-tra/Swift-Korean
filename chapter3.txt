@@ -150,5 +150,6 @@ this is the end of the first multiline comment */
 
 ```c
 let cat = "🐱"; println(cat)
-// prints "🐱’
+// prints "🐱"
 ```
+
