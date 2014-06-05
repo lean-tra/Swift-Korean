@@ -224,7 +224,7 @@ Swift에서 클로저의 가장 간단한 형태는 다른 함수의 본문 안�
 그러나, 이 함수가 `runningTotal` 변수를 호출시마다 변경하기 때문에, `incrementor`는 현재 `runningTotal`의 복사본 대신 값의 참조를 획득합니다. 참조 획득은 `runningTota`l 이 `makeIncrementor` 가 끝난 이후에도 사라지지 않음을 보증하며, `incrementor` 함수가 이후 호출될 때도 연속적으로 사용될 수 있음을 보증합니다.
 
 > **노트**
-> Swift는 어떤 변수가 참조 로 획득되고 어떤 변수가 복사값으로 획득될지 판단합니다. 사용자는 amount 및 runningTotal 이 incrementor 중첩 함수에서 쓰일지의 여부를 명기할 필요가 없습니다. Swift는 또한 runningTotal 이 더이상 incrementor 함수로부터 필요로하지 않을 때 폐기하는 모든 메모리 관리 과정을 담당합니다.
+> Swift는 어떤 변수가 참조 로 획득되고 어떤 변수가 복사값으로 획득될지 판단합니다. 사용자는 `amount` 및 `runningTotal` 이 `incrementor` 중첩 함수에서 쓰일지의 여부를 명기할 필요가 없습니다. Swift는 또한 `runningTotal` 이 더이상 `incrementor` 함수로부터 필요로하지 않을 때 폐기하는 모든 메모리 관리 과정을 담당합니다.
 
 `makeIncrementor` 의 사용 예입니다.
 
