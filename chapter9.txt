@@ -191,3 +191,14 @@ number 변수는 이후 10으로 나눠집니다. 이 변수가 정수이기 때
 
 Swift에서 클로저의 가장 간단한 형태는 다른 함수의 본문 안에 작성된 중첩 함수입니다. 중첩 함수는 바깥 함수의 모든 인자를 획득할 수 있으며, 또한 바깥 함수 내에서 정의된 모든 상수 및 변수를 획득할 수 있습니다.
 
+아래는 Incrementor라는 중첩 함수를 포함한 makeIncrementor 예입니다. 중첩된 incrementor 함수는 runningTotal 및 amount 의 두 값을 자신을 둘러싼 컨텍스트로부터 획득합니다. 이 두 값을 획득한 후, incrementor는 호출될 때 마다 runningTotal 을 amount 만큼 증가시키는 클로저로써 makeIncrementor 로부터 반환됩니다.
+
+    func makeIncrementor(forIncrement amount: Int) -> () -> Int {
+        var runningTotal = 0
+        func incrementor() -> Int {
+            runningTotal += amount
+            return runningTotal
+        }
+        return incrementor
+    }
+
