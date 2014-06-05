@@ -306,7 +306,7 @@ println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 >NOTE
 In-out 파라메터는 함수가 값을 반환하는 것과 같지 않다. 위의 `swapTwoInts` 예제는 반환 타입이나 반환값을 정의하고 있지 않다. 하지만 `someInt`와 `anotherInt`의 값을 변경한다. In-out 파라메터는 함수가 함수 밖의 범위(scope)에 영향을 끼칠 수 있는 또다른 방법이다.
 
-##Function Types
+##함수 타입
 모든 함수들은 특유의 함수 타입을 가지고 있다. 함수 타입은 함수의 파라메터 타입들과 반환 타입으로 구성된다.
 예를 들자면 이렇다:
 ```
@@ -326,73 +326,71 @@ func printHelloWorld() {
 }
 ```
 이 함수의 타입은 `()->()`이며, "함수는 파라메터가 없고 `Void`를 반환한다."고 할 수 있다. 반환값을 정해지지 않은 함수는 언제나 `Void`를 반환하며, 이는 빈 튜플인 `()`로 표시될 수 있다.
-###Using Function Types
 
-You use function types just like any other types in Swift. For example, you can define a constant or variable to be of a function type and assign an appropriate function to that variable:
-
+###함수 타입을 사용하기
+스위프트의 다른 타입들처럼 함수 타입 역시 사용될 수 있다. 예를들어 함수 타입의 상수나 변수를 만들어서 적절한 함수를 할당할 수 있다.
+```
 var mathFunction: (Int, Int) -> Int = addTwoInts
-This can be read as:
-
-“Define a variable called mathFunction, which has a type of ‘a function that takes two Int values, and returns an Int value.’ Set this new variable to refer to the function called addTwoInts.”
-
-The addTwoInts function has the same type as the mathFunction variable, and so this assignment is allowed by Swift’s type-checker.
-
-You can now call the assigned function with the name mathFunction:
-
+```
+위 코드는 "두개의 `Int` 값을 취하며 `Int`값을 반환하는 함수 타입 `mathFuntion`을 정의한다. 이 새로운 변수가 `addTwoInts` 함수를 참조(refer)하도록 한다."고 할 수 있다.
+`addTwoInts` 함수는 `mathFunction`변수와 같은 타입이다. 따라서 스위프트의 타입 체커에 의해 할당이 허용된다.
+이제 `mathFunction`을 이용해 할당된 함수를 호출할 수 있다.
+```
 println("Result: \(mathFunction(2, 3))")
 // prints "Result: 5"
-A different function with the same matching type can be assigned to the same variable, in the same way as for non-function types:
-
+```
+함수 타입이 아닌 변수가 그러하듯이, 일치하는 타입의 다른 함수 또한 같은 변수에 할당 될 수 있다.
+```
 mathFunction = multiplyTwoInts
 println("Result: \(mathFunction(2, 3))")
 // prints "Result: 6"
-As with any other type, you can leave it to Swift to infer the function type when you assign a function to a constant or variable:
-
+```
+다른 타입과 마찬가지로, 함수를 상수나 변수에 할당할때 스위프트가 타입을 추론하게 내버려 둘 수 있다.
+```
 let anotherMathFunction = addTwoInts
-// anotherMathFunction is inferred to be of type (Int, Int) -> Int
-Function Types as Parameter Types
-
-You can use a function type such as (Int, Int) -> Int as a parameter type for another function. This enables you to leave some aspects of a function’s implementation for the function’s caller to provide when the function is called.
-
-Here’s an example to print the results of the math functions from above:
-
+// anotherMathFunction is inferred to be of type (Int, Int) -> Int페
+```
+###파라메터 타입으로서의 함수 타입
+`(Int, Int) -> Int`와 같은 함수 타입을 파라메터 타입으로 함수에 이용할 수 있다. 이로서 함수 구현의 일부를 함수가 호출 될때 함수를 호출하는 쪽에 맡기는 것이 가능하게 된다.
+이 예제는 위에서 가져온 수학 함수의 결과를 출력한다.
+```
 func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
     println("Result: \(mathFunction(a, b))")
 }
 printMathResult(addTwoInts, 3, 5)
 // prints "Result: 8"
-This example defines a function called printMathResult, which has three parameters. The first parameter is called mathFunction, and is of type (Int, Int) -> Int. You can pass any function of that type as the argument for this first parameter. The second and third parameters are called a and b, and are both of type Int. These are used as the two input values for the provided math function.
+```
+이 예제는 세개의 파라메터를 가지는 `printMathResult`함수를 정의한다. 첫번째 파라메터는 타입이 `(Int, Int) -> Int`인 `mathFunction`이다. 함수 타입이 맞는 함수라면 인수로서 첫번째 파라메터에 어느것이나 넘길 수 있다. 두번째와 세번째 파라메터는 `a`와 `b`이며 둘 다 `Int`타입이다. 이 둘은 제공된 수학 함수의 두 입력값으로 사용된다.
+`printMathResult` 함수가 호출되면 `addTwoInts`함수와, 정수 값으로 `3`과 `5`를 넘긴다. 이 함수는 제공받은 함수를 호출할때 `3`과 `5`를 이용한다. 그리고 결과인 `8`을 출력한다. 
+`printMathResult`의 역할은 적절한 타입의 수학 함수의 실행 결과를 출력하는 것이다. 이 함수는 넘겨받는 함수의 구현이 실제로 무엇을 하는지 상관하지 않는다. 오직 함수가 정확하게 일치하는 타입인지만 본다. 이로서 `printMathResult`함수가 타입에 안전한 방식(type-safe way)으로 자신의 기능의 일부를 호출자에게 넘길 수 있게 한다.
 
-When printMathResult is called, it is passed the addTwoInts function, and the integer values 3 and 5. It calls the provided function with the values 3 and 5, and prints the result of 8.
-
-The role of printMathResult is to print the result of a call to a math function of an appropriate type. It doesn’t matter what that function’s implementation actually does—it matters only that the function is of the correct type. This enables printMathResult to hand off some of its functionality to the caller of the function in a type-safe way.
-
-Function Types as Return Types
-
-You can use a function type as the return type of another function. You do this by writing a complete function type immediately after the return arrow (->) of the returning function.
-
-The next example defines two simple functions called stepForward and stepBackward. The stepForward function returns a value one more than its input value, and the stepBackward function returns a value one less than its input value. Both functions have a type of (Int) -> Int:
-
+###함수 타입과 반환 타입
+함수 타입을 다른 함수의 반환 타입으로 사용할 수 있다. 이는 완전한 함수 타입을 반환할 함수 정의의 반환 화살표 (`->`)바로 뒤에 작성함으로서 할 수 있다.
+다음 예제는 두개의 간단한 함수인 `stepForward`와 `stepBackward`를 정의하고 있다. `stepForward`함수는 입력값보다 1이 더 큰 값을 반환하고 `stepBackward`함수는 입력 값보다 1이 작은 값을 반환한다. 두 함수의 타입은 모두 `(Int) -> Int`다.
+```
 func stepForward(input: Int) -> Int {
     return input + 1
 }
 func stepBackward(input: Int) -> Int {
     return input - 1
 }
-Here’s a function called chooseStepFunction, whose return type is “a function of type (Int) -> Int”. chooseStepFunction returns the stepForward function or the stepBackward function based on a Boolean parameter called backwards:
-
+```
+여기 `chooseStepFunction` 함수가 있다.  이 함수의 반환 타입은 "`(Int) -> Int`를 반환하는 함수"다. `chooseStepFunction`은 `backwards` 불리언 파라메터에 따라 `stepForward`함수와 `stepBackward`함수중 하나를 반환한다.
+```
 func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
     return backwards ? stepBackward : stepForward
 }
-You can now use chooseStepFunction to obtain a function that will step in one direction or the other:
-
+```
+`chooseStepFunction`를 이용하여 어느 한쪽 방향으로 나아가는(증가 또는 감소하는) 함수를 얻을 수 있다.
+```
 var currentValue = 3
 let moveNearerToZero = chooseStepFunction(currentValue > 0)
 // moveNearerToZero now refers to the stepBackward() function
-The preceding example works out whether a positive or negative step is needed to move a variable called currentValue progressively closer to zero. currentValue has an initial value of 3, which means that currentValue > 0 returns true, causing chooseStepFunction to return the stepBackward function. A reference to the returned function is stored in a constant called moveNearerToZero.
-
+```
+앞서 한 예제들은 `currentValue`변수에 따라 점진적으로 0이 되기 위해 필요한 증가나 감소 방향을 산출한다. `currentValue > 0`은 `true`를 반환하여,  `chooseStepFunction`이 `stepBackward`함수를 반환하게 한다. 반환된 함수에 대한 참조(reference)는 `moveNearerToZero` 상수에 저장된다.
 Now that moveNearerToZero refers to the correct function, it can be used to count to zero:
-
+이제 `moveNearerToZero`가 올바른 함수를 참조하기에, 이를 0까지 세는데 이용할 수 있다.
+```
 println("Counting to zero:")
 // Counting to zero:
 while currentValue != 0 {
@@ -404,14 +402,15 @@ println("zero!")
 // 2...
 // 1...
 // zero!
-Nested Functions
+```
+##중첩 함수들
 
 All of the functions you have encountered so far in this chapter have been examples of global functions, which are defined at a global scope. You can also define functions inside the bodies of other functions, known as nested functions.
 
 Nested functions are hidden from the outside world by default, but can still be called and used by their enclosing function. An enclosing function can also return one of its nested functions to allow the nested function to be used in another scope.
 
 You can rewrite the chooseStepFunction example above to use and return nested functions:
-
+```
 func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
     func stepForward(input: Int) -> Int { return input + 1 }
     func stepBackward(input: Int) -> Int { return input - 1 }
@@ -430,3 +429,4 @@ println("zero!")
 // -2...
 // -1...
 // zero!
+```
