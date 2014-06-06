@@ -314,18 +314,19 @@ let pointOneFourOneFiveNine = 0.14159
 let pi = Double(three) + pointOneFourOneFiveNine
 // pi equals 3.14159, and is inferred to be of type Double
 ```
-Here, the value of the constant three is used to create a new value of type Double, so that both sides of the addition are of the same type. Without this conversion in place, the addition would not be allowed.
+위 예제에서 덧셈을 위해서 양쪽의 타입이 동일하도록 상수값 3을 `Double`타입의 값으로 바꾸는 것을 볼 수있다. 만일 이러한 변환이 없다면, 덧셈은 가능하지 않을 것이다.
 
-The reverse is also true for floating-point to integer conversion, in that an integer type can be initialized with a Double or Float value:
-
+또한 반대로 실수를 정수로 바꾸어 계사나는 것도 가능하다, 다만 이 경우 `Double`이나 `Float`값을 정수로 초기화하는 과정이 필요하다.
+```c
 let integerPi = Int(pi)
 // integerPi equals 3, and is inferred to be of type Int
-Floating-point values are always truncated when used to initialize a new integer value in this way. This means that 4.75 becomes 4, and -3.9 becomes -3.
+```
+실수형 값은 위와 같은 방식으로 새로운 정수형 값으로 변환시에 항상 소숫점 이하의 값을 버림한다. 예를들면 4.75는 4가되고 -3.9는 -3이 된다.
 
 >NOTE
 The rules for combining numeric constants and variables are different from the rules for numeric literals. The literal value 3 can be added directly to the literal value 0.14159, because number literals do not have an explicit type in and of themselves. Their type is inferred only at the point that they are evaluated by the compiler.
 
-Type Aliases
+##타입 알리아스(Type Aliases)
 
 Type aliases define an alternative name for an existing type. You define type aliases with the typealias keyword.
 
@@ -372,7 +373,7 @@ The result of the i == 1 comparison is of type Bool, and so this second example 
 
 As with other examples of type safety in Swift, this approach avoids accidental errors and ensures that the intention of a particular section of code is always clear.
 
-Tuples
+##튜플(Tuples)
 
 Tuples group multiple values into a single compound value. The values within a tuple can be of any type and do not have to be of the same type as each other.
 
@@ -413,11 +414,10 @@ println("The status message is \(http200Status.description)")
 // prints "The status message is OK"
 Tuples are particularly useful as the return values of functions. A function that tries to retrieve a web page might return the (Int, String) tuple type to describe the success or failure of the page retrieval. By returning a tuple with two distinct values, each of a different type, the function provides more useful information about its outcome than if it could only return a single value of a single type. For more information, see Functions with Multiple Return Values.
 
-NOTE
-
+>NOTE
 Tuples are useful for temporary groups of related values. They are not suited to the creation of complex data structures. If your data structure is likely to persist beyond a temporary scope, model it as a class or structure, rather than as a tuple. For more information, see Classes and Structures.
 
-Optionals
+###Optionals
 
 You use optionals in situations where a value may be absent. An optional says:
 
@@ -425,8 +425,8 @@ There is a value, and it equals x
 or
 
 There isn’t a value at all
-NOTE
 
+>NOTE
 The concept of optionals doesn’t exist in C or Objective-C. The nearest thing in Objective-C is the ability to return nil from a method that would otherwise return an object, with nil meaning “the absence of a valid object.” However, this only works for objects—it doesn’t work for structs, basic C types, or enumeration values. For these types, Objective-C methods typically return a special value (such as NSNotFound) to indicate the absence of a value. This approach assumes that the method’s caller knows there is a special value to test against and remembers to check for it. Swift’s optionals let you indicate the absence of a value for any type at all, without the need for special constants.
 
 Here’s an example. Swift’s String type has a method called toInt, which tries to convert a String value into an Int value. However, not every string can be converted into an integer. The string "123" can be converted into the numeric value 123, but the string "hello, world" does not have an obvious numeric value to convert to.
@@ -438,41 +438,43 @@ let convertedNumber = possibleNumber.toInt()
 // convertedNumber is inferred to be of type "Int?", or "optional Int"
 Because the toInt method might fail, it returns an optional Int, rather than an Int. An optional Int is written as Int?, not Int. The question mark indicates that the value it contains is optional, meaning that it might contain some Int value, or it might contain no value at all. (It can’t contain anything else, such as a Bool value or a String value. It’s either an Int, or it’s nothing at all.)
 
-If Statements and Forced Unwrapping
+##If문과 강제 If Statements and Forced Unwrapping
 
 You can use an if statement to find out whether an optional contains a value. If an optional does have a value, it evaluates to true; if it has no value at all, it evaluates to false.
 
 Once you’re sure that the optional does contain a value, you can access its underlying value by adding an exclamation mark (!) to the end of the optional’s name. The exclamation mark effectively says, “I know that this optional definitely has a value; please use it.” This is known as forced unwrapping of the optional’s value:
-
+```c
 if convertedNumber {
     println("\(possibleNumber) has an integer value of \(convertedNumber!)")
 } else {
     println("\(possibleNumber) could not be converted to an integer")
 }
 // prints "123 has an integer value of 123"
+```
 For more on the if statement, see Control Flow.
 
-NOTE
-
+>NOTE
 Trying to use ! to access a non-existent optional value triggers a runtime error. Always make sure that an optional contains a non-nil value before using ! to force-unwrap its value.
 
-Optional Binding
+##Optional Binding
 
 You use optional binding to find out whether an optional contains a value, and if so, to make that value available as a temporary constant or variable. Optional binding can be used with if and while statements to check for a value inside an optional, and to extract that value into a constant or variable, as part of a single action. if and while statements are described in more detail in Control Flow.
 
 Write optional bindings for the if statement as follows:
-
+```c
 if let constantName = someOptional {
     statements
 }
+```
 You can rewrite the possibleNumber example from above to use optional binding rather than forced unwrapping:
-
+```c
 if let actualNumber = possibleNumber.toInt() {
     println("\(possibleNumber) has an integer value of \(actualNumber)")
 } else {
     println("\(possibleNumber) could not be converted to an integer")
 }
 // prints "123 has an integer value of 123"
+```
 This can be read as:
 
 “If the optional Int returned by possibleNumber.toInt contains a value, set a new constant called actualNumber to the value contained in the optional.”
@@ -481,27 +483,27 @@ If the conversion is successful, the actualNumber constant becomes available for
 
 You can use both constants and variables with optional binding. If you wanted to manipulate the value of actualNumber within the first branch of the if statement, you could write if var actualNumber instead, and the value contained within the optional would be made available as a variable rather than a constant.
 
-nil
+##nil
 
 You set an optional variable to a valueless state by assigning it the special value nil:
-
+```c
 var serverResponseCode: Int? = 404
 // serverResponseCode contains an actual Int value of 404
 serverResponseCode = nil
 // serverResponseCode now contains no value
-NOTE
-
+```
+>NOTE
 nil cannot be used with non-optional constants and variables. If a constant or variable in your code needs to be able to cope with the absence of a value under certain conditions, always declare it as an optional value of the appropriate type.
 
 If you define an optional constant or variable without providing a default value, the constant or variable is automatically set to nil for you:
-
+```c
 var surveyAnswer: String?
 // surveyAnswer is automatically set to nil
-NOTE
-
+```
+>NOTE
 Swift’s nil is not the same as nil in Objective-C. In Objective-C, nil is a pointer to a non-existent object. In Swift, nil is not a pointer—it is the absence of a value of a certain type. Optionals of any type can be set to nil, not just object types.
 
-Implicitly Unwrapped Optionals
+##Implicitly Unwrapped Optionals
 
 As described above, optionals indicate that a constant or variable is allowed to have “no value”. Optionals can be checked with an if statement to see if a value exists, and can be conditionally unwrapped with optional binding to access the optional’s value if it does exist.
 
@@ -512,7 +514,7 @@ These kinds of optionals are defined as implicitly unwrapped optionals. You writ
 Implicitly unwrapped optionals are useful when an optional’s value is confirmed to exist immediately after the optional is first defined and can definitely be assumed to exist at every point thereafter. The primary use of implicitly unwrapped optionals in Swift is during class initialization, as described in Unowned References and Implicitly Unwrapped Optional Properties.
 
 An implicitly unwrapped optional is a normal optional behind the scenes, but can also be used like a nonoptional value, without the need to unwrap the optional value each time it is accessed. The following example shows the difference in behavior between an optional String and an implicitly unwrapped optional String:
-
+```c
 let possibleString: String? = "An optional string."
 println(possibleString!) // requires an exclamation mark to access its value
 // prints "An optional string."
@@ -520,29 +522,30 @@ println(possibleString!) // requires an exclamation mark to access its value
 let assumedString: String! = "An implicitly unwrapped optional string."
 println(assumedString)  // no exclamation mark is needed to access its value
 // prints "An implicitly unwrapped optional string."
+```
 You can think of an implicitly unwrapped optional as giving permission for the optional to be unwrapped automatically whenever it is used. Rather than placing an exclamation mark after the optional’s name each time you use it, you place an exclamation mark after the optional’s type when you declare it.
 
-NOTE
-
+>NOTE
 If you try to access an implicitly unwrapped optional when it does not contain a value, you will trigger a runtime error. The result is exactly the same as if you place an exclamation mark after a normal optional that does not contain a value.
 
 You can still treat an implicitly unwrapped optional like a normal optional, to check if it contains a value:
-
+```c
 if assumedString {
     println(assumedString)
 }
 // prints "An implicitly unwrapped optional string."
+```
 You can also use an implicitly unwrapped optional with optional binding, to check and unwrap its value in a single statement:
-
+```c
 if let definiteString = assumedString {
     println(definiteString)
 }
 // prints "An implicitly unwrapped optional string."
-NOTE
-
+```
+>NOTE
 Implicitly unwrapped optionals should not be used when there is a possibility of a variable becoming nil at a later point. Always use a normal optional type if you need to check for a nil value during the lifetime of a variable.
 
-Assertions
+###Assertions
 
 Optionals enable you to check for values that may or may not exist, and to write code that copes gracefully with the absence of a value. In some cases, however, it is simply not possible for your code to continue execution if a value does not exist, or if a provided value does not satisfy certain conditions. In these situations, you can trigger an assertion in your code to end code execution and to provide an opportunity to debug the cause of the absent or invalid value.
 
