@@ -13,7 +13,6 @@
 
 여기 작업을 수행한 횟수를 세는, 카운터`Counter`클래스를 정의한 간단한 예제가 있습니다:
 
-
 	class Counter {
 		var count = 0
 		func increment() {
@@ -27,10 +26,7 @@
 		}
 	}
 
-
 이 `Counter`클래스는 세가지 인스턴스 메소드를 정의합니다. 
-
-
  
 * `increment` 1만큼 counter를 증가시킵니다.
 * `incrementBy(amount: Int)` 특정한 정수값만큼 counter를 증가시킵니다.
