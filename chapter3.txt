@@ -407,19 +407,18 @@ let (justTheStatusCode, _) = http404Error
 println("The status code is \(justTheStatusCode)")
 // prints "The status code is 404"
 ```
-
-Alternatively, access the individual element values in a tuple using index numbers starting at zero:
+또다른 방식으로는 0부터 시작하는 index number를 통하여 각각의 element value에 접근합니다:
 ```c
 println("The status code is \(http404Error.0)")
 // prints "The status code is 404"
 println("The status message is \(http404Error.1)")
 // prints "The status message is Not Found"
 ```
-You can name the individual elements in a tuple when the tuple is defined:
+튜플을 정의할때 튜플의 각 element들에 이름을 지어줄 수도 있습니다:
 ```c
 let http200Status = (statusCode: 200, description: "OK")
 ```
-If you name the elements in a tuple, you can use the element names to access the values of those elements:
+만일 튜플의 각 element에 이름을 지어줬다면, 각 element에 값에 접근하기 위해서 element의 이름을 사용할 수 있습니다:
 ```c
 println("The status code is \(http200Status.statusCode)")
 // prints "The status code is 200"
