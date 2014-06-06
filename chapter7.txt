@@ -216,4 +216,113 @@ Swift는 `for-in`루프 말고도 C언어에서 쓰는, 조건부와 증가부�
 이렇게 확인작업을 해주지 않으면, board[squre]라고 썼을 때 board 배열의 범위를 넘어서는 값을 접근하려고 시도하게 됩니다.
 
 
+이렇게 확인작업을 해주지 않으면, board[squre]라고 썼을 때 board 배열의 범위를 넘어서는 값을 접근하려고 시도하게 되고, 에러가 날 것입니다. 예를 들어 칸 번호(square)가 26과 같아지면, 코드는 board[26]의 값을 확인하려 할 것이고, 26은 배열의 수보다 큽니다.
+이 `while` 루프 실행은 끝납니다. 그리고 루프의 조건부를 확인하고, 루프가 다시 실행되어야 하는지 확인합니다. 게임참가자가 25번 칸이나 25를 넘어서는 칸으로 이동했다면, 루프의 조건부는 거짓이 될 것이고 게임은 끝납니다. 
+  위 예제의 경우에는 `while`루프를 사용하는 것이 적절합니다. 왜냐하면 `while` 루프가 시작되기 전에 게임가 얼마나 계속되어야 하는지 알지 못하기 때문입니다. `while` 루프를 쓰면 특정 조건이 충족될 때까지 계속해서 실행됩니다. 
+
+### Do-While
+
+`while`루프와 비슷하지만 약간 다른 루프도 있습니다. 이름은 `do-while`루프이며, 이 루프에서는 루프의 조건부가 검토되기 전에 루프 블록이 한 번 실행됩니다. 그런 다음 조건부가 거짓이 될 때까지 루프를 반복합니다. 
+
+다음은 `do-while`문을 간단하게 일반화하여 나타낸 것입니다:
+
+```
+        do { 
+              statements 
+        } while   condition  
+```
+이번에도 뱀과 사다리 게임 예제를 사용하겠습니다. 다만 이번에는 `while` 루프 가 아니라 `do-while` 루프를 사용합니다. finalSquare, board, square, diceRoll 변수의 값은 앞에서 `while`루프를 사용했을 때와 동일한 값을로 초기화했습니다.
+
+```
+ let finalSquare  = 25 
+ var board  = Int[](count : finalSquare +  1, repeatedValue: 0) 
+ board[03]  = +08; board[06]  = +11; board[09]  = +09; board[10]  = +02   board[14]  = -10; board[19]  = -11; board[22]  = -02; board[24]  = -08 
+ var square  = 0 
+ var diceRoll  = 0  
+```
+
+이번 예제에서, 루프 내에서 처음으로 하는 작업은 사다리나 뱀이 들어 있는 지 확인하는 것입니다. 사다리를 타고 올라갔을 때 게임 참가자가 바로 25번 칸으로 이동하는 것은 불가능합니다. 즉 사다리를 타는 방법으로는 게임에서 이길 수 없습니다. 따라서 루프 안에서 칸에 뱀이나 사다리가 있는 지 여부를 확인하면 안전합니다. 
+
+게임을 시작할 때, 참가자는 “0번 칸”에 있습니다. board[0]의 값은 항상 0이며, 이 값이 가지는 효과는 없습니다: 
+
+```
+do { 
+     // move up or down for a snake or ladder square += board[square] 
+// 주사위를 던진다
+     if ++diceRoll  == 7 { diceRoll  =  1 } 
+// 주사위를 던져서 나온 수만큼 이동한다
+     square += diceRoll 
+ } while square  < finalSquare 
+println("Game over!")  
+```
+
+칸에 뱀이나 사다리가 있는지 프로그램이 확인한 후에, 주사위가 던져집니다. 게임 참가자는 diceRoll 값 만큼 칸을 움직입니다. 그런 다음 이번 루프 실행은 끝납니다. 
+
+루프의 조건부의 내용( while square < finalSquare)은 이전 예제에서와 같지만, 이번에는 루프를 한 번 돈 다음에 이 조건부가 검토됩니다. 이 게임에는 `while`루프보다 `do-while` 루프의 구조가 더 적절합니다. 이번에 사용한 `do-while` 루프에서, square += board[quare] 이 부분은 루프의 while 조건부에서 square가 아직 board 상에 있다고 확인한 후에 항상 즉시 실행됩니다.  이렇게 하면 이전 예제에서 한 것처럼 배열의 범위를 확인할 필요가 없어집니다.
+ 
+## 조건문  (Conditionals Statements)
+
+특정 조건이 충족하는지에 따라 각각 다른 코드를 실행하는 것이 유용한 경우가 많습니다. 어떤 에러가 발생했을 때 특정 코드를 실행시키고 싶을 수도 있습니다. 또는 어떤 값이 너무 높거나 너무 낮을 때 메시지를 보여주고 싶을 수도 있습니다. 이렇게 하려면 코드를 조건문으로 쓰면 됩니다.
+
+Swift에서 코드에 조건문을 추가하는 방법은 두 가지가 있습니다. 바로 `if`문과 `switch`문입니다. 보통 조건의 수가 많지 않을 때에는 보통 `if`문을 사용합니다. 한편 조건의 종류가 다양하고 복잡할 때에는 `switch`문이 더욱 적합하니다. 실행시킬 코드 브랜치를 선택하는데 패턴-매칭이 도움이 되는 경우에도 `switch`문을 사용합니다. 
+
+### If
+
+`if`문을 아주 단순하게 표현하면, 하나의 `if` 조건이 있습니다. 그럼 그 조건이 참인 경우에만 코드구문들이 실행됩니다. 
+
+```
+ var temperatureInFahrenheit  = 30    if temperatureInFahrenheit  <= 32 { 
+      println("It's very cold. Consider wearing a scarf.") 
+  } 
+ // prints "It's very cold. Consider wearing a scarf."  
+```
+
+위 예제에서는 온도가 화씨 32도(물이 어는 온도)보다 낮은지 같은지 여부를 확인합니다. 온도가 화씨 32도 이하이면, 메시지가 출력됩니다. 그 외의 경우에는 아무런 메시지도 나오지 않으며 코드 실행은 `if`문을 닫는 중괄호(}) 다음으로 이동하여 계속됩니다.
+
+`if`문을 사용할 때에는 `else` 절도 사용할 수 있는데, 여기에는 `if` 조건이 거짓일 때 실행되는 코드가 들어갑니다. `else` 키워드를 사용하여 나타냅니다:
+
+```
+  temperatureInFahrenheit  = 40 
+  if temperatureInFahrenheit  <= 32 { 
+      println("It's very cold. Consider wearing a scarf.") 
+  } else { 
+      println("It's not that cold. Wear a t-shirt.") 
+  } 
+ // prints "It's not that cold. Wear a t-shirt."  
+```
+ 
+위에서 두 개의 브랜치 중에서 하나는 항상 실행됩니다. 온도가 화씨 40도로 올라갔기 때문에, 스카프를 매라고 조언할 정도로 춥지 않습니다. 따라서 `else` 브랜치가 대신에 실행됩니다. 
+
+추가적인 경우를 고려할 때에는 여러 개의 `if`문을 쓸 수도 있습니다:
+
+```
+  temperatureInFahrenheit  = 90 
+  if temperatureInFahrenheit  <= 32 { 
+      println("It's very cold. Consider wearing a scarf.") 
+  } else if temperatureInFahrenheit  >= 86 { 
+      println("It's really warm. Don't forget to wear sunscreen.") 
+  } else { 
+      println("It's not that cold. Wear a t-shirt.") 
+  } 
+ // prints "It's really warm. Don't forget to wear sunscreen."  
+```
+
+위 예에서, 추가적인 `if` 문이 들어갔습니다. 이 부분은 온도가 특별히 높을 때의 경우에 대한 것입니다. 
+
+마지막에 쓴 `else` 절이 있습니다. 이 부분은 온도가 너무 높지도 낮지도 않은 경우에 보여주는 메시지를 출력합니다. 
+
+하지만 마지막에 쓴 `else` 절은 선택적입니다. 조건들이 모든 경우를 다뤄야 하지 않는다면, `else`절을 안 써줘도 됩니다:
+
+```
+  temperatureInFahrenheit  = 72 
+  if temperatureInFahrenheit  <= 32 { 
+     println("It's very cold. Consider wearing a scarf.") 
+  } else if temperatureInFahrenheit  >= 86 { 
+     println("It's really warm. Don't forget to wear sunscreen.") 
+  }  
+```
+ 
+이번 예제에서 온도는 너무 낮지도 너무 높지도 않았습니다. 그래서 `if`나 `else if`조건부에 들어 있는 코드는 실행되지 않았습니다. 그리고 아무 메시지도 출력되지 않았습니다: 
+             
+
 
