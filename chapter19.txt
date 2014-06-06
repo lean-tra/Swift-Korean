@@ -203,8 +203,9 @@ john.residence.address 의 address 인스턴스에 할당하기 위해서 느낌
 >if let upper = john.residence?.address?.buildingIdentifier()?.uppercaseString {
     println("John's uppercase building identifier is \(upper).")
 }
-// prints "John's uppercase building identifier is THE LARCHES."
+// prints "John's uppercase building identifier is THE LARCHES."  
 
+-
 >Note
 위 예제에서 둥근 괄호 다음에 선택 묶음 물음표를 놓았는데, 묶고자 하는 선택적 값이 buildingIndentifer 자체가 아니라 buildingIndentifer 메소드의 반환값이기 때문이다.
 
