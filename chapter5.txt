@@ -133,7 +133,7 @@ println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
 >또한 `countElements`에 의해 반환된 문자수는 항상 같은 문자가 포함되어있는 `NSSString` 의 길이 속성과 동일하지 않습니다. 길이는 `NSString`을 기초로한 문자열 UTF-16 표현내의 16비트 유닛 숫자에 기반하고 문자열에서 유니코드 문자의 수에 기반하지는 않습니다.
 이 사실을 반영하기 위해 길이 속성은 Swift가 `NSString` 문자열 값에 접근할때 `utf16count` 라고 합니다.
 
-## 문자열 및 문자 합치기
+## 문자열 및 문자 합치기(Concatenating Strings and Characters)
 
 문자열 및 문자를 덧셈 연산자(`+`)와 함께 추가하여 새로운 문자열(또는 연결된) 값을 만들 수 있습니다.
 
