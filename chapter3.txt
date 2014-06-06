@@ -382,7 +382,7 @@ if i == 1 {
 
 ##튜플(Tuples)
 
-튜플은 여러 값들을 하나의 값으로 묶어준다. 튜플안의 여러 값들은 Tuples group multiple values into a single compound value. The values within a tuple can be of any type and do not have to be of the same type as each other.
+튜플은 여러 값들을 하나의 값으로 묶어준다. 튜플안의 여러 값들은  어느 타입도 가능하고, 각각 동일한 타입일 필요도 없다.
 
 In this example, (404, "Not Found") is a tuple that describes an HTTP status code. An HTTP status code is a special value returned by a web server whenever you request a web page. A status code of 404 Not Found is returned if you request a webpage that doesn’t exist.
 ```c
