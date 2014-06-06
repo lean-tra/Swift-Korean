@@ -348,7 +348,7 @@ Swift는 `Bool`이라는 기본적인 이진형 타입을 가진다. 이진형 �
 let orangesAreOrange = true
 let turnipsAreDelicious = false
 ```
-**orangesAreOrange**와 **turnipsAreDelicious**의 타입은 이진형의 문자 그대로의 값으로 초기화가 가능한  `Bool`타입을 가지고 있습니다. 위에서의 `Int`와 `Double`처럼  As with Int and Double above, you don’t need to declare constants or variables as Bool if you set them to true or false as soon as you create them. 
+**orangesAreOrange**와 **turnipsAreDelicious**의 타입은 이진형의 문자 그대로의 값으로 초기화가 가능한  `Bool`타입을 가지고 있습니다. 위에서의 `Int`와 `Double`처럼, 만일 당신이 `true`나 `false`로 값을 설정한다면 자동으로 형태가 결정될 것이기 때문에 `Bool`로서 상수나 변수를 선언할 필요가 없다.
 타입 추론(Type inference)은 상수나 Swift의 코드를 더욱 간결하고 읽기 쉽게 하는데 도움을 준다.
 
 이진형 값은 다음과 같은 if문처럼 조건문으로 작업하는 경우에 특히 유용하다:
@@ -360,20 +360,22 @@ if turnipsAreDelicious {
 }
 // prints "Eww, turnips are horrible."
 ```
-Conditional statements such as the if statement are covered in more detail in Control Flow.
+위의 if문과 같은 조건문에 대한 것은 [Control Flow]()에서 조금 더 자세히 다룰것이다.
 
-Swift’s type safety prevents non-Boolean values from being be substituted for Bool. The following example reports a compile-time error:
-
+다음 예제는 컴파일 타임의 에러를 보여준다:
+```c
 let i = 1
 if i {
     // this example will not compile, and will report an error
 }
-However, the alternative example below is valid:
-
+```
+그러나 다음의 예제는 올바르게 처리되는 것을 보여준다:
+```c
 let i = 1
 if i == 1 {
     // this example will compile successfully
 }
+```
 The result of the i == 1 comparison is of type Bool, and so this second example passes the type-check. Comparisons like i == 1 are discussed in Basic Operators.
 
 As with other examples of type safety in Swift, this approach avoids accidental errors and ensures that the intention of a particular section of code is always clear.
