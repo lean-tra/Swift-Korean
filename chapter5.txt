@@ -99,19 +99,19 @@ Swift의 문자열 기본 복사 동작(copy-by-default)은 문자열 값이 함
 Swift의 문자열 타입은 지정된 순서로 문자 값의 컬렉션을 타나냅니다. 각 문자의 값은 하나의 유니코드 문자를 나타냅니다. 각 문자에 대해 for-in 루프의 문자 반복을 사용하여 각각의 문자의 값에 접근할 수 있습니다.
 
 ```
-for character in "Dog! " // 개 특수문자 {
+for character in "Dog!🐶"{
 	println(character)
 }
 // D
 // o
 // g
 // !
-// 개 특수문자
+// 🐶
 ```
 
 for-in 루프에 대해서는 For Loops 를 참조하십시오 // 링크
 
-그 대신에 문자 형식 주석을 제공하여 단일 문자열 리터럴에서 톡립(stand-alone) 문자 상수나 변수를 만듭니다.
+대신에 문자 형식 주석을 제공하여 단일 문자열 리터럴에서 톡립(stand-alone) 문자 상수나 변수를 만듭니다.
 
 ```
 let yenSign: Character = "¥"
