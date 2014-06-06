@@ -276,41 +276,44 @@ let oneMillion = 1_000_000
 let justOverOneMillion = 1_000_000.000_000_1
 ```
 
-###숫자 타입 변경(Numeric Type Conversion)
+###숫자의 타입 변환(Numeric Type Conversion)
 
-당신의 코드에서 모든 일반적인 목적으로 사용되는 정수형 상수나 변수가 모두 양수임을 알고 있더라도, 이를 위해 `int`타입을 사용 할 수 있다. 하지만 모든 상황에서 위와 같은 경우는 
-Use the Int type for all general-purpose integer constants and variables in your code, even if they are known to be non-negative. Using the default integer type in everyday situations means that integer constants and variables are immediately interoperable in your code and will match the inferred type for integer literal values.
+당신의 코드에서 모든 일반적인 목적으로 사용되는 정수형 상수나 변수가 모두 양수임을 알고 있더라도, 이를 위해 `int`타입을 사용 할 수 있다. 하지만 위와 같은 모든 상황에서 기본적인 정수형 타입을 사용하는 것은 당신의 코드에서  정수형 상수들이나 변수들이 당신에 코드내에서 즉시 서로 정보가 교환한 상태로 만든 다는 것을 의미한다. 그리고 이는 문자 그대로의 정수형을 의미하는데 적절하다.
 
-Use other integer types only when they are are specifically needed for the task at hand, because of explicitly-sized data from an external source, or for performance, memory usage, or other necessary optimization. Using explicitly-sized types in these situations helps to catch any accidental value overflows and implicitly documents the nature of the data being used.
+다른 정수형 타입들은 오직 외부의 소스로 부터오거나, 성능혹은 메모리와 같은 최적화가 필요하여 명확한 크기의 데이터를사용하는 작업이 필요한 경우에만 사용한다. 
+이런 상황에서 명확한 크기의 타입들을 사용하는 것은 어떠한 돌발적인 오버플로우나 사용되는 데이터의 종류를 기록하는데 도움이 된다.
 
-Integer Conversion
+## 정수형 변환(Integer Conversion)
 
-The range of numbers that can be stored in an integer constant or variable is different for each numeric type. An Int8 constant or variable can store numbers between -128 and 127, whereas a UInt8 constant or variable can store numbers between 0 and 255. A number that will not fit into a constant or variable of a sized integer type is reported as an error when your code is compiled:
-
+정수형의 상수나 변수에 저장 가능한 숫자의 범위는 각 숫자의 타입에 따라 다르다. `Int8`타입의 상수나 변수의 경우 -128~127의 값을 저장할 수 있으며, 반면 `UInt8`타입의 상수나 변수는 0~255의 값을 저장할 수있다.  지정된 크기의 정수형 타입에 맞지않는 숫자는 컴파일시 에러를 출력한다:
+```c
 let cannotBeNegative: UInt8 = -1
 // UInt8 cannot store negative numbers, and so this will report an error
 let tooBig: Int8 = Int8.max + 1
 // Int8 cannot store a number larger than its maximum value,
 // and so this will also report an error
-Because each numeric type can store a different range of values, you must opt in to numeric type conversion on a case-by-case basis. This opt-in approach prevents hidden conversion errors and helps make type conversion intentions explicit in your code.
+```
+각 숫자 타입은 각각 저장할 수있는 값의 범위가 다르기 때문에, 숫자의 형 변환은 경우에 따라 맞는 경우로 선택하여야 한다. 이러한 접근은 숨겨진 변환 에러들을 방지해주고  코드에서 타입을 변환하고 있다고 명시적으로 이야기하는것을 도와준다.
 
-To convert one specific number type to another, you initialize a new number of the desired type with the existing value. In the example below, the constant twoThousand is of type UInt16, whereas the constant one is of type UInt8. They cannot be added together directly, because they are not of the same type. Instead, this example calls UInt16(one) to create a new UInt16 initialized with the value of one, and uses this value in place of the original:
-
+특별한 숫자 타입에서 다른 타입으로 변환하기 위해서, 존재하는 값을 원하는 타입의 숫자를 초기화 한다. 아래의 예시에서,  상수 **twoThousand**는 `UInt16`이고, 반면에 상수 **one**은 `UInt8`이다.  이 두값은 서로 같은 타입이 아니기 때문에 이대로 서로 더하는 것은 불가능 하다. 대신에 이 예제에서 처럼 **UInt16(one)**를 이용하여  one의 값을 가진 `UInt16`타입을 새로 만들 수 있다. 그리고 이는 원래 값이 있었던 것처럼 사용할 수있다.
+```c
 let twoThousand: UInt16 = 2_000
 let one: UInt8 = 1
 let twoThousandAndOne = twoThousand + UInt16(one)
-Because both sides of the addition are now of type UInt16, the addition is allowed. The output constant (twoThousandAndOne) is inferred to be of type UInt16, because it is the sum of two UInt16 values.
+```
+이제는 덧셈의 양쪽 값이 `UInt16`이기 때문에, 덧셈이 가능하다. 그 결과값(**twoThousandAndOne**)는 두 `UInt16`의 덧셈이기 때문에 `Uint16`타입을 가진다.
 
-SomeType(ofInitialValue) is the default way to call the initializer of a Swift type and pass in an initial value. Behind the scenes, UInt16 has an initializer that accepts a UInt8 value, and so this initializer is used to make a new UInt16 from an existing UInt8. You can’t pass in any type here, however—it has to be a type for which UInt16 provides an initializer. Extending existing types to provide initializers that accept new types (including your own type definitions) is covered in Extensions.
+**SomeType(fInitialValue)**는 Swift타입의 기본적인 초기화 방법이자 초기화 값을 전달하는 방법입니다. 보이지 않는 곳에서, `UInt16`은 `UInt8`값을 변화하는 initializer를 가지고 있고, 이 initializer는 존재하는 `UInt8`에서 새로운  `UInt16`를 만드는데 사용된다. 그러나 어떠한 값도 넘길수 없다면, 그 타입이You can’t pass in any type here, however—it has to be a type for which UInt16 provides an initializer. Extending existing types to provide initializers that accept new types (including your own type definitions) is covered in Extensions.
 
-Integer and Floating-Point Conversion
+#정수와 실수 변환(Integer and Floating-Point Conversion)
 
-Conversions between integer and floating-point numeric types must be made explicit:
-
+실수와 정수사이의 변환은 분명하게 만들어야 한다:
+```c
 let three = 3
 let pointOneFourOneFiveNine = 0.14159
 let pi = Double(three) + pointOneFourOneFiveNine
 // pi equals 3.14159, and is inferred to be of type Double
+```
 Here, the value of the constant three is used to create a new value of type Double, so that both sides of the addition are of the same type. Without this conversion in place, the addition would not be allowed.
 
 The reverse is also true for floating-point to integer conversion, in that an integer type can be initialized with a Double or Float value:
@@ -335,7 +338,7 @@ var maxAmplitudeFound = AudioSample.min
 // maxAmplitudeFound is now 0
 Here, AudioSample is defined as an alias for UInt16. Because it is an alias, the call to AudioSample.min actually calls UInt16.min, which provides an initial value of 0 for the maxAmplitudeFound variable.
 
-Booleans
+##이진형(Booleans)
 
 Swift has a basic Boolean type, called Bool. Boolean values are referred to as logical, because they can only ever be true or false. Swift provides two Boolean constant values, true and false:
 
