@@ -121,7 +121,7 @@ let yenSign: Character = "¥"
 문자열의 문자의 수를 검색하려면 전역 함수인 countElements를 호출하여 함수의 유일한 매개변수인 문자열을 전달합니다.
 
 ```
-let unusualMenagerie = "Koala , Snail , Penguin , Dromedary"
+let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
 println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
 // prints "unusualMenagerie has 40 characters"
 ```
