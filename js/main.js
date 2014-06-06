@@ -13,8 +13,8 @@
                 return;
             }
 
-            //var li = $("<li></li>").append($("<a></a>").attr("href", page.page + ".html").text(page.name));
-            //$("#nav-menu").append(li);
+            var li = $("<li></li>").append($("<a></a>").attr("href", page.page + ".html").text(page.name));
+            $("#nav ul").append(li);
         });
     });
 

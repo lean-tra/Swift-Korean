@@ -13,16 +13,10 @@
    Author's custom styles
    ========================================================================== */
 
-
-
-
-
-
-
-
-
-
-
+.nav-sidebar-fixed {
+    position: fixed;
+    margin-top: 50px;
+}
 
 
 
