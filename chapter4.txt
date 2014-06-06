@@ -335,7 +335,7 @@ if !allowedEnrty {
 
 반대로 두 값이 `false` 이면 overall expression 또한 `false` 입니다. 사실 첫번째 값이 `false` 인 경우 두번째 값이 evaluated 되지 않습니다. 그것을 가능할수 없기 떄문에 overall expression이 `true`와 같게 됩니다. 이는 short-circuit evaluation 로 불린다.
 
-이 예제에서는 두 개의 `Bool`값을 고려하여 만약 두 값이 `true` 에만 액세스 할 수 있습니다.
+이 예제에서는 두 개의 `Bool`값을 고려하여 만약 두 값이 `true` 에만 접근할 수 있습니다.
 
 ```
 let enteredDoorCode = true
