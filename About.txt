@@ -8,11 +8,11 @@ By translating "The Swift Programming Language" we want to help a lot of korean 
 > 이 프로젝트는 애플의 새로운 프로그래밍 언어 **swift** 번역 프로젝트입니다. 자유롭게 참여하세요 =)
 **이 번역 프로젝트는 절대로 상업적인 목적으로 사용되지 않습니다.**
 
-## Oiginal Contents
+## Original Contents
 - [Download “The Swift Programming Language” from the iBooks Store](https://itunes.apple.com/us/book/the-swift-programming-language/id881256329?mt=11)
 - [The Swift Programming Language 웹 사이트](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/)
 
-## Let's tralate it! 
+## Let's translate it! 
 - 누가 어떤 챕터를 번역하고 있을까..? 저도 참여할 수 있을까요? - [번역작업 할당 현황](https://www.penflip.com/jjuakim/swift-korean/discussions/35)
 - 번역을 시작하기전에 그리고 submit 하기 전에 꼭 읽어주세요! - [번역 가이드](https://www.penflip.com/jjuakim/swift-korean/discussions/36)
 - 이러한 단어는 어떻게 번역해야 할까요? - [Dictionary](https://www.penflip.com/jjuakim/swift-korean/discussions/27)
