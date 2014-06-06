@@ -15,8 +15,7 @@
 이를 가능하게 하기위해, 클래스 인스턴스를 속성, 상수, 변수에 할당할때 해당 속성, 상수, 변수는 해당 인스턴스에 강한 참조(Strong reference)를 합니다. 이 참조는 "강한" 참조라 불리는데, 해당 인스턴스를 강력하게 유지하기 때문입니다. 그리고 이 강한 참조가 남아있는 이상 해당 인스턴스의 할당 해제는 허용되지 않습니다.
 
 ##ARC in Action
-
-Here’s an example of how Automatic Reference Counting works. This example starts with a simple class called Person, which defines a stored constant property called name:
+여기 자동 참조 계수가 어떻게 작동하는지에 대한 예제가 있습니다. 이 예제는 `name` 이라는 저장된 상수 속성을 정의하는 `Person` 이라는 단순한 클래스와 함께합니다.
 ```
 class Person {
     let name: String
@@ -29,36 +28,33 @@ class Person {
     }
 }
 ```
-The Person class has an initializer that sets the instance’s name property and prints a message to indicate that initialization is underway. The Person class also has a deinitializer that prints a message when an instance of the class is deallocated.
+`Person` 클래스는 `name` 속성을 설정하고 초기화가 진행중임을 알리는 메시지를 출력하는 이니셜라이져(initializer)를 가지고 있습니다. 또한 `Person` 클래스는 인스턴스가 할당 해제될때 메시지를 출력하는 디이니셜라이져(deinitializer)를 갖고 있습니다.
+다음 코드 조각들은 `Person?` 타입의 변수 3개를 정의하고 있습니다. 이 뒤에 `Person`의 새 인스턴스들의 복수 참조에 사용하기 위한 것입니다. 타입은 `Person`이 아닌 `Person?`인 선택적(Optional) 타입이기 때문에, 변수들은 자동적으로 `nil`로 초기화가 되며, 지금은 `Person` 인스턴스를 참조하지 않습니다.
 
-The next code snippet defines three variables of type Person?, which are used to set up multiple references to a new Person instance in subsequent code snippets. Because these variables are of an optional type (Person?, not Person), they are automatically initialized with a value of nil, and do not currently reference a Person instance.
 ```
 var reference1: Person?
 var reference2: Person?
 var reference3: Person?
 ```
-You can now create a new Person instance and assign it to one of these three variables:
+이제 새로운 `Person` 인스턴스를 생성하여 변수 3개중에 하나에 할당할 수 있습니다.
 ```
 reference1 = Person(name: "John Appleseed")
 // prints "John Appleseed is being initialized"
 ```
-Note that the message "John Appleseed is being initialized" is printed at the point that you call the Person class’s initializer. This confirms that initialization has taken place.
-
-Because the new Person instance has been assigned to the reference1 variable, there is now a strong reference from reference1 to the new Person instance. Because there is at least one strong reference, ARC makes sure that this Person is kept in memory and is not deallocated.
-
-If you assign the same Person instance to two more variables, two more strong references to that instance are established:
+ `"John Appleseed is being initialized"`라는 메시지가 `Person` 클래스의 이니셜라이져가 호출될 때 출력된다는 점에 주의합니다. 이것으로 초기화가 제대로 됐음을 확인할 수 있습니다.
+`reference1` 변수에 `Person`의 새 인스턴스가 할당 되었기 때문에, `reference1`과 `Person` 인스턴스 사이에 강한 참조가 생깁니다. 그리고 최소 하나의 강한 참조가 있어서 ARC는 `Person`이 메모리에 유지되는 것과, 할당 해제 되지 않음을 확인 합니다.
+만약 같은 `Person` 인스턴스를 두개 변수에 더 할당하면, 두개의 강한 참조가 더 생깁니다.
 ```
 reference2 = reference1
 reference3 = reference1
 ```
-There are now three strong references to this single Person instance.
-
-If you break two of these strong references (including the original reference) by assigning nil to two of the variables, a single strong reference remains, and the Person instance is not deallocated:
+이제 하나의 `Person` 인스턴스에 대한 강한 참조는 3개입니다.
+원래의 참조를 포함한 변수들 중에 `nil`을 2개 할당함으로써 2개의 강한 참조를 부순다면, 하나의 강한 참조가 남게 되며, `Person` 인스턴스는 할당해제 되지 않습니다.
 ```
 reference1 = nil
 reference2 = nil
 ```
-ARC does not deallocate the Person instance until the third and final strong reference is broken, at which point it is clear that you are no longer using the Person instance:
+세번째 강한 참조가 사라져 명확하게 `Person` 인스턴스가 더 이상 사용되지 않기 전까지 ARC는 `Person` 인스턴스를 할당 해제 하지 않습니다. 
 ```
 reference3 = nil
 // prints "John Appleseed is being deinitialized"
