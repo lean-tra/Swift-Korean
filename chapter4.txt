@@ -352,7 +352,7 @@ if enteredDoorCode && passedRetinaScan {
 
 위의 논리 AND 연산자처럼 논리 OR 연산자는 식을 고려할떄 short-circuit evaluation을 사용합니다. 논리 OR식의 좌측에 `true`가 해당하는 경우는 overall expression 식의 결과를 변경 할수 있기 때문에 우측은 계산되지 않는다.
 
-아래의 예제에서 첫 번째 `Bool` 값(`hasDoorKey`)은 `false`이지만 두 번째 값(`knowsOverridePassword`)는 `true`이다. 하나의 값 이`true`이기 떄문에 overall expression은 `true`로 평가하고 액세스가 허용됩니다.
+아래의 예제에서 첫 번째 `Bool` 값(`hasDoorKey`)은 `false`이지만 두 번째 값(`knowsOverridePassword`)는 `true`이다. 하나의 값 이`true`이기 떄문에 overall expression은 `true`로 평가하고 접근이 허용됩니다.
 
 ```
 let hasDoorKey = false
