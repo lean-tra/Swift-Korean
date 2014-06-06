@@ -324,7 +324,7 @@ let integerPi = Int(pi)
 실수형 값은 위와 같은 방식으로 새로운 정수형 값으로 변환시에 항상 소숫점 이하의 값을 버림한다. 예를들면 4.75는 4가되고 -3.9는 -3이 된다.
 
 >NOTE
-The rules for combining numeric constants and variables are different from the rules for numeric literals. The literal value 3 can be added directly to the literal value 0.14159, because number literals do not have an explicit type in and of themselves. Their type is inferred only at the point that they are evaluated by the compiler.
+숫자 상수나 변수를 결합하기위한 규칙은 numeric literals의 규칙과는 다릅니다. numeric literals는 그 스스로가 명시적인 타입을 가지고 있지 않기 때문에 literal value 3은 literal value 0.14159와 바로 더할 수 있습니다. 이는 그들의 타입은 오직 컴파일로 체크한다는 것을 의미합니다.
 
 ##타입 알리아스(Type Aliases)
 
@@ -391,9 +391,9 @@ let http404Error = (404, "Not Found")
 ```
 (404, "Not Found") 튜플은 HTTP 상태코드를 두개의 나누어진 값으로 표현하기 위한 `Int`값 하나와`String`값 하나를 서로 묶은 것이다. 이것은 " `(Int, String)`타입의 튜플"이라고 말할 수있다.
 
-You can create tuples from any permutation of types, and they can contain as many different types as you like. There’s nothing stopping you from having a tuple of type (Int, Int, Int), or (String, Bool), or indeed any other permutation you require.
+당신은 어떠한 순서를 가진타입들로부터도 튜블들을 만들 수 있습니다. 그리고 그 튜블들은 당신이 원하는 만큼 서로 다른 타입들을 가질 수 있습니다. 튜플 (Int, Int, Int)나 튜플(String, Bool) 혹은 당신이 필요한 어떠한 순서를 가진 튜플이라면 어떠한 것도 당신을 막을 수 없습니다. (모두 생성 가능하단의미)
 
-You can decompose a tuple’s contents into separate constants or variables, which you then access as usual:
+당신은 튜플의 각 내용들을 분리된 상수나 변수로 분해할수 있고 이는 평상시처럼 접근도 가능합니다.
 ```c
 let (statusCode, statusMessage) = http404Error
 println("The status code is \(statusCode)")
@@ -401,12 +401,13 @@ println("The status code is \(statusCode)")
 println("The status message is \(statusMessage)")
 // prints "The status message is Not Found"
 ```
-If you only need some of the tuple’s values, ignore parts of the tuple with an underscore (_) when you decompose the tuple:
+만일 당신이 튜플의 값들중 오직 몇몇개만 필요하다면, 튜플을 분리할때 튜플에서 무시할 부분을 언더바 "_" 로 처리하면 된다:
 ```c
 let (justTheStatusCode, _) = http404Error
 println("The status code is \(justTheStatusCode)")
 // prints "The status code is 404"
 ```
+
 Alternatively, access the individual element values in a tuple using index numbers starting at zero:
 ```c
 println("The status code is \(http404Error.0)")
