@@ -29,7 +29,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
 ```
 확장으로 프로토콜 준수의 추가는 Adding Protocol Conformance with an Extension 에 설명 되어 있습니다.
 
-### 연산 속성
+## 연산 속성
 확장은 연산 인스턴스 속성과 연산 타입 속성을 기존의 타입에 추가할 수 있습니다. 이 예제는 거리 단위를 제공하기 위해 다섯개의 연산 인스턴스 속성을 Swift의 내장 Double 타입에 추가합니다. 
 ```c
 extension Double {
@@ -62,3 +62,109 @@ println("A marathon is \(aMarathon) meters long")
 
 > 주의
 확장은 새로운 연산속성을 추가할 수 있습니다. 하지만 저장 속성 또는 기존 속성에 프로퍼티 옵저버를 추가할 수는 없습니다.
+
+## 이니셜라이저
+확장은 기존 타입에 새로운 이니셜라이저를 추가할 수 있습니다. 이는 다른 타입들이 여러분의 커스텀 타입을 이니셜라이저의 인자로 받을 수 있도록 하거나 또는 타입의 기본 구현에 포함되어 있지 않은 추가 적인 이니셜라이저 옵션을 제공할 수 있도록 확장하는 것을 가능하게 합니다.
+
+확장은 새 convenience 이니셜라이저를 클래스에 추가할 수 있습니다. 하지만 새 designated 이니셜라이저 또는 디이니셜라이저를 추가할 수는 없습니다. designated 이니셜라이저와 디이니셜라이저는 반드시 본래의 클래스 구현에서 제공되어야 합니다.
+
+> 주의
+> 만약 확장을 사용해서 모든 저장 속성의 기본 값을 제공하는 값 타입에 새로운 이니셜라이저를 추가하고, 어떠한 커스텀 이니셜라이저도 정의하지 않았다면, 기본 이니셜라이저와 memberwise 이니셜라이저를 호출 할 수 있습니다. 
+> *Initializer Delegation for Value Type*에서 설명한 것 처럼 이니셜라이저를 값 타입의 본래 구현에 작성을 한 경우에는 해당 되지 않습니다. 
+
+아래의 예제는 직사각형을 나타내기 위한 커스텀 `Rect` 구조체를 정의합니다. 또한 모든 속성의 기본값이 0.0인 `Size`와 `Point`구조체를 정의합니다. 
+
+```c
+struct Size {
+    var width = 0.0, height = 0.0
+}
+struct Point {
+    var x = 0.0, y = 0.0
+}
+struct Rect {
+    var origin = Point()
+    var size = Size()
+}
+```
+
+*Default Initailizers* 에서 언급했던 것처럼 `Rect` 구조체는 모든 속성의 기본값을 제공하기 때문에 기본 이니셜라이저와 memberwise 이니셜라이저를 자동으로 받습니다. 이 이니셜라이저들은 새로운 `Rect` 인스턴스를 생성하기 위해 사용될 수 있습니다.
+
+```c
+let defaultRect = Rect()
+let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
+    size: Size(width: 5.0, height: 5.0))
+```
+
+`Rect` 구조체에 특정 중심점과 크기를 받기 위한 추가 이니셜라이저를 제공하기 위해 확장할 수 있습니다.
+```c
+extension Rect {
+    init(center: Point, size: Size) {
+        let originX = center.x - (size.width / 2)
+        let originY = center.y - (size.height / 2)
+        self.init(origin: Point(x: originX, y: originY), size: size)
+    }
+}
+```
+
+이 새 이니셜라이저는 처음에 제공된 `center` 값과 `size`값을 기반으로 적절한 *origin point*를 계산합니다. 그 다음 구조체의 자동 memberwise 이니셜라이저 `init(origin:size:)`를 호출하여 새 origin 과 size 값을 적절한 속성에 저장합니다.
+
+```c
+let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
+    size: Size(width: 3.0, height: 3.0))
+// centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
+```
+
+>주의
+확장으로 새 이니셜라이저를 제공 할 경우 이니셜라이저가 완료되었을 때 각 인스턴스가 완전히 초기화 되었는지 확인하는 책임은 작성자에게 있습니다.
+
+## 메소드
+확장은 기존 타입에 새 인스턴스 메소드와 타입 메소드를 추가할 수 있습니다. 다음 예제는 새 인스턴스 메소드  `repetitions` 를 `Int` 타입에 추가합니다:
+```c
+extension Int {
+    func repetitions(task: () -> ()) {
+        for i in 0..self {
+            task()
+        }
+    }
+}
+```
+`repetitions` 메소드는 매개변수가 없고 반환 값이 없음을 나타내는 하나의 `()->()`인자를 받습니다.
+
+이 확장을 정의한 후에 여러번의 반복작업을 위해 어느 정수값에서 repetitions 메소드를 호출 할 수 있습니다.
+
+```c
+3.repetitions({
+    println("Hello!")
+    })
+// Hello!
+// Hello!
+// Hello!
+```
+
+호출을 더 간결하게 하기위해 후행 클로저 문법을 사용:
+```c
+3.repetitions {
+    println("Goodbye!")
+}
+// Goodbye!
+// Goodbye!
+// Goodbye!
+```
+
+### Mutating 인스턴스 메소드
+확장을 이용해 인스턴스 메소드 추가함으로써 인스턴스 스스로 또한 수정할 수 있습니다. `self` 또는 자신의 속성을 수정하는 구조체와 enumeration 메소드들은 반드시 인스턴스 메소드를 `mutating`으로 표시 해야합니다.
+
+아래 예제는 원래의 값을 제곱하는 새 mutating 메소드 `square` 를 Swift의 `Int`타입에 추가합니다. 
+
+```c
+extension Int {
+    mutating func square() {
+        self = self * self
+    }
+}
+var someInt = 3
+someInt.square()
+// someInt is now 9
+```
+
+## Subscripts
