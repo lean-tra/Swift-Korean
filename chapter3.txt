@@ -328,15 +328,17 @@ The rules for combining numeric constants and variables are different from the r
 
 ##타입 알리아스(Type Aliases)
 
-Type aliases define an alternative name for an existing type. You define type aliases with the typealias keyword.
+타입알리아스는 이미 존재하는 타입을 또다른 이름으로 정의하는것을 이야기합니다. `typealias`라는 키워드로 타입 알리아스를 정의할 수 있습니다.
 
-Type aliases are useful when you want to refer to an existing type by a name that is contextually more appropriate, such as when working with data of a specific size from an external source:
-
+타입 알리아스는 외부의 소스에서온 특정한 사이즈를 가진 데이터로 작업하는 경우 처럼 이미 존재하는 타입을 보다 문맥에 맞는 이름으로 알아보고 싶을때 유용하다:
+```c
 typealias AudioSample = UInt16
-Once you define a type alias, you can use the alias anywhere you might use the original name:
-
+```
+한번 Once you define a type alias, you can use the alias anywhere you might use the original name:
+```c
 var maxAmplitudeFound = AudioSample.min
 // maxAmplitudeFound is now 0
+```
 Here, AudioSample is defined as an alias for UInt16. Because it is an alias, the call to AudioSample.min actually calls UInt16.min, which provides an initial value of 0 for the maxAmplitudeFound variable.
 
 ##이진형(Booleans)
