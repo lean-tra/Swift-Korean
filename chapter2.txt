@@ -1,20 +1,20 @@
 # 02 Swift 둘러보기 (Swift Tour)
 > Translator : FlashMaestro (masterofflash@nate.com)
 
-새로운 언어를 배울 때 첫번째 프로그램은 전통적으로 화면에 "Hello, world"란 구문을 출력해 보는 것입니다. Swift에서는 단 한줄로 이것이 가능합니다.
+전통적으로 새로운 언어를 배울 때 첫번째 프로그램은 화면에 "Hello, world"란 구문을 출력해 보는 것입니다. Swift에서는 코드 한 줄로 이를 구현할 수 있습니다.
 	
     println("Hello, world")
     
-C나 Objective-C에서 코드를 작성해본적이 있다면 Swift에서 이 한줄의 코드가 완전한 프로그램을 구성하는 이런 문법이 매우 익숙할 것입니다. 입.출력이나 문자열을 다루기 위한 함수들 같은 기능들을 위한 분리된 라이브러리를 임포트할 필요가 없습니다. 프로그램의 전체 지점에 있어서 코드는 전역 범위(Global scope)로 쓰여지고, 때문에 main 함수는 필요하지 않습니다. 또한 모든 문장끝에 세미콜론을 쓸 필요도 없습니다.
+C나 Objective-C에서 코드를 작성해본적이 있다면 이런 문법이 매우 익숙할 것입니다. Swift에서는 이 한줄의 코드가 완전한 프로그램입니다. 입/출력이나 문자열을 다루기 위한 함수들 같은 기능들을 사용하기 위해 분리된 라이브러리를 볼러올(Import) 필요가 없습니다. 전역 범위(Global scope)에 해당하는 코드는 프로그램의 진입점(entry point)로 사용되기 때문에, main 함수는 필요하지 않습니다. 또한 모든 문장끝에 세미콜론을 쓸 필요도 없습니다.
 
-이 둘러보기는 다양한 프로그래밍 과제를 어떻게 완수해 나가는지 보여주면서 Swift로 어떻게 코드를 작성해야하는지에 대한 충분한 정보를 제공할 것입니다. 몇몇가지를 이해하지 못한다고 해서 걱정하지 마세요. 이번 장에서 소개되는 모든 것들은 책의 뒷 부분에서 자세히 설명될 것입니다.
+이번 장에서는 다양한 프로그래밍 과제를 어떻게 완수해 나가는지 보여주면서 Swift로 어떻게 코드를 작성해야하는지에 대한 충분한 정보를 제공할 것입니다. 몇몇가지를 이해하지 못한다고 해서 걱정하지 마세요. 이번 장에서 소개되는 모든 것들은 책의 뒷 부분에서 자세히 설명할 것입니다.
 
 >노트
-최선의 경험을 위해서 이번 장을 Xcode안에서 playground로 열어보세요. Playground는 코드의 수정과 즉시 결과를 볼 수 있도록 해줄 것입니다.
+이번 장을 확실하게 이해하려면 Xcode 6의 Playground를 열어보세요. Playground는 코드를 수정하는 즉기 결과를 볼 수 있게 해줄 것입니다.
 
 ##간단한 값
 
-let을 사용하면 상수를 만들고 var를 사용하면 변수를 만들 수 있습니다. 상수는 컴파일 타임에 알고 있을 필요가 없습니다. 그러나 오직 한번만 값을 할당해야합니다. 이것은 상수를 값을 한번만 결정하고 여러곳에 쓰일 이름으로 사용할 수 있다는 것을 의미합니다.
+let을 사용하면 상수를 만들고 var를 사용하면 변수를 만들 수 있습니다. 상수는 컴파일할 때 값을 알 필요가 없습니다. 그러나 한 번만 값을 할당할 수 있습니다. 이는 상수에 한 번만 값을 할당한 다음, 해당 상수 이름을 여러곳에 사용할 수 있다는 것을 의미합니다.
 
 ```c
 var myVariable =42
@@ -22,9 +22,9 @@ myVariable = 50
 let myConstant = 42
 ```
 
-상수나 변수 모두 당신이 할당하고 싶은 값의 타입을 가질 수 있습니다. 그러나 항상 타입을 명시해야만 하는 것은 아닙니다. 당신이 상수나 변수를 만들 때 할당한 값을 통해 컴파일러는 그 값의 타입을 추측합니다. 위의 예를 보면, myVariable이 정수형 값으로 초기화되었기 때문에 컴파일러는 정수형이라고 추측합니다.
+상수나 변수 값 모두에 여러분이 할당하고 싶은 값의 타입(type)을 지정할 수 있습니다. 그러나 항상 타입을 명시해야만 하는 것은 아닙니다. 여러분이 상수나 변수를 만들 때 할당한 값을 통해 컴파일러는 해당 값의 타입을 추측합니다. 위의 예를 보면, myVariable이 정수 타입 값으로 초기화되었기 때문에 컴파일러는 정수 타입이라고 추측합니다.
 
-만약 초기값이 충분한 정보를 제공하지 못한 경우(혹은 초기값이 없는 경우) 특정한 타입을 변수명 뒤에 세미콜론으로 분리하여 써주어야 합니다.
+만약 초기값이 충분한 정보를 제공하지 못한 경우(혹은 초기값이 없는 경우) 특정한 타입을 변수명 뒤에 세미콜론으로 분리하여 써줘야 합니다.
 
 ```c
 let inplicitInteger = 70
@@ -32,10 +32,10 @@ let implicitDouble = 70.0
 let explicitDouble: Double  = 70
 ```
 
->실험
-4와 명시적으로 Float 형태의 값을 갖는 상수를 만들어보자.
+>실습
+명시적으로 Float 타입인 상수를 만들고 4라는 값을 할당해보자.
 
-값은 절대 암시적으로 다른 형태의 값으로 변환할 수 없습니다. 만약 다른 형태의 값으로 변화해야 한다면 명시적으로 원하는 형태의 인스턴스로 만들어야 합니다.
+할당된 값은 절대 다른 타입의 값으로 암시적인 변환을 할 수 없습니다. 만약 다른 타입의 값으로 변화해야 한다면 원하는 형태의 인스턴스로 만들어 타입을 명시해야 합니다.
 
 ```c
 let label = "The width is "
@@ -43,10 +43,10 @@ let width = 94
 let widthLabel = label + String(width)
 ```
 
->실험
-마지막줄에 있는 String으로 변환 부분을 제거해보자. 어떤 에러가 발생하는가?
+>실습
+마지막 줄에 명시한 String 타입 변환 부분을 제거해보자. 어떤 에러가 발생하는가?
 
-문자열 안에 값들을 포함하는 쉬운 방법도 있습니다. 괄호 안에 값을 쓰고 괄호 앞에 백슬래시를 쓰면 됩니다. 예를 들면
+문자열 안에 값들을 쉽게 포함하는 방법도 있습니다. 괄호 안에 값을 쓰고 괄호 앞에 백슬래시(\)를 쓰면 됩니다. 예를 들면
 
 ```c
 let apples = 3
@@ -55,218 +55,252 @@ let appleSummary = "I have \(apples) apples."
 let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 ```
 
->실험
-문자열안에 \()를 이용해 실수형 계산을 포함하도록 해보고, 인사말 안에 누군가의 이름을 넣어보자.
+과 같습니다.
 
-배열과 딕셔너리는 대괄호([])를 이용해 만들 수 있습니다. 그리고 대괄호 안에 인덱스나 키를 이용해 각각의 요소에 접근할 수 있습니다.
+>실습
+`\()` 를 이용해 문자열 안에 실수형 계산을 포함하도록 해보고, 인사말 안에 누군가의 이름을 넣어보자.
 
-1| var shoppingList = ["catfish", "water", "tulips", "blue paint"]
-2| shoppingList[1] = "bottle of water"
-3|
-4| var occupations = [
-5|		"Malcolm":"Captian",
-6|		"Kaylee":"Mechanic",
-7| ]
-8| occupations["Jayne"] = "Public Relations"
+배열(array)과 딕셔너리(dictionary)는 대괄호([])를 이용해 만들 수 있습니다. 그리고 대괄호 안에 인덱스(index)나 키(key)를 이용해 각각의 요소에 접근할 수 있습니다.
 
-빈 배열이나 딕셔너리를 만들려면, 초기화자(initializer) 문법을 사용하면 됩니다.
+```c
+var shoppingList = ["catfish", "water", "tulips", "blue paint"]
+shoppingList[1] = "bottle of water"
 
-1| let emptyArray = String[]()
-2| let emptyDictionary = Dictionary<String, Float>()
+var occupations = [
+	"Malcolm":"Captian",
+	"Kaylee":"Mechanic",
+]
+occupations["Jayne"] = "Public Relations"
+```
 
-타입 정보를 추론할 수 없다면 빈 배열은 []로 빈 딕셔너리는 [:]로 쓸 수 있습니다. 예를 들어 변수에 새로운 값을 할당하거나 함수에 인자로 넘겨줄 때
+빈 배열이나 딕셔너리를 만들려면, 이니셜라이저(initializer)를 사용하면 됩니다.
 
-shoppingList = [] //쇼핑을 가서 모든 것을 샀다.
+```c
+let emptyArray = String[]()
+let emptyDictionary = Dictionary<String, Float>()
+```
+
+타입 정보를 추론할 수 없다면 빈 배열은 []로 빈 딕셔너리는 [:]로 표기할 수 있습니다. 예를 들어 변수에 새로운 값을 할당하거나 함수에 인자(argument)로 전달할 때
+
+```c
+shoppingList = [] // Went shopping and bought everything.
+```
+
+와 같이 표현하면 됩니다.
+
 
 ##흐름 제어
-if와 switch를 사용해서 조건문을 만들 수 있고 for-in, for, while, do-while을 이용해서 반복문을 만들 수 있습니다. 조건문과 반복문을 괄호로 감싸는 것은 선택사항입니다. 중괄호로 몸통을 감싸는 것은 필수입니다.
+if와 switch를 사용해서 조건문을 만들 수 있고 for-in, for, while, do-while을 이용해서 반복문을 만들 수 있습니다. 조건문과 반복문을 괄호로 감싸는 것은 선택사항입니다. 단, 중괄호로 해당 문 안(body)의 코드를 감싸는 것은 필수입니다.
 
-  1| let individualScores = [75, 43, 103, 87, 12]
-  2| var teamScore = 0
-  3| for score in individualScores {
-  4|    if score > 50 {
-  5|        teamScore += 3
-  6|    } else {
-  7|        teamScore += 1
-  8|    }
-  9|}
-10|teamScore
+```c
+ let individualScores = [75, 43, 103, 87, 12]
+ var teamScore = 0
+ for score in individualScores {
+    if score > 50 {
+        teamScore += 3
+    } else {
+        teamScore += 1
+    }
+}
+teamScore
+```
 
-if문 안에 조건은 꼭 불리언(Boolean) 표현이어야 합니다. 이것은 if score {...} 이 0과의 비교를 암시하지 않기 때문에 에러가 발생합니다.
+if문 안의 조건은 꼭 불리언(Boolean) 표현이어야 합니다. if score {...}라고 표현하면 0과의 비교를 암시하지 않기 때문에 에러가 발생합니다.
 
-사라질 값을 가지고 if와 let을  함께 사용하는 것도 가능합니다. 이런 값들은 옵션으로 대표됩니다. 옵션값은 어떤 값을 가지거나 사라질 값을 표현하는 nil을 가지기도 합니다. 값의 타입 뒤에 물음표를 쓰면 옵션값이라는 것을 나타냅니다.
+빈 값을 가지고 if와 let을  함께 사용하는 것도 가능합니다. 이런 값들은 옵션으로 표현합니다. 옵션 값은 어떤 값을 가지거나 빈 값을 표현하는 nil로 지정하기도 합니다. 값의 타입 뒤에 물음표를 쓰면 옵션 값이라는 것을 나타냅니다.
 
- 1| var optionalString: String? = "Hello"
- 2| optionalString == nil
- 3| 
- 4| var optionalName: String? = "John Appleseed"
- 5| var greeting = "Hello!"
- 6| if let name = optionalName {
- 7|    greeting = "Hello, \(name)"
- 8| }
+```c
+ var optionalString: String? = "Hello"
+ optionalString == nil
  
->실험
-optionalName의 값을 nil로 바꿔보자. 어떤 greeting의 값을 받을 수 있는가? optionalName이 nil일 때 다른 값을 greeting에 할당하도록 else 절을 추가해보자.
+ var optionalName: String? = "John Appleseed"
+ var greeting = "Hello!"
+ if let name = optionalName {
+    greeting = "Hello, \(name)"
+ }
+ ```
+ 
+>실습
+optionalName의 값을 nil로 바꿔보자. 어떤 greeting의 값을 받을 수 있는가? optionalName에 할당된 값이 nil일 때 다른 값을 greeting에 할당하도록 else 절을 추가해보자.
 
-만약 옵션값이 nil이라면 조건문은 false이고 중괄호 안에 있는 코드를 건너뛰게 됩니다. 반대의 경우에는 중괄호 블록 안에서 사용할 수 있도록 let 뒷부분의 상수에 값이 할당되고 옵션값으로 사용할 수 있습니다.  
+만약 옵션 값이 nil이라면 조건문은 거짓(false)이고 중괄호 안에 있는 코드를 실행하지 않고 건너뜁니다. 반대의 경우에는 중괄호 블록 안에서 사용할 수 있도록 let 뒷 부분의 상수에 값이 할당되고 옵션 값으로 사용할 수 있습니다.  
 
-스위치(Switch) 구문에는 정수형 값이나 동등 비교연산 뿐만 아니라 어떤 종류의 데이터든 사용할 수 있고 다양한 비교 연산자들을 사용할 수 있습니다.
+`switch`문에는 정수 타입 값이나 동등 비교연산 뿐만 아니라 어떤 종류의 데이터든 사용할 수 있고 다양한 비교 연산자들을 사용할 수 있습니다.
 
-  1|  let vegetable = "red pepper"
-  2|  switch vegetable {
-  3|  case "celery":
-  4|      let vegetableComment = "Add some raisins and make ants on a log."
-  5|  case "cucumber", "watercress":
-  6|      let vegetableComment = "That would make a good tea sandwich."
-  7|  case let x where x.hasSuffix("pepper"):
-  8|      let vegetableComment = "Is it a spicy \(x)?"
-  9|  default:
-10|      let vegetableComment = "Everything tastes good in soup."
-11|  }
+```c
+  let vegetable = "red pepper"
+  switch vegetable {
+  case "celery":
+      let vegetableComment = "Add some raisins and make ants on a log."
+  case "cucumber", "watercress":
+      let vegetableComment = "That would make a good tea sandwich."
+  case let x where x.hasSuffix("pepper"):
+      let vegetableComment = "Is it a spicy \(x)?"
+  default:
+      let vegetableComment = "Everything tastes good in soup."
+  }
+```
 
->실험
-스위치 구문에서 default의 경우를 제거해 보자. 어떤 에러가 발생하는가?
+>실습
+switch문에서 default 부분을 제거해 보자. 어떤 에러가 발생하는가?
     
-스위치 구문안의 일치하는 경우의 코드를 실행하고 나면 프로그램은 스위치 구문을 빠져나옵니다. 실행한 코드 이후에 나오는 내용은 실행하지 않기 때문에 각 경우의 코드 끝마다 빠져나오도록 명시적으로 써주지 않아도됩니다.(*역자 주: 보통 사용되는 break를 굳이 쓸 필요가 없다는 것입니다.)
+switch문은 case문의 조건과 일치할 때 case문 아래에 속한 코드를 실행하 switch문을 빠져나옵니다. 이후에 나오는 case문은 자동적으로 실행하지 않기 때문에 코드 끝에 break 키워드를 명시하지 않아도 됩니다.
 
-for-in 문을 사용하면 각각 키-값 쌍으로 사용할 수 있는 이름들의 쌍을 이용해 딕셔너리에 있는 요소들을 반복처리할 수 있습니다.
+for-in 문을 사용하면 각각 키/값 쌍으로 사용할 수 있는 이름들의 쌍을 이용해 딕셔너리에 있는 요소들을 반복 처리할 수 있습니다.
 
-   1|  let interestingNumbers = [
-   2|      "Prime": [2, 3, 5, 7, 11, 13],
-   3|      "Fibonacci": [1, 1, 2, 3, 5, 8],
-   4|      "Square": [1, 4, 9, 16, 25],
-   5|  ]
-   6|  var largest = 0
-   7|  for (kind, numbers) in interestingNumbers {
-   8|      for number in numbers {
-   9|          if number > largest {
- 10|              largest = number
- 11|          }
- 12|      }
- 13|  }
- 14|  largest
+```c
+  let interestingNumbers = [
+      "Prime": [2, 3, 5, 7, 11, 13],
+      "Fibonacci": [1, 1, 2, 3, 5, 8],
+      "Square": [1, 4, 9, 16, 25],
+  ]
+  var largest = 0
+  for (kind, numbers) in interestingNumbers {
+      for number in numbers {
+          if number > largest {
+              largest = number
+          }
+      }
+  }
+  largest
+ ```
  
->실험
-계속 알아 보기 위해서 기존의 제일 큰 값만큼 큰 값을 가지는 요소를 추가해보자.
+>실습
+어떤 숫자가 가장 큰 수로 저장되는지 확인하기 위해 다른 변수를 추가하고, 가장 큰 수로 저장된 숫자가 무엇인지 확인해보라.
     
-조건문이 변경될 때까지 코드 블록을 반복 실행하기 위해서 while 문을 사용해 봅시다.
+이번에는 조건문이 변경될 때까지 코드 블록을 반복 실행하기 위해서 while 문을 사용해 봅시다. 반복문이 적어도 한번은 실행될 수 있도록 보장하려면 조건문을 반복문의 끝에 작성할 수도 있습니다.
 
-반복문이 적어도 한번은 실행될 수 있도록 보장하기 위해서 조건문을 반복문 끝에 쓸수도 있습니다.
+```c
+  var n = 2
+  while n < 100 {
+      n = n * 2
+  }
+  n
+   
+  var m = 2
+  do {
+      m = m * 2
+  } while m < 100
+  m
+```
 
-   1|  var n = 2
-   2|  while n < 100 {
-   3|      n = n * 2
-   4|  }
-   5|  n
-   6|   
-   7|  var m = 2
-   8|  do {
-   9|      m = m * 2
- 10|  } while m < 100
- 11|  m
+ 반복문안에서 `..`을 사용해 인덱스의 범위를 만들거나 명시적으로 초기화, 조건문, 증감식을 사용할 수도 있습니다. 아래 두 가지 반복문은 동일한 작업을 수행합니다.
+
+```c
+   var firstForLoop = 0
+  for i in 0..3 {
+      firstForLoop += i
+  }
+  firstForLoop
+   
+  var secondForLoop = 0
+  for var i = 0; i < 3; ++i {
+      secondForLoop += 1
+  }
+  secondForLoop
+```
  
- 반복문안에서 ..을 사용해 인덱스의 범위를 만들어 사용하거나 명시적으로 초기화, 조건문, 증감식을 사용하는 것 또한 가능합니다. 아래쪽에 나오는 두가지 반복문은 동일한 일을 수행합니다.
- 
-   1|   var firstForLoop = 0
-   2|  for i in 0..3 {
-   3|      firstForLoop += i
-   4|  }
-   5|  firstForLoop
-   6|   
-   7|  var secondForLoop = 0
-   8|  for var i = 0; i < 3; ++i {
-   9|      secondForLoop += 1
- 10|  }
- 11|  secondForLoop
- 
- ..을 사용해서 범위를 지정하면 제일 나중값은 제외가 됩니다. 대신 ...을 사용하면 양쪽 끝값 모두 포함하게 됩니다.
+`..`을 사용해서 범위를 지정하면 제일 맨 마지막 값은 제외됩니다. 반면에 `...`을 사용하면 양쪽 끝의 값을 모두 범위에 포함하게 됩니다.
  
  ##함수(Functions)와 클로저(Closures)
  
-func를 사용해 함수를 선언할 수 있습니다. 함수의 이름과 괄호안에 인자들을 넣어서 함수를 호출할 수 있습니다. 매개변수들의 이름과 분리해서 ->를 사용해 타입을 써주면 함수 반환값의 타입을 지정할 수 있습니다.
+`func`를 사용해 함수를 선언할 수 있습니다. 함수를 호출할 때 함수의 이름과 괄호안에 인자들을 넣을 수 있습니다. 매개변수의 이름과 분리해서 '->'를 사용해 타입 이름을 표기하면 함수 반환 값의 타입을 지정할 수 있습니다.
 
-   1|  func greet(name: String, day: String) -> String {
-   2|      return "Hello \(name), today is \(day)."
-   3|  }
-   4|  greet("Bob", "Tuesday")
-   
+```c
+  func greet(name: String, day: String) -> String {
+      return "Hello \(name), today is \(day)."
+  }
+  greet("Bob", "Tuesday")
+```   
 
->실험
-매개변수 day를 제거하고 오늘의 스페셜 런치 매개변수를 greeting에 추가해보자.
+>실습
+매개변수 day를 제거하고 인사말에 '오늘의 특별한 점심'을 포함하도록 매개변수를 추가해보자.
     
-    튜플(tuple)을 사용하면 여러개의 값을 반환할 수 있습니다.
-    
-   1|  func getGasPrices() -> (Double, Double, Double) {
-   2|      return (3.59, 3.69, 3.79)
-   3|  }
-   4|  getGasPrices()
-   
-   함수는 배열을 이용해서 여러개의 값을 인자로 받는 것도 가능합니다.
-   
-   1|  func sumOf(numbers: Int...) -> Int {
-   2|      var sum = 0
-   3|      for number in numbers {
-   4|          sum += number
-   5|      }
-   6|      return sum
-   7|  }
-   8|  sumOf()
-   9|  sumOf(42, 597, 12)
-   
->실험
+튜플(tuple)을 사용하면 여러개의 값을 반환할 수 있습니다.
+
+```c
+  func getGasPrices() -> (Double, Double, Double) {
+      return (3.59, 3.69, 3.79)
+  }
+  getGasPrices()
+```
+
+배열을 이용해서 여러 개의 값을 함수의 인자로 받을 수도 있습니다.
+
+```c
+  func sumOf(numbers: Int...) -> Int {
+      var sum = 0
+      for number in numbers {
+          sum += number
+      }
+      return sum
+  }
+  sumOf()
+  sumOf(42, 597, 12)
+```
+
+>실습
 인자들의 평균값을 계산하는 함수를 만들어보자.
     
-함수는 다른 것에 포함될 수도 있습니다. 내장된(Nested) 함수는 감싸고 있는 함수에서 선언된 변수에 접근할 수 있습니다. 길어지고 복잡한 함수의 코드를 정리하기 위해 내장된 함수를 사용할 수 있습니다.
-    
-   1|  func returnFifteen() -> Int {
-   2|      var y = 10
-   3|      func add() {
-   4|          y += 5
-   5|      }
-   6|      add()
-   7|      return y
-   8|  }
-   9|  returnFifteen()
-   
-함수는 최상위 타입입니다. 이것은 어떤 함수가 다른 함수를 반환값형태로  반환할 수 있다는 것을 의미합니다.
-   
-   1|  func makeIncrementer() -> (Int -> Int) {
-   2|      func addOne(number: Int) -> Int {
-   3|          return 1 + number
-   4|      }
-   5|      return addOne
-   6|  }
-   7|  var increment = makeIncrementer()
-   8|  increment(7)
-   
+함수는 중첩해서 사용할 수도 있습니다. 중첩(Nested) 함수는 감싸고 있는 함수에서 선언된 변수에 접근할 수 있습니다. 코드가 길어지고 복잡해지는 함수라면 이를 정리하려고 중첩 함수를 사용할 수 있습니다.
+
+```c
+  func returnFifteen() -> Int {
+      var y = 10
+      func add() {
+          y += 5
+      }
+      add()
+      return y
+  }
+  returnFifteen()
+```
+
+함수는 최상위(ㄹfirst-class) 타입입니다. 즉, 어떤 함수가 다른 함수를 반환 값 형태로  반환할 수 있다는 것을 의미합니다.
+
+```c
+  func makeIncrementer() -> (Int -> Int) {
+      func addOne(number: Int) -> Int {
+          return 1 + number
+      }
+      return addOne
+  }
+  var increment = makeIncrementer()
+  increment(7)
+```
+
 또 함수는 다른 함수를 인자로 받을 수 있습니다.
 
-   1|  func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
-   2|      for item in list {
-   3|          if condition(item) {
-   4|              return true
-   5|          }
-   6|      }
-   7|      return false
-   8|  }
-   9|  func lessThanTen(number: Int) -> Bool {
-  10|      return number < 10
-  11|  }
-  12|  var numbers = [20, 19, 7, 12]
-  13|  hasAnyMatches(numbers, lessThanTen)
-  
-함수는 실제로는 클로저의 특별한 예입니다. 중괄호로 묶기만 해서 이름없이 클로저를 사용할 수도 있습니다. in을 사용해 몸통에서 인자와 반환값 타입을 분리해 쓸 수 있습니다.
-  
-   1|  numbers.map({
-   2|      (number: Int) -> Int in
-   3|      let result = 3 * number
-   4|      return result
-   5|      })
-   
->실험
+```c
+  func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
+      for item in list {
+          if condition(item) {
+              return true
+          }
+      }
+      return false
+  }
+  func lessThanTen(number: Int) -> Bool {
+      return number < 10
+  }
+  var numbers = [20, 19, 7, 12]
+  hasAnyMatches(numbers, lessThanTen)
+```
+
+실제로 함수는 클로저(Closure)의 특별한 예입니다. 중괄호로 묶어서 이름을 지정하지 않고도 클로저를 사용할 수 있습니다. `in` 키워드를 사용해 인자와 반환값 타입을 분리해 사용할 수도 있습니다.
+
+```c
+  numbers.map({
+      (number: Int) -> Int in
+      let result = 3 * number
+      return result
+      })
+```
+
+>실습
 모든 홀수값에 대해 0을 반환하도록 클로저를 수정해보자.
     
-클로저를 간결하게 쓰기 위한 몇가지 옵션이 있습니다. 델리게이트(delegate)를 위한 콜백같이 이미 클로저의 타입을 아는 경우라면 매개변수의 타입, 반환값 타입을 모두 생략하거나 선택적으로 생략할 수 있습니다. 한줄짜리 구문을 가진 클로저라면 구문만 가지고도 반환 타입을 추측할 수 있습니다.
+클로저를 간결하게 사용하는 몇가지 옵션이 있습니다. 델리게이트(delegate)를 위한 콜백(callback)처럼 이미 클로저의 타입을 아는 경우라면 매개변수의 타입, 반환 값 타입을 모두 생략하거나 선택적으로 생략할 수 있습니다. 한 줄짜리 구문을 가진 클로저라면 구문만 가지고도 반환 타입을 추측할 수 있습니다.
 
 	numbers.map({ number in 3 * number })
     
@@ -278,31 +312,37 @@ func를 사용해 함수를 선언할 수 있습니다. 함수의 이름과 괄�
 
 클래스를 만들기 위해서는 클래스 이름과 함께 class 키워드를 사용하면 됩니다.클래스 컨텍스트(context) 내부를 제외하고 클래스 안에 속성을 선언하기 위해서는 상수나 변수를 선언하는 것과 똑같은 방식으로 쓰면 됩니다. 마찬가지로 메서드와 함수도 선언할 수 있습니다.
 
-	   1|  class Shape {
-       2|    var numberOfSides = 0
-       3|    func simpleDescription() -> String {
-       4|      return "A shape with \(numberOfSides) sides."
-       5|    }
-       6|  }
+```c
+  class Shape {
+    var numberOfSides = 0
+    func simpleDescription() -> String {
+      return "A shape with \(numberOfSides) sides."
+    }
+  }
+```
 
 어떤 클래스의 인스턴스를 만들려면 클래스 이름 다음에 괄호를 넣으면 됩니다. .(점) 문법을 사용하면 인스턴스의 속성이나 메서드에 접근할 수 있습니다.
 
-	   1|  var shape = Shape()
-       2|  shape.numberOfSides = 7
-       3|  var shapeDescription = shape.simpleDescription()
+```c
+  var shape = Shape()
+  shape.numberOfSides = 7
+  var shapeDescription = shape.simpleDescription()
+```
 
 현재 상태의 Shape클래스는 중요한 것이 빠져있습니다. 바로 클래스가 생성될 때 클래스를 초기화하기 위한 초기화자 입니다. init 키워드를 사용해 만들어 봅시다.
 
-	     1|  class NamedShape {
-         2|      var numberOfSides: Int = 0
-         3|      var name: String
-         4|      init(name: String) {
-         5|          self.name = name
-         6|      }
-         7|      func simpleDescription() -> String {
-         8|          return "A shape with \(numberOfSides) sides."
-         9|      }
-       10|  }
+```c
+  class NamedShape {
+      var numberOfSides: Int = 0
+      var name: String
+      init(name: String) {
+          self.name = name
+      }
+      func simpleDescription() -> String {
+          return "A shape with \(numberOfSides) sides."
+      }
+  }
+```
 
 인자의 name과 속성의 name을 구분하기 위해서 self 키워드가 어떻게 사용되는지 주의해서 봅시다.  클래스의 인스턴스를 만들 때 초기화자에 인자를 전달하는 방식은 함수에 전달하는 방식과 동일합니다. 모든 속성은 numberOfSides 처럼 값을 선언 할 때 혹은 name처럼 클래스를 초기화 할 때 처럼 적어도 둘중에 한가지 방법을 통해 값을 할당해줘야 합니다.
 
@@ -595,32 +635,48 @@ protocalValue 변수가 실행시 SimpleClass 타입이더라도 컴파일러는
 
 ##제네릭(Generics)
 
+제네릭 함수나 타입을 만들려면 꺾쇠안에 이름을 쓰면 됩니다.
 
+```c
+func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
+    var result = ItemType[]()
+    for i in 0..times {
+        result += item
+    }
+    return result
+}
+repeat("knock", 4)
+```
 
+클래스, 열거형, 구조체와 마찬가지로 함수나 메서드를 제네릭 형태로 만들 수 있습니다. 
 
+```c
+// Reimplement the Swift standard library's optional type
+enum OptionalValue<T> {
+    case None
+    case Some(T)
+}
+var possibleInteger: OptionalValue<Int> = .None
+possibleInteger = .Some(100)
+```
 
+특정 요구 조건들의 타입 뒤에 `where`키워드를 사용해 봅시다. 예를 들어 프로토콜 구현의 위한 타입을 요구하거나 똑같은 타입을 요구하는 경우 혹은 특정 상위 클래스를 요구하는 경우 말입니다.
 
+```c
+func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Element: Equatable, T.GeneratorType.Element == U.GeneratorType.Element> (lhs: T, rhs: U) -> Bool {
+    for lhsItem in lhs {
+        for rhsItem in rhs {
+            if lhsItem == rhsItem {
+                return true
+            }
+        }
+    }
+    return false
+}
+anyCommonElements([1, 2, 3], [3])
+```
 
+>실험
+anyCommonElements 함수를 공통적으로 두개의 연속값을 갖는 배열을 반환하도록 수정해 봅시다.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+간단한 경우에는 where을 생략하고 프로토콜과 클래스 이름을 콜론뒤에 바로 쓸 수 있습니다. `<T:Equatable>`과 `<T where T: Equatable>`은 동일합니다.
