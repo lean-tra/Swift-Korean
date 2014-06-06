@@ -192,5 +192,6 @@ if let johnsStreet = john.residence?.address?.street {
 john.residence.address 의 address 인스턴스에 할당하기 위해서 느낌표를 사용한 것을 잘보자. john.residence 프로퍼티는 선택적 타입을 가지기에 Residence의 address 프로퍼티에 접근하기 전에 느낌표를 사용해서 그 실제 값을 까볼 필요가 있다.
 
 ##선택적 반환값을 사용해서 메소드 묶임
-이전 예제는 선택 묶임를 사용해서 
+이전 예제는 선택 묶임를 사용해서 선택적 타입의 프로퍼티의 값을 어떻게 집어오는지 보여주었다. 또한 선택 묶임을 사용해서 선택적 타입 값을 반환하는 메소드를 호출하고 필요하다면 그 메소드의 반환값을 연결할 수 있었다.
+아래 예제는 선택 묶임을 통해 Address 클래스의 buildingIndentifer 메소드를 호출한다. 이 메소드는 String? 타입의 값을 반환한다. 이전에 설명한데로, 
 
