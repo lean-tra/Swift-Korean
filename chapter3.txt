@@ -442,16 +442,16 @@ println("The status message is \(http200Status.description)")
 - 그곳에는 값이 전혀 "없다"
 
 >NOTE
-옵셔널에 대한 개념은 C나 Objective-C에는 존재하지 않는다. Objective-C에서 그나마 가장 가까운 개념은 is the ability to return nil from a method that would otherwise return an object, with nil meaning “the absence of a valid object.” 
-However, this only works for objects—it doesn’t work for structs, basic C types, or enumeration values. For these types, Objective-C methods typically return a special value (such as NSNotFound) to indicate the absence of a value. This approach assumes that the method’s caller knows there is a special value to test against and remembers to check for it. Swift’s optionals let you indicate the absence of a value for any type at all, without the need for special constants.
+옵셔널에 대한 개념은 C나 Objective-C에는 존재하지 않는다. Objective-C에서 그나마 가장 가까운 개념은 메서드에서 object값을 리턴하는 대신 올바른 오브젝트가 존재하지 않는다 라는 의미로 `nil`을 리턴하는 것이다. 그러나 이는 오직 오브젝트에만 적용할 수있고 구조체, 기본적인 C언어 타입들, 열거형에 대해서는 적용할 수 없다. 이런 타입들을 위해서 Objective-C 메서들은 보통 값의 부재를 의미하는 `NSNotFound`와 같은 특수한 값을 리턴합니다. 이러한 접근은 메서드를 부르는 쪽에서 체크나 테스트를 위한 특수한 값을 잘 알고 있다고 가정하고 있습니다. Swift의 옵셔널은 특별한 용도의 상수가 필요 없이 어떠한 타입의 값의 부재를 바로 알아낼수 있도록 만들어줍니다.
 
-Here’s an example. Swift’s String type has a method called toInt, which tries to convert a String value into an Int value. However, not every string can be converted into an integer. The string "123" can be converted into the numeric value 123, but the string "hello, world" does not have an obvious numeric value to convert to.
+이곳에 한가지 예제가 있다. Swift의 `String`타입은 `String`타입을 `Int`타입으로 변환하기 위한 `toInt`라는 메서드를 가집니다. 그러나 모든 문자형이 정수형으로 변환 가능한것은 아닙니다. "123"이라는 문자형은 123이라는 숫자값으로 변환이 가능하지만, "hellow, world"라는 값은 분명한 숫자값으로 변환할 수 없습니다.
 
-The example below uses the toInt method to try to convert a String into an Int:
-
+아래의 예제는 `String`을 `Int`로 변환하기 위해 `toInt`메서드를 사용하고 있다:
+```c
 let possibleNumber = "123"
 let convertedNumber = possibleNumber.toInt()
 // convertedNumber is inferred to be of type "Int?", or "optional Int"
+```
 Because the toInt method might fail, it returns an optional Int, rather than an Int. An optional Int is written as Int?, not Int. The question mark indicates that the value it contains is optional, meaning that it might contain some Int value, or it might contain no value at all. (It can’t contain anything else, such as a Bool value or a String value. It’s either an Int, or it’s nothing at all.)
 
 ##If문과 강제 If Statements and Forced Unwrapping
