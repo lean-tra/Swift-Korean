@@ -65,6 +65,8 @@
     <Content Include="apple-touch-icon-72x72.png" />
     <Content Include="apple-touch-icon-76x76.png" />
     <Content Include="apple-touch-icon.png" />
+    <Content Include="a-swift-tour.html" />
+    <Content Include="about-swift.html" />
     <Content Include="favicon.ico" />
     <Content Include="images\btnupdate.png" />
     <Content Include="images\chapter10-fig1.png" />

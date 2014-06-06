@@ -3,19 +3,27 @@
 (function ($) {
     $(document).ready(function () {
         var file = getCurrentPage();
-        $.each(pages, function (i, page) {
-            if (page.page + ".html" == file) {
-                var doc = page.doc;
-                getMarkdown(doc);
-            }
+        for (var i in pages) {
+            var page = pages[i];
 
             if (page.page == "index") {
-                return;
+                getMarkdown(page.doc);
+            } else {
+                for (var j in page.children) {
+                    var p = page.children[j];
+                    if (p.doc == undefined || p.page + ".html" != file) {
+                        continue;
+                    }
+                    getMarkdown(p.doc);
+                }
             }
 
-            var li = $("<li></li>").append($("<a></a>").attr("href", page.page + ".html").text(page.name));
-            $("#nav ul").append(li);
-        });
+            if (!page.isParent) {
+                continue;
+            }
+
+            getSideNavigation(page);
+        }
     });
 
     // Gets the current page.
@@ -62,5 +70,61 @@
                 }
                 $("#main-content").html(data);
             });
+    };
+
+    // Gets the side navigation menus.
+    var getSideNavigation = function (page) {
+        if (page == undefined) {
+            return;
+        }
+
+        if (page.page == "index") {
+            return;
+        }
+
+        var link = $("<a></a>").text(page.name);
+        if (page.children == undefined) {
+            link.attr({ "href": page.page + ".html" });
+        } else {
+            link.attr({ "data-toggle": "collapse", "data-parent": "#accordion", "href": "#" + page.page });
+        }
+
+        var title = $("<h4></h4>")
+            .addClass("panel-title")
+            .append(link);
+
+        var heading = $("<div></div>")
+            .addClass("panel-heading")
+            .append(title);
+
+        var panel = $("<div></div>")
+            .addClass("panel panel-default")
+            .append(heading);
+
+        if (page.children != undefined) {
+            var ul = $("<ul></ul>")
+                .addClass("nav nav-stacked");
+
+            for (var i in page.children) {
+                var p = page.children[i];
+                var l = $("<a></a>")
+                    .attr("href", p.page + ".html")
+                    .text(p.name);
+                var li = $("<li></li>")
+                    .append(l);
+                ul.append(li);
+            }
+
+            var body = $("<div></div>")
+                .addClass("panel-body")
+                .append(ul);
+            var collapsable = $("<div></div>")
+                .attr("id", page.page)
+                .addClass("panel-collapse collapse")
+                .append(body);
+
+            panel.append(collapsable);
+        }
+        $("#accordion").append(panel);
     };
 })(jQuery);

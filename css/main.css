@@ -15,11 +15,9 @@
 
 .nav-sidebar-fixed {
     position: fixed;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
-
-
-
-
-
+.nav > li > a {
+    padding: 0px !important;
+}
