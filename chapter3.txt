@@ -384,12 +384,12 @@ if i == 1 {
 
 튜플은 여러 값들을 하나의 값으로 묶어준다. 튜플안의 여러 값들은  어느 타입도 가능하고, 각각 동일한 타입일 필요도 없다.
 
-아래의 예시에서 **(404, "Not Found")**는 HTTP의 상태코드를 묘사하는 튜플이다. HTTP상태 코드는 당신이 웹페이지에 요청을 할때 웹서버의 상태를 알려주는 특별한 코드이다. 요청한 페이지가 존재하지 않는다면 404 Not Found라는 특정한 코드가 반환됩니다. 
+아래의 예시에서 **(404, "Not Found")**는 HTTP의 상태코드를 묘사하는 튜플이다. HTTP상태 코드는 당신이 웹페이지에 요청을 할때 웹서버의 상태를 알려주는 특별한 코드이다. 요청한 페이지가 존재하지 않는다면 404 Not Found라는 상태 코드가 반환된다. 
 ```c
 let http404Error = (404, "Not Found")
 // http404Error is of type (Int, String), and equals (404, "Not Found")
 ```
-The (404, "Not Found") tuple groups together an Int and a String to give the HTTP status code two separate values: a number and a human-readable description. It can be described as “a tuple of type (Int, String)”.
+(404, "Not Found") 튜플은 HTTP 상태코드를 두개의 나누어진 값으로 표현하기 위한 `Int`값 하나와`String`값 하나를 서로 묶은 것이다. 이것은 " `(Int, String)`타입의 튜플"이라고 말할 수있다.
 
 You can create tuples from any permutation of types, and they can contain as many different types as you like. There’s nothing stopping you from having a tuple of type (Int, Int, Int), or (String, Bool), or indeed any other permutation you require.
 
