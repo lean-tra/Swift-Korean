@@ -348,16 +348,18 @@ Swift는 `Bool`이라는 기본적인 이진형 타입을 가진다. 이진형 �
 let orangesAreOrange = true
 let turnipsAreDelicious = false
 ```
-The types of orangesAreOrange and turnipsAreDelicious have been inferred as Bool from the fact that they were initialized with Boolean literal values. As with Int and Double above, you don’t need to declare constants or variables as Bool if you set them to true or false as soon as you create them. Type inference helps make Swift code more concise and readable when it initializes constants or variables with other values whose type is already known.
+**orangesAreOrange**와 **turnipsAreDelicious**의 타입은 이진형의 문자 그대로의 값으로 초기화가 가능한  `Bool`타입을 가지고 있습니다. 위에서의 `Int`와 `Double`처럼  As with Int and Double above, you don’t need to declare constants or variables as Bool if you set them to true or false as soon as you create them. 
+타입 추론(Type inference)은 상수나 Swift의 코드를 더욱 간결하고 읽기 쉽게 하는데 도움을 준다.
 
-Boolean values are particularly useful when you work with conditional statements such as the if statement:
-
+이진형 값은 다음과 같은 if문처럼 조건문으로 작업하는 경우에 특히 유용하다:
+```c
 if turnipsAreDelicious {
     println("Mmm, tasty turnips!")
 } else {
     println("Eww, turnips are horrible.")
 }
 // prints "Eww, turnips are horrible."
+```
 Conditional statements such as the if statement are covered in more detail in Control Flow.
 
 Swift’s type safety prevents non-Boolean values from being be substituted for Bool. The following example reports a compile-time error:
@@ -420,11 +422,12 @@ Tuples are particularly useful as the return values of functions. A function tha
 >NOTE
 Tuples are useful for temporary groups of related values. They are not suited to the creation of complex data structures. If your data structure is likely to persist beyond a temporary scope, model it as a class or structure, rather than as a tuple. For more information, see Classes and Structures.
 
-###Optionals
+###옵셔널(Optionals)
 
-You use optionals in situations where a value may be absent. An optional says:
+옵셔널을 You use optionals in situations where a value may be absent. 
+옵셔널이란 다음과같은 이야기를 이야기한다:
 
-There is a value, and it equals x
+There is a value, and it equals xabsent
 or
 
 There isn’t a value at all
