@@ -320,6 +320,35 @@ print("\n")
 
 다섯 번째와 여섯 번째 `codeUnit`의 값(`55357` 과 `56374`)는 `DOG FACE` 문자를 UTF-16을 써로게이트 페어로 표현한것이다. 이 값은 `U+D83D`(십진수 값 `55357`)의 lead 써로게이트 값과 `U+DC36`(십진수 값 `56374`)의 trail 써로게이트 값입니다. 
 
+### 유니코드 스칼라
+
+`unicodeScalars` 속성을 반복하여 문자열 값의 유니코드 스칼라 표현에 접근할 수 있습니다. 이 속성타입은 UnicodeScalarView 이며 UnicodeScalar 값 타입의 컬렉션입니다. 유니코드 스칼라 21비트 코드 포인트는 lead 써로게이트나 trail 써로게이트가 아닙니다.
+
+각 UnicodeScalar는 값 속성이 있으며 이것은 스칼라의 21비트 값을 반환합니다. UInt32 안의 값을 표현한것입니다.:
+
+```
+for scalar in dogString.unicodeScalars {
+    print("\(scalar.value) ")
+}
+print("\n")
+// 68 111 103 33 128054
+```
+
+값 속성들은 처음 4개의 유니코드 스칼라 값(68, 11, 103, 33)을 다시 문자 D, o, g 와 !를 표현합니다.
+다섯번째이면서 마지막인 유니코드스칼라 값 속성은 십진법의 12804이며 16진법 1F436과 같습니다. 이는 DOG FACE 문자인 유니코드 스칼라는 U+1F436와 같습니다.
+
+값 속성들을 쿼링하는 대신 각 UnicodeScalar 값은 또한 문자열 삽입으로 새로운 문자열 값을 생성하는데 사용될수 있습니다.
+
+```
+for scalar in dogString.unicodeScalars {
+    println("\(scalar) ")
+}
+// D
+// o
+// g
+// !
+// 
+```
 
 
 
