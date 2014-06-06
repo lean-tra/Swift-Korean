@@ -324,7 +324,7 @@ print("\n")
 
 `unicodeScalars` 속성을 반복하여 문자열 값의 유니코드 스칼라 표현에 접근할 수 있습니다. 이 속성타입은 UnicodeScalarView 이며 UnicodeScalar 값 타입의 컬렉션입니다. 유니코드 스칼라 21비트 코드 포인트는 lead 써로게이트나 trail 써로게이트가 아닙니다.
 
-각 UnicodeScalar는 값 속성이 있으며 이것은 스칼라의 21비트 값을 반환합니다. UInt32 안의 값을 표현한것입니다.:
+각 `UnicodeScalar`는 값 속성(value property)이 있으며 이것은 스칼라의 21비트 값을 반환합니다. `UInt32` 안의 값을 표현한것입니다.:
 
 ```
 for scalar in dogString.unicodeScalars {
