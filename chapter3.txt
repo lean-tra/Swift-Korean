@@ -425,20 +425,21 @@ println("The status code is \(http200Status.statusCode)")
 println("The status message is \(http200Status.description)")
 // prints "The status message is OK"
 ```
-Tuples are particularly useful as the return values of functions. A function that tries to retrieve a web page might return the (Int, String) tuple type to describe the success or failure of the page retrieval. By returning a tuple with two distinct values, each of a different type, the function provides more useful information about its outcome than if it could only return a single value of a single type. For more information, see Functions with Multiple Return Values.
+튜플들은 함수들의 리턴값으로써 특히 유용합니다. 
+웹페이지를 검색하기위한 함수는 보통 페이지 검색을 성공여부를 표현하기 위해서 (Int, String) 튜플을 리턴합니다.두 개의 서로 다른 타입의 구분되는 값을 가진 튜플을 리턴하는 것으로 그 함수는 단순히 오직 하나의 타입을 가진 하나의 값을 리턴하는 것보다 결과에 대한 보다 유용한 정보를 제공할 수 있습니다.
+보다 자세한 정보는 [Functions with Multiple Return Values]()를 참고하기 바란다.
 
 >NOTE
-Tuples are useful for temporary groups of related values. They are not suited to the creation of complex data structures. If your data structure is likely to persist beyond a temporary scope, model it as a class or structure, rather than as a tuple. For more information, see Classes and Structures.
+튜플은 연관성있는 값들을 임시로 묶는데도 유용하다. 그들은 복잡한 자료구조를 생성하기에는 알맞지 않다. 만일 당신의 자료구조가 임시적이지 않고 계속해서 사용될 것으로 생각된다면, 튜플보다는 클래스나 자료구조로 만드는 것이 나을 것이다. 보다 많은 정보가 필요하다면 [Classes and Structures]()를 참조하기 바란다.
 
 ###옵셔널(Optionals)
 
 옵셔널을 You use optionals in situations where a value may be absent. 
 옵셔널이란 다음과같은 이야기를 이야기한다:
 
-There is a value, and it equals xabsent
+- There is a value, and it equals xabsent
 or
-
-There isn’t a value at all
+- There isn’t a value at all
 
 >NOTE
 The concept of optionals doesn’t exist in C or Objective-C. The nearest thing in Objective-C is the ability to return nil from a method that would otherwise return an object, with nil meaning “the absence of a valid object.” However, this only works for objects—it doesn’t work for structs, basic C types, or enumeration values. For these types, Objective-C methods typically return a special value (such as NSNotFound) to indicate the absence of a value. This approach assumes that the method’s caller knows there is a special value to test against and remembers to check for it. Swift’s optionals let you indicate the absence of a value for any type at all, without the need for special constants.
@@ -563,33 +564,35 @@ Implicitly unwrapped optionals should not be used when there is a possibility of
 
 Optionals enable you to check for values that may or may not exist, and to write code that copes gracefully with the absence of a value. In some cases, however, it is simply not possible for your code to continue execution if a value does not exist, or if a provided value does not satisfy certain conditions. In these situations, you can trigger an assertion in your code to end code execution and to provide an opportunity to debug the cause of the absent or invalid value.
 
-Debugging with Assertions
+##Debugging with Assertions
 
 An assertion is a runtime check that a logical condition definitely evaluates to true. Literally put, an assertion “asserts” that a condition is true. You use an assertion to make sure that an essential condition is satisfied before executing any further code. If the condition evaluates to true, code execution continues as usual; if the condition evaluates to false, code execution ends, and your app is terminated.
 
 If your code triggers an assertion while running in a debug environment, such as when you build and run an app in Xcode, you can see exactly where the invalid state occurred and query the state of your app at the time that the assertion was triggered. An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
 You write an assertion by calling the global assert function. You pass the assert function an expression that evaluates to true or false and a message that should be displayed if the result of the condition is false:
-
+```c
 let age = -3
 assert(age >= 0, "A person's age cannot be less than zero")
 // this causes the assertion to trigger, because age is not >= 0
+```
 In this example, code execution will continue only if age >= 0 evaluates to true, that is, if the value of age is non-negative. If the value of age is negative, as in the code above, then age >= 0 evaluates to false, and the assertion is triggered, terminating the application.
 
 Assertion messages cannot use string interpolation. The assertion message can be omitted if desired, as in the following example:
-
+```c
 assert(age >= 0)
-When to Use Assertions
+```
+##When to Use Assertions
 
 Use an assertion whenever a condition has the potential to be false, but must definitely be true in order for your code to continue execution. Suitable scenarios for an assertion check include:
 
-An integer subscript index is passed to a custom subscript implementation, but the subscript index value could be too low or too high.
-A value is passed to a function, but an invalid value means that the function cannot fulfill its task.
-An optional value is currently nil, but a non-nil value is essential for subsequent code to execute successfully.
+- An integer subscript index is passed to a custom subscript implementation, but the subscript index value could be too low or too high.
+- A value is passed to a function, but an invalid value means that the function cannot fulfill its task.
+- An optional value is currently nil, but a non-nil value is essential for subsequent code to execute successfully.
+
 See also Subscripts and Functions.
 
-NOTE
-
+>NOTE
 Assertions cause your app to terminate and are not a substitute for designing your code in such a way that invalid conditions are unlikely to arise. Nonetheless, in situations where invalid conditions are possible, an assertion is an effective way to ensure that such conditions are highlighted and noticed during development, before your app is published.
 
 
