@@ -1,24 +1,20 @@
 # 18 자동 참조 계수 (Automatic Reference Counting)
 > Translator : Quartet ( ungsik.yun@gmail.com )
 
-Swift uses Automatic Reference Counting (ARC) to track and manage your app’s memory usage. In most cases, this means that memory management “just works” in Swift, and you do not need to think about memory management yourself. ARC automatically frees up the memory used by class instances when those instances are no longer needed.
-
+스위프트는 앱의 메모리 사용량을 추척, 관리하기 위해 자동 참조 계수(ARC)를 사용합니다. 대부분의 경우, 이러한 메모리 관리는 스위프트에서 "그냥 잘 작동합니다". 개발자가 메모리 관리에 대해서 생각할 필요가 없다는 것이죠. ARC는 인스턴스가 더이상 필요가 없을때 해당 클래스 인스턴스가 쓰는 메모리를 자동으로 해제합니다.
 However, in a few cases ARC requires more information about the relationships between parts of your code in order to manage memory for you. This chapter describes those situations and shows how you enable ARC to manage all of your app’s memory.
+하지만 드물게 ARC는 메모리 관리를 하기 위해서 코드 부분들간의 관계 정보를 알아야 할 때가 있습니다. 이번 장은 그러한 상황을 설명하고, 어떻게 ARC가 앱의 모든 메모리 관리를 가능하게 하는지 보여줍니다.
 
 >NOTE
-Reference counting only applies to instances of classes. Structures and enumerations are value types, not reference types, and are not stored and passed by reference.
+참조 계수는 오직 클래스의 인스턴스에만 적용됩니다. 구조체와 열거형은 값(Value) 타입이며, 참조 타입이 아닙니다. 또한 참조형태로 저장되거나 전달되지 않습니다.
 
-##How ARC Works
-
-Every time you create a new instance of a class, ARC allocates a chunk of memory to store information about that instance. This memory holds information about the type of the instance, together with the values of any stored properties associated with that instance.
-
-Additionally, when an instance is no longer needed, ARC frees up the memory used by that instance so that the memory can be used for other purposes instead. This ensures that class instances do not take up space in memory when they are no longer needed.
-
-However, if ARC were to deallocate an instance that was still in use, it would no longer be possible to access that instance’s properties, or call that instance’s methods. Indeed, if you tried to access the instance, your app would most likely crash.
-
-To make sure that instances don’t disappear while they are still needed, ARC tracks how many properties, constants, and variables are currently referring to each class instance. ARC will not deallocate an instance as long as at least one active reference to that instance still exists.
-
+##ARC는 어떻게 작동하는가
+클래스의 새 인스턴스를 만들때마다 인스턴스에 대한 정보를 저장하기 위해 ARC는 메모리 덩어리들을 할당합니다. 이 메모리는 인스턴스 타입에 관련된 정보와, 인스턴스와 관련된 저장 속성의 값들을 저장합니다.
+그리고 ARC는 더이상 필요하지 않은 인스턴스의 메모리 할당을 해제하여 메모리가 다른 목적으로 이용될 수 있게 합니다. 이로써 클래스 인스턴스가 필요하지 않은 메모리를 차지하고 있는 것을 방지합니다.
+하지만 만약 사용중인 인스턴스를  ARC가 할당 해제하면, 해당 인스턴스의 속성에 접근하거나 메소드를 호출하는 것은 불가능해집니다. 사실, 만약 그 인스턴스에 접근하려하면 앱은 크러시(Crash)가 날것입니다.
+사용되고 있는 인스턴스가 사라지지 않게 하기 위해 ARC는 얼마나 많은 속성, 상수, 변수들이 각각의 클래스 인스턴스들을 참조하는지 추적합니다. 최소한 하나의 활성화 참조가 있는 이상, ARC는 해당 인스턴스의 할당을 해제하지 않습니다.
 To make this possible, whenever you assign a class instance to a property, constant, or variable, that property, constant, or variable makes a strong reference to the instance. The reference is called a “strong“ reference because it keeps a firm hold on that instance, and does not allow it to be deallocated for as long as that strong reference remains.
+이를 가능하게 하기위해, 클래스 인스턴스를 속성, 상수, 변수에 할당할때 해당 속성, 상수, 변수는 해당 인스턴스에 강한 참조(Strong reference)를 합니다. 이 참조는 "강한" 참조라 불리는데, 해당 인스턴스를 강력하게 유지하기 때문입니다. 그리고 이 강한 참조가 남아있는 이상 해당 인스턴스의 할당 해제는 허용되지 않습니다.
 
 ##ARC in Action
 
