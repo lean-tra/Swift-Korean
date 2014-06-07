@@ -16,7 +16,7 @@ Swift의 문자열 유형은 빠르고 현대적인 구현에도 불구하고 �
 >
 > Swift의 문자열 타입은 Foundation의 NSString 클래스에 연결됩니다. 당신은 Cocoa 또는 Cocoa Touch의 Foundation 프레임워크로 작업하는 경우 NSString의 API를 이용하여 문자열 값 호춣이 만드는 것이 가능하며 또한 이 장에서 설명한 문자열 기능도 사용가능합니다. 또한 NSString의 API 인스턴스를 필요로 하는 문자열 값도 사용가능합니다.
 >
->Foundation 과 Cocoa 에 대한 자세한 정보는 _Using Swift With Cocoa and Objective-C_ 를 참조하십시오 // 이탤릭체
+>Foundation 과 Cocoa 에 대한 자세한 정보는 _Using Swift With Cocoa and Objective-C_ 를 참조하십시오.
 
 ## 문자열 리터럴
 
@@ -37,7 +37,7 @@ Swift는 초기화된 문자열 리터럴 값으로 `someString` 상수에 대�
 - 4바이트 유니코드 스칼라는 `\Unnnnnnnn` 이며 `nnnnnnnn`은 8개의 16진수 숫자입니다.
 
 아래의 코드는 여러 종류의 특수문자의 예를 나타냅니다.
-`wiseWords` 상수는 두개의 이스케이프 문자가 포함되어 있습니다. `dollarSign` 과 `blackHeart` 및 `sparklingHeart` tkdtnsms 세가지 유니코드 스칼라 문자 형식을 보여줍니다.
+`wiseWords` 상수는 두개의 이스케이프 문자가 포함되어 있습니다. `dollarSign` 과 `blackHeart` 및 `sparklingHeart` 상수는 세가지 다른 유니코드 스칼라 문자 형식을 보여줍니다.
 
 ```
 let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
@@ -80,23 +80,23 @@ constantString += " and another Highlander"
 ```
 
 > NOTE
-> 이 방법은 Objective-C 또는 Cocoa에서 다른 방법으로 접근하는데 문자열이 변경될수 있는지 여부를 나타내기 위해 두 개의 클래스 (NSString 또는 NSMutableString) 사이에서 선택할 수 있습니다.
+> 이 방법은 Objective-C 또는 Cocoa에서 다른 방법으로 접근합니다. 문자열이 변경될수 있는지 여부를 나타내기 위해 두 개의 클래스 (NSString 또는 NSMutableString) 사이에서 선택할 수 있습니다.
 
 ## 문자열 값 타입 (Strings Are Value Types)
 
-Swift의 문자열 타입은 값 타입닙니다. 새 문자열 값을 만드는 경우에 상수 또는 변수에 할당되면 그 문자열 값이 함수나 메소드에 전달 될때 복사 됩니다. 각각의 경우에 기존의 문자열 값의 새 복사본이 전달되거나 복사되며 이는 원래의 버전이 아닙니다. 값 타입은 Structurs and Enumerations Are Value Types를 참조하십시오. // 링크
+Swift의 문자열 타입은 값 타입입니다. 새 문자열 값을 만드는 경우에 상수 또는 변수에 할당되면 그 문자열 값이 함수나 메소드에 전달 될때 복사 됩니다. 각각의 경우에 기존의 문자열 값의 새 복사본이 전달되거나 복사되며 이는 원래의 버전이 아닙니다. 값 타입은 Structurs and Enumerations Are Value Types를 참조하십시오. // 링크
 
 >NOTE
 >
 >이 동작은 Cocoa에 있는 NSString 과는 다릅니다. Cocoa에 있는 NSString 인스턴스를 생성할때와 함수나 메소드에 전달하거나 변수에 할당 및 전달될때 동일한 단일 NSString에 대한 참조를 할당합니다. 특별히 요청하지 않는 한 문자열에 대해 어떠한 복사는 수행되지 않습니다.
 
-Swift의 문자열 기본 복사 동작(copy-by-default)은 문자열 값이 함수나 메소드에의해 수행될때 어디에서 오는지 상관 없이 정확한 문자열 값을 소유하고 깨끗한지 확인합니다.스스로 수정하지 않는한 전달된 문자열이 수정되지 않는다는것을 보장합니다. 
+Swift의 문자열 기본 복사 동작(copy-by-default)은 문자열 값이 함수나 메소드에의해 수행될때 어디에서 오는지 상관 없이 정확한 문자열 값을 소유하고 깨끗한지 확인합니다. 스스로 수정하지 않는한 전달된 문자열이 수정되지 않는다는것을 보장합니다. 
 
 내부적으로 Swift의 컴파일러는 실제 복사가 반드시 필요한 경우에만 발생하도록 최적화하고있습니다. 이 뜻은 문자열로 작업할때 항상 좋은 성능을 의미합니다.
 
 ## 문자와 작업하기 (Working with Charaters)
 
-Swift의 문자열 타입은 지정된 순서로 문자 값의 컬렉션을 타나냅니다. 각 문자의 값은 하나의 유니코드 문자를 나타냅니다. 각 문자에 대해 for-in 루프의 문자 반복을 사용하여 각각의 문자의 값에 접근할 수 있습니다.
+Swift의 문자열 타입은 지정된 순서로 문자 값의 컬렉션을 타나냅니다. 각 문자의 값은 하나의 유니코드 문자를 나타냅니다. 각 문자에 대해 `for-in` 루프의 문자 반복을 사용하여 각각의 문자의 값에 접근할 수 있습니다.
 
 ```
 for character in "Dog!🐶"{
@@ -109,9 +109,9 @@ for character in "Dog!🐶"{
 // 🐶
 ```
 
-for-in 루프에 대해서는 For Loops 를 참조하십시오 // 링크
+`for-in` 루프에 대해서는 For Loops 를 참조하십시오 // 링크
 
-대신에 문자 형식 주석을 제공하여 단일 문자열 리터럴에서 톡립(stand-alone) 문자 상수나 변수를 만듭니다.
+또한 문자 타입 주석을 제공하여 단일 문자열 리터럴에서 독립(stand-alone) 문자 상수나 변수를 만들수 있습니다.
 
 ```
 let yenSign: Character = "¥"
@@ -171,9 +171,9 @@ let multiplier = 3
 let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 // message is "3 times 2.5 is 7.5"
 ```
-위의 예에서 `multiplier`의 값은 `\(multiplier)` 문자열 리터럴로 삽입됩니다. 이 플레이스 홀더는 실제 문자열 삽입이 평가(evaluate)될때 `multiplier`의 실제 값으로 치환됩니다.
+위의 예에서 `multiplier`의 값은 `\(multiplier)` 문자열 리터럴로 삽입됩니다. 이 플레이스 홀더는 실제 문자열 삽입이 평가될때 `multiplier`의 실제 값으로 치환됩니다.
 
-`multiplier`의 값은 큰 문자열 표현식의 후의 일부입니다. 이 표현식은 `Double(mutiplier) * 2.5` 의 값을 계산하고 문자열로 결과 (`7.5`)를 삽입합니다. 이 경우에 문자열 리터럴 내부에 포함된 경우 표현은 `\(Double(multiplier) * 2.5)`로 기록됩니다.
+`multiplier`의 값은 큰 문자열 표현식 나중의 일부입니다. 이 표현식은 `Double(mutiplier) * 2.5` 의 값을 계산하고 문자열로 결과 (`7.5`)를 삽입됩니다. 이 경우에 문자열 리터럴 내부에 포함된 경우 표현은 `\(Double(multiplier) * 2.5)`로 기록됩니다.
 
 
 > NOTE
@@ -181,7 +181,7 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 > 문자열에 삽입된 괄호안에 쓰는 표현으로 이스케이프 큰 따옴표 (`"`) 또는 백 슬래시(`\`)와 캐리지 리턴 및 줄바꿈을 포함할 수 없습니다.
 
 ## 문자열 비교
-Swift는 문자열 값을 비교하는 세가지 방법을 제공합니다 : 문자열 같음, 접두사 같음, 접미사 같음 // 디스커션에 올림
+Swift는 문자열 값을 비교하는 세가지 방법을 제공합니다 : 문자열 같음, 전위 같음, 후위 같음 // 디스커션에 올림
 
 ### String Equality 
 두개의 문자열 값이 동일한 순서로 포함되어 있는 경우 두개의 문자열 값이 동일한 것으로 간주됩니다.
