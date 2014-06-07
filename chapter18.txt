@@ -114,13 +114,10 @@ number73 = nil
 
 `Person`과 `Apartment`간의 강한 참조는 여전히 남아있으며, 깨어질 수 없게 되었습니다.
 
-##Resolving Strong Reference Cycles Between Class Instances
-
-Swift provides two ways to resolve strong reference cycles when you work with properties of class type: weak references and unowned references.
-
-Weak and unowned references enable one instance in a reference cycle to refer to the other instance without keeping a strong hold on it. The instances can then refer to each other without creating a strong reference cycle.
-
-Use a weak reference whenever it is valid for that reference to become nil at some point during its lifetime. Conversely, use an unowned reference when you know that the reference will never be nil once it has been set during initialization.
+##클래스 인스턴스간의 강한 참조 순환 해결하기
+스위프트는 약한 참조와 미소유 참조라는 2가지 방법을 클래스 속성에서 일어나는 강한 참조 순환을 해결할 수 있게 제공합니다.
+약한 참조나 미소유 참조는 참조 순환의 안에 있는 인스턴스가 다른 인스턴스를 강한 참조 유지할 필요 없이 참조할 수 있게 합니다. 인스턴스는 서로를 강한 참조 없이 참조 할 수 있게 됩니다.
+약한 참조는 해당 참조가 살아있는 동안 어느 순간 `nil`이 될때 사용하게 됩니다. 그와 반대로 미소유 참조는 참조가 초기화 과정 중 설정 되고 이후에 절대로 `nil`이 되지 않음을 알때 사용합니다.
 
 ###Weak References
 
