@@ -176,22 +176,18 @@ number73 = nil
 ```
 위 두 코드 조각은 `Person`과 `Apartment`의 디이니셜라이저가 `john`과 `number73` 변수가 `nil`로 설정 될때 "디이니셜라이즈" 메시지를 출력하는 것을 보여줍니다. 이것으로 강한 참조가 사라졌을음 증명할 수 있습니다.
 
-###Unowned References
-Like weak references, an unowned reference does not keep a strong hold on the instance it refers to. Unlike a weak reference, however, an unowned reference is assumed to always have a value. Because of this, an unowned reference is always defined as a non-optional type. You indicate an unowned reference by placing the unowned keyword before a property or variable declaration.
-
-Because an unowned reference is non-optional, you don’t need to unwrap the unowned reference each time it is used. An unowned reference can always be accessed directly. However, ARC cannot set the reference to nil when the instance it refers to is deallocated, because variables of a non-optional type cannot be set to nil.
+###미소유 참조
+약한 참조처럼 _미소유 참조_ 또한 인스턴스에 대한 참조를 강하게 하지 않습니다. 약한 참조와는 다르게, 미소유 참조는 언제나 값을 가지고 있다고 가정합니다. 이 때문에 미소유 참조는 옵셔널 타입이 아닙니다(non-optional). 미소유 참조는 `unowned`  키워드를 속성이나 변수 선언 앞에 둠으로써 할 수 있습니다.
+미소유 참조가 옵셔널이 아니기 때문에 미소유 참조를 쓸 때마다 드러내야 할 필요가 없습니다. 미소유 참조는 언제나 직접 접근이 가능합니다. 하지만 ARC가 인스턴스의 참조를 할당 해제 할 때 `nil`로 설정 할 수는 없습니다. 옵셔널이 아닌 타입은 `nil`로 설정 될 수 없기 때문입니다.
 
 >NOTE
-If you try to access an unowned reference after the instance that it references is deallocated, you will trigger a runtime error. Use unowned references only when you are sure that the reference will always refer to an instance.
-Note also that Swift guarantees your app will crash if you try to access an unowned reference after the instance it references is deallocated. You will never encounter unexpected behavior in this situation. Your app will always crash reliably, although you should, of course, prevent it from doing so.
+만약 미소유 참조가 참조하는 인스턴스가 할당 해제된 후에 접근하려 한다면 런타임 에러를 발생 시킬것입니다. 미소유 참조는 언제나 인스턴스를 참조하는 게 확실할 때에만 사용해야 합니다.
+스위프트는 미소유 참조가 할당 해제된 인스턴스에 접근하려 할때 언제나 크래시를 낸다는 것에 주의하십시오. 앱은 언제나 안정적으로 크래시할 것입니다. 물론, 당연히 그런 일이 일어나지 않게 해야할테지만 말이죠.
 
-The following example defines two classes, Customer and CreditCard, which model a bank customer and a possible credit card for that customer. These two classes each store an instance of the other class as a property. This relationship has the potential to create a strong reference cycle.
-
-The relationship between Customer and CreditCard is slightly different from the relationship between Apartment and Person seen in the weak reference example above. In this data model, a customer may or may not have a credit card, but a credit card will always be associated with a customer. To represent this, the Customer class has an optional card property, but the CreditCard class has a non-optional customer property.
-
-Furthermore, a new CreditCard instance can only be created by passing a number value and a customer instance to a custom CreditCard initializer. This ensures that a CreditCard instance always has a customer instance associated with it when the CreditCard instance is created.
-
-Because a credit card will always have a customer, you define its customer property as an unowned reference, to avoid a strong reference cycle:
+다음의 예제는 `Customer`와 `CreditCard` 두 클래스를 정의하고 있습니다. 이 클래스는 은행 고객과 그 고객을 위한 가능한 신용카드를 모델링합니다. 이 두 클래스는 서로의 인스턴스를 속성으로 저장합니다. 이 관계는 강한 참조 순환을 만들 가능성이 있습니다.
+`Customer`와 `CreditCard` 의 관계는 위의 약한 참조 예제에서 살펴본  `Person`과 `Apartment`의 관계와는 조금 다릅니다. 이 데이터 모델에서  고객은 신용 카드를 가질수도 있고 안가질수도 있습니다. 하지만 신용 카드는 _언제나_ 고객과 연관이 됩니다. 기것을 표현하기 위해 `Customer` 클래스는 `card` 속성을 옵셔널 로 가지지만, `CredicCard` 클래스는 `customer` 를 옵셔널이 아닌 속성으로 가집니다.
+게다가 새로운 `CreditCard` 인스턴스는 오직 `number`값과 `customer` 인스턴스를 `CreditCard`의 맞춤(custom) 이니셜라이저를 통해서만 생성될 수 있습니다. 이를 통해 `CreditCard` 인스턴스가 생성될 때는 언제나 `credit` 인스턴스와 연관이 됨을 보증할 수 있습니다.
+신용카드는 언제나 고객을 가지기 때문에 `customer` 속성을 미소유 참조로 설정하여 강한 참조 순환을 피할 수 있습니다.
 ```
 class Customer {
     let name: String
@@ -212,32 +208,30 @@ class CreditCard {
     deinit { println("Card #\(number) is being deinitialized") }
 }
 ```
-This next code snippet defines an optional Customer variable called john, which will be used to store a reference to a specific customer. This variable has an initial value of nil, by virtue of being optional:
+다음 코드 조각은 옵셔널 `Customer` 변수인 `john`을 정의하여 특정한 고객의 정보를 참조하게 하였습니다. 이 변수는 옵셔널 변수임으로 `nil`을 초기값으로 갖습니다.
 ```
 var john: Customer?
 ```
-You can now create a Customer instance, and use it to initialize and assign a new CreditCard instance as that customer’s card property:
+이제 `Customer` 인스턴스를 생성하여 인스턴스의 `card` 속성에 할당할 `CreditCard` 인스터스의 초기화에 이용할 수 있습다.
 ```
 john = Customer(name: "John Appleseed")
 john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 ```
-Here’s how the references look, now that you’ve linked the two instances:
-
+이 그림은 위 두 인스턴스간의 관계가 어떻게 되는지 보여주고 있습니다.
 ![unownedreference01_2x.png](images/unownedreference01_2x.png)
 
-The Customer instance now has a strong reference to the CreditCard instance, and the CreditCard instance has an unowned reference to the Customer instance.
-
-Because of the unowned customer reference, when you break the strong reference held by the john variable, there are no more strong references to the Customer instance:
-
+`Customer` 인스턴스는 `CreditCard`에 대해 강한 참조를 하고 있습니다. `CreditCard`는 `Customer` 인스턴스에 대해 미소유 참조를 하고 있습니다.
+`customer`가 미소유 참조이기 때문에 `john` 변수에 한 강한 참조를 사라지게 한 순간, `Customer`에 대한 강한 참조는 더이상 존재않게 됩니다.
 ![unownedreference02_2x.png](images/unownedreference02_2x.png)
 
-Because there are no more strong references to the Customer instance, it is deallocated. After this happens, there are no more strong references to the CreditCard instance, and it too is deallocated:
+`Customer` 인스턴스에 대한 강한 참조가 더이상 존재하지 않게되어 인스턴스는 할당 해제 됩니다. 이 일이 일어난 뒤에, `CreditCard` 인스턴스에 대한 강한 참조 역시 더이상 존재하지 않기에 이 또한 할당 해제 됩니다.
 ```
 john = nil
 // prints "John Appleseed is being deinitialized"
 // prints "Card #1234567890123456 is being deinitialized"
 ```
 The final code snippet above shows that the deinitializers for the Customer instance and CreditCard instance both print their “deinitialized” messages after the john variable is set to nil.
+위에 있는 마지막 코드 조각은 `john`변수가 `nil`로 설정 된 후 `Customer` 인스턴스와 `CreditCard` 인스턴스가 둘 다 "디이니셜라이즈" 메시지를 출력하는 것을 보여주고 있습니다.
 
 ###Unowned References and Implicitly Unwrapped Optional Properties
 
