@@ -34,7 +34,7 @@ for index in  1...5 {       println("\(index) times 5 is \(index * 5)")
 
 위 예에서 인덱스는 상수(constant)이며, 이 상수의 값은 루프를 돌 때마다, 초반에 자동으로 값이 지정됩니다. 따라서 이 상수를 사용하기 전에 선언할 필요가 없습니다. 루프를 선언할 때 포함시키기만 해도 암묵적으로 선언한 셈이 됩니다. 즉 let 선언 키워드(declaration keyword)를 써줄 필요가 없습니다.  
 
->NOTE - 인덱스 상수는 루프의 스코프(scope)안에서만 존재합니다. 루프문이 끝난 다음에 이 인덱스의 값을 확인하고 싶거나, 이 값을 상수가 아니라 변수로 사용하고 싶으면, 루프 안에서 변수로 직접 선언해 주어야 합니다. 
+> NOTE - 인덱스 상수는 루프의 스코프(scope)안에서만 존재합니다. 루프문이 끝난 다음에 이 인덱스의 값을 확인하고 싶거나, 이 값을 상수가 아니라 변수로 사용하고 싶으면, 루프 안에서 변수로 직접 선언해 주어야 합니다. 
  
  
 범위 내에 있는 값이 필요 없다면, 변수명 대신에 언더바(`_`, underscore)를 써주면 됩니다:
@@ -323,6 +323,193 @@ Swift에서 코드에 조건문을 추가하는 방법은 두 가지가 있습�
 ```
  
 이번 예제에서 온도는 너무 낮지도 너무 높지도 않았습니다. 그래서 `if`나 `else if`조건부에 들어 있는 코드는 실행되지 않았습니다. 그리고 아무 메시지도 출력되지 않았습니다: 
+
              
+### Switch
+
+`switch`문은 값을 검토해서 몇 가지 패턴과 비교합니다. 그런 다음, 처음 매칭되는 패턴이 있는 코드 블록을 실행시킵니다. `if`문을 사용할 때보다 `switch`문을 사용했을 때의 장점은, 여러 가지 경우에 대해서 처리할 수 있게 된다는 점입니다.
+
+`switch`문에서는 어떤 값과 한 개 이상의 동일한 타입(type)의 값을 비교합니다: 
+
+ ```
+        switch   some value to consider  { 	
+   	   //switch 고려하려는 값
+        case   value  1 : 
+              respond to value  1 
+        case   value 2 , 
+         value 3  :  
+              respond to value 2 or 3 
+        default : 
+              otherwise, do something else 
+        } 
+```
+
+`switch`문은 여러 가지 가능한 경우(case)로 구성되어 있습니다. 각 경우는 `case`라는 키워드로 시작됩니다. 특정 값과 비교할 수도 있지만, Swift에서는 더욱 복잡한 패턴과 비교하는(complex pattern matching) 여러 가지 방법이 있습니다. 이에 대해서는 이번 섹션의 뒷부분에 나옵니다. 
+
+경우(switch case)의 본문 각각은 서로 독립된 코드실행 브랜치입니다(separate branch of code execution). 이는 `if` 문과 비슷합니다. `switch`문은 어느 브랜치를 선택할지 결정합니다. 이는 비교하려는 값에 대해서 스위치한다고 합니다.
+
+`switch`문 안에는 가능한 경우(case)가 모두 고려되어야 합니다. 즉, 비교하려는 값이 가질 수 있는 모든 값이 해당하는 경우(case)가 반드시 있어야 합니다. 명시적으로 다루지 않는 값에 대해서는 디폴트 경우를 정의해서 처리할 수도 있습니다. 이렇게 할 때에는 키워드 `default`를 사용하며, 이 경우는 `switch`문 안에서 제일 마지막에 위치해야 합니다. 
+
+다음의 예에서는 `switch`문을 사용해서 someCharacter 변수에 들어 있는 하나의 소문자를 검토합니다: 
+
+```
+  let someCharacter: Character  = "e" 
+  switch someCharacter { 
+  case "a", "e", "i", "o", "u": 
+      println("\(someCharacter) is a vowel") 
+case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+ "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z": 
+      println("\(someCharacter) is a consonant") 
+  default : 
+      println("\(someCharacter) is not a vowel or a consonant") 
+}
+// prints "e is a vowel " 
+
+```
+위 예에서 `switch`문 안의 첫번째 경우(case)는 영어의 다섯 개 모음과 매치됩니다. 마찬가지로, 두번째 경우는 영어의 자음 소문자와 매치됩니다. 
+
+자음과 모음 이외의 나머지 문자와 매치하는 경우(case)를 만들기 위해, 이 문자들을 다 써주려면 번거롭니다. 그래서 위 예제에서는 디폴트 경우(default case)를 사용하여, 자음과 모음 이외의 문자가 매치되는 경우를 처리했습니다. 이렇게 디폴트 경우를 써줌으로써 이 switch문은 빼먹은 경우(case)가 없는, 포괄적인 switch문이 됩니다. 
+ 
+## 디폴트로 다음 경우(case)로 넘어가지 않음! (No Implicit Fallthrough)
+
+C언어나 Objective-C의 `switch`문과는 다르게, Swift에서는 디폴트로 다음 경우로 넘어가지 않습니다. 대신에, 한 경우와 매치되면, 그 경우에 해당하는 코드 블록이 실행된 후에, 전체 `switch`문이 종료됩니다. 이 때 명시적으로 `break`문을 써주지 않아도 됩니다. 이렇게 함으로써 C언어에서 보다 실수를 할 위험이 줄어듭니다. C언어에서는 실수로 `break`문을 빠뜨리면 의도하지 않게, 한 개 이상의 경우에 해당하는 코드블럭을 실행시킬 수도 있습니다.
+
+> NOTE – 필요하면, 매치된 경우 내의 코드블럭을 다 실행시키기 전에 빠져나올 수도 있습니다. 이에 대해서는 **Break in a Switch Statement** 부분을 참고하세요.
+
+각 경우의 본문은 적어도 한 개 이상의 실행가능한 구문을 포함해야 합니다. 다음의 예제코드처럼 쓰면 안됩니다. 왜냐하면 첫번째 경우의 본문이 비어 있기 때문입니다:
+
+```
+  let anotherCharacter: Character  = "a" 
+  switch anotherCharacter { 
+  case "a": 
+  case "A": 
+     println("T he letter A") 
+  default : 
+     println("Not the letter A") 
+  } 
+  // 컴파일 에러가 납니다.
+```
+
+C언어의 `switch`문에서는 anotherCharacter가 “a”와 “A” 경우 둘 다하고 매치되는 반면에, 위 예제의 `switch`문은 그렇지 않습니다. 위 예제에서는 컴파일 에러가 납니다. 왜냐하면 “a” 경우의 본문에 실행가능한 코드가 없기 때문입니다. 
+
+이런 방식 덕분에, 의도하지 않았는데 다음 경우로 넘어가는 실수를 방지할 수 있으며 의도가 더욱 명확하게 드러납니다. 
+
+한 경우에 해당하는 매치를 여러 개 쓸 때에는 콤마`,`로 구분합니다. 그리고 길어지면 줄을 바꾸어 써도 됩니다:
+
+```
+switch   some value  to consider  { 
+        case   value  1 , 
+         value 2  : 
+              statements 
+          }  
+```          
+> NOTE – 특정 경우의 본문이 실행된 후에, 다음 경우로 자동으로 넘어가게 하려면, 키워드 `fallthrough`를 사용하면 됩니다. 자세한 사용방법은 **Fallthrough**를 참고하세요.
+
+## 범위로 매치하기(Range Matching )
+
+스위치 경우 안에 있는 값에 대해서 어떤 범위 안에 들어있는지 여부를 확인할 수 있습니다. 아래의 예제는 수 범위를 사용하여, 수의 크기에 관계 없이, 어떤 수를 대략적으로 문자로 표현한 결과를 제공합니다:
+
+```
+  let count  = 3_000_000_000_000 
+  let countedThings  = "stars in the Milky Way" 
+  var naturalCount : String 
+  switch count { 
+  case 0: 
+      naturalCount  = "no" 
+  case  1...3: 
+      naturalCount  = "a few" 
+  case 4...9: 
+       naturalCount  = "several"  
+case 10...99:  
+       naturalCount  = "tens of" 
+  case 100...999: 
+       naturalCount  = "hundreds of"  
+case 1000...999_999:  
+      naturalCount  = "thousands of" 
+default: 
+     naturalCount  = "millions and millions of" 
+     println("There are \(naturalCount) \(countedThings).") 
+// prints "There are millions and millions of stars in the Milky Way ."  
+```
+
+## 튜플 (Tuples)
+
+하나의 `switch`문 안에서 여러 개의 값을 사용할 때에는 튜플을 사용하면 됩니다. 튜플의 각 요소는 특정 값이나 값의 범위와 비교할 수 있습니다. 특정 값을 지정하지 않고 임의의 값을 나타내려면 밑줄 `_`을 사용하세요. 
+
+아래의 예제에서는 (x, y)로 표현된 점을 취합니다. 이 점은 (Int, Int) 타입의 튜플로 나타내며, 이 점이 그래프 상에서 어느 구역에 위치하는지 분류합니다. 
+
+```
+   let somePoint  = (1,  1) 
+   switch somePoint { 
+   case (0, 0): 
+        println("(0, 0) 은 원점에 있습니다") 
+   case (_, 0): 
+       println("(\(somePoint.0), 0)은 x축 상에 있습니다. ") 
+   case (0, _): 
+       println("(0, \(somePoint.1))은 y축 상에 있습니다.") 
+   case (-2...2, -2...2): 
+        println("(\(somePoint.0), \(somePoint.1))은 상자 안에 있습니다.")  
+   default :  
+         println("(\(somePoint.0), \(somePoint.1))은 상자 밖에 있습니다.")  
+    }
+    //prints "(1,  1) is inside the box"   
+```
+`switch`문은 점이 원점(0,0)에 있는지, 빨간선으로 표현된 x축 상에 있는지, 주황색으로 표현된 y축 상에 있는지, 그래프의 중앙에 파란색으로 칠한 4x4 상자 안에 있는지, 그 상자의 밖에 있는지를 판단합니다.
+
+C언어와는 다르게, Swift에서는 하나의 값이나 값 묶음을 여러 개의 경우(case)와 비교할 수 있습니다. 사실 위 예제에서 점(0, 0)은 4개의 경우에 모두 해당됩니다. 하지만 여러 경우와 매치하는 경우에는, 첫번째 경우만 사용됩니다. 따라서 점(0,0)은 case(0,0) 하고만 매치하며, 다른 경우 안에 있는 코드는 실행되지 않습니다. 
+
+## 값을 상수와 묶기, 상수에 바인딩하기 (Value Bindings)
+
+ `switch`문에서 경우는 매치된 값이나 값들을 임시 상수나 변수에 바인딩할 수 있습니다. 이렇게 바인딩한 상수나 변수는 그 경우의 본문에서 사용할 수 있습니다. 이렇게 하는 것을 보고 값을 묶는다, 바인딩(value binding)한다고 합니다. 왜냐하면 해당 경우의 본문 내에서 값이 특정 상수나 변수에 “묶여” 있기 때문입니다. 
+ 
+아래의 예제는 (x, y) 점을 취합니다. 이 점은 (Int, Int) 튜플로 표현되며, 예제는 이 점을 그래프상의 어느 구역에 위치하는지 분류합니다:
+
+```
+  let anotherPoint  = (2, 0) 
+  switch anotherPoint { 
+  case (let x, 0): 
+     println("x축 상에 있으며 x의 값은 \(x)값입니다.") 
+  case (0, let y): 
+     println("y축 상에 있으며 y의 값은 \(y)입니다.") 
+  case let (x, y): 
+     println("(\(x), \(y))에 있습니다.") 
+  }  
+
+// 다음을 출력합니다:  "x축 상에 있으며 x의 값은 2입니다"  
+```
+`switch`문은 이 점이 빨간색선인 x축 상에 있는지, 주황색선인 y축 상에 있는지, 또는 그 이외의 구역에 있는지를 판단합니다. 
+
+위 예제에서 세 개의 switch case에서는 플레이스홀더인 상수 x와 상수 y를 선언하였습니다. 이 둘은 anotherPoint로부터 튜플 값을 취합니다. 첫번째 case에서 case (let x, 0)은 y값이 0이면 모두 매치합니다. 이 때 점의 x값은 임시 상수인 x에 들어갑니다. 마찬가지로, 두번째 case인 case(0, let y)는 x 값이 0이면 모두 매치합니다. 그리고 이 때 점의 y값은 임시 상수인 y에 들어갑니다.
+
+일단 임시 상수가 선언되면, case의 코드 블록 내에서 사용될 수 있습니다. 위 예제에서는 println함수에서 값을 출력할 때 점의 좌표값을 빠르게 표현하기 위해서 이 상수를 사용하였습니다. 
+ 
+ 위 예제에는 디폴트 경우(default case)가 없다는 점에 유의하세요. 마지막 경우인 case let (x, y)에서는 두 개의 플레이스 홀더 상수로 이루어진 튜플을 선언하는데, 이는 모든 점과 매치합니다. 결국, 남아있는 모든 가능한 값은 이 경우와 매치한다는 의미이며, 스위치 문에서 가능한 모든 경우를 다 포괄하고 있으므로 이 때에는 디폴트 경우를 쓸 필요가 없습니다. 
+ 
+위 예제에서는 x와 y의 값이 경우의 본문에서 바뀔 필요가 없습니다. 그래서 키워드 `let`을 사용해서 상수로 선언하였습니다. 값이 바뀔 필요가 있다면 키워드 `var`를 사용해서 변수로 선언하면 됩니다. 이렇게 하면 임시 변수가 만들어지고, 적절한 값으로 초기화됩니다. 이 변수 값의 변화는, 해당 경우 내의 본문 내에서만 영향을 미칩니다. 
+
+## 키워드 `Where`
+
+`switch`의 case에는 `where`절을 사용해서 조건부를 작성할 수도 있습니다. 
+
+아래의 예제는 어떤 점 (x, y)과 그래프의 어느 구역에 위치하는지를 분류합니다:
+ 
+```
+  let yetAnotherPoint  = (1, -1) 
+  switch yetAnotherPoint { 
+  case let (x, y) where x  == y : 
+      println("(\(x), \(y)) 는 x==y인 곳에 있습니다.") 
+  case let (x, y) where x  == -y : 
+      println("(\(x), \(y)) 는 x==-y인 곳에 있습니다.")  
+  case let (x, y): 
+      println("(\(x), \(y)) 는 기타 구역에 있습니다.") 
+}  
+// prints "(1, -1) 은 x==-y인 곳에 있습니다."  
+
+```
+
+위 예제의 `switch`문은 이 점이 x == y인 녹색사선 상에 있는지, x==-y인 보라색 사선 상에 있는지, 그 이외의 지점에 있는지 판단합니다. 
+
+위 예제에서 세 개의 case는 플레이스홀더 상수 x와 상수 y를 선언하였으며, 이 둘은 점의 좌표값을 받아서 튜플로 가지고 있습니다. 이 상수는 `where`절에서 사용되어, 동적인 필터를 만들었습니다. 어떤 경우의 `where`절 내의 조건이 참이 되어야 어떤 값이 그 경우와 매치합니다. 
+이전 예제에서와 마찬가지로, 위 예제의 마지막에 나오는 경우는 나머지 모든 가능한 값과 매치합니다. 따라서 디폴트 경우는 쓸 필요가 없습니다.
 
 
