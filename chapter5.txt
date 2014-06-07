@@ -285,7 +285,7 @@ Swift는 문자열의 유니코드 표현에 접근할 수 있는 여러가지 �
 아래의 각 예제에서는 D,O,G,! 및 (DOG FACE) 문자로 구성되어 있으며 문자열은 다른 표현을 보여줍니다. (`DOG FACE` 또는 `유니코드 스칼라 U+1F436)
 
 ```
-let dogString = "Dog!" // 특수문자
+let dogString = "Dog!🐶"
 ```
 
 ### UTF-8
@@ -347,7 +347,7 @@ for scalar in dogString.unicodeScalars {
 // o
 // g
 // !
-// 
+// 🐶
 ```
 
 
