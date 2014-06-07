@@ -491,11 +491,11 @@ if let actualNumber = possibleNumber.toInt() {
 }
 // prints "123 has an integer value of 123"
 ```
-This can be read as:
+이는 다음을 의미합니다:
 
-“If the optional Int returned by possibleNumber.toInt contains a value, set a new constant called actualNumber to the value contained in the optional.”
+“만일 **possibleNumber.toInt**가 리턴한 옵셔널 `int`값이 값을 가지고 있을 경우,  새로운 상수인 **actualNumber**를 그 옵셔널이 가지는 값으로 설정한다.”
 
-If the conversion is successful, the actualNumber constant becomes available for use within the first branch of the if statement. It has already been initialized with the value contained within the optional, and so there is no need to use the ! suffix to access its value. In this example, actualNumber is simply used to print the result of the conversion.
+만일 변환이 성공적이라면, 상수 **actualNumber**는 `if`문의 첫번째 부분에서 사용하는 것이 가능하다. 이는 옵셔널이 가지는 값으로 이미 초기화 되어있고, !를 뒤에 붙여서 그 값을 가져오는 것이 필요하지 않다. 예제에서 **actualNumber**는 단순히 변환의 결과를 출력하기위해 사용한다.
 
 You can use both constants and variables with optional binding. If you wanted to manipulate the value of actualNumber within the first branch of the if statement, you could write if var actualNumber instead, and the value contained within the optional would be made available as a variable rather than a constant.
 
