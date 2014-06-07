@@ -163,6 +163,7 @@ Swift는 `for-in`루프 말고도 C언어에서 쓰는, 조건부와 증가부�
 ```
        
 이번에 사용할 예제는 뱀과 사다리 게임입니다.
+
  ![뱀과 사다리 게임](images/image__255.png)
 
 게임의 규칙은 다음과 같습니다:
@@ -479,7 +480,6 @@ C언어와는 다르게, Swift에서는 하나의 값이나 값 묶음을 여러
 // 다음을 출력합니다:  "x축 상에 있으며 x의 값은 2입니다"  
 ```
 ![그래프](images/image__257.png)
-![image__257.png](images/image__257.png)
 
 `switch`문은 이 점이 빨간색선인 x축 상에 있는지, 주황색선인 y축 상에 있는지, 또는 그 이외의 구역에 있는지를 판단합니다. 
 
@@ -656,8 +656,6 @@ Swift에서는 루프문이나 `switch`문 안에서 루프문이나 `switch`문
 
 게임판은 이전에 사용한 것과 동일합니다:
 ![뱀과 사다리 - 게임판](images/image__260.png)
-
-![image__260.png](images/image__260.png)
 
 
 변수 finalSquare, board, square, diceRoll은 이전 예제에서와 동일한 값으로 초기화합니다:
