@@ -161,7 +161,7 @@ let three = 3
 let minusThree = -three // minusThree equal -3
 let plusThree = -minusThree // plus equal 3, or "minus minus 		three"
 ```
-단항 마이너스 연산자는 공백없이 작동하는 값 바로 앞에 추가 됩니다.
+단항 마이너스 연산자는 공백없이 값 바로 앞에 추가됩니다.
 
 ##단항 플러스 연산자
 단항 플러스 연산자(`+`)는 간단하게 값 앞에 추가되며 값을  변경하지 않고 값을 반환합니다.
