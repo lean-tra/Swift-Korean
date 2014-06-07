@@ -563,13 +563,13 @@ if let definiteString = assumedString {
 
 ###Assertions
 
-옵셔널은 값이 있는지 있지 않은지 체크를 할수 있게 해주고, and to write code that copes gracefully with the absence of a value. In some cases, however, it is simply not possible for your code to continue execution if a value does not exist, or if a provided value does not satisfy certain conditions. In these situations, you can trigger an assertion in your code to end code execution and to provide an opportunity to debug the cause of the absent or invalid value.
+옵셔널은 값이 있는지 있지 않은지 체크를 할수 있게 해주고, 값이 부재한지 우아하게 대처하는 코드를 작성합니다. 그러나 이것이 값이 없거나 명확한 조건을 만족하지 않은 값을 제공하는 경우에 코드를 계속 실행하게 하는 것은 불가능합니다. 이러한 상황에서 당신은 코드상에서 값의 부재나 올바르지 않은 값을 디버그하기 위한 기회를 제공하고 종료 코드를 실행하기 위해 Assertion을 발생시킬수 있습니다.
 
-##Debugging with Assertions
+##Assertions을 통한 디버그(Debugging with Assertions)
 
-An assertion is a runtime check that a logical condition definitely evaluates to true. Literally put, an assertion “asserts” that a condition is true. You use an assertion to make sure that an essential condition is satisfied before executing any further code. If the condition evaluates to true, code execution continues as usual; if the condition evaluates to false, code execution ends, and your app is terminated.
+assertion은 논리적 조건이 항상 `true`인지를 런타임에 체크한다. 문자 그대로, assertion은 조건이 항상 `true`인 것을  “주장한다”. 더 이상의 코드를 실행시키기 전에 필수적인 조건을 만족하는 지를 확실히 하기 위해서 assertion을 사용한다. 만일 그 조건이 `true`라면, 보통 코드는 계속하여실행된다. 그러나 만일 그 조건이 `false`라면 코드는 종료되고, 너의 앱도 종료될 것이다.
 
-If your code triggers an assertion while running in a debug environment, such as when you build and run an app in Xcode, you can see exactly where the invalid state occurred and query the state of your app at the time that the assertion was triggered. An assertion also lets you provide a suitable debug message as to the nature of the assert.
+만일 Xcode에서 앱을 빌드하고 실행할때와 같이 당신의 코드가 디버깅 환경에서 돌아가고 있을때 assertion이 발생한다면, 어디서 올바르지 않은 상태가 발생했는지 볼 수 있고, assertion이 발생한 시점에서의 앱의 상태를 요구할 수있다. assertion은 또한 당신에게 assert가 발생한 원인에 대한 명확한 디버그 메시지도 제공한다.
 
 You write an assertion by calling the global assert function. You pass the assert function an expression that evaluates to true or false and a message that should be displayed if the result of the condition is false:
 ```c
