@@ -688,7 +688,6 @@ if ++diceRoll  == 7 { diceRoll  =  1 }
  // 주사위에서 나온 수 만큼 이동합니다. 
            square += diceRoll 
            square += board[square] 
-
 }
 println("Game over!")  
 ```
