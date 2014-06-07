@@ -74,12 +74,12 @@ println("theAceOfSpades: \(theAceOfSpades.description)")
 
 `Rank`와 `Suit`가 `BlackjackCard`안에 중첩되어 있다고 해도 그들의 타입은 문맥으로 부터 추론될 수 았가 때문에 이 인스턴스의 초기화는 자신의 맴버 이름(.Ace와 .Spades)으로 열거형 멤버를 참조할 수 있습니다. 위의 예에서는 **description**속성이 올바르게 Space Ace 카드가 1 또는 11의 값을 가지고 있는지 확인합니다. 
 
-## 중첩 형식을 참조하기 (Referring to Nested Types)
-자신이 정의된 문맥 외부에서 중첩형식을 사용하려면, 자기를 포함하고 있는(중첩하고 있는)형식의 이름을 그 이름앞에 붙입니다. 
+## 중첩 타입 참조하기 (Referring to Nested Types)
+자신이 정의된 문맥 외부에서 중첩타입을 사용하려면, 자기를 포함하고 있는(중첩하고 있는)타입의 이름을 그 이름앞에 붙입니다. 
 
 ```c
 let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
 // heartsSymbol is "♡"
 ```
 
-위의 예를 보면, 그들의 이름은 자연스럽게 그들이 정의된 문맥에 의해 규정되기 때문에 `Suit`, `Rank`, `Values`의 이름이 의도적으로 짧게 할 수 있습니다.
+위의 예를 보면, `Suit`, `Rank`, `Values`와 같은 이름들은 자연스럽게 그들이 정의된 문맥에 의해 규정되기 때문에 의도적으로 짧게 유지할 수 있습니다.
