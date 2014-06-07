@@ -571,30 +571,30 @@ assertion은 논리적 조건이 항상 `true`인지를 런타임에 체크한�
 
 만일 Xcode에서 앱을 빌드하고 실행할때와 같이 당신의 코드가 디버깅 환경에서 돌아가고 있을때 assertion이 발생한다면, 어디서 올바르지 않은 상태가 발생했는지 볼 수 있고, assertion이 발생한 시점에서의 앱의 상태를 요구할 수있다. assertion은 또한 당신에게 assert가 발생한 원인에 대한 명확한 디버그 메시지도 제공한다.
 
-You write an assertion by calling the global assert function. You pass the assert function an expression that evaluates to true or false and a message that should be displayed if the result of the condition is false:
+당신는 전역적인 assert함수로서 assertion을 작성할 수도 있고, assert함수에게 `true`와 `false`를 체크할 조건과 조건이 `false`일때 출력할 메시지를 넘겨줄 수 있다:
 ```c
 let age = -3
 assert(age >= 0, "A person's age cannot be less than zero")
 // this causes the assertion to trigger, because age is not >= 0
 ```
-In this example, code execution will continue only if age >= 0 evaluates to true, that is, if the value of age is non-negative. If the value of age is negative, as in the code above, then age >= 0 evaluates to false, and the assertion is triggered, terminating the application.
+이 예제에서 코드는 오직 **age >= 0**이 `true`일때(**age**가 음수가 아닐때)만 실행됩니다. 만일 **age**의 값이 음수라면 위와 같이 **age >= 0**의 결과는 `false`가 되고 assertion이 발생하며 그 앱은 종료됩니다.
 
-Assertion messages cannot use string interpolation. The assertion message can be omitted if desired, as in the following example:
+Assertion 메시지는 문자어구를 사용해야하는 것은 아닙니다. assertion 메시지는 다음과 같이 원하는 경우에는 생략도 가능합니다:
 ```c
 assert(age >= 0)
 ```
-##When to Use Assertions
+##Assertion을 사용할 때(When to Use Assertions)
 
-Use an assertion whenever a condition has the potential to be false, but must definitely be true in order for your code to continue execution. Suitable scenarios for an assertion check include:
+어떠한 조건이 `false`가 될수 있지만 코드 실행을 계속하기 위해서는 반드시 `true`이여만 하는 곳에 assertion을 사용한다. asertion체크를 포함하는 올바른 경우들은 다음과 같다:
 
-- An integer subscript index is passed to a custom subscript implementation, but the subscript index value could be too low or too high.
-- A value is passed to a function, but an invalid value means that the function cannot fulfill its task.
-- An optional value is currently nil, but a non-nil value is essential for subsequent code to execute successfully.
+- 어떠한 정수의 서브스크립트 인덱스가 커스텀 서브스크립트 구현을 위해 제공되었으나, 그 서브스크립트 인덱스의 값이 너무 크거나 작을 수 있을때.
+- 함수로 넘긴 어떤 값이 함수에서 작업을 진행하는데 적합하지 않은 값일때.
+- 옵셔널 값이 현재 `nil`인데 추후의 코드 실행을 위해서 `nil`이 아닌 값이 필요할때.
 
-See also Subscripts and Functions.
+이에 관해서는 [Subscripts]()와 [Functions]()을 참고하시기 바랍니다.
 
 >NOTE
-Assertions cause your app to terminate and are not a substitute for designing your code in such a way that invalid conditions are unlikely to arise. Nonetheless, in situations where invalid conditions are possible, an assertion is an effective way to ensure that such conditions are highlighted and noticed during development, before your app is published.
+Assertions는 당신의 앱이 종료하는 원인이고, 당신의 코드를 부적절한 조건이라도 곤란한 상황이 발생하지 않도록 디자인 하기 위한 대체물이 없다. 그렇기는 하지만 올바르지 않은 조건이 발생할 수 있는 상황에서, assertion은 어떠한 조건을 앱의 출시 전에 개발에서 강조하고 주목시키기 위한 매우 효과적인 방법이다.
 
 
 
