@@ -119,20 +119,16 @@ number73 = nil
 약한 참조나 미소유 참조는 참조 순환의 안에 있는 인스턴스가 다른 인스턴스를 강한 참조 유지할 필요 없이 참조할 수 있게 합니다. 인스턴스는 서로를 강한 참조 없이 참조 할 수 있게 됩니다.
 약한 참조는 해당 참조가 살아있는 동안 어느 순간 `nil`이 될때 사용하게 됩니다. 그와 반대로 미소유 참조는 참조가 초기화 과정 중 설정 되고 이후에 절대로 `nil`이 되지 않음을 알때 사용합니다.
 
-###Weak References
-
-A weak reference is a reference that does not keep a strong hold on the instance it refers to, and so does not stop ARC from disposing of the referenced instance. This behavior prevents the reference from becoming part of a strong reference cycle. You indicate a weak reference by placing the weak keyword before a property or variable declaration.
-
-Use a weak reference to avoid reference cycles whenever it is possible for that reference to have “no value” at some point in its life. If the reference will always have a value, use an unowned reference instead, as described in Unowned References. In the Apartment example above, it is appropriate for an apartment to be able to have “no tenant” at some point in its lifetime, and so a weak reference is an appropriate way to break the reference cycle in this case.
+###약한 참조
+_약한 참조_는 인스턴스가 다른 인스턴스를 참조하는데 강하게 유지하지 않는 참조이며, 그렇기에 ARC가 참조된 인스턴스를 버리는 것을 멈추게 하지 않습니다. 이 행위로 인해 참조가 강한 참조 순환의 일부가 되는 것을 방지합니다. `weak` 키워드를 선언의 앞에 위치시키는 것으로 속성이나 변수 선언이 약한 참조라고 알릴 수 있습니다.
+약한 참조는 참조가 어느 순간 "값 없음"을 참조하게 될때 사용되어 참조 순환을 피하는데 이용 됩니다. 만약 참조가 언제나 값을 가진다면 __미소유 참조__에 설명된 것처럼 미소유 참조를 대신 사용하면 됩니다. 위의 `Apartment` 예제에서는 아파트가 "거주자 없음" 상태를 가지는 것이 자연스럽기에 약한 참조를 사용하여 참조 순환을 부술 수 있습니다.
 
 >NOTE
-Weak references must be declared as variables, to indicate that their value can change at runtime. A weak reference cannot be declared as a constant.
+약한 참조는 실생 시간중에 값이 바뀔 수 있기 때문에 반드시 변수로서 선언되어야 합니다. 약한 참조는 상수로 선언될 수 없습니다.
 
-Because weak references are allowed to have “no value”, you must declare every weak reference as having an optional type. Optional types are the preferred way to represent the possibility for “no value” in Swift.
-
-Because a weak reference does not keep a strong hold on the instance it refers to, it is possible for that instance to be deallocated while the weak reference is still referring to it. Therefore, ARC automatically sets a weak reference to nil when the instance that it refers to is deallocated. You can check for the existence of a value in the weak reference, just like any other optional value, and you will never end up with a reference to an invalid instance that no longer exists.
-
-The example below is identical to the Person and Apartment example from above, with one important difference. This time around, the Apartment type’s tenant property is declared as a weak reference:
+약한 참조는 "값이 없음"을 가지는게 허용되기에, 약한 참조는 언제나 옵셔널 타입으로 선언되어야 합니다. 옵셔널 타입은 스위프트에서 "값이 없음"을 표현하는데 선호되는 방식입니다.
+약한 참조는 인스턴스에 대한 참조를 강하게 하고 있지 않기 때문에 약한 참조가 참조를 하고 있는 동안 할당 해제가 될 가능성이 있습니다. 때문에 ARC는 약한 참조가 참조하고 있던 인스턴스가 할당해제 되면 참조를 자동으로 `nil`로 설정합니다. 다른 옵셔널 값들처럼, 약한 참조의 값이 존재하는지를 체크할 수 있습니다. 그렇기 때문에 존재하지 않는 잘못된 인스턴스를 참조하는 일은 일어나지 않습니다.
+밑의 예제는 위의 예제와 똑같지만 중요한 한가지가 다른 `Person`과 `Apartment`입니다. 이번에는 `Apartment` 타입의 `tenant` 속성이 약한 참조로 선언되어 있습니다.
 ```
 class Person {
     let name: String
@@ -148,7 +144,7 @@ class Apartment {
     deinit { println("Apartment #\(number) is being deinitialized") }
 }
 ```
-The strong references from the two variables (john and number73) and the links between the two instances are created as before:
+`john`과 `number73` 두 변수의 강한 참조와 두 인스턴스간의 연결은 이전엔 다음과 같았습니다.
 ```
 var john: Person?
 var number73: Apartment?
@@ -159,29 +155,26 @@ number73 = Apartment(number: 73)
 john!.apartment = number73
 number73!.tenant = john
 ```
-Here’s how the references look now that you’ve linked the two instances together:
-
+이 그림은 두 인스턴스의 참조가 어떤지를 보여줍니다.
 ![weakreference01_2x.png](images/weakreference01_2x.png)
 
-The Person instance still has a strong reference to the Apartment instance, but the Apartment instance now has a weak reference to the Person instance. This means that when you break the strong reference held by the john variables, there are no more strong references to the Person instance:
-
+`Person` 인스턴스는 여전히 `Apartment` 인스턴스를 강한 참조로 하고 있습니다. 하지만 `Apartment` 인스턴스는 이제 `Person`에 대해 _약한 참조_를 하고 있습니다. 이는 곧 `john` 변수에 대한 강한 참조를 없앴을때, `Person`인스턴스에 대한 강한 참조가 없다는 것을 뜻합니다.
 ![weakreference02_2x.png](images/weakreference02_2x.png)
 
-Because there are no more strong references to the Person instance, it is deallocated:
+`Person` 인스턴스에 대한 강한 참조가 더이상 없기에 인스턴스는 할당해제 됩니다.
 ```
 john = nil
 // prints "John Appleseed is being deinitialized"
 ```
-The only remaining strong reference to the Apartment instance is from the number73 variable. If you break that strong reference, there are no more strong references to the Apartment instance:
-
+`Apartment` 인스턴스에 대한 강한 참조는 `number73` 변수에 대한 것밖에 남지 않았습니다. 그 강한 참조를 사라지게 한다면 `Apartment`에 대한 강한 참조는 더이상 남아있지 않게 됩니다.
 ![weakreference03_2x.png](images/weakreference03_2x.png)
 
-Because there are no more strong references to the Apartment instance, it too is deallocated:
+`Apartment`에 대한 강한 참조가 더이상 없기 때문에, 이 인스턴스 역시 할당 해제 됩니다.
 ```
 number73 = nil
 // prints "Apartment #73 is being deinitialized"
 ```
-The final two code snippets above show that the deinitializers for the Person instance and Apartment instance print their “deinitialized” messages after the john and number73 variables are set to nil. This proves that the reference cycle has been broken.
+위 두 코드 조각은 `Person`과 `Apartment`의 디이니셜라이저가 `john`과 `number73` 변수가 `nil`로 설정 될때 "디이니셜라이즈" 메시지를 출력하는 것을 보여줍니다. 이것으로 강한 참조가 사라졌을음 증명할 수 있습니다.
 
 ###Unowned References
 Like weak references, an unowned reference does not keep a strong hold on the instance it refers to. Unlike a weak reference, however, an unowned reference is assumed to always have a value. Because of this, an unowned reference is always defined as a non-optional type. You indicate an unowned reference by placing the unowned keyword before a property or variable declaration.
