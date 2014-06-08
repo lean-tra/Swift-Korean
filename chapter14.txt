@@ -1,14 +1,14 @@
 # 14 서브스크립트 (Subscripts)
 > Translator : 이름 (메일주소)
 
- 클래스, 구조체 그리고 열거형은 collection, list, sequence의 member element에 접근하기 위한 축약형인 서브스크립트로 정의할 수 있습니다. 또한 값의 설정이나 검색을 위한 별도의 메서드(seperate method)없이 index를 통해서 값을 설정하거나 검색하기 위해 서브스크립트를 사용할 수있습니다. 예를 들어서  someArray[index] 나 someDictionary[key]를 사용하여 해당하는 Array와 Dictionary의 내부값(element)에 접근할 수 있습니다.
+ 클래스, 구조체 그리고 열거형은 collection, list, sequence의 member element에 접근하기 위한 축약형인 서브스크립트로 정의할 수 있습니다. 또한 값의 설정이나 검색을 위한 별도의 메서드(seperate method)없이 index를 통해서 값을 설정하거나 검색하기 위해 서브스크립트를 사용할 수있습니다. 예를 들어서  someArray[index]와 같이 배열의 내부값(element)에 접근하거나 someDictionary[key]와 같이 사용하여 딕셔너리의 내부값(element)에 접근할 수 있습니다.
  
  한 타입을 위해서 여러개의 서브스크립트를 정의 할 수도 있고, 또한 
-서브스크립트로 넘기는 index값의 타입을 기초로하여 사용하기 적절한 서브스크립트 overload(중복)를 선택할수 있다. 서브스크립트는 당신이 원하는 타입에 맞게 여러개의 입력 매개변수(input parameter)를 가지도록 정의할 수도 있다.
+서브스크립트로 넘기는 index값의 타입을 기초로하여 사용하기 적절한 서브스크립트 overload(중복)를 선택할수 있다. 서브스크립트는 당신이 원하는 타입에 맞게 여러개의 입력 파라미터(input parameter)를 가지도록 정의할 수도 있다.
 
 ##서브스크립트 문법(Subscript Syntax)
 
-서브스크립트는 인스턴스의 이름 뒤에 '[]'안에 한개 이상의 값을 적는 것으로 당신이 인스턴스들의 구조(instances of a type)를 물어 볼 수 있다. 그들의 문법은 instance method와 computed property의 문법과 유사합니다. 
+서브스크립트는 인스턴스의 이름 뒤에 있는 '[]'안에 한개 이상의 값을 적는 것으로 당신이 인스턴스들의 구조(instances of a type)를 물어 볼 수 있다. 그들의 문법은 instance method와 computed property의 문법과 유사합니다. 
 인스턴스의 메서드들과 동일한 방식으로 `subscript`키워드와 함께 특정한 하나 이상의 input parameter와 return type를 통해서 subscript를 정의할 수 있다.
 다만 인스턴스의 메서드들과는 달리 서브스크립트는 read-write이거나 read-only만이 될 수 있다. 
 다음 코드는 서브스크립트가 computed property들과 동일한 방식으로 getter와 setter를 통해 작업하는 것을 보여줍니다
