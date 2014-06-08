@@ -260,19 +260,16 @@ class City {
 }
 ```
 양 클래스 간의 상호 의존성을 설정하기 위해 `City` 이니셜라이저는 `Country` 인스턴스를 입력받고, 이 인스턴스를 `country` 속성에 저장합니다.
-`City`의 이니셜라이저는 `Country` 이니셜라이저 안에서 호출됩니다. 하지만 `Country` 이니셜라이저는 새 `Country` 인스턴스가 전부 이니셜라이즈 되기 전까지 `self`를 ` City`로 넘길 수 없습니다. **이단계 초기화** 에서 설명된 것처럼 말이죠.
-
-To cope with this requirement, you declare the capitalCity property of Country as an implicitly unwrapped optional property, indicated by the exclamation mark at the end of its type annotation (City!). This means that the capitalCity property has a default value of nil, like any other optional, but can be accessed without the need to unwrap its value as described in Implicitly Unwrapped Optionals.
-
-Because capitalCity has a default nil value, a new Country instance is considered fully initialized as soon as the Country instance sets its name property within its initializer. This means that the Country initializer can start to reference and pass around the implicit self property as soon as the name property is set. The Country initializer can therefore pass self as one of the parameters for the City initializer when the Country initializer is setting its own capitalCity property.
-
-All of this means that you can create the Country and City instances in a single statement, without creating a strong reference cycle, and the capitalCity property can be accessed directly, without needing to use an exclamation mark to unwrap its optional value:
+`City`의 이니셜라이저는 `Country` 이니셜라이저 안에서 호출됩니다. 하지만 `Country` 이니셜라이저는 새 `Country` 인스턴스가 완전하게 이니셜라이즈 되기 전까지 `self`를 ` City`로 넘길 수 없습니다. **이 단계 초기화** 에서 설명된 것처럼 말이죠.
+이 요구에 대처하기 위해  `Country`의 `capitalCity` 속성을 암시적으로 드러난 옵셔널 속성으로 선언합니다. 그러기 위해서 타입 표시의 끝에 느낌표를 붙이면 됩니다(`City!`). 이는 `capitalCity`가 다른 옵셔널 값들처럼 `nil`을 기본값으로 가짐을 뜻하지만, **암시적으로 드러난 옵셔널**에서 설명한 것과 같이 접근하는데 드러내야할 필요가 없습니다.
+`capitalCity`가 기본값으로 `nil`을 가지기에, 새 `Country` 인스턴스는 `Country` 인스턴스의 `name` 속성이 이니셜라이저 안에서 설정 되었을때를 완전히 완전히 초기화 된 순간이라고 간주합니다. 이는 `Country` 이니셜라이저가 암시적으로 `name`속성을 설정하면서 `self` 속성을 참조하고 넘겨줄 수 있다는 것을 뜻합니다. 그렇기에  `Country`의 이니셜라이저는 자신의 `capitalCity` 속성을 설정할때 `self`를 `City` 이니셜라이저의 파라메터로 넘겨줄 수 있습니다.
+이 모든 것은 강한 참조 순환을 만들지 않고 `Country`와 `City` 인스턴스를 한 문장(statement)안에서 만들 수 있다는 것을 뜻합니다. 그리고 느낌표를 통해 옵셔널 값을 드러내지 않고 `capitalCity` 속성에 직접 접근 할 수 있습니다.
 ```
 var country = Country(name: "Canada", capitalName: "Ottawa")
 println("\(country.name)'s capital city is called \(country.capitalCity.name)")
 // prints "Canada's capital city is called Ottawa"
 ```
-In the example above, the use of an implicitly unwrapped optional means that all of the two-phase class initializer requirements are satisfied. The capitalCity property can be used and accessed like a non-optional value once initialization is complete, while still avoiding a strong reference cycle.
+위의 예제에서는 암시적으로 드러난 옵셔널은 모든 두 단계의 클래스 이니셜라이저 요구사항이 모두 충족되었다는 것을 뜻합니다. `capitalCity` 속성에는 초기화 단계가 일단 끝나고 난후에는 옵셔널이 아닌 값처럼 접근이 가능합니다. 여전히 강한 참조 순환을 만들지 않으면서 말이죠.
 
 ##Strong Reference Cycles for Closures
 
