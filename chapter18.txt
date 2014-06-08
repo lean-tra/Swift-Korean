@@ -335,12 +335,11 @@ paragraph = nil
 ```
 `HTMLElement`의 디이니셜라이저가 아무런 메시지도 출력하지 않았음에 주의하세요. 이는 곧  `HTMLElement` 인스턴스가 할당 해제 되지 않았음을 의미합니다.
 
-##Resolving Strong Reference Cycles for Closures
-
-You resolve a strong reference cycle between a closure and a class instance by defining a capture list as part of the closure’s definition. A capture list defines the rules to use when capturing one or more reference types within the closure’s body. As with strong reference cycles between two class instances, you declare each captured reference to be a weak or unowned reference rather than a strong reference. The appropriate choice of weak or unowned depends on the relationships between the different parts of your code.
+##클로저의 강한 참조 순환 해결하기.
+클로저와 클래스의 강한 참조 순환은 클로저 정의의 일부로서 _획득 목록_을 정의하는 것으로 해결 할 수 있습니다. 획득 목록은 하나 이상의 참조 타입이 클로저의 바디에 있을때 사용할 규칙을 정의합니다. 두 클래스 인스턴스 간의 강한 참조 순환 처럼, 획득한 참조를 강한 참조대신 약한 참조나 미소유 참조로 선언할 수 있습니다. 약한 참조나 미소유 참조중 어느 것이 더 적절한지는 코드의 다른 부분에 따라 다릅니다.
 
 >NOTE
-Swift requires you to write self.someProperty or self.someMethod (rather than just someProperty or someMethod) whenever you refer to a member of self within a closure. This helps you remember that it’s possible to capture self by accident.
+스위프트는 `self`의 멤버를 클로저 안에서 참조할때 `someProperty`나 `someMethod` 대신에 `self.someProperty`나 `self.someMethod`로 표기할 것을 요구합니다. 이렇게 함으로써 `self`가 사고에 의해 획득 될 수 있음을 기억하는데 도움이 됩니다.
 
 ###Defining a Capture List
 Each item in a capture list is a pairing of the weak or unowned keyword with a reference to a class instance (such as self or someInstance). These pairings are written within a pair of square braces, separated by commas.
