@@ -50,21 +50,18 @@ n배 테이블은 고정된 숫자값을 출력하는 규칙에 기반합니다.
 ##Subscript Usage
 
 아주 정확한 의미의 "subscript"는 그것이 사용되는 문맥에 따라 결정된다. 서브스크립트는 일반적으로 collection, list, 또는 sequence에 특정 member elements에 접근하기 위한 단축형이라는 의미로 사용되며, 당신은 특별한 클래스나 구조체의기능을 위해 적절한 방식으로 자유롭게 대부분의 서브스크립트를 구현할 수있다.
-예를 들어서 Swift의 Dictionary type은 Dictionary instance에 저장된 값들을 설정하고 retrieve하기 위한 하나의 subscript로 구현했다.
-당신은 dictionary안에 dictionary의 key 타입의 key값을 subscript의 brace안에 넣는 것으로 값을 세팅할 수 있으며 dictionary안에 들어갈 값을 subscript에 할당할 수도 있다.
-You can set a value in a dictionary by providing a key of the
-dictionary’s key type within subscript braces, and assigning a value of the dictionary’s
-value type to the subscript:
+예를 들어서 Swift의 딕셔너리 타입은 딕셔너리 인스턴스에 저장된 값들을 설정하고 검색하기 위한 하나의 서브스크립트로 구현했다.
+당신은 딕셔너리 안에 딕셔너리의 키의 타입의 키값을 서브스크립트의 '[]'안에 넣는 것으로 값을 세팅할 수 있으며 딕셔너리 안에 들어갈 값을 서브스크립트에 할당할 수도 있다:
 ```c
 var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
 numberOfLegs["bird"] = 2
 ```
-위 예제는 numberOfLegs라는 변수를 선언하고 이를 3가지 key-value 쌍을 가진 dictionary literal로 초기화 하고있다.
-numberOfLegs 딕셔너리의 타입은 **Dictionary<\String, Int>** 를 뜻하며. dictionary가 생성이 된 후, 이 예제는 subscript assignment을 사용하여 String key "bird"와 int 값인 2를 dictionary에 추가하는 것을 볼 수있다.
-Dictionary subscripting에 관한 보다 많은 정보를 원한다면, [Accessing and Modifying a Dicionary]()를 참고하기 바란다.
+위 예제는 numberOfLegs라는 변수를 선언하고 이를 3가지 key-value 쌍을 가진 딕셔너리 literal로 초기화 하고있다.
+numberOfLegs 딕셔너리의 타입은 **Dictionary<\String, Int>** 를 뜻하며. 딕셔너리가 생성이 된 후, 이 예제는 서브스크립트 assignment을 사용하여 `String` 키인 "bird"와 `Int` 값인 2를 딕셔너리에 추가하는 것을 볼 수있다.
+딕셔너리 서브스크립트에 관한 보다 많은 정보를 원한다면, [Accessing and Modifying a Dicionary]()를 참고하기 바란다.
 
 >NOTE
-Swift의 Dictionary type은 내부적인 key-value subscripting 이 요구하고 반환하는 타입이 optional type인 subscript로 구현하였습니다. 위의 numberOfLegs dictionary를 보면, key-value subscript 요구하고 반환하는 타입이 Int일까요?, 그렇지 않으면 “optional int”일까요? Dictionary type은  '모든 키가 값을 가지는 것은 아니다'라는 사실을 위한 모델을 지원하는 optional subscript type을 사용합니다. 그리고 어떤 key에 value를 삭제하는 방법을 제공하는데, 이경우 해당 key값의 value는 nil로 할당된다.
+Swift의 딕셔너리 타입은 내부적인 key-value 서브스크립트가 요구하고 반환하는 타입이 옵셔널 타입인 서브스크립트로 구현하였습니다. 위에서 **numberOfLegs** 딕셔너리를 보면, key-value 서브스크립트를 요구하고 반환하는 타입이 `Int`일까요?, 그렇지 않으면 옵셔널 `Int`일까요? 딕셔너리 타입은  '모든 키가 값을 가지는 것은 아니다'라는 사실을 위한 모델을 지원하기 위해 옵셔널 서브스크립트 타입을 사용합니다. 그리고 어떤 키에 값을 삭제하는 방법을 제공하는데, 이경우 해당 키값의 값는 `nil`로 할당된다.
 
 ##Subscript Options
 
