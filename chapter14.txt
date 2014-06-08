@@ -8,10 +8,7 @@
 
 ##서브스크립트 문법(Subscript Syntax)
 
-서브스크립트는 인스턴스의 이름 뒤에 있는 '[]'안에 한개 이상의 값을 적는 것으로 당신이 인스턴스들의 구조(instances of a type)를 물어 볼 수 있다. 그들의 문법은 instance method와 computed property의 문법과 유사합니다. 
-인스턴스의 메서드들과 동일한 방식으로 `subscript`키워드와 함께 특정한 하나 이상의 input parameter와 return type를 통해서 subscript를 정의할 수 있다.
-다만 인스턴스의 메서드들과는 달리 서브스크립트는 read-write이거나 read-only만이 될 수 있다. 
-다음 코드는 서브스크립트가 computed property들과 동일한 방식으로 getter와 setter를 통해 작업하는 것을 보여줍니다
+서브스크립트는 인스턴스의 이름 뒤에 있는 '[]'안에 한개 이상의 값을 적는 것으로 당신이 인스턴스들의 타입(instances of a type)를 요구할 수 있다. 그들의 문법은 인스턴스의 메서드나 computed property의 문법과 유사합니다.  인스턴스의 메서드들과 동일한 방식으로 `subscript`키워드와 함께 특정한 하나 이상의 입력 파라미터와 와 리턴타입을 통해서 서브스크립트를 정의할 수 있다. 다만 인스턴스의 메서드들과는 달리 서브스크립트는 읽고 쓰는 권한만 있거나 읽는 권한만을 가질 수 있다. 다음 코드는 서브스크립트가 computed property들과 동일한 방식으로 getter와 setter를 통해 작업하는 것을 보여줍니다
 ```c
 subscript(index: Int) -> Int {
  get {
@@ -50,7 +47,7 @@ println("six times three is \(threeTimesTable[6])")
 >NOTE
 n배 테이블은 고정된 숫자값을 출력하는 규칙에 기반합니다. 따라서 newValue등을 통하여 treeTimesTable[someindex]를 설정하는 것은 적절하지 않으며 그러기에 위의 TimesTable을 위한 subscript는 read-only subscript로 선언되었습니다.
 
-Subscript Usage
+##Subscript Usage
 
 아주 정확한 의미의 "subscript"는 그것이 사용되는 문맥에 따라 결정된다. Subscripts는 일반적으로 collection, list, 또는 sequence에 특정 member elements에 접근하기 위한 바로가기라는 의미로 사용되며. 당신은 당신의 particular class나 structure의기능을 위해 대부분의 적절한 방식으로 자유롭게 subscripts를 구현할 수있다.
 예를 들어서 Swift의 Dictionary type은 Dictionary instance에 저장된 값들을 설정하고 retrieve하기 위한 하나의 subscript로 구현했다.
@@ -63,13 +60,13 @@ var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
 numberOfLegs["bird"] = 2
 ```
 위 예제는 numberOfLegs라는 변수를 선언하고 이를 3가지 key-value 쌍을 가진 dictionary literal로 초기화 하고있다.
-numberOfLegs dictionary의 타입은 Dictionary<String, int>를 뜻하며. dictionary가 생성이 된 후, 이 예제는 subscript assignment을 사용하여 String key "bird"와 int 값인 2를 dictionary에 추가하는 것을 볼 수있다.
-Dictionary subscripting에 관한 보다 많은 정보를 원한다면, Accessing and Modifying a Dicionary(link)를 참고하기 바란다.
+numberOfLegs 딕셔너리의 타입은 **Dictionary<\String, Int>** 를 뜻하며. dictionary가 생성이 된 후, 이 예제는 subscript assignment을 사용하여 String key "bird"와 int 값인 2를 dictionary에 추가하는 것을 볼 수있다.
+Dictionary subscripting에 관한 보다 많은 정보를 원한다면, [Accessing and Modifying a Dicionary]()를 참고하기 바란다.
 
 >NOTE
 Swift의 Dictionary type은 내부적인 key-value subscripting 이 요구하고 반환하는 타입이 optional type인 subscript로 구현하였습니다. 위의 numberOfLegs dictionary를 보면, key-value subscript 요구하고 반환하는 타입이 Int일까요?, 그렇지 않으면 “optional int”일까요? Dictionary type은  '모든 키가 값을 가지는 것은 아니다'라는 사실을 위한 모델을 지원하는 optional subscript type을 사용합니다. 그리고 어떤 key에 value를 삭제하는 방법을 제공하는데, 이경우 해당 key값의 value는 nil로 할당된다.
 
-Subscript Options
+##Subscript Options
 
 Subscripts은 어떠한 숫자의 input parameter들도 처리가 가능하다.그리고 그리고 이 input parameter들은 어떠한 타입도 가능하다. Subscripts는 또한 어떠한 타입으로도 return이 가능하다. Subscripts는 variable parameters와 variadic parameters도 가능하지만, in-out parameters 나 default parameter 값은 지원하지 않습니다.
 class나 structure는 필요한 만큼의 subscript를 구현하는 것이 가능하며, 적절한 subscript는 보통각 subscript가 사용되는 요소요소에서 subscript에 포함된이 서로 대비하도록 한 값이나 값들의 타입이 기초라고 생각할 수 있습니다. 
@@ -96,7 +93,7 @@ subscript(row: Int, column: Int) -> Double {
  assert(indexIsValidForRow(row, column: column), "Index out of range")
  grid[(row * columns) + column] = newValue
  }
- ```
+```
 Matrix는 rows 와 columns이라는 두개의 parameter를 요구하는 initializer 를 제공하며, Double type의 충분이 커서 rows * columns 만큼의 저장이 가능한 array를 생성합니다. 각 Matrix의 위치의 초기값은 0.0으로 주어지며. 이러한 작업이 모두 이루어 진 다음에는 만들어진 array를  array의 initializer로 보내서 올바른 크기의 array를 만듭니다. 이 initializer에 다한 자세한 사항은 Creating and Initializing an Array(링크)를 참고하세요.
 
 이제 다음과 같은 방식으로  적절한 row와 column을  initializer에 넘기는 것으로 new Matrix instance를 생성할 수 있습니다.
@@ -122,7 +119,7 @@ func indexIsValidForRow(row: Int, column: Int) -> Bool {
  return row >= 0 && row < rows && column >= 0 && column < columns
 }
 ```
-만일 matrix의 경계를 넘어가는 값이 subscript로 들어오게 된다면 assertion이 triggered됩니다:
+만일 matrix의 경계를 넘어가는 값이 subscript로 들어오게 된다면 assertion이 발생합니다:
 ```c
 let someValue = matrix[2, 2]
 // this triggers an assert, because [2, 2] is outside of the matrix bounds 
