@@ -19,16 +19,16 @@ subscript(index: Int) -> Int {
  }
 }
 ```
-newValue의 type은 해당 subscript의 return 값과 동일합니다.
-computed properties와 같이 당신은 setter의 parameter인 (newValue)를 특정하게 선택할수 없습니다. 만일 당신이 setter를 위한 타입을 아무것도 제공하지 않는다면, 그제서야 기본 parameter인 newValue가 setter를 위해 제공될 것입니다.
+**newValue**의 type은 해당 subscript의 리턴값과 동일합니다.
+computed properties와 같이 당신은 setter의 파라미터인 **(newValue)**를 특정하게 선택할수 없습니다. 만일 당신이 setter를 위한 타입을 아무것도 제공하지 않는다면, 그제서야 기본 parameter인 **newValue**가 setter를 위해 제공될 것입니다.
 
-read-only computed properties와 같이 get 키워드를 빼서 read-only subscript를 만들 수 있다.:
+읽기 전용의 computed properties와 같이 get 키워드를 없애서 읽기 전용의 서브스크립트를 만들 수 있다.:
 ```c
 subscript(index: Int) -> Int {
  // return an appropriate subscript value here
 }
 ```c
-이곳에 정수의 n 배 표현을 하려는 TimesTable structure를 선언하기 을 위한 read-only subscript구현 예제가 하나 있습니다.
+이곳에 정수의 n 배한 결과를 표시하는 **TimesTable structure**를 선언하기 을 위한 읽기 전용의 서브스크립트를 구현하는 예제가 하나 있습니다.
 ```c
 struct TimesTable {
  let multiplier: Int
@@ -40,16 +40,16 @@ let threeTimesTable = TimesTable(multiplier: 3)
 println("six times three is \(threeTimesTable[6])")
 // prints "six times three is 18"
 ```
-이 예제에서 새로운 TimesTable instance는 3의 배수를 출력을 하도록 생성되고.
-이것은 넘겨준 값인 3을 structure의 initializer가 instance의 multiplier parameter로 사용한 것을 의미합니다. 
-해당 subscript를 call하는 것으로 threeTimesTable instance 에게 요청할 수 있다.보는바와같이 threeTimesTable[6]과 같이 call하는 것으로 threeTimesTable instance의 subscript를 call할 수 있다. 해당 요청은 6의 3배 테이블을 요청했으며 그 값은 18=6*3 이 된다.
+이 예제에서 새로운 **TimesTable**의 인스턴스는 3의 배수를 출력을 하도록 생성되고.
+이것은 넘겨준 값인 3을 구조체의 initializer가 인스턴스의의 multiplier 파라미터로 사용한 것을 의미합니다. 
+해당 서브스크립트를 부르는 것으로 **threeTimesTable**의 인스턴스에게 요청할 수 있다. 보는 바와같이 **threeTimesTable[6]**과 같이 부르는 것으로 **threeTimesTable** 인스턴스의 서브스크립트를 부를 수 있다. 해당 요청은 6의 3배 테이블을 요청했으며 그 값은 18=6*3 이 된다.
 
 >NOTE
-n배 테이블은 고정된 숫자값을 출력하는 규칙에 기반합니다. 따라서 newValue등을 통하여 treeTimesTable[someindex]를 설정하는 것은 적절하지 않으며 그러기에 위의 TimesTable을 위한 subscript는 read-only subscript로 선언되었습니다.
+n배 테이블은 고정된 숫자값을 출력하는 규칙에 기반합니다. 따라서 **newValue**등을 통하여 **treeTimesTable[someindex]**를 따로 설정하는 것은 적절하지 않으며 그러기에 위의 **TimesTable**을 위한 서브스크립트는 읽기전용의 서브스크립트로 선언되었습니다.
 
 ##Subscript Usage
 
-아주 정확한 의미의 "subscript"는 그것이 사용되는 문맥에 따라 결정된다. Subscripts는 일반적으로 collection, list, 또는 sequence에 특정 member elements에 접근하기 위한 바로가기라는 의미로 사용되며. 당신은 당신의 particular class나 structure의기능을 위해 대부분의 적절한 방식으로 자유롭게 subscripts를 구현할 수있다.
+아주 정확한 의미의 "subscript"는 그것이 사용되는 문맥에 따라 결정된다. 서브스크립트는 일반적으로 collection, list, 또는 sequence에 특정 member elements에 접근하기 위한 단축형이라는 의미로 사용되며, 당신은 특별한 클래스나 구조체의기능을 위해 적절한 방식으로 자유롭게 대부분의 서브스크립트를 구현할 수있다.
 예를 들어서 Swift의 Dictionary type은 Dictionary instance에 저장된 값들을 설정하고 retrieve하기 위한 하나의 subscript로 구현했다.
 당신은 dictionary안에 dictionary의 key 타입의 key값을 subscript의 brace안에 넣는 것으로 값을 세팅할 수 있으며 dictionary안에 들어갈 값을 subscript에 할당할 수도 있다.
 You can set a value in a dictionary by providing a key of the
