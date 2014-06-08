@@ -28,7 +28,7 @@ subscript(index: Int) -> Int {
  // return an appropriate subscript value here
 }
 ```c
-이곳에 정수의 n 배한 결과를 표시하는 **TimesTable structure**를 선언하기 을 위한 읽기 전용의 서브스크립트를 구현하는 예제가 하나 있습니다.
+이곳에 정수를 n배 한 결과를 표시하는 **TimesTable structure**를 선언하기 을 위한 읽기 전용의 서브스크립트를 구현하는 예제가 하나 있습니다.
 ```c
 struct TimesTable {
  let multiplier: Int
