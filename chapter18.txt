@@ -341,8 +341,8 @@ paragraph = nil
 >NOTE
 스위프트는 `self`의 멤버를 클로저 안에서 참조할때 `someProperty`나 `someMethod` 대신에 `self.someProperty`나 `self.someMethod`로 표기할 것을 요구합니다. 이렇게 함으로써 `self`가 사고에 의해 획득 될 수 있음을 기억하는데 도움이 됩니다.
 
-###Defining a Capture List
-Each item in a capture list is a pairing of the weak or unowned keyword with a reference to a class instance (such as self or someInstance). These pairings are written within a pair of square braces, separated by commas.
+###획득 목록 정의하기
+획득 목록의 각각의 아이템은 `self`나 `someInstance`같은 클래스 인스턴스와 참조간의 약한 참조 또는 미소유 참조의 쌍입니다. 각 쌍들은 대괄호안에 쓰여지며, 콤마로 구분됩니다.
 
 Place the capture list before a closure’s parameter list and return type if they are provided:
 ```
