@@ -342,14 +342,14 @@ paragraph = nil
 ###획득 목록 정의하기
 획득 목록의 각각의 아이템은 `self`나 `someInstance`같은 클래스 인스턴스와 참조간의 약한 참조 또는 미소유 참조의 쌍입니다. 각 쌍들은 대괄호안에 쓰여지며, 콤마로 구분됩니다.
 
-Place the capture list before a closure’s parameter list and return type if they are provided:
+획득 목록은 클로저의 파라메터 목록이나 반환 타입이 있다면 그 앞에 위치시킵니다.
 ```
 @lazy var someClosure: (Int, String) -> String = {
     [unowned self] (index: Int, stringToProcess: String) -> String in
     // closure body goes here
 }
 ```
-If a closure does not specify a parameter list or return type because they can be inferred from context, place the capture list at the very start of the closure, followed by the in keyword:
+만약 클로저의 파라메터 목록이나 반환 타입이 문맥에서 암시되어 특별히 정해지지 않았다면, 획득 목록은 클로저의 시작 부분인 `in` 바로 앞에 둡니다.
 ```
 @lazy var someClosure: () -> String = {
     [unowned self] in
