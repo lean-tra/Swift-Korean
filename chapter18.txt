@@ -1,4 +1,440 @@
 # 18 자동 참조 계수 (Automatic Reference Counting)
-> Translator : 이름 (메일주소)
+> Translator : Quartet ( ungsik.yun@gmail.com )
 
-Write here...
+스위프트는 앱의 메모리 사용량을 추척, 관리하기 위해 자동 참조 계수(ARC)를 사용합니다. 대부분의 경우, 이러한 메모리 관리는 스위프트에서 "그냥 잘 작동합니다". 개발자가 메모리 관리에 대해서 생각할 필요가 없다는 것이죠. ARC는 인스턴스가 더이상 필요가 없을때 해당 클래스 인스턴스가 쓰는 메모리를 자동으로 해제합니다.
+하지만 드물게 ARC는 메모리 관리를 하기 위해서 코드 부분들간의 관계 정보를 알아야 할 때가 있습니다. 이번 장은 그러한 상황을 설명하고, 어떻게 ARC가 앱의 모든 메모리 관리를 가능하게 하는지 보여줍니다.
+
+>NOTE
+참조 계수는 오직 클래스의 인스턴스에만 적용됩니다. 구조체와 열거형은 값(Value) 타입이며, 참조 타입이 아닙니다. 또한 참조형태로 저장되거나 전달되지 않습니다.
+
+##ARC는 어떻게 작동하는가
+클래스의 새 인스턴스를 만들때마다 인스턴스에 대한 정보를 저장하기 위해 ARC는 메모리 덩어리들을 할당합니다. 이 메모리는 인스턴스 타입에 관련된 정보와, 인스턴스와 관련된 저장 속성의 값들을 저장합니다.
+그리고 ARC는 더이상 필요하지 않은 인스턴스의 메모리 할당을 해제하여 메모리가 다른 목적으로 이용될 수 있게 합니다. 이로써 클래스 인스턴스가 필요하지 않은 메모리를 차지하고 있는 것을 방지합니다.
+하지만 만약 사용중인 인스턴스를  ARC가 할당 해제하면, 해당 인스턴스의 속성에 접근하거나 메소드를 호출하는 것은 불가능해집니다. 사실, 만약 그 인스턴스에 접근하려하면 앱은 크러시(Crash)가 날것입니다.
+사용되고 있는 인스턴스가 사라지지 않게 하기 위해 ARC는 얼마나 많은 속성, 상수, 변수들이 각각의 클래스 인스턴스들을 참조하는지 추적합니다. 최소한 하나의 활성화 참조가 있는 이상, ARC는 해당 인스턴스의 할당을 해제하지 않습니다.
+이를 가능하게 하기위해, 클래스 인스턴스를 속성, 상수, 변수에 할당할때 해당 속성, 상수, 변수는 해당 인스턴스에 강한 참조(Strong reference)를 합니다. 이 참조는 "강한" 참조라 불리는데, 해당 인스턴스를 강력하게 유지하기 때문입니다. 그리고 이 강한 참조가 남아있는 이상 해당 인스턴스의 할당 해제는 허용되지 않습니다.
+
+##ARC in Action
+여기 자동 참조 계수가 어떻게 작동하는지에 대한 예제가 있습니다. 이 예제는 `name` 이라는 저장된 상수 속성을 정의하는 `Person` 이라는 단순한 클래스와 함께합니다.
+```
+class Person {
+    let name: String
+    init(name: String) {
+        self.name = name
+        println("\(name) is being initialized")
+    }
+    deinit {
+        println("\(name) is being deinitialized")
+    }
+}
+```
+`Person` 클래스는 `name` 속성을 설정하고 초기화가 진행중임을 알리는 메시지를 출력하는 이니셜라이져(initializer)를 가지고 있습니다. 또한 `Person` 클래스는 인스턴스가 할당 해제될때 메시지를 출력하는 디이니셜라이져(deinitializer)를 갖고 있습니다.
+다음 코드 조각들은 `Person?` 타입의 변수 3개를 정의하고 있습니다. 이 뒤에 `Person`의 새 인스턴스들의 복수 참조에 사용하기 위한 것입니다. 타입은 `Person`이 아닌 `Person?`인 선택적(Optional) 타입이기 때문에, 변수들은 자동적으로 `nil`로 초기화가 되며, 지금은 `Person` 인스턴스를 참조하지 않습니다.
+
+```
+var reference1: Person?
+var reference2: Person?
+var reference3: Person?
+```
+이제 새로운 `Person` 인스턴스를 생성하여 변수 3개중에 하나에 할당할 수 있습니다.
+```
+reference1 = Person(name: "John Appleseed")
+// prints "John Appleseed is being initialized"
+```
+ `"John Appleseed is being initialized"`라는 메시지가 `Person` 클래스의 이니셜라이져가 호출될 때 출력된다는 점에 주의합니다. 이것으로 초기화가 제대로 됐음을 확인할 수 있습니다.
+`reference1` 변수에 `Person`의 새 인스턴스가 할당 되었기 때문에, `reference1`과 `Person` 인스턴스 사이에 강한 참조가 생깁니다. 그리고 최소 하나의 강한 참조가 있어서 ARC는 `Person`이 메모리에 유지되는 것과, 할당 해제 되지 않음을 확인 합니다.
+만약 같은 `Person` 인스턴스를 두개 변수에 더 할당하면, 두개의 강한 참조가 더 생깁니다.
+```
+reference2 = reference1
+reference3 = reference1
+```
+이제 하나의 `Person` 인스턴스에 대한 강한 참조는 3개입니다.
+원래의 참조를 포함한 변수들 중에 `nil`을 2개 할당함으로써 2개의 강한 참조를 부순다면, 하나의 강한 참조가 남게 되며, `Person` 인스턴스는 할당해제 되지 않습니다.
+```
+reference1 = nil
+reference2 = nil
+```
+세번째 강한 참조가 사라져 명확하게 `Person` 인스턴스가 더 이상 사용되지 않기 전까지 ARC는 `Person` 인스턴스를 할당 해제 하지 않습니다. 
+```
+reference3 = nil
+// prints "John Appleseed is being deinitialized"
+```
+##클래스 인스턴스간의 강한 참조 순환
+위 예제에서 ARC는 생성된 `Person` 인스턴스의 참조 갯수를 추적하고 해당 `Person` 인스턴스가 더이상 필요하지 않을때 할당해제를 합니다.
+하지만 _절대로_ 강한 참조의 갯수가 0으로 떨어지지 않게 코드를 작성하는 것이 가능합니다. 두개의 클래스 인스턴스가 서로를 강한 참조로 잡고 있을때 그 현상이 발생합니다. 인스턴스 서로가 서로를 살게끔 유지하는 것이죠. 이를 _강한 참조 순환(strong referecne cycle)_이라고 합니다.
+강한 참조 순환을 풀려면 클래스간의 관계를 강한 참조대신 약한(weak) 참조나 미소유 참조(unowned references)로 대체해야 합니다.이 과정은 __Resolving Strong Reference Cycles __에 설명이 되어있습니다. 하지만 강한 참조 순환을 푸는걸 배우기 전에, 어떻게 순환이  생기는지 이해하는것이 좋습니다.
+이 예제는 강한 참조 순환이 어떻게 사고에 의해 생기는지 보여줍니다. 이 예제는 아파트 블록과 거기에 사는 사람을 모델링하는 `Person`과 `Apartment` 두개의 클래스를 정의합니다.
+```
+class Person {
+    let name: String
+    init(name: String) { self.name = name }
+    var apartment: Apartment?
+    deinit { println("\(name) is being deinitialized") }
+}
+ 
+class Apartment {
+    let number: Int
+    init(number: Int) { self.number = number }
+    var tenant: Person?
+    deinit { println("Apartment #\(number) is being deinitialized") }
+}
+```
+모든 `Person` 인스턴스는 `String`타입의 `name` 속성을 가지고 있고, 추가적으로 `apartment` 속성을 최초에 `nil` 값이 할당된 채로 가집니다. `apartment` 속성은 옵션입니다. 어떤 사람은 아파트에 살지 않을 수도 있기 때문입니다.
+비슷하게, 모든 `Apartment` 인스턴스는 `Int` 타입의 `number` 속성을 가지고 있고, 추가적으로 최초에 `nil`이 할당된 `tenant` 속성을 가지고 있습니다. `tenant` 속성은 옵션입니다. 어떤 아파트는 사람이 살지 않을 수도 있기 때문입니다.
+두 클래스 전부 디이니셜라이저를 정의하여 클래스 인스턴스가 디이니셜라이즈 된다는 사실을 출력하고있습니다. 이로 인해 `Person`과 `Apartment` 인스턴스가 기대한대로 할당해제가 되는걸 볼 수 있습니다.
+다음 코드 조각은 `john`과 `number73`이라는 변수를 정의하고 있습니다. 이 변수들에 밑의 `Apartment`와 `Person` 인스턴스를 설정할겁니다. 두 변수는 옵셔널이기에 초기값으로 `nil`을 가집니다.
+```
+var john: Person?
+var number73: Apartment?
+```
+이제 `Person`과 `Apartment`의 인스턴스를 생성해서 `john`과 `number73` 변수에 할당 할 수 있습니다.
+```
+john = Person(name: "John Appleseed")
+number73 = Apartment(number: 73)
+```
+두 인스턴스를 생성 후에 할당하여 강한 참조가 어떻게 구성되는지 보여주는 그림입니다. `john` 변수는 새 `Person` 인스턴스에 강한 참조를 가지고 있으며 `number73` 변수는 `Apartment` 인스턴스에 강한 참조를 가지고 있습니다.
+![referencecycle01_2x.png](images/referencecycle01_2x.png)
+
+이제 두 인스턴스를 서로 연결하여 사람(person)이 아파트를 가지고, 아파트가 사람을 가지게 할 수 있습니다. 여기서 느낌표(`!`)는 `john`과 `number73` 인스턴스 안에 저장된 옵셔널(optional) 변수를 드러내어 접근할 수 있게 하는 것입니다. 그렇게 인스턴스의 속성은 다음과 같이 설정 될 수 있습니다.
+```
+john!.apartment = number73
+number73!.tenant = john
+```
+여기 그림은 두 인스턴스간에 강한 참조가 어떻게 형성되어있는지를 보여줍니다.
+![referencecycle02_2x.png](images/referencecycle02_2x.png)
+
+안타깝게도 이러한 두 인스턴스간의 연결은 서로간의 강한 참조 순환을 발생시킵니다. `Person` 인스턴스는 `Apartment` 인스턴스에 대한 강한 참조를 가지고 있고, `Apartment` 인스턴스는 `Person` 인스턴스에 대한 강한 참조를 가지게 됩니다. 그러므로 `john`과 `number73` 변수만을 이용하여 강한 참조를 부수려할때, 참조 계수는 0으로 떨어지지 않으며 ARC에 의해 인스턴스가 할당해제 되지 않습니다.
+```
+john = nil
+number73 = nil
+```
+두 변수가 `nil`로 할당 될 때 디이니셜라이저가 호출되지 않았음에 주의하세요. 강한 참조 순환은 `Person`과 `Apartment`의 인스턴스가 영원히 할당해제 되지 않게하여 앱의 메모리 누수(leak)가 일어나게 합니다.
+여기 그림은 `john`과 `number73` 변수가 `nil` 로 할당 된 후의 강한 참조가 어떻게 되었는지 보여줍니다.
+![referencecycle03_2x.png](images/referencecycle03_2x.png)
+
+`Person`과 `Apartment`간의 강한 참조는 여전히 남아있으며, 깨어질 수 없게 되었습니다.
+
+##클래스 인스턴스간의 강한 참조 순환 해결하기
+스위프트는 약한 참조와 미소유 참조라는 2가지 방법을 클래스 속성에서 일어나는 강한 참조 순환을 해결할 수 있게 제공합니다.
+약한 참조나 미소유 참조는 참조 순환의 안에 있는 인스턴스가 다른 인스턴스를 강한 참조 유지할 필요 없이 참조할 수 있게 합니다. 인스턴스는 서로를 강한 참조 없이 참조 할 수 있게 됩니다.
+약한 참조는 해당 참조가 살아있는 동안 어느 순간 `nil`이 될때 사용하게 됩니다. 그와 반대로 미소유 참조는 참조가 초기화 과정 중 설정 되고 이후에 절대로 `nil`이 되지 않음을 알때 사용합니다.
+
+###약한 참조
+_약한 참조_는 인스턴스가 다른 인스턴스를 참조하는데 강하게 유지하지 않는 참조이며, 그렇기에 ARC가 참조된 인스턴스를 버리는 것을 멈추게 하지 않습니다. 이 행위로 인해 참조가 강한 참조 순환의 일부가 되는 것을 방지합니다. `weak` 키워드를 선언의 앞에 위치시키는 것으로 속성이나 변수 선언이 약한 참조라고 알릴 수 있습니다.
+약한 참조는 참조가 어느 순간 "값 없음"을 참조하게 될때 사용되어 참조 순환을 피하는데 이용 됩니다. 만약 참조가 언제나 값을 가진다면 __미소유 참조__에 설명된 것처럼 미소유 참조를 대신 사용하면 됩니다. 위의 `Apartment` 예제에서는 아파트가 "거주자 없음" 상태를 가지는 것이 자연스럽기에 약한 참조를 사용하여 참조 순환을 부술 수 있습니다.
+
+>NOTE
+약한 참조는 실생 시간중에 값이 바뀔 수 있기 때문에 반드시 변수로서 선언되어야 합니다. 약한 참조는 상수로 선언될 수 없습니다.
+
+약한 참조는 "값이 없음"을 가지는게 허용되기에, 약한 참조는 언제나 옵셔널 타입으로 선언되어야 합니다. 옵셔널 타입은 스위프트에서 "값이 없음"을 표현하는데 선호되는 방식입니다.
+약한 참조는 인스턴스에 대한 참조를 강하게 하고 있지 않기 때문에 약한 참조가 참조를 하고 있는 동안 할당 해제가 될 가능성이 있습니다. 때문에 ARC는 약한 참조가 참조하고 있던 인스턴스가 할당해제 되면 참조를 자동으로 `nil`로 설정합니다. 다른 옵셔널 값들처럼, 약한 참조의 값이 존재하는지를 체크할 수 있습니다. 그렇기 때문에 존재하지 않는 잘못된 인스턴스를 참조하는 일은 일어나지 않습니다.
+밑의 예제는 위의 예제와 똑같지만 중요한 한가지가 다른 `Person`과 `Apartment`입니다. 이번에는 `Apartment` 타입의 `tenant` 속성이 약한 참조로 선언되어 있습니다.
+```
+class Person {
+    let name: String
+    init(name: String) { self.name = name }
+    var apartment: Apartment?
+    deinit { println("\(name) is being deinitialized") }
+}
+ 
+class Apartment {
+    let number: Int
+    init(number: Int) { self.number = number }
+    weak var tenant: Person?
+    deinit { println("Apartment #\(number) is being deinitialized") }
+}
+```
+`john`과 `number73` 두 변수의 강한 참조와 두 인스턴스간의 연결은 이전엔 다음과 같았습니다.
+```
+var john: Person?
+var number73: Apartment?
+ 
+john = Person(name: "John Appleseed")
+number73 = Apartment(number: 73)
+ 
+john!.apartment = number73
+number73!.tenant = john
+```
+이 그림은 두 인스턴스의 참조가 어떤지를 보여줍니다.
+![weakreference01_2x.png](images/weakreference01_2x.png)
+
+`Person` 인스턴스는 여전히 `Apartment` 인스턴스를 강한 참조로 하고 있습니다. 하지만 `Apartment` 인스턴스는 이제 `Person`에 대해 _약한 참조_를 하고 있습니다. 이는 곧 `john` 변수에 대한 강한 참조를 없앴을때, `Person`인스턴스에 대한 강한 참조가 없다는 것을 뜻합니다.
+![weakreference02_2x.png](images/weakreference02_2x.png)
+
+`Person` 인스턴스에 대한 강한 참조가 더이상 없기에 인스턴스는 할당해제 됩니다.
+```
+john = nil
+// prints "John Appleseed is being deinitialized"
+```
+`Apartment` 인스턴스에 대한 강한 참조는 `number73` 변수에 대한 것밖에 남지 않았습니다. 그 강한 참조를 사라지게 한다면 `Apartment`에 대한 강한 참조는 더이상 남아있지 않게 됩니다.
+![weakreference03_2x.png](images/weakreference03_2x.png)
+
+`Apartment`에 대한 강한 참조가 더이상 없기 때문에, 이 인스턴스 역시 할당 해제 됩니다.
+```
+number73 = nil
+// prints "Apartment #73 is being deinitialized"
+```
+위 두 코드 조각은 `Person`과 `Apartment`의 디이니셜라이저가 `john`과 `number73` 변수가 `nil`로 설정 될때 "디이니셜라이즈" 메시지를 출력하는 것을 보여줍니다. 이것으로 강한 참조가 사라졌을음 증명할 수 있습니다.
+
+###Unowned References
+Like weak references, an unowned reference does not keep a strong hold on the instance it refers to. Unlike a weak reference, however, an unowned reference is assumed to always have a value. Because of this, an unowned reference is always defined as a non-optional type. You indicate an unowned reference by placing the unowned keyword before a property or variable declaration.
+
+Because an unowned reference is non-optional, you don’t need to unwrap the unowned reference each time it is used. An unowned reference can always be accessed directly. However, ARC cannot set the reference to nil when the instance it refers to is deallocated, because variables of a non-optional type cannot be set to nil.
+
+>NOTE
+If you try to access an unowned reference after the instance that it references is deallocated, you will trigger a runtime error. Use unowned references only when you are sure that the reference will always refer to an instance.
+Note also that Swift guarantees your app will crash if you try to access an unowned reference after the instance it references is deallocated. You will never encounter unexpected behavior in this situation. Your app will always crash reliably, although you should, of course, prevent it from doing so.
+
+The following example defines two classes, Customer and CreditCard, which model a bank customer and a possible credit card for that customer. These two classes each store an instance of the other class as a property. This relationship has the potential to create a strong reference cycle.
+
+The relationship between Customer and CreditCard is slightly different from the relationship between Apartment and Person seen in the weak reference example above. In this data model, a customer may or may not have a credit card, but a credit card will always be associated with a customer. To represent this, the Customer class has an optional card property, but the CreditCard class has a non-optional customer property.
+
+Furthermore, a new CreditCard instance can only be created by passing a number value and a customer instance to a custom CreditCard initializer. This ensures that a CreditCard instance always has a customer instance associated with it when the CreditCard instance is created.
+
+Because a credit card will always have a customer, you define its customer property as an unowned reference, to avoid a strong reference cycle:
+```
+class Customer {
+    let name: String
+    var card: CreditCard?
+    init(name: String) {
+        self.name = name
+    }
+    deinit { println("\(name) is being deinitialized") }
+}
+ 
+class CreditCard {
+    let number: Int
+    unowned let customer: Customer
+    init(number: Int, customer: Customer) {
+        self.number = number
+        self.customer = customer
+    }
+    deinit { println("Card #\(number) is being deinitialized") }
+}
+```
+This next code snippet defines an optional Customer variable called john, which will be used to store a reference to a specific customer. This variable has an initial value of nil, by virtue of being optional:
+```
+var john: Customer?
+```
+You can now create a Customer instance, and use it to initialize and assign a new CreditCard instance as that customer’s card property:
+```
+john = Customer(name: "John Appleseed")
+john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
+```
+Here’s how the references look, now that you’ve linked the two instances:
+
+![unownedreference01_2x.png](images/unownedreference01_2x.png)
+
+The Customer instance now has a strong reference to the CreditCard instance, and the CreditCard instance has an unowned reference to the Customer instance.
+
+Because of the unowned customer reference, when you break the strong reference held by the john variable, there are no more strong references to the Customer instance:
+
+![unownedreference02_2x.png](images/unownedreference02_2x.png)
+
+Because there are no more strong references to the Customer instance, it is deallocated. After this happens, there are no more strong references to the CreditCard instance, and it too is deallocated:
+```
+john = nil
+// prints "John Appleseed is being deinitialized"
+// prints "Card #1234567890123456 is being deinitialized"
+```
+The final code snippet above shows that the deinitializers for the Customer instance and CreditCard instance both print their “deinitialized” messages after the john variable is set to nil.
+
+###Unowned References and Implicitly Unwrapped Optional Properties
+
+The examples for weak and unowned references above cover two of the more common scenarios in which it is necessary to break a strong reference cycle.
+
+The Person and Apartment example shows a situation where two properties, both of which are allowed to be nil, have the potential to cause a strong reference cycle. This scenario is best resolved with a weak reference.
+
+The Customer and CreditCard example shows a situation where one property that is allowed to be nil and another property that cannot be nil have the potential to cause a strong reference cycle. This scenario is best resolved with an unowned reference.
+
+However, there is a third scenario, in which both properties should always have a value, and neither property should ever be nil once initialization is complete. In this scenario, it is useful to combine an unowned property on one class with an implicitly unwrapped optional property on the other class.
+
+This enables both properties to be accessed directly (without optional unwrapping) once initialization is complete, while still avoiding a reference cycle. This section shows you how to set up such a relationship.
+
+The example below defines two classes, Country and City, each of which stores an instance of the other class as a property. In this data model, every country must always have a capital city, and every city must always belong to a country. To represent this, the Country class has a capitalCity property, and the City class has a country property:
+```
+class Country {
+    let name: String
+    let capitalCity: City!
+    init(name: String, capitalName: String) {
+        self.name = name
+        self.capitalCity = City(name: capitalName, country: self)
+    }
+}
+ 
+class City {
+    let name: String
+    unowned let country: Country
+    init(name: String, country: Country) {
+        self.name = name
+        self.country = country
+    }
+}
+```
+To set up the interdependency between the two classes, the initializer for City takes a Country instance, and stores this instance in its country property.
+
+The initializer for City is called from within the initializer for Country. However, the initializer for Country cannot pass self to the City initializer until a new Country instance is fully initialized, as described in Two-Phase Initialization.
+
+To cope with this requirement, you declare the capitalCity property of Country as an implicitly unwrapped optional property, indicated by the exclamation mark at the end of its type annotation (City!). This means that the capitalCity property has a default value of nil, like any other optional, but can be accessed without the need to unwrap its value as described in Implicitly Unwrapped Optionals.
+
+Because capitalCity has a default nil value, a new Country instance is considered fully initialized as soon as the Country instance sets its name property within its initializer. This means that the Country initializer can start to reference and pass around the implicit self property as soon as the name property is set. The Country initializer can therefore pass self as one of the parameters for the City initializer when the Country initializer is setting its own capitalCity property.
+
+All of this means that you can create the Country and City instances in a single statement, without creating a strong reference cycle, and the capitalCity property can be accessed directly, without needing to use an exclamation mark to unwrap its optional value:
+```
+var country = Country(name: "Canada", capitalName: "Ottawa")
+println("\(country.name)'s capital city is called \(country.capitalCity.name)")
+// prints "Canada's capital city is called Ottawa"
+```
+In the example above, the use of an implicitly unwrapped optional means that all of the two-phase class initializer requirements are satisfied. The capitalCity property can be used and accessed like a non-optional value once initialization is complete, while still avoiding a strong reference cycle.
+
+##Strong Reference Cycles for Closures
+
+You saw above how a strong reference cycle can be created when two class instance properties hold a strong reference to each other. You also saw how to use weak and unowned references to break these strong reference cycles.
+
+A strong reference cycle can also occur if you assign a closure to a property of a class instance, and the body of that closure captures the instance. This capture might occur because the closure’s body accesses a property of the instance, such as self.someProperty, or because the closure calls a method on the instance, such as self.someMethod(). In either case, these accesses cause the closure to “capture” self, creating a strong reference cycle.
+
+This strong reference cycle occurs because closures, like classes, are reference types. When you assign a closure to a property, you are assigning a reference to that closure. In essence, it’s the same problem as above—two strong references are keeping each other alive. However, rather than two class instances, this time it’s a class instance and a closure that are keeping each other alive.
+
+Swift provides an elegant solution to this problem, known as a closure capture list. However, before you learn how to break a strong reference cycle with a closure capture list, it is useful to understand how such a cycle can be caused.
+
+The example below shows how you can create a strong reference cycle when using a closure that references self. This example defines a class called HTMLElement, which provides a simple model for an individual element within an HTML document:
+```
+class HTMLElement {
+    
+    let name: String
+    let text: String?
+    
+    @lazy var asHTML: () -> String = {
+        if let text = self.text {
+            return "<\(self.name)>\(text)</\(self.name)>"
+        } else {
+            return "<\(self.name) />"
+        }
+    }
+    
+    init(name: String, text: String? = nil) {
+        self.name = name
+        self.text = text
+    }
+    
+    deinit {
+        println("\(name) is being deinitialized")
+    }
+    
+}
+```
+The HTMLElement class defines a name property, which indicates the name of the element, such as "p" for a paragraph element, or "br" for a line break element. HTMLElement also defines an optional text property, which you can set to a string that represents the text to be rendered within that HTML element.
+
+In addition to these two simple properties, the HTMLElement class defines a lazy property called asHTML. This property references a closure that combines name and text into an HTML string fragment. The asHTML property is of type () -> String, or “a function that takes no parameters, and returns a String value”.
+
+By default, the asHTML property is assigned a closure that returns a string representation of an HTML tag. This tag contains the optional text value if it exists, or no text content if text does not exist. For a paragraph element, the closure would return "<p>some text</p>" or "<p />", depending on whether the text property equals "some text" or nil.
+
+The asHTML property is named and used somewhat like an instance method. However, because asHTML is a closure property rather than an instance method, you can replace the default value of the asHTML property with a custom closure, if you want to change the HTML rendering for a particular HTML element.
+
+>NOTE
+The asHTML property is declared as a lazy property, because it is only needed if and when the element actually needs to be rendered as a string value for some HTML output target. The fact that asHTML is a lazy property means that you can refer to self within the default closure, because the lazy property will not be accessed until after initialization has been completed and self is known to exist.
+
+The HTMLElement class provides a single initializer, which takes a name argument and (if desired) a text argument to initialize a new element. The class also defines a deinitializer, which prints a message to show when an HTMLElement instance is deallocated.
+
+Here’s how you use the HTMLElement class to create and print a new instance:
+```
+var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
+println(paragraph!.asHTML())
+// prints "<p>hello, world</p>"
+```
+>NOTE
+The paragraph variable above is defined as an optional HTMLElement, so that it can be set to nil below to demonstrate the presence of a strong reference cycle.
+
+Unfortunately, the HTMLElement class, as written above, creates a strong reference cycle between an HTMLElement instance and the closure used for its default asHTML value. Here’s how the cycle looks:
+
+![closurereferencecycle01_2x.png](images/closurereferencecycle01_2x.png)
+
+The instance’s asHTML property holds a strong reference to its closure. However, because the closure refers to self within its body (as a way to reference self.name and self.text), the closure captures self, which means that it holds a strong reference back to the HTMLElement instance. A strong reference cycle is created between the two. (For more information about capturing values in a closure, see Capturing Values.)
+
+>NOTE
+Even though the closure refers to self multiple times, it only captures one strong reference to the HTMLElement instance.
+
+If you set the paragraph variable to nil and break its strong reference to the HTMLElement instance, neither the HTMLElement instance nor its closure are deallocated, because of the strong reference cycle:
+
+```
+paragraph = nil
+```
+Note that the message in the HTMLElement deinitializer is not printed, which shows that the HTMLElement instance is not deallocated.
+
+##Resolving Strong Reference Cycles for Closures
+
+You resolve a strong reference cycle between a closure and a class instance by defining a capture list as part of the closure’s definition. A capture list defines the rules to use when capturing one or more reference types within the closure’s body. As with strong reference cycles between two class instances, you declare each captured reference to be a weak or unowned reference rather than a strong reference. The appropriate choice of weak or unowned depends on the relationships between the different parts of your code.
+
+>NOTE
+Swift requires you to write self.someProperty or self.someMethod (rather than just someProperty or someMethod) whenever you refer to a member of self within a closure. This helps you remember that it’s possible to capture self by accident.
+
+###Defining a Capture List
+Each item in a capture list is a pairing of the weak or unowned keyword with a reference to a class instance (such as self or someInstance). These pairings are written within a pair of square braces, separated by commas.
+
+Place the capture list before a closure’s parameter list and return type if they are provided:
+```
+@lazy var someClosure: (Int, String) -> String = {
+    [unowned self] (index: Int, stringToProcess: String) -> String in
+    // closure body goes here
+}
+```
+If a closure does not specify a parameter list or return type because they can be inferred from context, place the capture list at the very start of the closure, followed by the in keyword:
+```
+@lazy var someClosure: () -> String = {
+    [unowned self] in
+    // closure body goes here
+}
+```
+###Weak and Unowned References
+
+Define a capture in a closure as an unowned reference when the closure and the instance it captures will always refer to each other, and will always be deallocated at the same time.
+
+Conversely, define a capture as a weak reference when the captured reference may become nil at some point in the future. Weak references are always of an optional type, and automatically become nil when the instance they reference is deallocated. This enables you to check for their existence within the closure’s body.
+
+>NOTE
+If the captured reference will never become nil, it should always be captured as an unowned reference, rather than a weak reference.
+
+An unowned reference is the appropriate capture method to use to resolve the strong reference cycle in the HTMLElement example from earlier. Here’s how you write the HTMLElement class to avoid the cycle:
+```
+class HTMLElement {
+    
+    let name: String
+    let text: String?
+    
+    @lazy var asHTML: () -> String = {
+        [unowned self] in
+        if let text = self.text {
+            return "<\(self.name)>\(text)</\(self.name)>"
+        } else {
+            return "<\(self.name) />"
+        }
+    }
+    
+    init(name: String, text: String? = nil) {
+        self.name = name
+        self.text = text
+    }
+    
+    deinit {
+        println("\(name) is being deinitialized")
+    }
+    
+}
+```
+This implementation of HTMLElement is identical to the previous implementation, apart from the addition of a capture list within the asHTML closure. In this case, the capture list is [unowned self], which means “capture self as an unowned reference rather than a strong reference”.
+
+You can create and print an HTMLElement instance as before:
+```
+var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
+println(paragraph!.asHTML())
+// prints "<p>hello, world</p>"
+```
+Here’s how the references look with the capture list in place:
+
+![closurereferencecycle02_2x.png](images/closurereferencecycle02_2x.png)
+
+This time, the capture of self by the closure is an unowned reference, and does not keep a strong hold on the HTMLElement instance it has captured. If you set the strong reference from the paragraph variable to nil, the HTMLElement instance is deallocated, as can be seen from the printing of its deinitializer message in the example below:
+```
+paragraph = nil
+// prints "p is being deinitialized"
+```
