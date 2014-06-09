@@ -227,17 +227,12 @@ The init(center:size:) initializer could have assigned the new values of origin 
 클래스의 모든 저장 속성은 - 부모 클래스에서 상속받은 어떠한 속성또한 포함하여 - 반드시 초기화 과정중에 초기 값을 할당받아야 합니다.
 스위프트는 두 종류의 이니셜라이져를 제공하여 클래스 타입의 모든 저장 속성이 초기값을 갖게끔 보장합니다. 각각 지정 이니셜라이저와 편의 이니셜라이저라 합니다.
 
-### Designated Initializers and Convenience Initializers
-
-Designated initializers are the primary initializers for a class. A designated initializer fully initializes all properties introduced by that class and calls an appropriate superclass initializer to continue the initialization process up the superclass chain.
-
-Classes tend to have very few designated initializers, and it is quite common for a class to have only one. Designated initializers are “funnel” points through which initialization takes place, and through which the initialization process continues up the superclass chain.
-
-Every class must have at least one designated initializer. In some cases, this requirement is satisfied by inheriting one or more designated initializers from a superclass, as described in Automatic Initializer Inheritance below.
-
-Convenience initializers are secondary, supporting initializers for a class. You can define a convenience initializer to call a designated initializer from the same class as the convenience initializer with some of the designated initializer’s parameters set to default values. You can also define a convenience initializer to create an instance of that class for a specific use case or input value type.
-
-You do not have to provide convenience initializers if your class does not require them. Create convenience initializers whenever a shortcut to a common initialization pattern will save time or make initialization of the class clearer in intent.
+### 지정 이니셜라이저와 편의 이니셜라이저
+_지정 이니셜라이저_는 클래스의 주 이니셜라이저입니다. 지정 이니셜라이저는 해당 클래스에서 접하는 모든 속성을 완전히 초기화하고, 적절한 부모 클래스 이니셜라이저를 호출하여 초기화 과정을 부모 클래스로 연쇄시킵니다.
+클래스들은 매우 적은 수의 지정 이니셜라이저를 가지는 경향이 있으며, 보통의 경우 클래스는 오직 하나만 가집니다. 지정 이니셜라이저는 초기화가 이루어지는 곳의 "깔때기" 지점이며, 부모 클래스로 이어지는 초기화 과정 연쇄의 "깔때기" 지점입니다.
+모든 클래스는 반드시 최소한 하나의 지정 이니셜라이저를 가져야합니다. 때때로, **자동 이니셜라이저 상속**에 설명된 것과 같이, 이 조건은 부모 클래스에서 하나 이상의 지정 이니셜라이저를 상속 받음에 따라 충족되는 경우가 있습니다.
+_편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라이저입니다. 편의 이니셜라이저를 정의하여, 같은 클래스 내의 지정 이니셜라이저를 호출하는 편의 이니셜라이저를 만들 수 있습니다. 이 편의 이니셜라이져를 통해 호출하는 지정 이니셜라이저의 몇몇 파라메터를 기본 값으로 설정할 수 있습니다. 또한 편의 이니셜라이저를 정의하여 특정 쓰임새나 입력 값 타입에 대한 클래스 인스턴스를 만들 수 있습니다.
+클래스가 필요로 하지 않는다면 편의 이니셜라이저를 제공할 필요는 없습니다. 편의 이니셜라이저는 보통 초기화 패턴을 단축하거나, 클래스의 의도를 명확하게 할때 만듭니다.
 
 ### Initializer Chaining
 
