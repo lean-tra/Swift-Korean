@@ -42,9 +42,9 @@ struct Fahrenheit {
 }
 ```
 
-## Customizing Initialization
-
+## 맞춤 초기화
 You can customize the initialization process with input parameters and optional property types, or by modifying constant properties during initialization, as described in the following sections.
+이 섹션에서 설명할 것은, 입력 파라메터와 옵셔널 속성 타입을 이용하거나, 상수 속성을 초기화 과정중에 변경하는 것으로 초기화 과정을 사용자가 정의하는 것 입니다.
 
 ### Initialization Parameters
 
