@@ -235,34 +235,32 @@ _편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라�
 클래스가 필요로 하지 않는다면 편의 이니셜라이저를 제공할 필요는 없습니다. 편의 이니셜라이저는 보통 초기화 패턴을 단축하거나, 클래스의 의도를 명확하게 할때 만듭니다.
 
 ### Initializer Chaining
+지정 이니셜라이저와 편의 이니셜라이저의 관계를 단순화 하기 위해, 스위프트는 다음의 3개 규칙을 이니셜라이저간의 델리게이션에 적용합니다.
 
-To simplify the relationships between designated and convenience initializers, Swift applies the following three rules for delegation calls between initializers:
+- **Rule 1**
+    지정 이니셜라이저는 반드시 바로 위 부모 클래스의 지정 이니셜라이저를 호출한다.
+- **Rule 2**
+	편의 이니셜라이저는 반드시 같은 클래스 내의 호출 가능한 다른 이니셜라이저를 호출한다.
+- **Rule 3**
+    편의 이니셜라이저는 반드시 궁극적으로 지정 이니셜라이저를 호출하는 것으로 끝내야 한다.
 
-**Rule 1**
-Designated initializers must call a designated initializer from their immediate superclass.
+간단히 기억하기 위한 방법은 이렇습니다.
 
-**Rule 2**
-Convenience initializers must call another initializer available in the same class.
+- 지정 이니셜라이저는 반드시 _위_를 대리한다.
+- 편의 이니셜라이저는 반드시 클래스 내부를 _가로질러_서 대리한다.
 
-**Rule 3**
-Convenience initializers must ultimately end up calling a designated initializer.
-
-A simple way to remember this is:
-
-Designated initializers must always delegate up.
-Convenience initializers must always delegate across.
-These rules are illustrated in the figure below:
+이 규칙은 다음의 그림으로 표현될 수 있습니다.
 
 ![initializerdelegation01_2x.png](images/initializerdelegation01_2x.png)
 
-Here, the superclass has a single designated initializer and two convenience initializers. One convenience initializer calls another convenience initializer, which in turn calls the single designated initializer. This satisfies rules 2 and 3 from above. The superclass does not itself have a further superclass, and so rule 1 does not apply.
-
-The subclass in this figure has two designated initializers and one convenience initializer. The convenience initializer must call one of the two designated initializers, because it can only call another initializer from the same class. This satisfies rules 2 and 3 from above. Both designated initializers must call the single designated initializer from the superclass, to satisfy rule 1 from above.
+여기 부모 클래스는 하나의 지정 이니셜라이저를 가지고 있으며, 두개의 편의 이니셜라이저를 가지고 있습니다. 한 편의 이니셜라이저는 다른 편의 이니셜라이저를 호출하며, 그 이니셜라니저는 하나 있는 지정 이니셜라이저를 호출합니다. 이는 위의 규칙 2와 3을 충족시킵니다. 부모 클래스는 더이상의 부모 클래스를 가지지 않기에 규칙 1은 적용되지 않습니다.
+그림의 서브 클래스는 두개의 지정 이니셜라이져와 하나의 편의 이니셜라이저가 있습니다. 편의 이니셜라이저는 반드시 두 지정 이니셜라이저중 하나의 이니셜라이저를 호출해야 합니다. 편의 이니셜라이저는 클래스 안의 다른 이니셜라이저만 호출 가능하기 떄문입니다. 이는 위의 규칙 2와 3을 만족시킵니다. 규칙 1을 만족시키기 위해, 두개의 지정 이니셜라이저는 반드시 부모 클래스에 하나 있는 지정 이니셜라이저를 호출해야 합니다.
 
 >NOTE
-These rules don’t affect how users of your classes create instances of each class. Any initializer in the diagram above can be used to create a fully-initialized instance of the class they belong to. The rules only affect how you write the class’s implementation.
+이 규칙들은 각각의 클래스를 생성하는 방법에 영향을 주지 않습니다. 위 다이어그램의 어느 이니셜라이저라도 자기가 속해야 될, 완전히 초기화된 클래스 인스턴스를 만드는데 쓰일 수 있습니다. 이 규칙은 오직 클래스 구현의 작성에만 영향을 끼칩니다.
 
 The figure below shows a more complex class hierarchy for four classes. It illustrates how the designated initializers in this hierarchy act as “funnel” points for class initialization, simplifying the interrelationships among classes in the chain:
+밑의 그림은 더 복잡한 4개의 클래스 간의 계층도를 나타냅니다. 이 그림은 지정 이니셜라이저가 어떻게 이 계층도의 클래스 초기화 과정에서 "깔때기"처럼 작동하고, 연쇄에서 클래스간의 관계를 단순화하는지 보여줍니다.
 
 ![initializerdelegation02_2x.png](images/initializerdelegation02_2x.png)
 
