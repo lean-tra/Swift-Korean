@@ -29,10 +29,20 @@
         $("a").click(function () {
             var href = $(this).attr("href");
             var path = href.substring(href.lastIndexOf("/") + 1);
-            var internalPage = getInternalPage(path);
-            if (internalPage != undefined) {
+            var section = getSection(path);
+            if (section != undefined) {
+                for (var k in pages) {
+                    if (section.page == pages[k].page) {
+                        $("#" + section.page).addClass("in");
+                    } else {
+                        $("#" + pages[k].page).removeClass("in");
+                    }
+                }
+            }
+            var subPage = getSubPage(path);
+            if (subPage != undefined) {
                 history.pushState(null, null, $(this).attr("href"));
-                getMarkdown(internalPage.doc);
+                getMarkdown(subPage.doc);
                 return false;
             }
             return true;
@@ -169,28 +179,53 @@
         $("#accordion").append(panel);
     };
 
-    // Gets the internal page.
-    var getInternalPage = function (path) {
-        var internalPage = undefined;
+    // Gets the section of the page.
+    var getSection = function(path) {
+        var section = undefined;
+        for (var i in pages) {
+            var page = pages[i];
+            if (page.children == undefined) {
+                continue;
+            }
+            if (page.children.length > 0) {
+                for (var j in page.children) {
+                    var p = page.children[j];
+                    if (p.page != path) {
+                        continue;
+                    }
+                    section = page;
+                    break;
+                }
+            }
+            if (section != undefined) {
+                break;
+            }
+        }
+        return section;
+    };
+
+    // Gets the sub page.
+    var getSubPage = function (path) {
+        var subPage = undefined;
         for (var i in pages) {
             var page = pages[i];
             if (page.doc != undefined && page.doc.length > 0 && page.page == path) {
-                internalPage = page;
+                subPage = page;
                 break;
             }
             if (page.children != undefined && page.children.length > 0) {
                 for (var j in page.children) {
                     var p = page.children[j];
                     if (p.doc != undefined && p.doc.length > 0 && p.page == path) {
-                        internalPage = p;
+                        subPage = p;
                         break;
                     }
                 }
             }
-            if (internalPage != undefined && internalPage.page != undefined && internalPage.page.length > 0) {
+            if (subPage != undefined && subPage.page != undefined && subPage.page.length > 0) {
                 break;
             }
         }
-        return internalPage;
+        return subPage;
     };
 })(jQuery);
