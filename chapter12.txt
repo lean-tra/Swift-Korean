@@ -237,9 +237,11 @@ The center property is then set to a new value of (15, 15), which moves the squa
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png "Rect구조체의 center 계산속성")
 
-# Shorthand Setter Declaration
+# 단축/축약(?) Setter 선언(Shorthand Setter Declaration)
 
 If a computed property’s setter does not define a name for the new value to be set, a default name of newValue is used. Here’s an alternative version of the Rect structure, which takes advantage of this shorthand notation:
+
+계산속성의 setter에 새로운 값이 저장될 이름이 명시되지 않으면 기본값으로 newValue를 사용한다. 축약형을 이용한 Rect 구조체의 새로운 버전은 다음과 같다:
 
 ```
 struct AlternativeRect {
@@ -259,14 +261,21 @@ struct AlternativeRect {
 }
 ```
 
-# Read-Only Computed Properties
+# 읽기전용 계산속성 (Read-Only Computed Properties)
 
 A computed property with a getter but no setter is known as a read-only computed property. A read-only computed property always returns a value, and can be accessed through dot syntax, but cannot be set to a different value.
+
+getter만 있고, setter가 없는 계산속성은 읽기전용 계산속성(read-only computed property)라 부른다. 읽기전용 계산속성은 언제나 값을 반환하며, 마침표(.)를 통해 접근할 수 있지만, 다른 값을 지정할 수는 없다. 
 
 > N O T E
 > You must declare computed properties—including read-only computed properties—as variable properties with the var keyword, because their value is not fixed. The let keyword is only used for constant properties, to indicate that their values cannot be changed once they are set as part of instance initialization.
 
+> NOTE
+> 읽기전용을 포함한 모든 계산속성은 반드시 var 키워드로 선언되어야한다. 왜냐하면, 계산속성의 값은 고정되지 않았기 때문이다. let 키워드는 초기화시 한번 지정되면 변경할 수 없다는 것을 표시하기 위해 상수속성 선언에만 사용해야한다. 
+
 You can simplify the declaration of a read-only computed property by removing the get keyword and its braces:
+
+읽기전용 계산속성의 선언은 단순히 get 키워드와 중괄호를 제거하면 된다. (엄멀하게 말하자만, set 부분은 아예 없고, get 블록 내부의 코드가 한꺼풀 바깥으로 나오는 형상이네요)
 
 ```
 struct Cuboid {
@@ -281,6 +290,8 @@ println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 ```
 
 This example defines a new structure called Cuboid, which represents a 3D rectangular box with width, height, and depth properties. This structure also has a read-only computed property called volume, which calculates and returns the current volume of the cuboid. It doesn’t make sense for volume to be settable, because it would be ambiguous as to which values of width, height, and depth should be used for a particular volume value. Nonetheless, it is useful for a Cuboid to provide a read-only computed property to enable external users to discover its current calculated volume.
+
+위 예제코드는 Cuboid란 이름의 새로운 구조체를 정의합니다. Cuboid는 너비, 높이, 그리고 깊이를 가진 3D 직육면체 상자를 표시합니다. 이 구조체는 volume이라는 읽기전용 계산속성을 제공합니다. volume 은 현재 cuboid의 면적을 계산하여 반환합니다. 면적이 변경되면 어떤 너비, 높이, 그리고 깊이값으로 변경되어야하는지 모호하기 때문에 면적을 변경하는 것은 말이 되지 않습니다. 그럼에도 불구하고, Cuboid 구조체를 사용하는 프로그래머에게 계산된 면적으로 제공하는 읽기전용 계산속성을 제공하는 것은 유용할 것입니다. 
 
 # 속성감시자 (Property Observers)
 
