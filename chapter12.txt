@@ -145,66 +145,76 @@ ager.data += "Some more data"
 // importer 속성에 할당된 DataImporter 인스턴스는 아직 생성되지 않았다.
 ```
 
-The DataManager class has a stored property called data, whi ch i s ini tial i zed wi th a new,
-empty array of Stri ng values. Al though the rest of i ts functional i ty i s not shown, the purpose
-of thi s DataManager class i s to manage and provide access to thi s array of Stri ng data.
-Part of the functional i ty of the DataManager class i s the abi l i ty to import data from a fi le.
-Thi s functional i ty i s provided by the DataImporter class, whi ch i s assumed to take a non-
-trivial  amount of time to ini tial i ze. Thi s might be because a DataImporter instance needs to
-open a fi le and read i ts contents into memory when the DataImporter instance i s ini tial i zed.
-It i s possible for a DataManager instance to manage i ts data wi thout ever importing data
-from a fi le, so there i s no need to create a new DataImporter instance when the DataManager
-i tsel f i s created. Instead, i t makes more sense to create the DataImporter instance i f and
-when i t i s fi rst used.
-Because i t i s marked wi th the @l azy attribute, the DataImporter instance for the i mporter
-property i s only created when the i mporter property i s fi rst accessed, such as when i ts
-fi l eName property i s queried:
-pri ntl n(manager. i mporter. fi l eName)
-// the DataImporter i nstance for the i mporter property has now  been created
-// pri nts "data. txt"
-Stored Properties and Instance Variables
-If you have experience wi th Objective-C, you may know that i t provides two ways to store
-values and references as part of a class instance. In addi tion to properties, you can use
-instance variables as a backing store for the values stored in a property.
-Swi ft uni fies these concepts into a single property declaration. A Swi ft property does not
-have a corresponding instance variable, and the backing store for a property i s not
-accessed di rectly. Thi s approach avoids confusion about how the value i s accessed in
-di fferent contexts and simpl i fies the property’s declaration into a single, defini tive
-statement. Al l  information about the property—including i ts name, type, and memory
-management characteri sti cs—i s defined in a single location as part of the type’s
-defini tion.
-Computed Properties
-In addi tion to stored properties, classes, structures, and enumerations can define
-computed properties, whi ch do not actual ly store a value. Instead, they provide a getter
-and an optional  setter to retrieve and set other properties and values indi rectly.
-struct Poi nt {
-var x = 0. 0,  y = 0. 0
+The DataManager class has a stored property called data, which is initialized with a new, empty array of String values. Although the rest of its functionality is not shown, the purpose of this DataManager class is to manage and provide access to this array of String data.
+
+DataManager 클래스는 data라는 저장속성을 가지는데, 이 data 저장속성은 새로운 String 값들로 이루어진 빈 배열로 초기화된다. 나머지 기능들은 코드에 드러나지 않지만, DataManager 클래스의 목적은 이 String 데이터의 배열을 외부에서 접근하여 사용하도록 관리하는 것이다.
+
+Part of the functionality of the DataManager class is the ability to import data from a file. This functionality is provided by the DataImporter class, which is assumed to take a non-trivial amount of time to initialize. This might be because a DataImporter instance needs to open a file and read its contents into memory when the DataImporter instance is initialized.
+
+DataManager 클래스의 기능 중 하나는 파일에서 데이터를 가져오는 것이다. 이 기능은 초기화하는데 많은 시간이 드는 DataImporter 클래스가 제공한다. 이것은 DataImporter 인스턴스가 초기화될때 화일로부터 데이터를 읽어 메모리로 로드해야하기 때문이라고 가정하자. 
+
+It is possible for a DataManager instance to manage its data without ever importing data from a file, so there is no need to create a new DataImporter instance when the DataManager itself is created. Instead, it makes more sense to create the DataImporter instance if and when it is first used.
+
+DataManager 인스턴스가 데이터를 관리할 때 파일에서 읽어오지 않는 경우도 있을 수 있다. 이런 경우엔 DataManager가 생성될때, DataImporter 인스턴스를  생성하는 것은 불필요하다. 대신에, DataImporter 인스턴스를 최초로 사용할때 생성되도록 하는 것이 더 좋다.
+
+Because it is marked with the @lazy attribute, the DataImporter instance for the importer property is only created when the importer property is first accessed, such as when its fileName property is queried:
+
+게으른 속성(@lazy)으로 표시되어있기 때문에, DataImporter 인스턴스인 DataManager의 importer 속성은 fileName 속성을 조회할 때와 같은 최초의 접근시 생성된다.
+
+```
+println(manager.importer.fileName)
+// DataImporter 인스턴스인 importer 속성이 여기서 생성된다
+// prints "data.txt"
+```
+
+# 저장속성과 인스턴스 변수 (Stored Properties and Instance Variables)
+
+If you have experience with Objective-C, you may know that it provides two ways to store values and references as part of a class instance. In addition to properties, you can use instance variables as a backing store for the values stored in a property.
+
+Swift unifies these concepts into a single property declaration. A Swift property does not have a corresponding instance variable, and the backing store for a property is not accessed directly. This approach avoids confusion about how the value is accessed in different contexts and simplifies the property’s declaration into a single, definitive statement. All information about the property—including its name, type, and memory management characteristics—is defined in a single location as part of the type’s definition.
+
+# 계산속성 (Computed Properties)
+
+In addition to stored properties, classes, structures, and enumerations can define computed properties, which do not actually store a value. Instead, they provide a getter and an optional setter to retrieve and set other properties and values indirectly.
+
+```
+struct Point {
+    var x = 0.0, y = 0.0
 }
-struct Si ze {
-var w i dth = 0. 0,  hei ght = 0. 0
+struct Size {
+    var width = 0.0, height = 0.0
 }
 struct Rect {
-var ori gi n = Poi nt()
-var si ze = Si ze()
-ar center: Poi nt {
-et {
-l et centerX = ori gi n. x + (si ze.w i dth / 2)
-l et centerY  = ori gi n. y + (si ze. hei ght / 2)
-return Poi nt(x: centerX,  y: centerY )
-et(new Center) {
-ori gi n. x = new Center. x -  (si ze.w i dth / 2)
-ori gi n. y = new Center. y -  (si ze. hei ght / 2)
-square = Rect(ori gi n: Poi nt(x: 0. 0,  y: 0. 0),
-ze: Si ze(w i dth: 10. 0,  hei ght: 10. 0))
-i ti al SquareCenter = square. center
-re. center = Poi nt(x: 15. 0,  y: 15. 0)
-("square. ori gi n i s now  at (\(square. ori gi n. x),  \(square. ori gi n. y))")
-i nts "square. ori gi n i s now  at (10. 0,  10. 0)"
-Thi s example defines three structures for working wi th geometri c shapes:
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+    get {
+        let centerX = origin.x + (size.width / 2)
+        let centerY = origin.y + (size.height / 2)
+        return Point(x: centerX, y: centerY)
+    }
+    set(newCenter) {
+        origin.x = newCenter.x - (size.width / 2)
+        origin.y = newCenter.y - (size.height / 2)
+    }
+    }
+}
+var square = Rect(origin: Point(x: 0.0, y: 0.0),
+    size: Size(width: 10.0, height: 10.0))
+let initialSquareCenter = square.center
+square.center = Point(x: 15.0, y: 15.0)
+println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+// prints "square.origin is now at (10.0, 10.0)"
+```
+This example defines three structures for working with geometric shapes:
+
+* Point encapsulates an (x, y) coordinate.
+* Size encapsulates a width and a height.
+* Rect defines a rectangle by an origin point and a size.
+
 The Rect structure al so provides a computed property cal led center. The current center
-Poi nt encapsulates an (x,  y) coordinate.
-Si ze encapsulates a w i dth and a hei ght.
-Rect defines a rectangle by an origin point and a si ze.
+
+
 posi tion of a Rect can always be determined from i ts ori gi n and si ze, and so you don’t need to
 store the center point as an expl i ci t Poi nt value. Instead, Rect defines a custom getter and
 setter for a computed variable cal led center, to enable you to work wi th the rectangle’s
