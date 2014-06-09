@@ -11,7 +11,7 @@
             } else {
                 for (var j in page.children) {
                     var p = page.children[j];
-                    if (p.doc == undefined || p.page + ".html" != file) {
+                    if (p.doc == undefined || p.page!= file) {
                         continue;
                     }
                     getMarkdown(p.doc);
@@ -24,13 +24,25 @@
 
             getSideNavigation(page);
         }
+
+        $("a").click(function () {
+            var href = $(this).attr("href");
+            var path = href.substring(href.lastIndexOf("/") + 1);
+            var internalPage = getInternalPage(path);
+            if (internalPage != undefined) {
+                history.pushState(null, null, $(this).attr("href"));
+                getMarkdown(internalPage.doc);
+                return false;
+            }
+            return true;
+        });
     });
 
     // Gets the current page.
     var getCurrentPage = function() {
         var page = $.url().attr("file");
         if (page == undefined || !page.length) {
-            page = "index.html";
+            page = "index";
         }
         return page;
     };
@@ -66,7 +78,7 @@
                 for (var i in pages) {
                     var doc = pages[i].doc;
                     var page = pages[i].page;
-                    data = data.replace(doc, page + ".html");
+                    data = data.replace(doc, page);
                 }
                 $("#main-content").html(data);
             });
@@ -84,7 +96,7 @@
 
         var link = $("<a></a>").text(page.name);
         if (page.children == undefined) {
-            link.attr({ "href": page.page + ".html" });
+            link.attr({ "href": page.page});
         } else {
             link.attr({ "data-toggle": "collapse", "data-parent": "#accordion", "href": "#" + page.page });
         }
@@ -108,7 +120,7 @@
             for (var i in page.children) {
                 var p = page.children[i];
                 var l = $("<a></a>")
-                    .attr("href", p.page + ".html")
+                    .attr("href", p.page)
                     .text(p.name);
                 var li = $("<li></li>")
                     .append(l);
@@ -126,5 +138,30 @@
             panel.append(collapsable);
         }
         $("#accordion").append(panel);
+    };
+
+    // Gets the internal page.
+    var getInternalPage = function (path) {
+        var internalPage = undefined;
+        for (var i in pages) {
+            var page = pages[i];
+            if (page.doc != undefined && page.doc.length > 0 && page.page == path) {
+                internalPage = page;
+                break;
+            }
+            if (page.children != undefined && page.children.length > 0) {
+                for (var j in page.children) {
+                    var p = page.children[j];
+                    if (p.doc != undefined && p.doc.length > 0 && p.page == path) {
+                        internalPage = p;
+                        break;
+                    }
+                }
+            }
+            if (internalPage != undefined && internalPage.page != undefined && internalPage.page.length > 0) {
+                break;
+            }
+        }
+        return internalPage;
     };
 })(jQuery);
