@@ -7,24 +7,20 @@ properties calculate (rather than store) a value. Computed properties are provid
 classes, structures, and enumerations. Stored properties are provided only by classes and
 structures.
 
-속성은 특정 클래스, 구조체(structure), 혹은 열거형(Enumeration)과 값들을 연결해준다. 
-저장속성(Stored property)는 상수나 변수 값을 인스턴스의 일부로 저장한다.
-계산속성(Computed property)는 값을 그냥 저장하는 것이 아니라 계산한다. 
-계산속성은 클래스나 구조체 그리고 열거형에 의해 제공된다. 
-저장속성는 클래스와 구조체에 의해서만 제공된다.
+속성은 특정 클래스, 구조체(structure), 혹은 열거형(Enumeration)과 값들을 연결해준다. 저장속성(Stored property)는 상수나 변수값을 인스턴스의 일부로 저장한다. 계산속성(Computed property)는 값을 그냥 저장하는 것이 아니라 계산한다. 계산속성은 클래스나 구조체 그리고 열거형에서 사용할 수 있다. 저장속성은 클래스와 구조체에서만 사용할 수 있다. 
 
 Stored and computed properties are usually associated with instances of a particular
 type. However, properties can also be associated with the type itself. Such properties are
 known as type properties.
 
-저장속성과 계산속성은 일반적으로 특정 타입의 인스턴스와 연결된다. 하지만, 속성은 타입 자체와 연결될수도 있는데, 이런 속성을 타입 속성(type property)라고 한다.
+저장속성과 계산속성은 일반적으로 특정 타입의 인스턴스와 연결된다. 하지만, 속성이 타입 자체와 연결될수도 있는데, 이런 속성을 타입 속성(type property)라고 한다.
 
 In addition, you can define property observers to monitor changes in a property’s value,
 which you can respond to with custom actions. Property observers can be added to stored
 properties you define yourself, and also to properties that a subclass inherits from i ts
 superclass.
 
-덧붙여, 프로그래머는 속성값의 변경을 모니터링하기 위해 속성 관찰/감시자(property observer)를 정의할 수 있다. 이것은 프로그래머가 속성값의 변경에 직접 정의한 동작들로 대응할 수 있게 해준다. 속성감시자/관찰자는 프로그래머가 직접 정의한 저장속성이나 부모클래스에서 상속받은 속성들에 추가할 수 있다.
+덧붙여, 프로그래머는 속성값의 변경을 모니터링하기 위해 속성 관찰/감시자(property observer)를 정의할 수 있다. 이것은 프로그래머가 속성값의 변경에 직접 정의한 동작들로 대응할 수 있게 해준다. 속성감시자는 프로그래머가 직접 정의한 저장속성이나 상위클래스에서 상속받은 속성들에 추가할 수 있다.
 
 # 저장속성 (Stored Property)
 
@@ -70,11 +66,10 @@ i s created and cannot be changed thereafter, because i t i s a constant propert
 
 FixedLengthRange 구조체의 인스턴스들은 변수저장속성 firstValue와 상수저장속성 length를 갖는다. 위의 예제에서는 length 속성은 상수속성이기 때문에 구조체가 생성될때 최초로 지정되고, 이후로는 변경되지 않는다. 
 
-# Stored Properties of Constant Structure Instances
-# 상수 구조체 인스턴스의 저장속성
+# 상수 구조체 인스턴스의 저장속성 (Stored Properties of Constant Structure Instances)
 
-If you create an instance of a structure and assign that instance to a constant, you cannot
-modify the instance’s properties, even if they were declared as variable properties:
+
+If you create an instance of a structure and assign that instance to a constant, you cannot modify the instance’s properties, even if they were declared as variable properties:
 
 상수로 선언된 구조체 인스턴스의 속성들은 변수속성이더라도 수정되지 않는다. 
 
@@ -91,7 +86,7 @@ marked as a constant, so are al l  of i ts properties.
 The same i s not true for classes, whi ch are reference types. If you assign an instance of a
 reference type to a constant, you can sti l l  change that instance’s variable properties.
 
-rangeOfFourItems 인스턴스는 let 키워드를 통해 상수로 선언되었으므로 그 속성인 firstValue는 비록 변수속성이더라도  수정할 수 없다.
+위 예제에서 rangeOfFourItems 인스턴스는 let 키워드를 통해 상수로 선언되었으므로 그 속성인 firstValue는 비록 변수속성이더라도  수정할 수 없다.
 이러한 동작은 구조체가 값타입(value type)이기 때문인데, 값타입의 인스턴스가 상수로 선언되면 그 속성들도 모두 상수가 된다.
 이와 비교해서, 참조타입(reference type)인 클래스는 다르게 동작한다. 참조타입의 인스턴스를 상수로 선언하더라고 그 변수 속성들은 여전히 수정이 가능하다.
 
@@ -103,8 +98,7 @@ declaration.
 
 게으른 저장속성은 그 초기값이 최초로 사용되기전까지는 계산되지 않는다. 프로그래머는 선언시에 @lazy attribute라고 써줌으로써 게으른 저장속성을 표시할 수 있다. 
 
-N O T E
-
+> N O T E
 Y ou must al w ays decl are a l azy property as a vari abl e (w i th the var keyw ord),  because its initial  value may not
 be retrieved until  after instance initialization completes.  Constant properties must always have a value before
 initialization completes,  and therefore cannot be declared as lazy.
@@ -114,6 +108,7 @@ Lazy properties are al so useful  when the ini tial  value for a property requi 
 computational ly expensive setup that should not be performed unless or unti l  i t i s
 needed.
 
+> NOTE
 게으론 속성은 초기화(initialization)가 끝난 뒤에도 초기값을 꺼낼 수 없을지도 모르기 때문에 언제나 var 키워드를 통해 변수로 선언되어야한다. 반면, 상수 속성은 초기화가 끝나기 전에 반드시 값을 가져야하기 때문에 게으른 속성으로 선언될 수 없다. 
 게으른 속성은 속성의 초기값이 객체의 초기화가 끝날때까지도 값을 알 수 없는 외부 변수에 의존하고 있을때 유용하다. 
 게으른 속성은 속성의 값이 매우 복잡하거나 리소스를 많이 사용하는 (expensive) 계산이어서 필요한 경우가 아니면 수행되지 말아야 하는 경우에도 역시 유용하다. 
@@ -251,212 +246,210 @@ A computed property with a getter but no setter is known as a read-only computed
 > N O T E
 > You must declare computed properties—including read-only computed properties—as variable properties with the var keyword, because their value is not fixed. The let keyword is only used for constant properties, to indicate that their values cannot be changed once they are set as part of instance initialization.
 
-You can simpl i fy the declaration of a read-only computed property by removing the get
-keyword and i ts braces:
-struct Cuboi d {
-var w i dth = 0. 0,  hei ght = 0. 0,  depth = 0. 0
-var vol ume: Doubl e {
-return w i dth * hei ght * depth
+You can simplify the declaration of a read-only computed property by removing the get keyword and its braces:
+
+```
+struct Cuboid {
+    var width = 0.0, height = 0.0, depth = 0.0
+    var volume: Double {
+    return width * height * depth
+    }
 }
+let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
+println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+// prints "the volume of fourByFiveByTwo is 40.0"
+```
+
+This example defines a new structure called Cuboid, which represents a 3D rectangular box with width, height, and depth properties. This structure also has a read-only computed property called volume, which calculates and returns the current volume of the cuboid. It doesn’t make sense for volume to be settable, because it would be ambiguous as to which values of width, height, and depth should be used for a particular volume value. Nonetheless, it is useful for a Cuboid to provide a read-only computed property to enable external users to discover its current calculated volume.
+
+# 속성감시자 (Property Observers)
+
+Property observers observe and respond to changes in a property’s value. Property observers are called every time a property’s value is set, even if the new value is the same as the property’s current value.
+
+You can add property observers to any stored properties you define, apart from lazy stored properties. You can also add property observers to any inherited property (whether stored or computed) by overriding the property within a subclass. Property overriding is described in Overriding.
+
+>N O T E
+You don’t need to define property observers for non-overridden computed properties, because you can observe and respond to changes to their value from directly within the computed property’s setter.
+
+You have the option to define either or both of these observers on a property:
+
+* willSet is called just before the value is stored.
+* didSet is called immediately after the new value is stored.
+
+If you implement a willSet observer, it is passed the new property value as a constant parameter. You can specify a name for this parameter as part of your willSet implementation. If you choose not to write the parameter name and parentheses within your implementation, the parameter will still be made available with a default parameter name of newValue.
+
+Similarly, if you implement a didSet observer, it will be passed a constant parameter containing the old property value. You can name the parameter if you wish, or use the default parameter name of oldValue.
+
+>N O T E
+willSet and didSet observers are not called when a property is first initialized. They are only called when the property’s value is set outside of an initialization context.
+
+Here’s an example of willSet and didSet in action. The example below defines a new class called StepCounter, which tracks the total number of steps that a person takes while walking. This class might be used with input data from a pedometer or other step counter to keep track of a person’s exercise during their daily routine.
+
+```
+class StepCounter {
+    var totalSteps: Int = 0 {
+    willSet(newTotalSteps) {
+        println("About to set totalSteps to \(newTotalSteps)")
+    }
+    didSet {
+        if totalSteps > oldValue  {
+            println("Added \(totalSteps - oldValue) steps")
+        }
+    }
+    }
 }
-l et fourByFi veByT w o = Cuboi d(w i dth: 4. 0,  hei ght: 5. 0,  depth: 2. 0)
-pri ntl n("the vol ume of fourByFi veByT w o i s \(fourByFi veByT w o. vol ume)")
-// pri nts "the vol ume of fourByFi veByT w o i s 40. 0"
-Thi s example defines a new structure cal led Cuboi d, whi ch represents a 3D rectangular box
-wi th w i dth, hei ght, and depth properties. Thi s structure al so has a read-only computed
-property cal led vol ume, whi ch cal culates and returns the current volume of the cuboid. It
-doesn’t make sense for vol ume to be settable, because i t would be ambiguous as to whi ch
-values of w i dth, hei ght, and depth should be used for a parti cular vol ume value. Nonetheless, i t
-i s useful  for a Cuboi d to provide a read-only computed property to enable external  users to
-di scover i ts current cal culated volume.
-Property Observers
-Property observers observe and respond to changes in a property’s value. Property
-observers are cal led every time a property’s value i s set, even i f the new value i s the
-same as the property’s current value.
-You can add property observers to any stored properties you define, apart from lazy
-stored properties. You can al so add property observers to any inheri ted property
-(whether stored or computed) by overriding the property wi thin a subclass. Property
-overriding i s described in Overriding.
-N O T E
-Y ou don’t need to defi ne property observers for non-overri dden computed properti es,  because you can
-observe and respond to changes to thei r val ue from di rectl y w i thi n the computed property’s setter.
-You have the option to define ei ther or both of these observers on a property:
-w i l l Set i s cal led just before the value i s stored.
-di dSet i s cal led immediately after the new value i s stored.
-If you implement a w i l l Set observer, i t i s passed the new property value as a constant
-parameter. You can speci fy a name for thi s parameter as part of your w i l l Set
-implementation. If you choose not to wri te the parameter name and parentheses wi thin
-your implementation, the parameter wi l l  sti l l  be made avai lable wi th a defaul t parameter
-name of new Val ue.
-Simi larly, i f you implement a di dSet observer, i t wi l l  be passed a constant parameter
-containing the old property value. You can name the parameter i f you wi sh, or use the
-defaul t parameter name of ol dVal ue.
-N O T E
-w i l l Set and di dSet observers are not cal l ed w hen a property i s fi rst i ni ti al i zed.  T hey are onl y cal l ed w hen the
-property’s val ue i s set outsi de of an i ni ti al i zati on context.
-Here’s an example of w i l l Set and di dSet in action. The example below defines a new class
-cal led StepCounter, whi ch tracks the total  number of steps that a person takes whi le
-walking. Thi s class might be used wi th input data from a pedometer or other step counter
-to keep track of a person’s exerci se during thei r dai ly routine.
-cl ass StepCounter {
-var total Steps: Int = 0 {
-w i l l Set(new T otal Steps) {
-pri ntl n("About to set total Steps to \(new T otal Steps)")
-}
-di dSet {
-i f total Steps > ol dVal ue  {
-pri ntl n("Added \(total Steps -  ol dVal ue) steps")
-}
-tepCounter = StepCounter()
-Counter. total Steps = 200
-bout to set total Steps to 200
-dded 200 steps
-Counter. total Steps = 360
-bout to set total Steps to 360
-dded 160 steps
-Counter. total Steps = 896
-bout to set total Steps to 896
-dded 536 steps
-The StepCounter class declares a total Steps property of type Int. Thi s i s a stored property wi th
-w i l l Set and di dSet observers.
-The w i l l Set and di dSet observers for total Steps are cal led whenever the property i s assigned a
-new value. Thi s i s true even i f the new value i s the same as the current value.
-Thi s example’s w i l l Set observer uses a custom parameter name of new T otal Steps for the
-upcoming new value. In thi s example, i t simply prints out the value that i s about to be
-set.
-The di dSet observer i s cal led after the value of total Steps i s updated. It compares the new
-value of total Steps against the old value. If the total  number of steps has increased, a
-message i s printed to indi cate how many new steps have been taken. The di dSet observer
-does not provide a custom parameter name for the old value, and the defaul t name of
-ol dVal ue i s used instead.
-N O T E
-If you assi gn a val ue to a property w i thi n i ts ow n di dSet observer,  the new  val ue that you assi gn w i l l  repl ace
-the one that w as just set.
-Global and Local Variables
-The capabi l i ties described above for computing and observing properties are al so
-avai lable to global  variables and local  variables. Global  variables are variables that are
-defined outside of any function, method, closure, or type context. Local  variables are
-variables that are defined wi thin a function, method, or closure context.
-The global  and local  variables you have encountered in previous chapters have al l  been
-stored variables. Stored variables, l ike stored properties, provide storage for a value of a
-certain type and al low that value to be set and retrieved.
-However, you can al so define computed variables and define observers for stored
-variables, in ei ther a global  or local  scope. Computed variables cal culate rather than store
-a value, and are wri tten in the same way as computed properties.
-N O T E
-Gl obal  constants and vari abl es are al w ays computed l azi l y,  i n a si mi l ar manner to Lazy Stored Properti es.  Unl i ke
-l azy stored properti es,  gl obal  constants and vari abl es do not need to be marked w i th the @l azy attri bute.
-Local  constants and vari abl es are never computed l azi l y.
+let stepCounter = StepCounter()
+stepCounter.totalSteps = 200
+// About to set totalSteps to 200
+// Added 200 steps
+stepCounter.totalSteps = 360
+// About to set totalSteps to 360
+// Added 160 steps
+stepCounter.totalSteps = 896
+// About to set totalSteps to 896
+// Added 536 steps
+```
+
+The StepCounter class declares a totalSteps property of type Int. This is a stored property with willSet and didSet observers.
+
+The willSet and didSet observers for totalSteps are called whenever the property is assigned a new value. This is true even if the new value is the same as the current value.
+
+This example’s willSet observer uses a custom parameter name of newTotalSteps for the upcoming new value. In this example, it simply prints out the value that is about to be set.
+
+The didSet observer is called after the value of totalSteps is updated. It compares the new value of totalSteps against the old value. If the total number of steps has increased, a message is printed to indicate how many new steps have been taken. The didSet observer does not provide a custom parameter name for the old value, and the default name of oldValue is used instead.
+
+> NOTE
+If you assign a value to a property within its own didSet observer, the new value that you assign will replace the one that was just set.
+
+# 전역변수와 지역변수 (Global and Local Variables)
+
+The capabilities described above for computing and observing properties are also available to global variables and local variables. Global variables are variables that are defined outside of any function, method, closure, or type context. Local variables are variables that are defined within a function, method, or closure context.
+
+The global and local variables you have encountered in previous chapters have all been stored variables. Stored variables, like stored properties, provide storage for a value of a certain type and allow that value to be set and retrieved.
+
+However, you can also define computed variables and define observers for stored variables, in either a global or local scope. Computed variables calculate rather than store a value, and are written in the same way as computed properties.
+
+NOTE
+
+Global constants and variables are always computed lazily, in a similar manner to Lazy Stored Properties. Unlike lazy stored properties, global constants and variables do not need to be marked with the @lazy attribute.
+
+Local constants and variables are never computed lazily.
+
 Type Properties
-Instance properties are properties that belong to an instance of a parti cular type. Every
-time you create a new instance of that type, i t has i ts own set of property values,
-separate from any other instance.
-You can al so define properties that belong to the type i tsel f, not to any one instance of
-that type. There wi l l  only ever be one copy of these properties, no matter how many
-instances of that type you create. These kinds of properties are cal led type properties.
-Type properties are useful  for defining values that are universal  to al l  instances of a
-parti cular type, such as a constant property that al l  instances can use (l ike a stati c
-constant in C), or a variable property that stores a value that i s global  to al l  instances of
-that type (l ike a stati c variable in C).
-For value types (that i s, structures and enumerations), you can define stored and
-computed type properties. For classes, you can define computed type properties only.
-Stored type properties for value types can be variables or constants. Computed type
-properties are always declared as variable properties, in the same way as computed
-instance properties.
-N O T E
-Unl i ke stored i nstance properti es,  you must al w ays gi ve stored type properti es a defaul t val ue.  T hi s i s because
-the type i tsel f does not have an i ni ti al i zer that can assi gn a val ue to a stored type property at i ni ti al i zati on ti me.
+
+Instance properties are properties that belong to an instance of a particular type. Every time you create a new instance of that type, it has its own set of property values, separate from any other instance.
+
+You can also define properties that belong to the type itself, not to any one instance of that type. There will only ever be one copy of these properties, no matter how many instances of that type you create. These kinds of properties are called type properties.
+
+Type properties are useful for defining values that are universal to all instances of a particular type, such as a constant property that all instances can use (like a static constant in C), or a variable property that stores a value that is global to all instances of that type (like a static variable in C).
+
+For value types (that is, structures and enumerations), you can define stored and computed type properties. For classes, you can define computed type properties only.
+
+Stored type properties for value types can be variables or constants. Computed type properties are always declared as variable properties, in the same way as computed instance properties.
+
+NOTE
+
+Unlike stored instance properties, you must always give stored type properties a default value. This is because the type itself does not have an initializer that can assign a value to a stored type property at initialization time.
+
 Type Property Syntax
-In C and Objective-C, you define stati c constants and variables associated wi th a type as
-global  stati c variables. In Swi ft, however, type properties are wri tten as part of the type’s
-defini tion, wi thin the type’s outer curly braces, and each type property i s expl i ci tly scoped
-to the type i t supports.
-You define type properties for value types wi th the stati c keyword, and type properties for
-class types wi th the cl ass keyword. The example below shows the syntax for stored and
-computed type properties:
+
+In C and Objective-C, you define static constants and variables associated with a type as global static variables. In Swift, however, type properties are written as part of the type’s definition, within the type’s outer curly braces, and each type property is explicitly scoped to the type it supports.
+
+You define type properties for value types with the static keyword, and type properties for class types with the class keyword. The example below shows the syntax for stored and computed type properties:
+
 struct SomeStructure {
-stati c var storedT ypeProperty = "Some val ue. "
-stati c var computedT ypeProperty: Int {
-// return an Int val ue here
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+    // return an Int value here
+    }
 }
+enum SomeEnumeration {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+    // return an Int value here
+    }
 }
-enum SomeEnumerati on {
-stati c var storedT ypeProperty = "Some val ue. "
-stati c var computedT ypeProperty: Int {
-/ return an Int val ue here
-SomeCl ass {
-ass var computedT ypeProperty: Int {
-/ return an Int val ue here
-N O T E
-T he computed type property exampl es above are for read-onl y computed type properti es,  but you can al so
-defi ne read-w ri te computed type properti es w i th the same syntax as for computed i nstance properti es.
+class SomeClass {
+    class var computedTypeProperty: Int {
+    // return an Int value here
+    }
+}
+NOTE
+
+The computed type property examples above are for read-only computed type properties, but you can also define read-write computed type properties with the same syntax as for computed instance properties.
+
 Querying and Setting Type Properties
-Type properties are queried and set wi th dot syntax, just l ike instance properties.
-However, type properties are queried and set on the type, not on an instance of that
-type. For example:
-pri ntl n(SomeCl ass. computedT ypeProperty)
-// pri nts "42"
-pri ntl n(SomeStructure. storedT ypeProperty)
-// pri nts "Some val ue. "
-SomeStructure. storedT ypeProperty = "Another val ue. "
-pri ntl n(SomeStructure. storedT ypeProperty)
-// pri nts "Another val ue. "
-The examples that fol low use two stored type properties as part of a structure that
-model s an audio level  meter for a number of audio channel s. Each channel  has an integer
-audio level  between 0 and 10 inclusive.
-The figure below i l lustrates how two of these audio channel s can be combined to model  a
-stereo audio level  meter. When a channel ’s audio level  i s 0, none of the l ights for that
-channel  are l i t. When the audio level  i s 10, al l  of the l ights for that channel  are l i t. In thi s
-figure, the left channel  has a current level  of 9, and the right channel  has a current level
-of 7:
-The audio channel s described above are represented by instances of the Audi oChannel
-structure:
-struct Audi oChannel  {
-stati c l et threshol dLevel  = 10
-stati c var maxInputLevel ForAl l Channel s = 0
-var currentLevel : Int = 0 {
-di dSet {
-i f currentLevel  > Audi oChannel . threshol dLevel  {
-// cap the new  audi o l evel  to the threshol d l evel
-currentLevel  = Audi oChannel . threshol dLevel
+
+Type properties are queried and set with dot syntax, just like instance properties. However, type properties are queried and set on the type, not on an instance of that type. For example:
+
+println(SomeClass.computedTypeProperty)
+// prints "42"
+ 
+println(SomeStructure.storedTypeProperty)
+// prints "Some value."
+SomeStructure.storedTypeProperty = "Another value."
+println(SomeStructure.storedTypeProperty)
+// prints "Another value."
+The examples that follow use two stored type properties as part of a structure that models an audio level meter for a number of audio channels. Each channel has an integer audio level between 0 and 10 inclusive.
+
+The figure below illustrates how two of these audio channels can be combined to model a stereo audio level meter. When a channel’s audio level is 0, none of the lights for that channel are lit. When the audio level is 10, all of the lights for that channel are lit. In this figure, the left channel has a current level of 9, and the right channel has a current level of 7:
+
+image: ../Art/staticPropertiesVUMeter_2x.png
+The audio channels described above are represented by instances of the AudioChannel structure:
+
+struct AudioChannel {
+    static let thresholdLevel = 10
+    static var maxInputLevelForAllChannels = 0
+    var currentLevel: Int = 0 {
+    didSet {
+        if currentLevel > AudioChannel.thresholdLevel {
+            // cap the new audio level to the threshold level
+            currentLevel = AudioChannel.thresholdLevel
+        }
+        if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+            // store this as the new overall maximum input level
+            AudioChannel.maxInputLevelForAllChannels = currentLevel
+        }
+    }
+    }
 }
-i f currentLevel  > Audi oChannel .maxInputLevel ForAl l Channel s {
-// store thi s as the new  overal l  maxi mum i nput l evel
-Audi oChannel .maxInputLevel ForAl l Channel s = currentLevel
-}
-The Audi oChannel  structure defines two stored type properties to support i ts functional i ty.
-The fi rst, threshol dLevel , defines the maximum threshold value an audio level  can take. Thi s
-i s a constant value of 10 for al l  Audi oChannel  instances. If an audio signal  comes in wi th a
-higher value than 10, i t wi l l  be capped to thi s threshold value (as described below).
-The second type property i s a variable stored property cal led maxInputLevel ForAl l Channel s. Thi s
-keeps track of the maximum input value that has been received by any Audi oChannel
-instance. It starts wi th an ini tial  value of 0.
-The Audi oChannel  structure al so defines a stored instance property cal led currentLevel , whi ch
-represents the channel ’s current audio level  on a scale of 0 to 10.
-The currentLevel  property has a di dSet property observer to check the value of currentLevel
-whenever i t i s set. Thi s observer performs two checks:
-If the new value of currentLevel  i s greater than the al lowed threshol dLevel , the property
-observer caps currentLevel  to threshol dLevel .
-If the new value of currentLevel  (after any capping) i s higher than any value
-N O T E
-In the fi rst of these tw o checks,  the di dSet observer sets currentLevel  to a di fferent val ue.  T hi s does not,
-how ever,  cause the observer to be cal l ed agai n.
-You can use the Audi oChannel  structure to create two new audio channel s cal led l eftChannel  and
-ri ghtChannel , to represent the audio level s of a stereo sound system:
-var l eftChannel  = Audi oChannel ()
-var ri ghtChannel  = Audi oChannel ()
-If you set the currentLevel  of the left channel  to 7, you can see that the maxInputLevel ForAl l Channel s
-type property i s updated to equal  7:
-l eftChannel . currentLevel  = 7
-pri ntl n(l eftChannel . currentLevel )
-// pri nts "7"
-pri ntl n(Audi oChannel .maxInputLevel ForAl l Channel s)
-// pri nts "7"
-If you try to set the currentLevel  of the right channel  to 11, you can see that the right
-channel ’s currentLevel  property i s capped to the maximum value of 10, and the
-maxInputLevel ForAl l Channel s type property i s updated to equal  10:
-ri ghtChannel . currentLevel  = 11
-pri ntl n(ri ghtChannel . currentLevel )
-// pri nts "10"
-pri ntl n(Audi oChannel .maxInputLevel ForAl l Channel s)
-// pri nts "10"
+The AudioChannel structure defines two stored type properties to support its functionality. The first, thresholdLevel, defines the maximum threshold value an audio level can take. This is a constant value of 10 for all AudioChannel instances. If an audio signal comes in with a higher value than 10, it will be capped to this threshold value (as described below).
+
+The second type property is a variable stored property called maxInputLevelForAllChannels. This keeps track of the maximum input value that has been received by any AudioChannel instance. It starts with an initial value of 0.
+
+The AudioChannel structure also defines a stored instance property called currentLevel, which represents the channel’s current audio level on a scale of 0 to 10.
+
+The currentLevel property has a didSet property observer to check the value of currentLevel whenever it is set. This observer performs two checks:
+
+* If the new value of currentLevel is greater than the allowed thresholdLevel, the property observer caps currentLevel to thresholdLevel.
+* If the new value of currentLevel (after any capping) is higher than any value previously received by any AudioChannel instance, the property observer stores the new currentLevel value in the maxInputLevelForAllChannels static property.
+
+>NOTE
+In the first of these two checks, the didSet observer sets currentLevel to a different value. This does not, however, cause the observer to be called again.
+
+You can use the AudioChannel structure to create two new audio channels called leftChannel and rightChannel, to represent the audio levels of a stereo sound system:
+
+```
+var leftChannel = AudioChannel()
+var rightChannel = AudioChannel()
+```
+
+If you set the currentLevel of the left channel to 7, you can see that the maxInputLevelForAllChannels type property is updated to equal 7:
+
+```
+leftChannel.currentLevel = 7
+println(leftChannel.currentLevel)
+// prints "7"
+println(AudioChannel.maxInputLevelForAllChannels)
+// prints "7"
+```
+
+If you try to set the currentLevel of the right channel to 11, you can see that the right channel’s currentLevel property is capped to the maximum value of 10, and the maxInputLevelForAllChannels type property is updated to equal 10:
+
+```
+rightChannel.currentLevel = 11
+println(rightChannel.currentLevel)
+// prints "10"
+println(AudioChannel.maxInputLevelForAllChannels)
+// prints "10"
+```
