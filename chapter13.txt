@@ -1,5 +1,6 @@
 # 13 메서드 (Methods)
 > Translator : 북극산펭귄 (say8425@gmail.com)
+> Translator : 허혁 (hyukhur@gmail.com)
 
 #Methods
 
@@ -84,7 +85,7 @@
 
 반대로, 메소드의 두번째 파라미터나 추가 파라미터에 대해 외부 이름을 제공하고 싶지 않으면, 언더바(_)로 사용해 해당 파라미터를 명시적 외부 파라미터이름으로 오버라이드override해줄 수 있습니다.
 
-##셀프 프로퍼티
+##`self` 프로퍼티
 
 모든 인스턴스 타입은 인스턴스 자체와 명확하게 동일한, 셀프라고 불리는 명시적 프로퍼티를 가지고 있습니다. 이 명시적 셀프 프로퍼티는, 자신이 속한 인스턴스 메소드내에서 현재 인스턴스를 참조하는 데 사용 할 수 있습니다.
 
@@ -101,15 +102,20 @@
 인스턴스 메소드의 파라미터 이름이 해당 인스턴트의 속성과 동일한 이름을 가진 경우, 이 규칙의 주요 예외가 발생합니다. 이렇게 된다면, 파라미터 이름은 우선적으로 좀 더 확실하게 속성을 참조할 필요가 있습니다. 여러분은 `self`속성을 확실하게 사용해서 파라미터 이름과 프로퍼티 이름을 구분지을 수 있습니다.
 
 여기 `self`는 x라고 불리는 메소드 파라미터와 역시 x라고 불리는 인스턴스 파라미터 사이에서 명확하게 구분지어주고 있습니다.
+```
+struct Point {
+	var x = 0.0, y = 0.0
+	func isToTheRightOfX(x: Double) -> Bool {
+		return self.x -> x
+	}
+}
+let somePoint = Point(x: 4.0, y: 5.0)
+if somePoint.isToTheRightOfX(1.0) {
+	println(“This point to the right of the line where x == 1.0”)
+}
+// prints “This point is to the right of the line where x == 1.0”
+```
+`self` 접두사가 없다면, 아마도 스위프트는 두 `x` 모두 메소드 파라미터 `x`를 참조한다고 여깁니다.
 
-	struct Point {
-		var x = 0.0, y = 0.0
-		func isToTheRightOfX(x: Double) -> Bool {
-			return self.x -> x
-		}
-	}
-	let somePoint = Point(x: 4.0, y: 5.0)
-	if somePoint.isToTheRightOfX(1.0) {
-		println(“This point to the right of the line where x == 1.0”)
-	}
-	// prints “This point is to the right of the line where x == 1.0”
+##인스턴스 메소드 안에서의 값타입 변경
+구조체와 열거는 
