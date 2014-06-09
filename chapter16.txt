@@ -1,11 +1,10 @@
 # 16 초기화 (Intialization)
 > Translator : Quartet ( ungsik.yun@gmail.com )
 
-Initialization is the process of preparing an instance of a class, structure, or enumeration for use. This process involves setting an initial value for each stored property on that instance and performing any other setup or initialization that is required before the new instance is ready to for use.
+_초기화_는 클래스, 구조체, 또는 열거형의 인스턴스를 사용하기 위한 준비 과정입니다. 이 과정은 해당 인스턴스의 각각의 저장된 속성의 초기값을 설정하는 것과 그 외의 다른 설정 또는 새 인스턴스를 사용하기 전에 필요한 초기화를 합니다. 
+이 초기화 과정을 이니셜라이저(initializer)를 정의함으로서 구현할 수 있습니다. 이니셜라이저는 특정 타입의 새 인스턴스를 만들때 호출될 수 있는 특수 메소드입니다. 다른 오브젝티브 C의 이니셜라이저와는 달리 스위프트의 이니셜라이저는 값을 반환하지 않습니다. 이니셜라이저의 주 역할은 새 인스턴스가 처음 사용되기 전에 잘못된 곳이 없이 초기화가 되었는지 보장하는 것입니다.
+또한 클래스 타입의 인스턴스는 디이니셜라이저(deinitializer)를 정의 할 수 있습니다. 디이니셜라이저는 할당 해제되기 바로 직전에 맞춤 정리를 수행합니다. 디이니셜라이저에 대해 더 많은 정보를 원하시면 **Deinitialization**을 보세요.
 
-You implement this initialization process by defining initializers, which are like special methods that can be called to create a new instance of a particular type. Unlike Objective-C initializers, Swift initializers do not return a value. Their primary role is to ensure that new instances of a type are correctly initialized before they are used for the first time.
-
-Instances of class types can also implement a deinitializer, which performs any custom cleanup just before an instance of that class is deallocated. For more information about deinitializers, see Deinitialization.
 
 ## Setting Initial Values for Stored Properties
 
