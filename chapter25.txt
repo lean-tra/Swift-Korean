@@ -102,7 +102,7 @@ UInt8 정수들은 8개의 비트를 가지며, 0에서부터 255까지의 임�
 3:let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent is 0x66, or 102
 4:let blueComponent = pink & 0x0000FF           // blueComponent is 0x99, or 153
 
-이 예제는 핑크색에 대한 Cascading Style Sheets 색 값을 저장하기 위해 pink로 불리우는 UInt32 타입의 상수를 선언합니다. CSS 컬러 값 #CC6699는 Swift의 16진수 표현으로 0xCC6699가 됩니다. 이 색깔은 비트 AND 연산자(&)와 비트 오른쪽 이동 연산자(>>)를 사용하여 빨간색 (CC), 녹색(66), 파란색 (99) 요소들로 나눌 수 있습니다..
+이 예제는 핑크색에 대한 Cascading Style Sheets 색 값을 저장하기 위해 pink로 불리우는 UInt32 타입의 상수를 선언합니다. CSS 컬러 값 #CC6699는 Swift의 16진수 표현으로 0xCC6699가 됩니다. 이 색깔은 비트 AND 연산자(&)와 비트 오른쪽 쉬프트 연산자(>>)를 사용하여 빨간색 (CC), 녹색(66), 파란색 (99) 요소들로 나눌 수 있습니다..
 
 빨간색 요소는 숫자 0xCC6699와 0xFF0000사이에 비트 AND 연산을 수행하므로써 얻어집니다. 6699를 무시하기 위해서 그리고 결과에서 0xCC0000를 남기기 위해서, 0xFF0000에서의 0은 0xCC6699의 두번째와 세번째 바이트를 효과적으로 가려줍니다.(mask)
 
