@@ -235,7 +235,7 @@ The center property is then set to a new value of (15, 15), which moves the squa
 
 그 다음엔 center 속성을 (15,15)로 변경한다. 이것은 사각형을 아래 도표 속의 우상단에 있는 오렌지 사각형의 위치로 이동시킨다. center 속성에 값을 지정하게 되면 setter를 호출하게 되는데, 이것은 x, y 저장속성을 함께 변경시켜, 사각형이 새로운 위치로 이동하도록 만든다.
 
-[이미지 삽입:파란사각형, 오렌지사각형]
+https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png
 
 # Shorthand Setter Declaration
 
