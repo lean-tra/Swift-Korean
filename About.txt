@@ -2,6 +2,8 @@
 **“Apple Inc. Copyright © 2014 Apple Inc. All rights reserved.”** 
 This is a [The Swift Programming Language](https://developer.apple.com/swift/) guide documentation translation project.
 
+	저작권 관련 이슈로 잠시 닫았습니다. 현재 애플에 메일을 보낸 상태이며, 공식 답변을 받고 난뒤 재오픈 하겠습니다. (프로젝트에 참여하시면 작업중인 번역물을 보실 수 있습니다.) 
+
 _This project is **never used for commercial purposes**. 
 By translating "The Swift Programming Language" we want to help a lot of korean learners who may otherwise struggle to understand it._
 
