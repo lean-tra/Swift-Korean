@@ -29,14 +29,13 @@ println("The default temperature is \(f.temperature)° Fahrenheit")
 ```
 이 구조체는 파라메터가 없는 단일 이니셜라이저 `init`을 정의합니다. 이 이니셜라이져는 저장된 온도값을  화씨 단위로 표현했을때의 물의 어는점인 32.0으로 초기화합니다.
 
-### Default Property Values
-
-You can set the initial value of a stored property from within an initializer, as shown above. Alternatively, specify a default property value as part of the property’s declaration. You specify a default property value by assigning an initial value to the property when it is defined.
+### 기본 속성 값
+위에 보인 것처럼 이니셜라이저 안에서 저장 속성의 초기값을 설정할 수 있습니다. 또 다른 방법은, 속성 선언의 일부로 기본 속성 값을 지정하는 것입니다. 속성을 정의할때 초기 값을 속성에 할당 하는 것으로 기본 속성 값을 지정 할 수 있습니다.
 
 >NOTE
-If a property always takes the same initial value, provide a default value rather than setting a value within an initializer. The end result is the same, but the default value ties the property’s initialization more closely to its declaration. It makes for shorter, clearer initializers and enables you to infer the type of the property from its default value. The default value also makes it easier for you to take advantage of default initializers and initializer inheritance, as described later in this chapter.
+만약 속성이 언제나 똑같은 초기값을 가진다면, 이니셜라이저 안에서 값을 설정하기보다는 기본 값을 주는 것이 낫습니다. 결과적으로는 같지만, 기본값이 속성의 선언에 더 근접해서 속성의 초기화를 합니다. 이로써 더 짧고 명확한 이니셜라이저를 작성할 수 있게 하고, 기본 값에서 속성의 타입을 개발자가 유추할 수 있게 합니다. 또한 기본값은 이 장의 뒤에서 설명되겠지만, 기본 이니셜라이저의 장점을 취하는 것과 이니셜라이저 상속을 쉽게 합니다.
 
-You can write the Fahrenheit structure from above in a simpler form by providing a default value for its temperature property at the point that the property is declared:
+`temperatur` 속성을 선언할때 기본값을 제공하는 것을 통해, 위해서 보인 단순한 형태로 `Fahrenheit` 구조체를 다시 작성 할 수 있습니다.
 ```
 struct Fahrenheit {
     var temperature = 32.0
