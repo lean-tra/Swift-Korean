@@ -1,87 +1,151 @@
-# 12 속성 (Properties)
-> Translator : 이름 (메일주소)
+## 12 속성 (Properties)
+> Translator : mango (minkyu.shim@gmail.com)
 
-Properties
-Properties associate values wi th a parti cular class, structure, or enumeration. Stored
+Properties associate values with a particular class, structure, or enumeration. Stored
 properties store constant and variable values as part of an instance, whereas computed
-properties cal culate (rather than store) a value. Computed properties are provided by
+properties calculate (rather than store) a value. Computed properties are provided by
 classes, structures, and enumerations. Stored properties are provided only by classes and
 structures.
-Stored and computed properties are usual ly associated wi th instances of a parti cular
-type. However, properties can al so be associated wi th the type i tsel f. Such properties are
+
+속성은 특정 클래스, 구조체(structure), 혹은 열거형(Enumeration)과 값들을 연결해준다. 
+저장속성(Stored property)는 상수나 변수 값을 인스턴스의 일부로 저장한다.
+계산속성(Computed property)는 값을 그냥 저장하는 것이 아니라 계산한다. 
+계산속성은 클래스나 구조체 그리고 열거형에 의해 제공된다. 
+저장속성는 클래스와 구조체에 의해서만 제공된다.
+
+Stored and computed properties are usually associated with instances of a particular
+type. However, properties can also be associated with the type itself. Such properties are
 known as type properties.
-In addi tion, you can define property observers to moni tor changes in a property’s value,
-whi ch you can respond to wi th custom actions. Property observers can be added to stored
-properties you define yoursel f, and al so to properties that a subclass inheri ts from i ts
+
+저장속성과 계산속성은 일반적으로 특정 타입의 인스턴스와 연결된다. 하지만, 속성은 타입 자체와 연결될수도 있는데, 이런 속성을 타입 속성(type property)라고 한다.
+
+In addition, you can define property observers to monitor changes in a property’s value,
+which you can respond to with custom actions. Property observers can be added to stored
+properties you define yourself, and also to properties that a subclass inherits from i ts
 superclass.
-Stored Properties
-In i ts simplest form, a stored property i s a constant or variable that i s stored as part of an
-instance of a parti cular class or structure. Stored properties can be ei ther variable stored
+
+덧붙여, 프로그래머는 속성값의 변경을 모니터링하기 위해 속성 관찰/감시자(property observer)를 정의할 수 있다. 이것은 프로그래머가 속성값의 변경에 직접 정의한 동작들로 대응할 수 있게 해준다. 속성감시자/관찰자는 프로그래머가 직접 정의한 저장속성이나 부모클래스에서 상속받은 속성들에 추가할 수 있다.
+
+# 저장속성 (Stored Property)
+
+In its simplest form, a stored property is a constant or variable that is stored as part of an
+instance of a particular class or structure. Stored properties can be either variable stored
 properties (introduced by the var keyword) or constant stored properties (introduced by
-the l et keyword).
-You can provide a defaul t value for a stored property as part of i ts defini tion, as described
-in Defaul t Property Values. You can al so set and modi fy the ini tial  value for a stored
-property during ini tial i zation. Thi s i s true even for constant stored properties, as
-described in Modi fying Constant Properties During Ini tial i zation.
-The example below defines a structure cal led Fi xedLengthRange, whi ch describes a range of
+the let keyword).
+
+저장 속성은 가장 단순한 형태일때 특정 클래스와 구조체의 인스턴스에 저장되는 상수나 변수다. var 키워드로 선언(introduced)되면, 변수저장속성(variable stored property). let 키워드로 선언되면 상수저장속성(constant stored property)이라 한다.
+
+You can provide a default value for a stored property as part of its definition, as described
+in Default Property Values. You can also set and modify the initial value for a stored
+property during initialization. This is true even for constant stored properties, as
+described in Modifying Constant Properties During Initialization.
+
+프로그래머는 저장 속성을 정의할 때 초기값을 지정할 수 있다. 이에 대해서는 "초기속성값" 챕터에서 설명되어있다. 저장된 속성의 초기값을 수정할 수도 있는데, 심지어 상수 저장속성마저도 수정이 가능하다. 이에 대해서는 "초기화시 상수속성수정/변경하기" 챕터에 설명되어있다.
+
+The example below defines a structure called FixedLengthRange, whi ch describes a range of
 integers whose range length cannot be changed once i t i s created:
-struct Fi xedLengthRange {
-var fi rstVal ue: Int
-l et l ength: Int
+
+아래 예제는 FixedLengthRange라는 구조체를 정의한다. 이 구조체는 특정 범위의 정수들을 의미하는데, 이 범위는 한번 생성되면 수정되지 않는다.
+
+```
+struct FixedLengthRange {
+    var firstValue: Int
+    let length: Int
 }
-var rangeOfT hreeItems = Fi xedLengthRange(fi rstVal ue: 0,  l ength: 3)
-// the range represents i nteger val ues 0,  1,  and 2
-rangeOfT hreeItems. fi rstVal ue = 6
-// the range now  represents i nteger val ues 6,  7,  and 8
-Instances of Fi xedLengthRange have a variable stored property cal led fi rstVal ue and a constant
-stored property cal led l ength. In the example above, l ength i s ini tial i zed when the new range
+
+var rangeOfT hreeItems = FixedLengthRange(firstValue: 0,  length: 3)
+
+// the range represents integer values 0,  1,  and 2
+// 이 구조체의 범위는 0, 1, 2 이다.
+
+rangeOfThreeItems.firstValue = 6
+
+// the range now  represents integer val ues 6,  7,  and 8
+// 구조체의 범위는 이제 6, 7, 8 이다.
+```
+
+Instances of FixedLengthRange have a variable stored property called firstValue and a constant
+stored property called l ength. In the example above, l ength i s ini tial i zed when the new range
 i s created and cannot be changed thereafter, because i t i s a constant property.
-Stored Properties of Constant Structure Instances
+
+FixedLengthRange 구조체의 인스턴스들은 변수저장속성 firstValue와 상수저장속성 length를 갖는다. 위의 예제에서는 length 속성은 상수속성이기 때문에 구조체가 생성될때 최초로 지정되고, 이후로는 변경되지 않는다. 
+
+# Stored Properties of Constant Structure Instances
+# 상수 구조체 인스턴스의 저장속성
+
 If you create an instance of a structure and assign that instance to a constant, you cannot
-modi fy the instance’s properties, even i f they were declared as variable properties:
-l et rangeOfFourItems = Fi xedLengthRange(fi rstVal ue: 0,  l ength: 4)
-// thi s range represents i nteger val ues 0,  1,  2,  and 3
-rangeOfFourItems. fi rstVal ue = 6
-// thi s w i l l  report an error,  even thought fi rstVal ue i s a vari abl e property
-Because rangeOfFourItems i s declared as a constant (wi th the l et keyword), i t i s not possible
-to change i ts fi rstVal ue property, even though fi rstVal ue i s a variable property.
+modify the instance’s properties, even if they were declared as variable properties:
+
+상수로 선언된 구조체 인스턴스의 속성들은 변수속성이더라도 수정되지 않는다. 
+
+```swift
+let rangeOfFourItems = FixedLengthRange(firstVal ue: 0,  length: 4)
+// 이 구조체의 범위는 0, 1, 2, 3 이다.
+rangeOfFourItems.firstValue = 6
+// firstValue는 변수속성이지만 여기서 에러가 난다. 
+```
+Because rangeOfFourItems is declared as a constant (with the let keyword), it is not possible
+to change its firstValue property, even though firstVal ue i s a variable property.
 Thi s behavior i s due to structures being value types. When an instance of a value type i s
 marked as a constant, so are al l  of i ts properties.
 The same i s not true for classes, whi ch are reference types. If you assign an instance of a
 reference type to a constant, you can sti l l  change that instance’s variable properties.
-Lazy Stored Properties
+
+rangeOfFourItems 인스턴스는 let 키워드를 통해 상수로 선언되었으므로 그 속성인 firstValue는 비록 변수속성이더라도  수정할 수 없다.
+이러한 동작은 구조체가 값타입(value type)이기 때문인데, 값타입의 인스턴스가 상수로 선언되면 그 속성들도 모두 상수가 된다.
+이와 비교해서, 참조타입(reference type)인 클래스는 다르게 동작한다. 참조타입의 인스턴스를 상수로 선언하더라고 그 변수 속성들은 여전히 수정이 가능하다.
+
+# 게으른 저장속성(Lazy Stored Property)
+
 A lazy stored property i s a property whose ini tial  value i s not cal culated unti l  the fi rst time
 i t i s used. You indi cate a lazy stored property by wri ting the @l azy attribute before i ts
 declaration.
+
+게으른 저장속성은 그 초기값이 최초로 사용되기전까지는 계산되지 않는다. 프로그래머는 선언시에 @lazy attribute라고 써줌으로써 게으른 저장속성을 표시할 수 있다. 
+
 N O T E
-Y ou must al w ays decl are a l azy property as a vari abl e (w i th the var keyw ord),  because i ts i ni ti al  val ue may not
-be retri eved unti l  after i nstance i ni ti al i zati on compl etes.  Constant properti es must al w ays have a val ue before
-i ni ti al i zati on compl etes,  and therefore cannot be decl ared as l azy.
+
+Y ou must al w ays decl are a l azy property as a vari abl e (w i th the var keyw ord),  because its initial  value may not
+be retrieved until  after instance initialization completes.  Constant properties must always have a value before
+initialization completes,  and therefore cannot be declared as lazy.
 Lazy properties are useful  when the ini tial  value for a property i s dependent on outside
 factors whose values are not known unti l  after an instance’s ini tial i zation i s complete.
 Lazy properties are al so useful  when the ini tial  value for a property requi res complex or
 computational ly expensive setup that should not be performed unless or unti l  i t i s
 needed.
+
+게으론 속성은 초기화(initialization)가 끝난 뒤에도 초기값을 꺼낼 수 없을지도 모르기 때문에 언제나 var 키워드를 통해 변수로 선언되어야한다. 반면, 상수 속성은 초기화가 끝나기 전에 반드시 값을 가져야하기 때문에 게으른 속성으로 선언될 수 없다. 
+게으른 속성은 속성의 초기값이 객체의 초기화가 끝날때까지도 값을 알 수 없는 외부 변수에 의존하고 있을때 유용하다. 
+게으른 속성은 속성의 값이 매우 복잡하거나 리소스를 많이 사용하는 (expensive) 계산이어서 필요한 경우가 아니면 수행되지 말아야 하는 경우에도 역시 유용하다. 
+
 The example below uses a lazy stored property to avoid unnecessary ini tial i zation of a
 complex class. Thi s example defines two classes cal led DataImporter and DataManager, nei ther
 of whi ch i s shown in ful l :
-cl ass DataImporter {
+
+아래 예시는 복잡한 클래스의 불필요한 초기화를 피하기 위해 게으른 저장속성을 사용하고 있다. 예시된 코드는 DataImporter 클래스와 DataManager 클래스 정의의 일부분이다. 
+
+```swift
+class DataImporter {
 /*
-DataImporter i s a cl ass to i mport data from an external  fi l e.
-T he cl ass i s assumed to take a non- tri vi al  amount of ti me to i ni ti al i ze.
+DataImporter는 외부 화일로부터 데이터를 가져오는 클래스로 
+초기화에 오랜 시간이 걸린다고 가정하자.
 */
-var fi l eName = "data. txt"
-// the DataImporter cl ass w oul d provi de data i mporti ng functi onal i ty here
+var fileName = "data. txt"
+
+// 이 곳에 DataImporter 클래스의 데이터 가져오기 기능이 구현된다.
 }
+
 DataManager {
-@l azy var i mporter = DataImporter()
-ar data = Stri ng[]()
-/ the DataManager cl ass w oul d provi de data management functi onal i ty here
+@lazy var importer = DataImporter()
+ar data = String[]()
+// DataManager 클래스의 데이터 관리 기능은 여기에 구현된다.
 manager = DataManager()
-ager. data += "Some data"
-ager. data += "Some more data"
-e DataImporter i nstance for the i mporter property has not yet been created
-The DataManager class has a stored property cal led data, whi ch i s ini tial i zed wi th a new,
+ager.data += "Some data"
+ager.data += "Some more data"
+// importer 속성에 할당된 DataImporter 인스턴스는 아직 생성되지 않았다.
+```
+
+The DataManager class has a stored property called data, whi ch i s ini tial i zed wi th a new,
 empty array of Stri ng values. Al though the rest of i ts functional i ty i s not shown, the purpose
 of thi s DataManager class i s to manage and provide access to thi s array of Stri ng data.
 Part of the functional i ty of the DataManager class i s the abi l i ty to import data from a fi le.
