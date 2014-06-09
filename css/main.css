@@ -14,10 +14,22 @@
    ========================================================================== */
 
 .nav-sidebar-fixed {
-    position: fixed;
-    margin-top: 10px;
+    display: none;
 }
 
 .nav > li > a.nav-padding-flat {
     padding: 0px !important;
+}
+
+@media (min-width: 768px) {
+    .nav-sidebar-fixed {
+        display: block;
+        position: fixed;
+        margin-top: 10px;
+        width: 200px;
+    }
+
+    #main-content {
+        margin-left: 220px;
+    }
 }
