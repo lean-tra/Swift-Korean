@@ -212,49 +212,45 @@ This example defines three structures for working with geometric shapes:
 * Size encapsulates a width and a height.
 * Rect defines a rectangle by an origin point and a size.
 
-The Rect structure al so provides a computed property cal led center. The current center
+The Rect structure also provides a computed property called center. The current center position of a Rect can always be determined from its origin and size, and so you don’t need to store the center point as an explicit Point value. Instead, Rect defines a custom getter and setter for a computed variable called center, to enable you to work with the rectangle’s center as if it were a real stored property.
 
+The preceding example creates a new Rect variable called square. The square variable is initialized with an origin point of (0, 0), and a width and height of 10. This square is represented by the blue square in the diagram below.
 
-posi tion of a Rect can always be determined from i ts ori gi n and si ze, and so you don’t need to
-store the center point as an expl i ci t Poi nt value. Instead, Rect defines a custom getter and
-setter for a computed variable cal led center, to enable you to work wi th the rectangle’s
-center as i f i t were a real  stored property.
-The preceding example creates a new Rect variable cal led square. The square variable i s
-ini tial i zed wi th an origin point of (0,  0), and a width and height of 10. Thi s square i s
-represented by the blue square in the diagram below.
-The square variable’s center property i s then accessed through dot syntax (square. center), whi ch
-causes the getter for center to be cal led, to retrieve the current property value. Rather than
-returning an exi sting value, the getter actual ly cal culates and returns a new Poi nt to
-represent the center of the square. As can be seen above, the getter correctly returns a
-center point of (5,  5).
-The center property i s then set to a new value of (15,  15), whi ch moves the square up and to
-the right, to the new posi tion shown by the orange square in the diagram below. Setting
-the center property cal l s the setter for center, whi ch modi fies the x and y values of the stored
-ori gi n property, and moves the square to i ts new posi tion.
-Shorthand Setter Declaration
-If a computed property’s setter does not define a name for the new value to be set, a
-defaul t name of new Val ue i s used. Here’s an al ternative version of the Rect structure, whi ch
-takes advantage of thi s shorthand notation:
-struct Al ternati veRect {
-var ori gi n = Poi nt()
-var si ze = Si ze()
-var center: Poi nt {
-get {
-l et centerX = ori gi n. x + (si ze.w i dth / 2)
-l et centerY  = ori gi n. y + (si ze. hei ght / 2)
-return Poi nt(x: centerX,  y: centerY )
+The square variable’s center property is then accessed through dot syntax (square.center), which causes the getter for center to be called, to retrieve the current property value. Rather than returning an existing value, the getter actually calculates and returns a new Point to represent the center of the square. As can be seen above, the getter correctly returns a center point of (5, 5).
+
+The center property is then set to a new value of (15, 15), which moves the square up and to the right, to the new position shown by the orange square in the diagram below. Setting the center property calls the setter for center, which modifies the x and y values of the stored origin property, and moves the square to its new position.
+
+[이미지 삽입]
+
+# Shorthand Setter Declaration
+
+If a computed property’s setter does not define a name for the new value to be set, a default name of newValue is used. Here’s an alternative version of the Rect structure, which takes advantage of this shorthand notation:
+
+```
+struct AlternativeRect {
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+    get {
+        let centerX = origin.x + (size.width / 2)
+        let centerY = origin.y + (size.height / 2)
+        return Point(x: centerX, y: centerY)
+    }
+    set {
+        origin.x = newValue.x - (size.width / 2)
+        origin.y = newValue.y - (size.height / 2)
+    }
+    }
 }
-et {
-ori gi n. x = new Val ue. x -  (si ze.w i dth / 2)
-ori gi n. y = new Val ue. y -  (si ze. hei ght / 2)
-Read-Only Computed Properties
-A computed property wi th a getter but no setter i s known as a read-only computed
-property. A read-only computed property always returns a value, and can be accessed
-through dot syntax, but cannot be set to a di fferent value.
-N O T E
-Y ou must decl are computed properti es—i ncl udi ng read-onl y computed properti es—as vari abl e properti es w i th
-the var keyw ord,  because thei r val ue i s not fi xed.  T he l et keyw ord i s onl y used for constant properti es,  to
-i ndi cate that thei r val ues cannot be changed once they are set as part of i nstance i ni ti al i zati on.
+```
+
+# Read-Only Computed Properties
+
+A computed property with a getter but no setter is known as a read-only computed property. A read-only computed property always returns a value, and can be accessed through dot syntax, but cannot be set to a different value.
+
+> N O T E
+> You must declare computed properties—including read-only computed properties—as variable properties with the var keyword, because their value is not fixed. The let keyword is only used for constant properties, to indicate that their values cannot be changed once they are set as part of instance initialization.
+
 You can simpl i fy the declaration of a read-only computed property by removing the get
 keyword and i ts braces:
 struct Cuboi d {
