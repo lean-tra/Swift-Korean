@@ -65,18 +65,16 @@ let freezingPointOfWater = Celsius(fromKelvin: 273.15)
 ```
 첫번째 이니셜라이저는 하나의 초기화 파라메터 `fromFahrenehit`를 외부 이름으로 가지고 `fahrenheit`를 지역 이름으로 가집니다. 두번째 이니셜라이저는 하나의 초기화 파라메터 `fromKelvin`을 외부 이름으로 가지고 `kelvin`을 지	역 이름으로 가집니다. 두 이니셜라이저 모두 하나의 인자(argument)를 섭씨 단위로 변환해 `temperatureInCelsius` 라는 속성에 값을 저장합니다.
 
-### Local and External Parameter Names
-
-As with function and method parameters, initialization parameters can have both a local name for use within the initializer’s body and an external name for use when calling the initializer.
-
-However, initializers do not have an identifying function name before their parentheses in the way that functions and methods do. Therefore, the names and types of an initializer’s parameters play a particularly important role in identifying which initializer should be called. Because of this, Swift provides an automatic external name for every parameter in an initializer if you don’t provide an external name yourself. This automatic external name is the same as the local name, as if you had written a hash symbol before every initialization parameter.
+### 지역 파라메터 이름과 외부 파라메터 이름
+함수나 메소드의 파라메터처럼, 초기화 파라메터 또한 이니셜라이저의 안에서 쓰일 지역 이름과 이니셜라이저를 호출할때 쓸 외부 이름을 가질 수 있습니다.
+하지만 이니셜라이저는 함수나 메소드처럼 괄호 앞에 있는 함수 이름으로 식별 가능한 이름을 가지고 있지 않습니다. 그러므로 이니셜라이저의 파라메터가 가지는 이름과 타입들을 어떤 이니셜라이저가 호출되는지 확인하는 특별히 중요한 역할을 합니다. 이 때문에 시위프트는 이니셜라이저의 사용자가 외부 이름을 지정하지 않은 모든 파라메터에 대해 자동 외부 이름을 부여합니다. 이 자동 외부 이름은 모든 초기화 파라메터에 해쉬 심볼(`#`)을 붙인 것처럼, 지역 이름과 똑같이 지정 됩니다.
 
 >NOTE
-If you do not want to provide an external name for a parameter in an initializer, provide an underscore (_) as an explicit external name for that parameter to override the default behavior described above.
+만약 이니셜라이저의 파라메터의 외부 이름을 지정하고 싶지 않다면, 언더스코어 (`_`)를 해당 파라메터의 명시적 외부 이름으로 하여 위에 설명된 기본 행동을 덮어 씌우십시오.
 
-The following example defines a structure called Color, with three constant properties called red, green, and blue. These properties store a value between 0.0 and 1.0 to indicate the amount of red, green, and blue in the color.
+다음 예제는 `red`, `green`, `blue`를 상수 속성으로 가지는 `Color` 구조체를 정의합니다. 이 속성들은 `0.0` 부터 `1.0` 사이의 값을 저장하여 색안의 빨강, 초록, 파랑의 양을 나타냅니다.
 
-Color provides an initializer with three appropriately named parameters of type Double:
+`Color` 구조체는 `Double` 타입의 적절하게 이름지어진 파라메터 3개를 가지는 이니셜라이저를 제공합니다.
 ```
 struct Color {
     let red = 0.0, green = 0.0, blue = 0.0
@@ -87,11 +85,11 @@ struct Color {
     }
 }
 ```
-Whenever you create a new Color instance, you call its initializer using external names for each of the three color components:
+새 `Color` 인스턴스를 만들때, 색의 세가지 구성요수를 외부 이름으로 사용하여 이니셜라이저를 호출 할 수 있습니다.
 ```
 let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
 ```
-Note that it is not possible to call this initializer without using the external names. External names must always be used in an intializer if they are defined, and omitting them is a compile-time error:
+이니셜라이저를 호출할때 외부 이름을 사용하지 않고 호출 할 수 없음에 주의하십시오. 외부 이름은 이니셜라이저 안에 반드시 언제나 사용되어야 하며, 생략하게 되면 컴파일 타임 에러를 냅니다.
 ```
 let veryGreen = Color(0.0, 1.0, 0.0)
 // this reports a compile-time error - external names are required
