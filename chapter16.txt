@@ -165,20 +165,16 @@ struct Size {
 let twoByTwo = Size(width: 2.0, height: 2.0)
 ```
 
-## Initializer Delegation for Value Types
-
-Initializers can call other initializers to perform part of an instance’s initialization. This process, known as initializer delegation, avoids duplicating code across multiple initializers.
-
-The rules for how initializer delegation works, and for what forms of delegation are allowed, are different for value types and class types. Value types (structures and enumerations) do not support inheritance, and so their initializer delegation process is relatively simple, because they can only delegate to another initializer that they provide themselves. Classes, however, can inherit from other classes, as described in Inheritance. This means that classes have additional responsibilities for ensuring that all stored properties they inherit are assigned a suitable value during initialization. These responsibilities are described in Class Inheritance and Initialization below.
-
-For value types, you use self.init to refer to other initializers from the same value type when writing your own custom initializers. You can only call self.init from within an initializer.
-
-Note that if you define a custom initializer for a value type, you will no longer have access to the default initializer (or the memberwise structure initializer, if it is a structure) for that type. This constraint prevents a situation in which you provide a more complex initializer that performs additional essential setup is circumvented by someone accidentally using one of the automatic initializers instead.
-
+## 값 타입의 이니셜라이저 Delegation
+이니셜라이져는 인스턴스 초기화 수행의 일부로 다른 이니셜라이저를 호출 할 수 있습니다. 이 과정은 _이니셜라이저 델리게이션_이라 하며, 여러 이니셜라이저 사이의 중복 코드를 피할 수 있게 합니다.
+값 타입과 클래스 타입에 따라 이니셜라이져 델리게이션이 어떤 형태로 허용 되는가, 어떻게 작동하는지 그 규칙은 어떤가가 다릅니다. 구조체나 열거형과 같은 값 타입은 상속을 지원하지 않습니다. 그렇기에 이니셜라이저 델리게이션의 과정은 비교적 간단합니다. 그저 다른 이니셜라이저가 제공한 것만을 대리 수행(delegation)하면 되기 때문입니다. 하지만 클래스는 **상속**에서 설명한 것처럼, 다른 클래스에서 상속 받을 수 있습니다. 이는 곧 클래스는 상속 받은 저장 속성들이 초기화 과정중에 올바르게 할당 되었는지 보장해야 하는 추가적인 책임이 있다는 것을 뜻합니다. 이러한 책임은 밑의 **클래스 상속과 초기화**에 설명되어 있습니다.
+값 타입에서 사용자 정의 이니셜라이저를 작성할때, 다른 같은 타입의 다른 이니셜라이저를 참조하려면 `self.init`을 사용해야 합니다. 이니셜라이저 안에선 오직 `self.init`만 호출 할 수 있습니다.
+만약 값 타입의 사용자 정의 이니셜라이저를 정의한다면, 더 이상 해당 값 타입의 기본 이니셜라이저에 접근 할 수 없게 됩니다. (그게 구조체라면 멤버 단위 구조체 이니셜라이저도 포함합니다.) 
+이 제약으로 인해, 필수적인 설정을 하는 이니셜라이저 대신 의도치 않게 자동 기본 이니셜라이저를 실행함으로써일어 날 수 있는 문제를 방지합니다.
 >NOTE
-If you want your custom value type to be initializable with the default initializer and memberwise initializer, and also with your own custom initializers, write your custom initializers in an extension rather than as part of the value type’s original implementation. For more information, see Extensions.
+만약 사용자 정의 값 타입이 기본 이니셜라이저와 멤버 단위 이니셜라이저, 그리고 사용자 정의 이니셜라이저를 동시에 쓰길 원한다면 이니셜라이져를 값 타입의 원래 구현의 부분으로 작성하기 보다 확장(extension)으로 작성하십시오. 자세한 정보는 **확장**을 보세요.
 
-The following example defines a custom Rect structure to represent a geometric rectangle. The example requires two supporting structures called Size and Point, both of which provide default values of 0.0 for all of their properties:
+다음 예제는 사용자 정의 `Rect` 구조체를 정의하여 기하학적 사각형을 표현합니다. 이 예제는 `Size`와 `Point`, 두개의 지지(supporting) 구조체를 요구합니다. 두 구조체 모두 속성들의 기본값으로 `0,0`을 제공합니다.
 ```
 struct Size {
     var width = 0.0, height = 0.0
@@ -187,7 +183,7 @@ struct Point {
     var x = 0.0, y = 0.0
 }
 ```
-You can initialize the Rect structure below in one of three ways—by using its default zero-initialized origin and size property values, by providing a specific origin point and size, or by providing a specific center point and size. These initialization options are represented by three custom initializers that are part of the Rect structure’s definition:
+`Rect` 구조체는 세가지 방법중 하나로 초기화 될 수 있습니다. 기본값인 0으로 초기화된 `origin`과 `size` 속성 값을 이용하여, 특정 기점(origin point)과 사이즈를 제공하여, 특정 중앙점과 사이즈를 제공하여. 이 초기화 옵션들은 `Rect` 정의 안에서 사용자 정의 이니셜라이저로서 표현됩니다.
 ```
 struct Rect {
     var origin = Point()
@@ -204,27 +200,28 @@ struct Rect {
     }
 }
 ```
-The first Rect initializer, init(), is functionally the same as the default initializer that the structure would have received if it did not have its own custom initializers. This initializer has an empty body, represented by an empty pair of curly braces {}, and does not perfom any initialization. Calling this initializer returns a Rect instance whose origin and size properties are both initialized with the default values of Point(x: 0.0, y: 0.0) and Size(width: 0.0, height: 0.0) from their property definitions:
+첫번째 `Rect` 이니셜라이저인 `init()`은 기능적으로 사용자 정의 이니셜라이저를 가지지 않을때의 기본 이니셜라이저와 똑같습니다. 이 이니셜라이저는 빈 몸체를 가지며, 빈 중괄호 한쌍 `{}`으로 표현됩니다. 또한 아무런 초기화도 수행하지 않습니다. 이 이니셜라이져를 호출하면 `Rect` 인스턴스를 반환하며, 그 인스턴스의 `origin`과 `size`는 모두 속성에서 정의된 기본값인 `Point(x: 0.0, y:0,0)`과 `Size(width: 0.0, height: 0.0)`입니다.
 ```
 let basicRect = Rect()
 // basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 ```
-The second Rect initializer, init(origin:size:), is functionally the same as the memberwise initializer that the structure would have received if it did not have its own custom initializers. This initializer simply assigns the origin and size argument values to the appropriate stored properties:
+두번째 `Rect` 이니셜라이져인 `init(origin:size:)`은 기능적으로 사용자 정의 이니셜라이저를 가지지 않을때의 멤버 단위 이니셜라이져와 동일합니다. 이 이니셜라이져는 단순히 `origin`과 `size` 인수를 알맞은 저장 변수에 할당합니다.
 ```
 let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
     size: Size(width: 5.0, height: 5.0))
 // originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 ```
-The third Rect initializer, init(center:size:), is slightly more complex. It starts by calculating an appropriate origin point based on a center point and a size value. It then calls (or delegates) to the init(origin:size:) initializer, which stores the new origin and size values in the appropriate properties:
+세번째 `Rect` 이니셜라이저인 `init(center:size:)`은 조금 더 복잡합니다.  `center` 포인트와 `size`에서 계산한 적절한 기점에서 시작하게 됩니다. 그리고 나면 `init(origin:size:)` 이니셜라이져를 호출( 혹은 대리)합니다. 그 이니셜라이져는 알맞은 새 기점과 사이즈 값을 저장합니다.
 ```
 let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
     size: Size(width: 3.0, height: 3.0))
 // centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 ```
 The init(center:size:) initializer could have assigned the new values of origin and size to the appropriate properties itself. However, it is more convenient (and clearer in intent) for the init(center:size:) initializer to take advantage of an existing initializer that already provides exactly that functionality.
+`init(center:size:)` 이니셜라이저는 새 `origin`과 `size`값을 적절한 속성에 할당받게 할 수 있습니다. 하지만 `init(center:size:)` 이니셜라이저를 이용하는게 더 편하고 의도가 명확하며, 이미 있는 이니셜라이저가 제공하는 기능을 활용할 수 있는 장점이 있습니다.
 
 >NOTE
-For an alternative way to write this example without defining the init() and init(origin:size:) initializers yourself, see Extensions.
+`init()`과 `init(origin:size:)`을 작성하지 않고 위의 예제를 작성해보려면 **확장**을 보세요.
 
 ## Class Inheritance and Initialization
 
