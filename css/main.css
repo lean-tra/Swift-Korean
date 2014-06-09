@@ -18,6 +18,6 @@
     margin-top: 10px;
 }
 
-.nav > li > a {
+.nav > li > a.nav-padding-flat {
     padding: 0px !important;
 }

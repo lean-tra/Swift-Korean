@@ -22,6 +22,7 @@
                 continue;
             }
 
+            getNavBar(page);
             getSideNavigation(page);
         }
 
@@ -84,6 +85,33 @@
             });
     };
 
+    // Gets the nav bar dropdowns.
+    var getNavBar = function(page) {
+        if (page == undefined) {
+            return;
+        }
+
+        if (page.page == "index") {
+            return;
+        }
+
+        if (page.children != undefined) {
+            var dropdown = $("#dropdown-" + page.page);
+
+            var link = $("<a></a>").addClass("dropdown-toggle").attr({ "data-toggle": "dropdown", "href": "#" }).html(page.name + " <strong class=\"caret\"></strong>");
+            dropdown.append(link);
+
+            var ul = $("<ul></ul>").addClass("dropdown-menu");
+            for (var i in page.children) {
+                var p = page.children[i];
+                var l = $("<a></a>").attr("href", p.page).text(p.name);
+                var li = $("<li></li>").append(l);
+                ul.append(li);
+            }
+            dropdown.append(ul);
+        }
+    };
+
     // Gets the side navigation menus.
     var getSideNavigation = function (page) {
         if (page == undefined) {
@@ -120,6 +148,7 @@
             for (var i in page.children) {
                 var p = page.children[i];
                 var l = $("<a></a>")
+                    .addClass("nav-padding-flat")
                     .attr("href", p.page)
                     .text(p.name);
                 var li = $("<li></li>")
