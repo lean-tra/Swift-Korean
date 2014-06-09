@@ -95,11 +95,9 @@ let veryGreen = Color(0.0, 1.0, 0.0)
 // this reports a compile-time error - external names are required
 ```
 
-### Optional Property Types
-
-If your custom type has a stored property that is logically allowed to have “no value”—perhaps because its value cannot be set during initialization, or because it is allowed to have “no value” at some later point—declare the property with an optional type. Properties of optional type are automatically initialized with a value of nil, indicating that the property is deliberately intended to have “no value yet” during initialization.
-
-The following example defines a class called SurveyQuestion, with an optional String property called response:
+### 옵셔널 속성 타입
+만약 저장 속성이 논리적으로 "값 없음"을 갖는게 허용이 된다면 - 어쩌면 초기화 과정중에 설정이 될 수 없다거나, 어느 순간 "값 없음"을 갖는게 허용이 되거나 - 그 속성을 옵셔널 타입으로 선언하십시오. 옵셔널 타입 속성은 자동적으로 `nil` 값으로 초기화가 됩니다.  그렇게 함으로써 해당 속성은 의도된 "아직 값 없음"을 초기화 과정중에 가지게 됩니다.
+이어지는 예제는 `response:`를 속성으로 갖는 `SurveyQuestion` 클래스를 정의합니다.
 ```
 class SurveyQuestion {
     var text: String
@@ -117,6 +115,7 @@ cheeseQuestion.ask()
 cheeseQuestion.response = "Yes, I do like cheese."
 ```
 The response to a survey question cannot be known until it is asked, and so the response property is declared with a type of String?, or “optional String”. It is automatically assigned a default value of nil, meaning “no string yet”, when a new instance of SurveyQuestion is initialized.
+설문 조사의 대답은 설문을 하기 전까지 알 수 없습니다. 그래서 `response` 속성은 `String?` 타입 또는 "optinal `String`" 타입입니다. 이는 `SurveyQuestion`의 새 인트섵스가 초기화 되었을때 자동적으로 기본 값을 `nil`로 할당하여 "no string yet"을 뜻하게 됩니다.
 
 ### Modifying Constant Properties During Initialization
 
