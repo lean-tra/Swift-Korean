@@ -42,15 +42,12 @@ struct Fahrenheit {
 }
 ```
 
-## 맞춤 초기화
-You can customize the initialization process with input parameters and optional property types, or by modifying constant properties during initialization, as described in the following sections.
+## 사용자 정의 초기화
 이 섹션에서 설명할 것은, 입력 파라메터와 옵셔널 속성 타입을 이용하거나, 상수 속성을 초기화 과정중에 변경하는 것으로 초기화 과정을 사용자가 정의하는 것 입니다.
 
-### Initialization Parameters
-
-You can provide initialization parameters as part of an initializer’s definition, to define the types and names of values that customize the initialization process. Initialization parameters have the same capabilities and syntax as function and method parameters.
-
-The following example defines a structure called Celsius, which stores temperatures expressed in the Celsius scale. The Celsius structure implements two custom initializers called init(fromFahrenheit:) and init(fromKelvin:), which initialize a new instance of the structure with a value from a different temperature scale:
+### 초기화 파라메터
+사용자 정의 초기화의 타입들과 값의 이름들을 정의하기 위해 이니셜라이저의 정의중 일부분으로 _초기화 파라메터_를 제공할 수 있습니다. 초기화 파라메터는 함수나 메소드의 파라메터와 같은 기능과 문법을 가지고 있습니다.
+다음의 예제는 섭씨 단위로 온도를 표현하여 저장하는 `Celsius` 구조체를 정의합니다. `Celsius` 구조체는 `init(fromFahrenheit:)`과 `init(fromKelvin:)` 두개의 이니셜라이저를 구현하여 다른 온도 단위에서 값을 받아와 새 인스턴스를 초기화합니다.
 ```
 struct Celsius {
     var temperatureInCelsius: Double = 0.0
@@ -66,7 +63,7 @@ let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
 let freezingPointOfWater = Celsius(fromKelvin: 273.15)
 // freezingPointOfWater.temperatureInCelsius is 0.0
 ```
-The first initializer has a single initialization parameter with an external name of fromFahrenheit and a local name of fahrenheit. The second initializer has a single initialization parameter with an external name of fromKelvin and a local name of kelvin. Both initializers convert their single argument into a value in the Celsius scale and store this value in a property called temperatureInCelsius.
+첫번째 이니셜라이저는 하나의 초기화 파라메터 `fromFahrenehit`를 외부 이름으로 가지고 `fahrenheit`를 지역 이름으로 가집니다. 두번째 이니셜라이저는 하나의 초기화 파라메터 `fromKelvin`을 외부 이름으로 가지고 `kelvin`을 지	역 이름으로 가집니다. 두 이니셜라이저 모두 하나의 인자(argument)를 섭씨 단위로 변환해 `temperatureInCelsius` 라는 속성에 값을 저장합니다.
 
 ### Local and External Parameter Names
 
