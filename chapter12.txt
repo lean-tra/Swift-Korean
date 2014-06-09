@@ -166,11 +166,17 @@ println(manager.importer.fileName)
 
 If you have experience with Objective-C, you may know that it provides two ways to store values and references as part of a class instance. In addition to properties, you can use instance variables as a backing store for the values stored in a property.
 
+Objective-C에 경험이 있는 프로그래머라면, 클래스 인스턴스에 값이나 참조를 저장하는 두가지 방법을 알고 있을 것이다. 속성과 별도로, 프로그래머는 인스턴스 변수를 속성에 저장된 값들의 저장소(backing store)로 활용할 수 있다. 
+
 Swift unifies these concepts into a single property declaration. A Swift property does not have a corresponding instance variable, and the backing store for a property is not accessed directly. This approach avoids confusion about how the value is accessed in different contexts and simplifies the property’s declaration into a single, definitive statement. All information about the property—including its name, type, and memory management characteristics—is defined in a single location as part of the type’s definition.
+
+스위프트(Swift)는 위의 개념들을 하나의 속성 선언에 통합시켰다. 스위프트에서 속성은 (Objective-C와 달리) 대응되는 인스턴스 변수가 없고, 속성의 저장소에도 직접 접근할 수 없다. 이러한 접근방식으로 스위프트는 서로 다른 맥락에서 하나의 값이 접근되는 방식에 대한 혼란을 줄이고, 속성의 선언을 하나의 정의문에 단순화 시켰다. 
 
 # 계산속성 (Computed Properties)
 
 In addition to stored properties, classes, structures, and enumerations can define computed properties, which do not actually store a value. Instead, they provide a getter and an optional setter to retrieve and set other properties and values indirectly.
+
+저장속성에 더해서, 클래스, 구조체 그리고 열거체에는 계산속성(Computed properties)를 정의할 수 있다. 계산속성은 실제로 값을 저장하지는 않고, 다른 속성이나 값들이 간접적으로 접근하여 값을 조회하거나 수정할 수 있는 getter와 선택적인 setter를 제공한다. 
 
 ```
 struct Point {
@@ -203,19 +209,33 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 ```
 This example defines three structures for working with geometric shapes:
 
+위 예제는 기하학의 도형을 다루기 위한 세개의 구조체를 정의하고 있다. 
+
 * Point encapsulates an (x, y) coordinate.
 * Size encapsulates a width and a height.
 * Rect defines a rectangle by an origin point and a size.
 
+* Point 구조체는 x,y 좌표를 가진다.
+* Size 구조체는 너비와 높이를 가진다.
+* Rect 구조체는 시작점과 크기로 사각형을 정의한다.
+
 The Rect structure also provides a computed property called center. The current center position of a Rect can always be determined from its origin and size, and so you don’t need to store the center point as an explicit Point value. Instead, Rect defines a custom getter and setter for a computed variable called center, to enable you to work with the rectangle’s center as if it were a real stored property.
+
+Rect 구조체는 center라는 이름의 계산속성도 제공한다. Rect 구조체의 현재 중점(center position)은 언제나 시작점과 크기에 의해 결정된다. 그러므로, 프로그래머는 중점을 명시적인 Point 값으로 저장하지 않아도 된다. 대신에, Rect 구조체는 center라는 이름의 저장속성을 위한 맞춤 getter와 setter를 제공한다. 프로그래머는 이 center 계산속성을 마치 실제 저장속성인 것처럼 사용할 수 있다. 
 
 The preceding example creates a new Rect variable called square. The square variable is initialized with an origin point of (0, 0), and a width and height of 10. This square is represented by the blue square in the diagram below.
 
+이어지는 코드에서는 square란 이름의 새로운 Rect 변수가 생성된다. square 변수는 시작점 (0,0)과 너비 10 ,높이 10으로 초기화된다. 이 square는 아래 도표의 파란색 사각형으로 표시된다. 
+
 The square variable’s center property is then accessed through dot syntax (square.center), which causes the getter for center to be called, to retrieve the current property value. Rather than returning an existing value, the getter actually calculates and returns a new Point to represent the center of the square. As can be seen above, the getter correctly returns a center point of (5, 5).
+
+square 변수의 center 속성은 마침표(.)를 통해 square.center 처럼 접근할 수 있다. 이렇게 접근할 경우, 현재 속성값을 조회하는 getter가 호출된다. 이 getter는 실재하는 속성값을 반환하는게 아니라, 계산을 통해서 현재 사각형의 중점에 해당하는 새로운 Point 값을 반환한다. 위에서 보듯이, getter는 정확하게 (5,5) 좌표를 반환한다.
 
 The center property is then set to a new value of (15, 15), which moves the square up and to the right, to the new position shown by the orange square in the diagram below. Setting the center property calls the setter for center, which modifies the x and y values of the stored origin property, and moves the square to its new position.
 
-[이미지 삽입]
+그 다음엔 center 속성을 (15,15)로 변경한다. 이것은 사각형을 아래 도표 속의 우상단에 있는 오렌지 사각형의 위치로 이동시킨다. center 속성에 값을 지정하게 되면 setter를 호출하게 되는데, 이것은 x, y 저장속성을 함께 변경시켜, 사각형이 새로운 위치로 이동하도록 만든다.
+
+[이미지 삽입:파란사각형, 오렌지사각형]
 
 # Shorthand Setter Declaration
 
@@ -319,7 +339,7 @@ This example’s willSet observer uses a custom parameter name of newTotalSteps 
 The didSet observer is called after the value of totalSteps is updated. It compares the new value of totalSteps against the old value. If the total number of steps has increased, a message is printed to indicate how many new steps have been taken. The didSet observer does not provide a custom parameter name for the old value, and the default name of oldValue is used instead.
 
 > NOTE
-If you assign a value to a property within its own didSet observer, the new value that you assign will replace the one that was just set.
+> If you assign a value to a property within its own didSet observer, the new value that you assign will replace the one that was just set.
 
 # 전역변수와 지역변수 (Global and Local Variables)
 
@@ -329,11 +349,10 @@ The global and local variables you have encountered in previous chapters have al
 
 However, you can also define computed variables and define observers for stored variables, in either a global or local scope. Computed variables calculate rather than store a value, and are written in the same way as computed properties.
 
-NOTE
+> NOTE
+> Global constants and variables are always computed lazily, in a similar manner to Lazy Stored Properties. Unlike lazy stored properties, global constants and variables do not need to be marked with the @lazy attribute.
 
-Global constants and variables are always computed lazily, in a similar manner to Lazy Stored Properties. Unlike lazy stored properties, global constants and variables do not need to be marked with the @lazy attribute.
-
-Local constants and variables are never computed lazily.
+> Local constants and variables are never computed lazily.
 
 Type Properties
 
