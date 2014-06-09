@@ -223,11 +223,9 @@ The init(center:size:) initializer could have assigned the new values of origin 
 >NOTE
 `init()`과 `init(origin:size:)`을 작성하지 않고 위의 예제를 작성해보려면 **확장**을 보세요.
 
-## Class Inheritance and Initialization
-
-All of a class’s stored properties—including any properties the class inherits from its superclass—must be assigned an initial value during initialization.
-
-Swift defines two kinds of initializers for class types to help ensure all stored properties receive an initial value. These are known as designated initializers and convenience initializers.
+## 클래스 상속과 초기화
+클래스의 모든 저장 속성은 - 부모 클래스에서 상속받은 어떠한 속성또한 포함하여 - 반드시 초기화 과정중에 초기 값을 할당받아야 합니다.
+스위프트는 두 종류의 이니셜라이져를 제공하여 클래스 타입의 모든 저장 속성이 초기값을 갖게끔 보장합니다. 각각 지정 이니셜라이저와 편의 이니셜라이저라 합니다.
 
 ### Designated Initializers and Convenience Initializers
 
