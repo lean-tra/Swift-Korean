@@ -114,7 +114,6 @@ cheeseQuestion.ask()
 // prints "Do you like cheese?"
 cheeseQuestion.response = "Yes, I do like cheese."
 ```
-The response to a survey question cannot be known until it is asked, and so the response property is declared with a type of String?, or “optional String”. It is automatically assigned a default value of nil, meaning “no string yet”, when a new instance of SurveyQuestion is initialized.
 설문 조사의 대답은 설문을 하기 전까지 알 수 없습니다. 그래서 `response` 속성은 `String?` 타입 또는 "optinal `String`" 타입입니다. 이는 `SurveyQuestion`의 새 인트섵스가 초기화 되었을때 자동적으로 기본 값을 `nil`로 할당하여 "no string yet"을 뜻하게 됩니다.
 
 ### 초기화 과정중에 상수 속성을 변경하기
@@ -141,11 +140,9 @@ beetsQuestion.ask()
 beetsQuestion.response = "I also like beets. (But not with cheese.)"
 ```
 
-## Default Initializers
-
-Swift provides a default initializer for any structure or base class that provides default values for all of its properties and does not provide at least one initializer itself. The default initializer simply creates a new instance with all of its properties set to their default values.
-
-This example defines a class called ShoppingListItem, which encapsulates the name, quantity, and purchase state of an item in a shopping list:
+## 기본 이니셜라이저
+스위프트는 기본값을 모든 속성에 지정했지만 이니셜라이저를 가지지 않은 구조체나 베이스 클래스에 대해 _기본 이니셜라이저_를 제공합니다. 기본 이니셜라이저는 단순히 새 인스턴스를 만들고, 속성들을 각각의 기본값으로 설정합니다.
+이 예제는 구매 목록안의 아이템의 이름, 수량, 구매 상태를 캡슐화하는 `ShoppingListItem` 클래스를 정의합니다.
 ```
 class ShoppingListItem {
     var name: String?
@@ -154,7 +151,7 @@ class ShoppingListItem {
 }
 var item = ShoppingListItem()
 ```
-Because all properties of the ShoppingListItem class have default values, and because it is a base class with no superclass, ShoppingListItem automatically gains a default initializer implementation that creates a new instance with all of its properties set to their default values. (The name property is an optional String property, and so it automatically receives a default value of nil, even though this value is not written in the code.) The example above uses the default initializer for the ShoppingListItem class to create a new instance of the class with initializer syntax, written as ShoppingListItem(), and assigns this new instance to a variable called item.
+`ShoppingListItem` 클래스의 모든 속성이 기본 값을 가지고 있고, 부모(super) 클래스가 없는 베이스  클래스이기 때문에, `ShoppingListItem`은 자동적으로 기본 이니셜라이저를 구현하여 새 인스턴스가 생길때 속성들을 기본값으로 설정해줍니다. (`name` 속성은 온셔널 `String` 속성이어서 별달리 값이 코드에 쓰여있지 않아도 자동적으로 기본 값으로 `nil`을 받습니다.) 위의 예제에서 `ShoppingListItem` 클래스는 기본 이니셜라이저와 `ShoppingListItem()`이라 쓰여진 것처럼 이니셜라이저 문법을 이용하여 새 클래스 인스턴스를 만드는데 사용합니다. 만들어진 새 인스턴스는 `item` 변수에 할당 됩니다.
 
 ### Memberwise Initializers for Structure Types
 
