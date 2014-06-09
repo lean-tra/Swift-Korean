@@ -153,15 +153,11 @@ var item = ShoppingListItem()
 ```
 `ShoppingListItem` 클래스의 모든 속성이 기본 값을 가지고 있고, 부모(super) 클래스가 없는 베이스  클래스이기 때문에, `ShoppingListItem`은 자동적으로 기본 이니셜라이저를 구현하여 새 인스턴스가 생길때 속성들을 기본값으로 설정해줍니다. (`name` 속성은 온셔널 `String` 속성이어서 별달리 값이 코드에 쓰여있지 않아도 자동적으로 기본 값으로 `nil`을 받습니다.) 위의 예제에서 `ShoppingListItem` 클래스는 기본 이니셜라이저와 `ShoppingListItem()`이라 쓰여진 것처럼 이니셜라이저 문법을 이용하여 새 클래스 인스턴스를 만드는데 사용합니다. 만들어진 새 인스턴스는 `item` 변수에 할당 됩니다.
 
-### Memberwise Initializers for Structure Types
-
-In addition to the default initializers mentioned above, structure types automatically receive a memberwise initializer if they provide default values for all of their stored properties and do not define any of their own custom initializers.
-
-The memberwise initializer is a shorthand way to initialize the member properties of new structure instances. Initial values for the properties of the new instance can be passed to the memberwise initializer by name.
-
-The example below defines a structure called Size with two properties called width and height. Both properties are inferred to be of type Double by assigning a default value of 0.0.
-
-Because both stored properties have a default value, the Size structure automatically receives an init(width:height:) memberwise initializer, which you can use to initialize a new Size instance:
+### 구조체 타입의 멤버 단위 이니셜라이저
+위에 언급된 기본 이니셜라이저 외에도, 구조체 타입은 자동적으로 _멤버 단위 이니셜라이저_를 부여받습니다. 구조체의 모든 저장 속성에 기본값이 제공되었지만 사용자 정의 이니셜라이저가 정의되지 않았을때 말이죠.
+멤버 단위 이니셜라이저는 새 구조체 인스턴스의 멤버 속성을 초기화 하는 단축 표현(shorthand)입니다. 새 인스턴스의 속성들의 초기값은 멤버 단위 이니셜라이저의 이름을 통해 전달 될 수 있습니다.
+밑의 예제는 `Size` 구조체를 `width`와 `height` 속성 두개를 정의합니다. 두 속성은 전부 `0.0`이 할담 됨으로써 `Double` 타입임이 암시됩니다.
+두 속성 전부 기본값을 가지기에 `Size` 구조체는 자동적으로 `Size` 인스턴스를 초기화 할 수 있는 `init(width:heigh:)` 멤버 단위 이니셜라이저를 부여받게 됩니다.
 ```
 struct Size {
     var width = 0.0, height = 0.0
