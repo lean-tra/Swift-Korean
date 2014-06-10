@@ -165,7 +165,7 @@ struct Size {
 let twoByTwo = Size(width: 2.0, height: 2.0)
 ```
 
-## 값 타입의 이니셜라이저 Delegation
+## 값 타입의 이니셜라이저 대리 수행Delegation
 이니셜라이져는 인스턴스 초기화 수행의 일부로 다른 이니셜라이저를 호출 할 수 있습니다. 이 과정은 _이니셜라이저 델리게이션_이라 하며, 여러 이니셜라이저 사이의 중복 코드를 피할 수 있게 합니다.
 값 타입과 클래스 타입에 따라 이니셜라이져 델리게이션이 어떤 형태로 허용 되는가, 어떻게 작동하는지 그 규칙은 어떤가가 다릅니다. 구조체나 열거형과 같은 값 타입은 상속을 지원하지 않습니다. 그렇기에 이니셜라이저 델리게이션의 과정은 비교적 간단합니다. 그저 다른 이니셜라이저가 제공한 것만을 대리 수행(delegation)하면 되기 때문입니다. 하지만 클래스는 **상속**에서 설명한 것처럼, 다른 클래스에서 상속 받을 수 있습니다. 이는 곧 클래스는 상속 받은 저장 속성들이 초기화 과정중에 올바르게 할당 되었는지 보장해야 하는 추가적인 책임이 있다는 것을 뜻합니다. 이러한 책임은 밑의 **클래스 상속과 초기화**에 설명되어 있습니다.
 값 타입에서 사용자 정의 이니셜라이저를 작성할때, 다른 같은 타입의 다른 이니셜라이저를 참조하려면 `self.init`을 사용해야 합니다. 이니셜라이저 안에선 오직 `self.init`만 호출 할 수 있습니다.
@@ -358,11 +358,9 @@ convenience init(parameters) {
 }
 ```
 
-### Designated and Convenience Initializers in Action
-
-The following example shows designated initializers, convenience initializers, and automatic initializer inheritance in action. This example defines a hierarchy of three classes called Food, RecipeIngredient, and ShoppingListItem, and demonstrates how their initializers interact.
-
-The base class in the hierarchy is called Food, which is a simple class to encapsulate the name of a foodstuff. The Food class introduces a single String property called name and provides two initializers for creating Food instances:
+### 실제로 해보는 지정 이지셜라이저와 편의 이니셜라이저
+다음 예제는 이정 이니셜라이저와 편의 이니셜라이저, 그리고 자동적 이니셜라이저 상속을 실제로 해몹니다. 이 예제는  `Food`, `RecipeIngredient` 그리고 `ShoppingListItem` 클래스들의 상속 계층을 정의합니다. 그리고 클래스들 간의 이니셜라이저가 어떻게 상호작용하는지 보여줄 것입니다.
+상속 계층의 베이스 클래스는 `Food`입니다. 이 클래스는 음식의 이름을 캡슐화 합니다. `Food` 클래스는 `String` 타입의 `name` 속성을 도입합니다. 그리고 `Food` 인스턴스를 생성하는데 두 개의 이니셜라이저를 제공합니다.
 ```
 class Food {
     var name: String
@@ -374,23 +372,21 @@ class Food {
     }
 }
 ```
-The figure below shows the initializer chain for the Food class:
-
+밑의 그림은 `Food` 클래스의 이니셜라이저 연쇄가 어떻게 되는지 보여줍니다.
 ![initializersexample01_2x.png](images/initializersexample01_2x.png)
 
-Classes do not have a default memberwise initializer, and so the Food class provides a designated initializer that takes a single argument called name. This initializer can be used to create a new Food instance with a specific name:
+클래스는 기본 멤버 단위 이니셜라이저를 가지고 있지 않습니다. 그리고 `Food` 클래스는 단일 인자 `name`을 받는 지정 이니셜라이저를 제공합니다. 이 이니셜라이저는 특정 이름으로 `Food` 인스턴스를 생성하는데 사용될 수 있습니다.
 ```
 let namedMeat = Food(name: "Bacon")
 // namedMeat's name is "Bacon"
 ```
-The init(name: String) initializer from the Food class is provided as a designated initializer, because it ensures that all stored properties of a new Food instance are fully initialized. The Food class does not have a superclass, and so the init(name: String) initializer does not need to call super.init() to complete its initialization.
-
-The Food class also provides a convenience initializer, init(), with no arguments. The init() initializer provides a default placeholder name for a new food by delegating across to the Food class’s init(name: String) with a name value of [Unnamed]:
+`Food` 클래스가 제공하는 `init(name: String)` 이니셜라이저는 `Food` 인스턴스의 모든 저장 속성이 완전히 초기화 되는 것을 보장하기에 _지정_ 이니셜라이저 입니다. `Food` 클래스는 부모 클래스를 가지지 않습니다. 또한 `init(name: String)` 이니셜라이저도 초기화를 완료하기 위해 `super.init()`을 호출할 필요가 없습니다.
+`Food` 클래스는 인자가 없는 `init()` 편의 이니셜라이저 또한 제공합니다. `init()` 이니셜라이저는 `Food` 클래스의 `init(name: String)` 을 대리하여, `[Unnamed]`값을 가진 `name`을 이름의 기본 플레이스홀더(placeholder)로서 제공합니다.
 ```
 let mysteryMeat = Food()
 // mysteryMeat's name is "[Unnamed]"
 ```
-The second class in the hierarchy is a subclass of Food called RecipeIngredient. The RecipeIngredient class models an ingredient in a cooking recipe. It introduces an Int property called quantity (in addition to the name property it inherits from Food) and defines two initializers for creating RecipeIngredient instances:
+클래스 상속 계층에서 두번째 클래스는 `Food` 클래스의 자식 클래스인 `RecipeIngredient` 입니다. `RecipeIngredient` 클래스는 요리 조리법의 재료를 모델링합니다. 이 클래스는 (`Food`에서 상속받은 `name` 속성에 더해) `Int` 타입의 `quantity` 속성을 도입합니다. 그리고 `RecipeIngredient`를 생성하기 위한 이니셜라이저 두개를 제공합니다.
 ```
 class RecipeIngredient: Food {
     var quantity: Int
@@ -403,27 +399,26 @@ class RecipeIngredient: Food {
     }
 }
 ```
-The figure below shows the initializer chain for the RecipeIngredient class:
-
+밑의 그림은 `RecipeIngredient`의 이니셜라이저 연쇄가 어떠한지 보여줍니다.
 ![initializersexample02_2x.png](images/initializersexample02_2x.png)
 
-The RecipeIngredient class has a single designated initializer, init(name: String, quantity: Int), which can be used to populate all of the properties of a new RecipeIngredient instance. This initializer starts by assigning the passed quantity argument to the quantity property, which is the only new property introduced by RecipeIngredient. After doing so, the initializer delegates up to the init(name: String) initializer of the Food class. This process satisfies safety check 1 from Two-Phase Initialization above.
+`RecipeIngredient` 클래스는 한개의 지정 이니셜라이저 `init(name: String, quantity: Int)`을 가지고 있습니다. 이 이니셜라이저는 새 `RecipeIngredient` 인스턴스의 모든 속성을 채우는데 쓰입니다. 이 이니셜라이저는  `RecipeIngredient` 클래스가 도입한 유일한 새 속성인  `quantity` 속성에 넘겨받은 `quantity` 인자를 할당하는 것으로 시작합니다. 그리고 위의 이니셜라이저는 `Food` 클래스의 `init(name: String)` 이니셜라이저를 대리 수행합니다. 이 과정은 위의 **이 단계 초기화**에 다온 안전 점검 1을 만족합니다.
 
-RecipeIngredient also defines a convenience initializer, init(name: String), which is used to create a RecipeIngredient instance by name alone. This convenience initializer assumes a quantity of 1 for any RecipeIngredient instance that is created without an explicit quantity. The definition of this convenience initializer makes RecipeIngredient instances quicker and more convenient to create, and avoids code duplication when creating several single-quantity RecipeIngredient instances. This convenience initializer simply delegates across to the class’s designated initializer.
+`RecipeIngredient`는 편의 이니셜라이저 `init(name: String)` 또한 정의합니다. 이 이니셜라이저는 넘겨받은 이름을 가진 `RecipeIngredient`인스턴스를 생성합니다. 이 편의 이니셜라이저는 생성될때 명시적인 재료 수량이 정해지지 않았다면 갯수가 1개라고 간주합니다. 이 편의 이니셜라이저를 정의함으로써 `RecipeIngredient` 인스턴스를 빠르고 더 편하게 생성 할 수 있습니다. 그리고 재료 수량이 한개인 `RecipeIngredient` 인스턴스를 몇개 만들때의 코드 중복을 피하게 합니다. 이 편의 이니셜라이저는 단순히 클래스의 지정 이니셜라이저를 대리합니다. 
 
-Note that the init(name: String) convenience initializer provided by RecipeIngredient takes the same parameters as the init(name: String) designated initializer from Food. Even though RecipeIngredient provides this initializer as a convenience initializer, RecipeIngredient has nonetheless provided an implementation of all of its superclass’s designated initializers. Therefore, RecipeIngredient automatically inherits all of its superclass’s convenience initializers too.
+눈여겨 봐야 할 것은, `RecipeIngredient`이 제공하는 `init(name: String)` 편의 이니셜라이저가, `Food`의 지정 이니셜라이저인 `init(name: String)`과 같은 파라메터를 받는다는 것 입니다. `RecipeIngredient`가 이 이니셜라이저를 편의 이니셜라이저로서 제공한다고 해도, `RecipeIngredient`는 부모 클래스의 모든 지정 이니셜라이저를 제공한 셈이 됩니다. 따라서 `RecipeIngredient`는 자동적으로 부모 클래스의 편의 이니셜라이저를 모두 상속받게 됩니다.
 
-In this example, the superclass for RecipeIngredient is Food, which has a single convenience initializer called init(). This initializer is therefore inherited by RecipeIngredient. The inherited version of init() functions in exactly the same way as the Food version, except that it delegates to the RecipeIngredient version of init(name: String) rather than the Food version.
+이 예제에서 `RecipeIngredient`의 부모 클래스인 `Food`는 하나의 편의 이니셜라이저 `init()`을 제공합니다. 따라서 이 이니셜라이저는 `RecipeIngredient`에게 상속되게 됩니다. `init()`의 상속된 버전은 정확하게 `Food` 버전과 똑같은 기능을 합니다. 대리 수행하는 이니셜라이저`init(name: String)`을 `Food` 버전이 아니라 `RecipeIngredient` 버전을 사용하여 대리 한다는 것을 제외하면 말이죠.
 
-All three of these initializers can be used to create new RecipeIngredient instances:
+이 세 이니셜라이저를 새 `RecipeIngredient` 인스턴스를 생성하는데 전부 사용할 수 있습니다.
 ```
 let oneMysteryItem = RecipeIngredient()
 let oneBacon = RecipeIngredient(name: "Bacon")
 let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
 ```
-The third and final class in the hierarchy is a subclass of RecipeIngredient called ShoppingListItem. The ShoppingListItem class models a recipe ingredient as it appears in a shopping list.
+클래스 상속 계층에서 세번째이자 마지막 클래스는 `RecipeIngredient`의 자식 클래스인 `ShoppingListItem`입니다. `ShoppingListItem`는 구매 목록에 있는 조리법의 재료를 모델링합니다.
 
-Every item in the shopping list starts out as “unpurchased”. To represent this fact, ShoppingListItem introduces a Boolean property called purchased, with a default value of false. ShoppingListItem also adds a computed description property, which provides a textual description of a ShoppingListItem instance:
+구매 목록에 있는 모든 품목(itme)들은 "unpurchased" 상태로 시작하게 됩니다. 이 사실을 표현하기 위해 `ShoppingListItem`은 기본값을 `false`로 가지는 `puchased` 불리언 속성을 도입합니다. `ShoppingListItem`은 또한 `ShoppingListItem` 인스턴스를 글로 설명하기 위해 산출한 `description` 속성을 추가합니다.
 ```
 class ShoppingListItem: RecipeIngredient {
     var purchased = false
@@ -436,15 +431,15 @@ class ShoppingListItem: RecipeIngredient {
 ```
 
 >NOTE
-ShoppingListItem does not define an initializer to provide an initial value for purchased, because items in a shopping list (as modeled here) always start out unpurchased.
+`ShoppingListItem`은 `purchased`의 초기값을 제공하는 이니셜라이저를 정의하지 않습니다. 여기 모델링된 구매 목록에 추가되는 아이템은 언제나 구매되지 않은(unpurchased) 상태로 시작하기 때문입니다.
 
-Because it provides a default value for all of the properties it introduces and does not define any initializers itself, ShoppingListItem automatically inherits all of the designated and convenience initializers from its superclass.
+이 클래스가 도입한 모든 속성의 초기값을 제공하고, 어떤 이니셜라이저도 스스로 정의하지 않기 때문에 `ShoppingListItem`은 자동적으로 _모든_ 지정 이니셜라이저와 편의 이니셜라이저를 부모 클래스에서 상속받습니다.
 
-The figure below shows the overall initializer chain for all three classes:
+밑의 그림은 전체 클래스 세개의 이니셜라이저 연쇄를 보여줍니다.
 
 ![initializersexample03_2x.png](images/initializersexample03_2x.png)
 
-You can use all three of the inherited initializers to create a new ShoppingListItem instance:
+`ShoppingListItem` 인스턴스를 만드는데 세개의 상속받은 이니셜라이저 전부를 이용할 수 있습니다.
 ```
 var breakfastList = [
     ShoppingListItem(),
@@ -460,7 +455,7 @@ for item in breakfastList {
 // 1 x bacon ✘
 // 6 x eggs ✘
 ```
-Here, a new array called breakfastList is created from an array literal containing three new ShoppingListItem instances. The type of the array is inferred to be ShoppingListItem[]. After the array is created, the name of the ShoppingListItem at the start of the array is changed from "[Unnamed]" to "Orange juice" and it is marked as having been purchased. Printing the description of each item in the array shows that their default states have been set as expected.
+`breakfastList`라는 새 배열은 배열 문자(array literal)로 만들어져 세개의 새 `ShoppingListItem` 인스턴스를 담습니다. 배열의 타입은 `ShoppingListItem[]`가 될 것으로 추론하게 됩니다. 배열이 생성된 후, 배열의 첫번째 `ShoppingListItem`의 이름은 `"[Unnamed]"`에서 `"Orange juice"`로 바뀌게 됩니다. 그리고 구매가 되었다고 표시하게 됩니다. 배열 안의 각 품목의 설명을 출력하게 하여 기대한 대로 기본 상태가 설정되었음을 보일 수 있습니다.
 
 ## Setting a Default Property Value with a Closure or Function
 
