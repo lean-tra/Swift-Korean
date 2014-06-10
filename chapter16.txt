@@ -457,13 +457,13 @@ for item in breakfastList {
 ```
 `breakfastList`라는 새 배열은 배열 문자(array literal)로 만들어져 세개의 새 `ShoppingListItem` 인스턴스를 담습니다. 배열의 타입은 `ShoppingListItem[]`가 될 것으로 추론하게 됩니다. 배열이 생성된 후, 배열의 첫번째 `ShoppingListItem`의 이름은 `"[Unnamed]"`에서 `"Orange juice"`로 바뀌게 됩니다. 그리고 구매가 되었다고 표시하게 됩니다. 배열 안의 각 품목의 설명을 출력하게 하여 기대한 대로 기본 상태가 설정되었음을 보일 수 있습니다.
 
-## Setting a Default Property Value with a Closure or Function
+## 클로저나 함수로 기본 속성 값을 설정하기
 
-If a stored property’s default value requires some customization or setup, you can use a closure or global function to provide a customized default value for that property. Whenever a new instance of the type that the property belongs to is initialized, the closure or function is called, and its return value is assigned as the property’s default value.
+만약 저장 속성의 기본 값이 약간의 사용자 정의나 설정을 요구한다면, 클로저나 전역 함수를 이용하여 사용자 정의된 기본 값을 속성에 제공할 수 있습니다. 해당 속성이 속해있는 새 인스턴스가 초기화 될 때마다, 해당 클로저나 함수가 호출됩니다. 그리고 그 반환 값이 속성의 기본 값으로 사용됩니다.
 
-These kinds of closures or functions typically create a temporary value of the same type as the property, tailor that value to represent the desired initial state, and then return that temporary value to be used as the property’s default value.
+그러한 클로저나 함수들은 대개 속성의 타입과 같은 임시 값을 만들어서, 그 값을 원하는 초기 상태로 맞춰주고, 그 임시 값을 속성의 기본 값으로 사용되게 반환합니다.
 
-Here’s a skeleton outline of how a closure can be used to provide a default property value:
+이 예제는 클로저가 어떻게 속성의 기본값을 제공할 수 있게 되는지 전체적인 뼈대를 보여줍니다.
 ```
 class SomeClass {
     let someProperty: SomeType = {
@@ -473,18 +473,18 @@ class SomeClass {
         }()
 }
 ```
-Note that the closure’s end curly brace is followed by an empty pair of parentheses. This tells Swift to execute the closure immediately. If you omit these parentheses, you are trying to assign the closure itself to the property, and not the return value of the closure.
+클로저의 닫는 중괄호 바로 뒤에 빈 괄호 한쌍이 있는 것에 주의해 주십시오. 이는 스위프트에게 클로저를 즉시 실행 시키라고 지시합니다. 만약 이 괄호를 생략한다면 클로저의 반환 값이 아니라, 클로저 그 자체를 속성에 할당하려 시도하는 것이 됩니다.
 
 >NOTE
-If you use a closure to initialize a property, remember that the rest of the instance has not yet been initialized at the point that the closure is executed. This means that you cannot access any other property values from within your closure, even if those properties have default values. You also cannot use the implicit self property, or call any of the instance’s methods.
+만약 클로저를 이용하려 속성을 초기화 하려고 한다면 다음을 기억해 두십시오. 클로저의 실행이 된 시점에서는 인스턴스의 나머지 부분은 아직 초기화가 되지 않은 상태입니다. 이는 클로저 안에서 다른 속성 값에 접근 할 수 없다는 것을 뜻합니다. 속성들이 기본값을 가지고 있다고 해도 말이죠. 또한 암시적 `self` 속성을 사용하거나, 인스턴스의 다른 메소드를 호출 할 수 없습니다.
 
-The example below defines a structure called Checkerboard, which models a board for the game of Checkers (also known as Draughts):
+이 예제는 `Checkerboard` 구조체를 정의하여 _Draughts_라고도 알려진 _체커_ 게임의 보드를 모델링합니다.
 
 ![checkersboard_2x.png](images/checkersboard_2x.png)
 
-The game of Checkers is played on a ten-by-ten board, with alternating black and white squares. To represent this game board, the Checkerboard structure has a single property called boardColors, which is an array of 100 Bool values. A value of true in the array represents a black square and a value of false represents a white square. The first item in the array represents the top left square on the board and the last item in the array represents the bottom right square on the board.
+_체커_ 게임은 흑백 칸이 번갈아 있는 10 * 10 판 위에서 플레이합니다. 이 게임판을 표현하기 위해 `Checkerboard` 구조체는 길이가 100이고, `Bool` 값을 가지는 `boardColors`라는 단일 속성을 가집니다. 배열에서 `ture` 값은 검은 칸을 표현하고, `false` 값은 흰색 칸을 표현합니다. 배열의 첫번째 아이템은 게임판에서 제일 좌상단의 칸을 표현하고, 마지막 아이템은 제일 게임판에서 우하단의 칸을 표현합니다.
 
-The boardColors array is initialized with a closure to set up its color values:
+`boardColors` 배열은 색상 값을 설정하기 위해 클로저를 사용하여 초기화가 됩니다.
 ```
 struct Checkerboard {
     let boardColors: Bool[] = {
@@ -504,7 +504,7 @@ struct Checkerboard {
     }
 }
 ```
-Whenever a new Checkerboard instance is created, the closure is executed, and the default value of boardColors is calculated and returned. The closure in the example above calculates and sets the appropriate color for each square on the board in a temporary array called temporaryBoard, and returns this temporary array as the closure’s return value once its setup is complete. The returned array value is stored in boardColors and can be queried with the squareIsBlackAtRow utility function:
+새 `Checkerboard` 인스턴스가 생성될때, 해당 클로저가 실행되어 `boardColors`의 기본 값이 계산되고 반환됩니다. 위 예제에서 보이는 클로저는 게임판 위의 각각의 칸에 알맞은 색을 계산하여 임시 배열인 `temporaryBoard`에 설정합니다. 그리고 설정이 끝나면 이 임시 배열은 클로저의 반환값으로서 반환이 됩니다. 이 반환된 배열 값은 `boardColors` 에 저장이 되고, 기능성 함수 `squareIsBlackAtRow`에 의해 조회 될 수 있습니다.
 ```
 let board = Checkerboard()
 println(board.squareIsBlackAtRow(0, column: 1))
