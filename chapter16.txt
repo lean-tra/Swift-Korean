@@ -344,15 +344,14 @@ _편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라�
 >NOTE
 자식 클래스는 규칙 2를 만족시키는 것의 일부로서 부모 클래스의 지정 이니셜라이저를 자식 클래스의 편의 이니셜라이저로 구현할 수 있습니다.
 
-### Syntax for Designated and Convenience Initializers
-
-Designated initializers for classes are written in the same way as simple initializers for value types:
+### 지정 이니셜라이저와 편의 이니셜라이저의 문법
+클래스의 지정 이니셜라이저는 값 타입을 위한 단순 이니셜라이저와 같은 방식으로 작성됩니다.
 ```
 init(parameters) {
     statements
 }
 ```
-Convenience initializers are written in the same style, but with the convenience keyword placed before the init keyword, separated by a space:
+편의 이니셜라이저는 `init` 키워드 앞에 `convenience` 키워드를 공백으로 구분하여 위치하게 하는 것을 제외하면 같은 방식으로 작성됩니다.
 ```
 convenience init(parameters) {
     statements
