@@ -165,7 +165,7 @@ struct Size {
 let twoByTwo = Size(width: 2.0, height: 2.0)
 ```
 
-## 값 타입의 이니셜라이저 Delegation
+## 값 타입의 이니셜라이저 대리 수행Delegation
 이니셜라이져는 인스턴스 초기화 수행의 일부로 다른 이니셜라이저를 호출 할 수 있습니다. 이 과정은 _이니셜라이저 델리게이션_이라 하며, 여러 이니셜라이저 사이의 중복 코드를 피할 수 있게 합니다.
 값 타입과 클래스 타입에 따라 이니셜라이져 델리게이션이 어떤 형태로 허용 되는가, 어떻게 작동하는지 그 규칙은 어떤가가 다릅니다. 구조체나 열거형과 같은 값 타입은 상속을 지원하지 않습니다. 그렇기에 이니셜라이저 델리게이션의 과정은 비교적 간단합니다. 그저 다른 이니셜라이저가 제공한 것만을 대리 수행(delegation)하면 되기 때문입니다. 하지만 클래스는 **상속**에서 설명한 것처럼, 다른 클래스에서 상속 받을 수 있습니다. 이는 곧 클래스는 상속 받은 저장 속성들이 초기화 과정중에 올바르게 할당 되었는지 보장해야 하는 추가적인 책임이 있다는 것을 뜻합니다. 이러한 책임은 밑의 **클래스 상속과 초기화**에 설명되어 있습니다.
 값 타입에서 사용자 정의 이니셜라이저를 작성할때, 다른 같은 타입의 다른 이니셜라이저를 참조하려면 `self.init`을 사용해야 합니다. 이니셜라이저 안에선 오직 `self.init`만 호출 할 수 있습니다.
@@ -217,7 +217,6 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
     size: Size(width: 3.0, height: 3.0))
 // centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 ```
-The init(center:size:) initializer could have assigned the new values of origin and size to the appropriate properties itself. However, it is more convenient (and clearer in intent) for the init(center:size:) initializer to take advantage of an existing initializer that already provides exactly that functionality.
 `init(center:size:)` 이니셜라이저는 새 `origin`과 `size`값을 적절한 속성에 할당받게 할 수 있습니다. 하지만 `init(center:size:)` 이니셜라이저를 이용하는게 더 편하고 의도가 명확하며, 이미 있는 이니셜라이저가 제공하는 기능을 활용할 수 있는 장점이 있습니다.
 
 >NOTE
@@ -234,7 +233,7 @@ _지정 이니셜라이저_는 클래스의 주 이니셜라이저입니다. 지
 _편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라이저입니다. 편의 이니셜라이저를 정의하여, 같은 클래스 내의 지정 이니셜라이저를 호출하는 편의 이니셜라이저를 만들 수 있습니다. 이 편의 이니셜라이져를 통해 호출하는 지정 이니셜라이저의 몇몇 파라메터를 기본 값으로 설정할 수 있습니다. 또한 편의 이니셜라이저를 정의하여 특정 쓰임새나 입력 값 타입에 대한 클래스 인스턴스를 만들 수 있습니다.
 클래스가 필요로 하지 않는다면 편의 이니셜라이저를 제공할 필요는 없습니다. 편의 이니셜라이저는 보통 초기화 패턴을 단축하거나, 클래스의 의도를 명확하게 할때 만듭니다.
 
-### Initializer Chaining
+### 이니셜라이저 연쇄
 지정 이니셜라이저와 편의 이니셜라이저의 관계를 단순화 하기 위해, 스위프트는 다음의 3개 규칙을 이니셜라이저간의 델리게이션에 적용합니다.
 
 - **Rule 1**
@@ -259,126 +258,109 @@ _편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라�
 >NOTE
 이 규칙들은 각각의 클래스를 생성하는 방법에 영향을 주지 않습니다. 위 다이어그램의 어느 이니셜라이저라도 자기가 속해야 될, 완전히 초기화된 클래스 인스턴스를 만드는데 쓰일 수 있습니다. 이 규칙은 오직 클래스 구현의 작성에만 영향을 끼칩니다.
 
-The figure below shows a more complex class hierarchy for four classes. It illustrates how the designated initializers in this hierarchy act as “funnel” points for class initialization, simplifying the interrelationships among classes in the chain:
 밑의 그림은 더 복잡한 4개의 클래스 간의 계층도를 나타냅니다. 이 그림은 지정 이니셜라이저가 어떻게 이 계층도의 클래스 초기화 과정에서 "깔때기"처럼 작동하고, 연쇄에서 클래스간의 관계를 단순화하는지 보여줍니다.
 
 ![initializerdelegation02_2x.png](images/initializerdelegation02_2x.png)
 
 
-### Two-Phase Initialization
-
-Class initialization in Swift is a two-phase process. In the first phase, each stored property is assigned an initial value by the class that introduced it. Once the initial state for every stored property has been determined, the second phase begins, and each class is given the opportunity to customize its stored properties further before the new instance is considered ready for use.
-
-The use of a two-phase initialization process makes initialization safe, while still giving complete flexibility to each class in a class hierarchy. Two-phase initialization prevents property values from being accessed before they are initialized, and prevents property values from being set to a different value by another initializer unexpectedly.
+### 이 단계 초기화
+스위프트의 초기화는 두 단계의 과정을 거칩니다. 첫번째 단계에서는 해당 클래스가 가지는 각각의 저장 속성에 초기값을 할당합니다. 모든 저장 속성의 초기 상태가 정해지고 나면, 두번째 단계가 시작됩니다. 두번째 단계에서는 클래스 인스턴스가 사용될 준비가 되기 전까지, (역주: 상속 트리 상에서의)각각의 클래스가 저장 속성을 사용자 정의할 기회를 가집니다.
+이 단계 초기화 과정을 사용하는 것은 초기화를 안전하게 하면서도, 클래스 상속 계층 상에서 각각의 클래스가 완전한 유연성을 가지게 합니다. 이 단계 초기화는 속성 값이 초기화 되기 전에 접근되는 것을 방지하며, 다른 이니셜라이저에 의해 의도치 않게 다른 값이 설정되는 것을 방지합니다.
 
 >NOTE
-Swift’s two-phase initialization process is similar to initialization in Objective-C. The main difference is that during phase 1, Objective-C assigns zero or null values (such as 0 or nil) to every property. Swift’s initialization flow is more flexible in that it lets you set custom initial values, and can cope with types for which 0 or nil is not a valid default value.
+스위프트의 이 단계 초기화 과정은 오브젝티브 C의 초기화와 비슷합니다. 주요한 차이점은 첫번째 단계에 있습니다. 오브젝티브 C는 0이나 널(null) 값(`0` 또는 `nil`)을 모든 속성에 할당합니다. 스위프트의 초기화 흐름은 좀 더 유연하려 사용자 정의 초기값을 설정할 수 있게 해줍니다. 그리고 
+`0`이나 `nil`이 기본값으로 유효하지 않은 타입에 대처할 수 있게 합니다.
 
-Swift’s compiler performs four helpful safety-checks to make sure that two-phase initialization is completed without error:
+스위프트의 컴파일러는 이 단계 초기화가 에러없이 완료 될 수 있게 4가지 안전 점검(safety check)을 수행합니다.
 
-**Safety check 1**
-A designated initializer must ensure that all of the properties introduced by its class are initialized before it delegates up to a superclass initializer.
+- **안전 점검 1**
+    지정 이니셜러이저는 해당 클래스에서 도입된 모든 속성이 초기화 되었는지를 부모 클래스의 이니셜라이저를 대리하기 전에 확실히 하여야 합니다.
 
-As mentioned above, the memory for an object is only considered fully initialized once the initial state of all of its stored properties is known. In order for this rule to be satisfied, a designated initializer must make sure that all its own properties are initialized before it hands off up the chain.
+위에 언급된 것처럼, 객체를 위한 메모리는 저장 속성의 초기 상태가 알려져야 완전히 초기화 되었다고 간주합니다. 이 규칙을 만족시키기 위해서 지정 이니셜라이저가 초기화 연쇄를 위로 전달하기 전에 자신의 속성이 초기화 되었음을 확실히 해야합니다.
 
-**Safety check 2**
-A designated initializer must delegate up to a superclass initializer before assigning a value to an inherited property. If it doesn’t, the new value the designated initializer assigns will be overwritten by the superclass as part of its own initialization.
+- **안전 점검 2**
+    지정 이니셜라이저는 상속받은 속성에 값을 할당하기 전에 부모 클래스의 이니셜라이저를 대리 수행해야 합니다. 만약 그렇게 하지 않는다면, 지정 이니셜라이저가 할당한 새 값은 부모 클래스의 초기화 과정중에 덮어 씌워질 것입니다.
 
-**Safety check 3**
-A convenience initializer must delegate to another initializer before assigning a value to any property (including properties defined by the same class). If it doesn’t, the new value the convenience initializer assigns will be overwritten by its own class’s designated initializer.
+- **안전 점검 3**
+    편의 이니셜라이저는 (역주: 클래스 상속 계층상) 같은 클래스 내부에서 정의된 속성을 포함한, 어떤 속성에라도 값을 할당하기 전에 다른 이니셜라이저를 대리 수행해야 합니다. 그렇게 하지 않을 경우 편의 이니셜라이저가 할당한 새 값은 해당 클래스의 지정 이니셜라이저에 의해 덮어씌워질 것입니다.
+    
 
-**Safety check 4**
-An initializer cannot call any instance methods, read the values of any instance properties, or refer to self as a value until after the first phase of initialization is complete.
+- **Safety check 4**
+    이니셜라이저는 어떠한 인스턴스 메소드도 호출 할 수 없습니다. 어떠한 인스턴스의 속성도 읽을 수 없습니다. 또한 `self`를 초기화의 첫 단계가 끝나기 전에 참조할 수 없습니다.
 
-The class instance is not fully valid until the first phase ends. Properties can only be accessed, and methods can only be called, once the class instance is known to be valid at the end of the first phase.
+클래스 인스턴스는 첫 단계가 끝나기 전까지는 완전히 유효하지 않습니다. 첫 단계가 끝나고 클래스 인스턴스가 유효하다고 알려져야만 속성에 접근 가능하고, 메소르를 호출 할 수 있습니다.
 
-Here’s how two-phase initialization plays out, based on the four safety checks above:
+여기서 어떻게 위의 4가지 안전 점검에 의한 두 단계 초기화가 진행되는지 설명합니다.
 
 **Phase 1**
 
-- A designated or convenience initializer is called on a class.
-- Memory for a new instance of that class is allocated. The memory is not yet initialized.
-- A designated initializer for that class confirms that all stored properties introduced by that --- class have a value. The memory for these stored properties is now initialized.
-- The designated initializer hands off to a superclass initializer to perform the same task for its own stored properties.
-- This continues up the class inheritance chain until the top of the chain is reached.
-- Once the top of the chain is reached, and the final class in the chain has ensured that all of its stored properties have a value, the instance’s memory is considered to be fully initialized, and phase 1 is complete.
+- 클래스의 지정 이니셜라이저 또는 편의 이니셜라이저가 호출됩니다.
+- 클래스 인스턴스를 위한 메모리가 할당됩니다. 메모리는 아직 초기화 되지 않았습니다.
+- 클래스의 지정 이니셜라이저가 해당 클래스에 의해 도입된 모든 저장 속성이 값을 가졌음을 확인합니다. 해당 저장 속성을 위한 메모리는 이제 초기화 되었습니다.
+- 지정 이니셜라이저는 부모 클래스 이니셜라이저로 같은 작업은 해당 클래스가 행하게 (순서를) 넘깁니다.
+- 이 작업의 연쇄는 클래스 상속 계층의 맨 꼭대기에 다다를때까지 계속 됩니다
+- 연쇄의 꼭대기에 다다르면, 연쇄의 마지막 클래스는 모든 저장 속성이 값을 가진 것을 확실히 합니다. 그러면 인스턴스의 메모리는 완전히 초기화 되었다고 간주되고, 첫 단계가 끝납니다.
 
 **Phase 2**
 
-- Working back down from the top of the chain, each designated initializer in the chain has the option to customize the instance further. Initializers are now able to access self and can modify its properties, call its instance methods, and so on.
-- Finally, any convenience initializers in the chain have the option to customize the instance and to work with self.
-Here’s how phase 1 looks for an initialization call for a hypothetical subclass and superclass:
+- 연쇄의 꼭대기에서 거꾸로 내려오면서 작업을 하여, 연쇄안의 각각의 지정 이니셜라이저는 추가로 인스턴스를 사용자 정의할 수 있는 선택권이 있습니다. 이니셜라이저는 이제 `self`에 접근 가능하고, 자신의 속성을 변경하거나, 인스턴스 메소드를 호출하거나 할 수 있습니다.
+- 마지막으로, 연쇄 안의 어떤 편의 이니셜라이저든 인스턴스를 사용자 정의 할 수 있는 선택권이 있으며, `self`를 이용하여 작업할 수 있습니다.
 
+초기화 호출의 첫 단계가 어떻게 보이는지 가상의 자식 클래스와 부모 클래스를 이용하여 보여줍니다.
 ![twophaseinitialization01_2x.png](images/twophaseinitialization01_2x.png)
 
-In this example, initialization begins with a call to a convenience initializer on the subclass. This convenience initializer cannot yet modify any properties. It delegates across to a designated initializer from the same class.
+이 예제에서 초기화는 자식 클래스의 편의 이니셜라이저를 호출 하는 것으로 시작합니다. 이 편의 이니셜라이저는 아직 어떤 속성도 변경할 수 없습니다. 편의 이니셜라이저는 같은 클래스 안의 지정 이니셜라이저를 대리 실행합니다.
+지정 이니셜라이저는 안전 점검 1에 따라, 모든 자식 클래스의 속성이 값을 가졌는지 확실히 합니다. 그 후에 지정 이니셜라이저는 부모 클래스의 지정 이니셜라이저를 불러 초기화 연쇄를 위로 올립니다.
+부모 클래스의 지정 이니셜라이저는 부모 클래스의 속성이 모두 값을 가졌는지 확실히 합니다. 초기화를 해야할 부모 클래스가 없기 때문에, 더 이상의 대리 수행(delegation)은 필요치 않습니다.
+부모 클래스의 속성들이 초기 값을 가지는 순간부터, 인스턴스의 메모리는 완전히 초기화가 되었다고 간주되며, 첫 단계는 끝이 납니다.
 
-The designated initializer makes sure that all of the subclass’s properties have a value, as per safety check 1. It then calls a designated initializer on its superclass to continue the initialization up the chain.
-
-The superclass’s designated initializer makes sure that all of the superclass properties have a value. There are no further superclasses to initialize, and so no further delegation is needed.
-
-As soon as all properties of the superclass have an initial value, its memory is considered fully initialized, and Phase 1 is complete.
-
-Here’s how phase 2 looks for the same initialization call:
-
+여기 두번째 단계가 같은 초기화 호출에서 어떻게 보이는지 설명이 있습니다.
 ![twophaseinitialization02_2x.png](images/twophaseinitialization02_2x.png)
 
-The superclass’s designated initializer now has an opportunity to customize the instance further (although it does not have to).
+부모 클래스의 지정 이니셜라이저는 인스턴스를 추가적으로 사용자 정의할 수 있는 기회가 있습니다. 물론 하지 않아도 됩니다.
+부모 클래스의 지정 이니셜라이저가 종료되면, 자식 클래스의 이니셜라이저가 추가 사용자 정의를 수행할 수 있습니다. 이번에도 물론, 하지 않아도 됩니다.
+마지막으로, 자식 클래스의 지정 이니셜라이저가 종료되면, 처음에 지정 이니셜라이저를 호출한 편의 이니셜라이저가 추가적인 사용자 정의를 수행합니다.
 
-Once the superclass’s designated initializer is finished, the subclass’s designated initializer can perform additional customization (although again, it does not have to).
+### 이니셜라이저 상속과 오버라이딩
+오브젝티브 C의 자식 클래스와는 다르게, 스위프트의 자식 클래스는 부모 클래스의 이니셜라이저를 기본적으로 상속받지 않습니다. 스위프트의 이러한 접근 방식은 부모 클래스의 단순한 이니셜라이저가 자동적으로 더 복잡한 자식 클래스에 상속되어, 자식 클래스의 새 인스턴스를 생성할때 완전하지 않게 또는 올바르지 않게 초기화되는 것을 방지합니다.
+만약 자식 클래스가 부모 클래스와 똑같은 이니셜라이저를 하나 이상 가지게 하고 싶다면, - 아마도 약간의 사용자 정의를 초기화 과정중에 수행할  -  같은 이니셜라이져를 사용자 정의 자식 클래스에서 오버라이드 하려 구현해 제공할 수 있습니다.
+만약 오버라이드 하려는 이니셜라이저가 _지정_ 이니셜라이져라면, 그 구현을 자식 클래스에서 오버라이드합니다. 그리고 부모 클래스 버전의 이니셜라이저를 오버라이딩 버전에서 호출합니다.
+만약 오버라이드 하려는 이니셜라이저가 _편의_ 이니셜라이저라면, 오버라이드한 이니셜라이저는 반드시 해당 자식 클래스 안의 지정 이니셜라이저를 호출해야 합니다. 위의 이니셜라이저 연쇄에서 설명한 것처럼 말이죠.
+>NOTE
+메소드, 속성, 서브스크립트와는 달리 이니셜라이는 오버라이드 할때 `override` 키워드가 필요하지 않습니다.
 
-Finally, once the subclass’s designated initializer is finished, the convenience initializer that was originally called can perform additional customization.
+### 자동적 이니셜라이저 상속
+위에서 언급한 것처럼, 기본적으로 자식 클래스는 부모 클래스의 이니셜라이저를 상속받지 않습니다. 하지만 부모클래스의 이니셜라이저가 특정 조건을 만족한다면 자동적으로 상속이 됩니다. 실제로 이것이 뜻하는 바는 다음과 같습니다. 많은 일반적인 경우에 이니셜라이져를 오버라이드 할 필요가 없습니다. 또한 상속 받는 것이 안전할때, 부모 클래스의 이니셜라이져를 최소의 노력으로 상속 받을 수 있습니다. 
+자식 클래스에 의해 도입된 새로운 어떤 속성이라도 기본 값을 제공받는 다고 가정했을때, 다음의 두 규칙이 적용됩니다.
 
-### Initializer Inheritance and Overriding
+- **Rule 1**
+    자식 클래스가 어떠한 지정 이니셜라이저도 정의하지 않았을 경우, 부모 클래스의 지정 이니셜라이저를 자동적으로 상속 받습니다.
 
-Unlike subclasses in Objective-C, Swift subclasses do not not inherit their superclass initializers by default. Swift’s approach prevents a situation in which a simple initializer from a superclass is automatically inherited by a more specialized subclass and is used to create a new instance of the subclass that is not fully or correctly initialized.
+- **Rule 2**
+    자식 클래스가 부모 클래스의 _모든_ 지정 이니셜라이저를, 위의 규칙 1에 의해 지정 이니셜라이저를 상속받아서 구현하든가, 자식 클래스 정의의 일부로서 사용자 정의 구현으로 제공한다면, 부모 클래스의 모든 편의 이니셜라이저를 자동적으로 상속받게 됩니다.
 
-If you want your custom subclass to present one or more of the same initializers as its superclass—perhaps to perform some customization during initialization—you can provide an overriding implementation of the same initializer within your custom subclass.
-
-If the initializer you are overriding is a designated initializer, you can override its implementation in your subclass and call the superclass version of the initializer from within your overriding version.
-
-If the initializer you are overriding is a convenience initializer, your override must call another designated initializer from its own subclass, as per the rules described above in Initializer Chaining.
+이 규칙은 자식 클래스가 추가적인 편의 클래스를 더할때도 적용이 됩니다.
 
 >NOTE
-Unlike methods, properties, and subscripts, you do not need to write the override keyword when overriding an initializer.
+자식 클래스는 규칙 2를 만족시키는 것의 일부로서 부모 클래스의 지정 이니셜라이저를 자식 클래스의 편의 이니셜라이저로 구현할 수 있습니다.
 
-### Automatic Initializer Inheritance
-
-As mentioned above, subclasses do not not inherit their superclass initializers by default. However, superclass initializers are automatically inherited if certain conditions are met. In practice, this means that you do not need to write initializer overrides in many common scenarios, and can inherit your superclass initializers with minimal effort whenever it is safe to do so.
-
-Assuming that you provide default values for any new properties you introduce in a subclass, the following two rules apply:
-
-**Rule 1**
-If your subclass doesn’t define any designated initializers, it automatically inherits all of its superclass designated initializers.
-
-**Rule 2**
-If your subclass provides an implementation of all of its superclass designated initializers—either by inheriting them as per rule 1, or by providing a custom implementation as part of its definition—then it automatically inherits all of the superclass convenience initializers.
-
-These rules apply even if your subclass adds further convenience initializers.
-
->NOTE
-A subclass can implement a superclass designated initializer as a subclass convenience initializer as part of satisfying rule 2.
-
-### Syntax for Designated and Convenience Initializers
-
-Designated initializers for classes are written in the same way as simple initializers for value types:
+### 지정 이니셜라이저와 편의 이니셜라이저의 문법
+클래스의 지정 이니셜라이저는 값 타입을 위한 단순 이니셜라이저와 같은 방식으로 작성됩니다.
 ```
 init(parameters) {
     statements
 }
 ```
-Convenience initializers are written in the same style, but with the convenience keyword placed before the init keyword, separated by a space:
+편의 이니셜라이저는 `init` 키워드 앞에 `convenience` 키워드를 공백으로 구분하여 위치하게 하는 것을 제외하면 같은 방식으로 작성됩니다.
 ```
 convenience init(parameters) {
     statements
 }
 ```
 
-### Designated and Convenience Initializers in Action
-
-The following example shows designated initializers, convenience initializers, and automatic initializer inheritance in action. This example defines a hierarchy of three classes called Food, RecipeIngredient, and ShoppingListItem, and demonstrates how their initializers interact.
-
-The base class in the hierarchy is called Food, which is a simple class to encapsulate the name of a foodstuff. The Food class introduces a single String property called name and provides two initializers for creating Food instances:
+### 실제로 해보는 지정 이지셜라이저와 편의 이니셜라이저
+다음 예제는 이정 이니셜라이저와 편의 이니셜라이저, 그리고 자동적 이니셜라이저 상속을 실제로 해몹니다. 이 예제는  `Food`, `RecipeIngredient` 그리고 `ShoppingListItem` 클래스들의 상속 계층을 정의합니다. 그리고 클래스들 간의 이니셜라이저가 어떻게 상호작용하는지 보여줄 것입니다.
+상속 계층의 베이스 클래스는 `Food`입니다. 이 클래스는 음식의 이름을 캡슐화 합니다. `Food` 클래스는 `String` 타입의 `name` 속성을 도입합니다. 그리고 `Food` 인스턴스를 생성하는데 두 개의 이니셜라이저를 제공합니다.
 ```
 class Food {
     var name: String
@@ -390,23 +372,21 @@ class Food {
     }
 }
 ```
-The figure below shows the initializer chain for the Food class:
-
+밑의 그림은 `Food` 클래스의 이니셜라이저 연쇄가 어떻게 되는지 보여줍니다.
 ![initializersexample01_2x.png](images/initializersexample01_2x.png)
 
-Classes do not have a default memberwise initializer, and so the Food class provides a designated initializer that takes a single argument called name. This initializer can be used to create a new Food instance with a specific name:
+클래스는 기본 멤버 단위 이니셜라이저를 가지고 있지 않습니다. 그리고 `Food` 클래스는 단일 인자 `name`을 받는 지정 이니셜라이저를 제공합니다. 이 이니셜라이저는 특정 이름으로 `Food` 인스턴스를 생성하는데 사용될 수 있습니다.
 ```
 let namedMeat = Food(name: "Bacon")
 // namedMeat's name is "Bacon"
 ```
-The init(name: String) initializer from the Food class is provided as a designated initializer, because it ensures that all stored properties of a new Food instance are fully initialized. The Food class does not have a superclass, and so the init(name: String) initializer does not need to call super.init() to complete its initialization.
-
-The Food class also provides a convenience initializer, init(), with no arguments. The init() initializer provides a default placeholder name for a new food by delegating across to the Food class’s init(name: String) with a name value of [Unnamed]:
+`Food` 클래스가 제공하는 `init(name: String)` 이니셜라이저는 `Food` 인스턴스의 모든 저장 속성이 완전히 초기화 되는 것을 보장하기에 _지정_ 이니셜라이저 입니다. `Food` 클래스는 부모 클래스를 가지지 않습니다. 또한 `init(name: String)` 이니셜라이저도 초기화를 완료하기 위해 `super.init()`을 호출할 필요가 없습니다.
+`Food` 클래스는 인자가 없는 `init()` 편의 이니셜라이저 또한 제공합니다. `init()` 이니셜라이저는 `Food` 클래스의 `init(name: String)` 을 대리하여, `[Unnamed]`값을 가진 `name`을 이름의 기본 플레이스홀더(placeholder)로서 제공합니다.
 ```
 let mysteryMeat = Food()
 // mysteryMeat's name is "[Unnamed]"
 ```
-The second class in the hierarchy is a subclass of Food called RecipeIngredient. The RecipeIngredient class models an ingredient in a cooking recipe. It introduces an Int property called quantity (in addition to the name property it inherits from Food) and defines two initializers for creating RecipeIngredient instances:
+클래스 상속 계층에서 두번째 클래스는 `Food` 클래스의 자식 클래스인 `RecipeIngredient` 입니다. `RecipeIngredient` 클래스는 요리 조리법의 재료를 모델링합니다. 이 클래스는 (`Food`에서 상속받은 `name` 속성에 더해) `Int` 타입의 `quantity` 속성을 도입합니다. 그리고 `RecipeIngredient`를 생성하기 위한 이니셜라이저 두개를 제공합니다.
 ```
 class RecipeIngredient: Food {
     var quantity: Int
@@ -419,27 +399,26 @@ class RecipeIngredient: Food {
     }
 }
 ```
-The figure below shows the initializer chain for the RecipeIngredient class:
-
+밑의 그림은 `RecipeIngredient`의 이니셜라이저 연쇄가 어떠한지 보여줍니다.
 ![initializersexample02_2x.png](images/initializersexample02_2x.png)
 
-The RecipeIngredient class has a single designated initializer, init(name: String, quantity: Int), which can be used to populate all of the properties of a new RecipeIngredient instance. This initializer starts by assigning the passed quantity argument to the quantity property, which is the only new property introduced by RecipeIngredient. After doing so, the initializer delegates up to the init(name: String) initializer of the Food class. This process satisfies safety check 1 from Two-Phase Initialization above.
+`RecipeIngredient` 클래스는 한개의 지정 이니셜라이저 `init(name: String, quantity: Int)`을 가지고 있습니다. 이 이니셜라이저는 새 `RecipeIngredient` 인스턴스의 모든 속성을 채우는데 쓰입니다. 이 이니셜라이저는  `RecipeIngredient` 클래스가 도입한 유일한 새 속성인  `quantity` 속성에 넘겨받은 `quantity` 인자를 할당하는 것으로 시작합니다. 그리고 위의 이니셜라이저는 `Food` 클래스의 `init(name: String)` 이니셜라이저를 대리 수행합니다. 이 과정은 위의 **이 단계 초기화**에 다온 안전 점검 1을 만족합니다.
 
-RecipeIngredient also defines a convenience initializer, init(name: String), which is used to create a RecipeIngredient instance by name alone. This convenience initializer assumes a quantity of 1 for any RecipeIngredient instance that is created without an explicit quantity. The definition of this convenience initializer makes RecipeIngredient instances quicker and more convenient to create, and avoids code duplication when creating several single-quantity RecipeIngredient instances. This convenience initializer simply delegates across to the class’s designated initializer.
+`RecipeIngredient`는 편의 이니셜라이저 `init(name: String)` 또한 정의합니다. 이 이니셜라이저는 넘겨받은 이름을 가진 `RecipeIngredient`인스턴스를 생성합니다. 이 편의 이니셜라이저는 생성될때 명시적인 재료 수량이 정해지지 않았다면 갯수가 1개라고 간주합니다. 이 편의 이니셜라이저를 정의함으로써 `RecipeIngredient` 인스턴스를 빠르고 더 편하게 생성 할 수 있습니다. 그리고 재료 수량이 한개인 `RecipeIngredient` 인스턴스를 몇개 만들때의 코드 중복을 피하게 합니다. 이 편의 이니셜라이저는 단순히 클래스의 지정 이니셜라이저를 대리합니다. 
 
-Note that the init(name: String) convenience initializer provided by RecipeIngredient takes the same parameters as the init(name: String) designated initializer from Food. Even though RecipeIngredient provides this initializer as a convenience initializer, RecipeIngredient has nonetheless provided an implementation of all of its superclass’s designated initializers. Therefore, RecipeIngredient automatically inherits all of its superclass’s convenience initializers too.
+눈여겨 봐야 할 것은, `RecipeIngredient`이 제공하는 `init(name: String)` 편의 이니셜라이저가, `Food`의 지정 이니셜라이저인 `init(name: String)`과 같은 파라메터를 받는다는 것 입니다. `RecipeIngredient`가 이 이니셜라이저를 편의 이니셜라이저로서 제공한다고 해도, `RecipeIngredient`는 부모 클래스의 모든 지정 이니셜라이저를 제공한 셈이 됩니다. 따라서 `RecipeIngredient`는 자동적으로 부모 클래스의 편의 이니셜라이저를 모두 상속받게 됩니다.
 
-In this example, the superclass for RecipeIngredient is Food, which has a single convenience initializer called init(). This initializer is therefore inherited by RecipeIngredient. The inherited version of init() functions in exactly the same way as the Food version, except that it delegates to the RecipeIngredient version of init(name: String) rather than the Food version.
+이 예제에서 `RecipeIngredient`의 부모 클래스인 `Food`는 하나의 편의 이니셜라이저 `init()`을 제공합니다. 따라서 이 이니셜라이저는 `RecipeIngredient`에게 상속되게 됩니다. `init()`의 상속된 버전은 정확하게 `Food` 버전과 똑같은 기능을 합니다. 대리 수행하는 이니셜라이저`init(name: String)`을 `Food` 버전이 아니라 `RecipeIngredient` 버전을 사용하여 대리 한다는 것을 제외하면 말이죠.
 
-All three of these initializers can be used to create new RecipeIngredient instances:
+이 세 이니셜라이저를 새 `RecipeIngredient` 인스턴스를 생성하는데 전부 사용할 수 있습니다.
 ```
 let oneMysteryItem = RecipeIngredient()
 let oneBacon = RecipeIngredient(name: "Bacon")
 let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
 ```
-The third and final class in the hierarchy is a subclass of RecipeIngredient called ShoppingListItem. The ShoppingListItem class models a recipe ingredient as it appears in a shopping list.
+클래스 상속 계층에서 세번째이자 마지막 클래스는 `RecipeIngredient`의 자식 클래스인 `ShoppingListItem`입니다. `ShoppingListItem`는 구매 목록에 있는 조리법의 재료를 모델링합니다.
 
-Every item in the shopping list starts out as “unpurchased”. To represent this fact, ShoppingListItem introduces a Boolean property called purchased, with a default value of false. ShoppingListItem also adds a computed description property, which provides a textual description of a ShoppingListItem instance:
+구매 목록에 있는 모든 품목(itme)들은 "unpurchased" 상태로 시작하게 됩니다. 이 사실을 표현하기 위해 `ShoppingListItem`은 기본값을 `false`로 가지는 `puchased` 불리언 속성을 도입합니다. `ShoppingListItem`은 또한 `ShoppingListItem` 인스턴스를 글로 설명하기 위해 산출한 `description` 속성을 추가합니다.
 ```
 class ShoppingListItem: RecipeIngredient {
     var purchased = false
@@ -452,15 +431,15 @@ class ShoppingListItem: RecipeIngredient {
 ```
 
 >NOTE
-ShoppingListItem does not define an initializer to provide an initial value for purchased, because items in a shopping list (as modeled here) always start out unpurchased.
+`ShoppingListItem`은 `purchased`의 초기값을 제공하는 이니셜라이저를 정의하지 않습니다. 여기 모델링된 구매 목록에 추가되는 아이템은 언제나 구매되지 않은(unpurchased) 상태로 시작하기 때문입니다.
 
-Because it provides a default value for all of the properties it introduces and does not define any initializers itself, ShoppingListItem automatically inherits all of the designated and convenience initializers from its superclass.
+이 클래스가 도입한 모든 속성의 초기값을 제공하고, 어떤 이니셜라이저도 스스로 정의하지 않기 때문에 `ShoppingListItem`은 자동적으로 _모든_ 지정 이니셜라이저와 편의 이니셜라이저를 부모 클래스에서 상속받습니다.
 
-The figure below shows the overall initializer chain for all three classes:
+밑의 그림은 전체 클래스 세개의 이니셜라이저 연쇄를 보여줍니다.
 
 ![initializersexample03_2x.png](images/initializersexample03_2x.png)
 
-You can use all three of the inherited initializers to create a new ShoppingListItem instance:
+`ShoppingListItem` 인스턴스를 만드는데 세개의 상속받은 이니셜라이저 전부를 이용할 수 있습니다.
 ```
 var breakfastList = [
     ShoppingListItem(),
@@ -476,15 +455,15 @@ for item in breakfastList {
 // 1 x bacon ✘
 // 6 x eggs ✘
 ```
-Here, a new array called breakfastList is created from an array literal containing three new ShoppingListItem instances. The type of the array is inferred to be ShoppingListItem[]. After the array is created, the name of the ShoppingListItem at the start of the array is changed from "[Unnamed]" to "Orange juice" and it is marked as having been purchased. Printing the description of each item in the array shows that their default states have been set as expected.
+`breakfastList`라는 새 배열은 배열 문자(array literal)로 만들어져 세개의 새 `ShoppingListItem` 인스턴스를 담습니다. 배열의 타입은 `ShoppingListItem[]`가 될 것으로 추론하게 됩니다. 배열이 생성된 후, 배열의 첫번째 `ShoppingListItem`의 이름은 `"[Unnamed]"`에서 `"Orange juice"`로 바뀌게 됩니다. 그리고 구매가 되었다고 표시하게 됩니다. 배열 안의 각 품목의 설명을 출력하게 하여 기대한 대로 기본 상태가 설정되었음을 보일 수 있습니다.
 
-## Setting a Default Property Value with a Closure or Function
+## 클로저나 함수로 기본 속성 값을 설정하기
 
-If a stored property’s default value requires some customization or setup, you can use a closure or global function to provide a customized default value for that property. Whenever a new instance of the type that the property belongs to is initialized, the closure or function is called, and its return value is assigned as the property’s default value.
+만약 저장 속성의 기본 값이 약간의 사용자 정의나 설정을 요구한다면, 클로저나 전역 함수를 이용하여 사용자 정의된 기본 값을 속성에 제공할 수 있습니다. 해당 속성이 속해있는 새 인스턴스가 초기화 될 때마다, 해당 클로저나 함수가 호출됩니다. 그리고 그 반환 값이 속성의 기본 값으로 사용됩니다.
 
-These kinds of closures or functions typically create a temporary value of the same type as the property, tailor that value to represent the desired initial state, and then return that temporary value to be used as the property’s default value.
+그러한 클로저나 함수들은 대개 속성의 타입과 같은 임시 값을 만들어서, 그 값을 원하는 초기 상태로 맞춰주고, 그 임시 값을 속성의 기본 값으로 사용되게 반환합니다.
 
-Here’s a skeleton outline of how a closure can be used to provide a default property value:
+이 예제는 클로저가 어떻게 속성의 기본값을 제공할 수 있게 되는지 전체적인 뼈대를 보여줍니다.
 ```
 class SomeClass {
     let someProperty: SomeType = {
@@ -494,18 +473,18 @@ class SomeClass {
         }()
 }
 ```
-Note that the closure’s end curly brace is followed by an empty pair of parentheses. This tells Swift to execute the closure immediately. If you omit these parentheses, you are trying to assign the closure itself to the property, and not the return value of the closure.
+클로저의 닫는 중괄호 바로 뒤에 빈 괄호 한쌍이 있는 것에 주의해 주십시오. 이는 스위프트에게 클로저를 즉시 실행 시키라고 지시합니다. 만약 이 괄호를 생략한다면 클로저의 반환 값이 아니라, 클로저 그 자체를 속성에 할당하려 시도하는 것이 됩니다.
 
 >NOTE
-If you use a closure to initialize a property, remember that the rest of the instance has not yet been initialized at the point that the closure is executed. This means that you cannot access any other property values from within your closure, even if those properties have default values. You also cannot use the implicit self property, or call any of the instance’s methods.
+만약 클로저를 이용하려 속성을 초기화 하려고 한다면 다음을 기억해 두십시오. 클로저의 실행이 된 시점에서는 인스턴스의 나머지 부분은 아직 초기화가 되지 않은 상태입니다. 이는 클로저 안에서 다른 속성 값에 접근 할 수 없다는 것을 뜻합니다. 속성들이 기본값을 가지고 있다고 해도 말이죠. 또한 암시적 `self` 속성을 사용하거나, 인스턴스의 다른 메소드를 호출 할 수 없습니다.
 
-The example below defines a structure called Checkerboard, which models a board for the game of Checkers (also known as Draughts):
+이 예제는 `Checkerboard` 구조체를 정의하여 _Draughts_라고도 알려진 _체커_ 게임의 보드를 모델링합니다.
 
 ![checkersboard_2x.png](images/checkersboard_2x.png)
 
-The game of Checkers is played on a ten-by-ten board, with alternating black and white squares. To represent this game board, the Checkerboard structure has a single property called boardColors, which is an array of 100 Bool values. A value of true in the array represents a black square and a value of false represents a white square. The first item in the array represents the top left square on the board and the last item in the array represents the bottom right square on the board.
+_체커_ 게임은 흑백 칸이 번갈아 있는 10 * 10 판 위에서 플레이합니다. 이 게임판을 표현하기 위해 `Checkerboard` 구조체는 길이가 100이고, `Bool` 값을 가지는 `boardColors`라는 단일 속성을 가집니다. 배열에서 `ture` 값은 검은 칸을 표현하고, `false` 값은 흰색 칸을 표현합니다. 배열의 첫번째 아이템은 게임판에서 제일 좌상단의 칸을 표현하고, 마지막 아이템은 제일 게임판에서 우하단의 칸을 표현합니다.
 
-The boardColors array is initialized with a closure to set up its color values:
+`boardColors` 배열은 색상 값을 설정하기 위해 클로저를 사용하여 초기화가 됩니다.
 ```
 struct Checkerboard {
     let boardColors: Bool[] = {
@@ -525,7 +504,7 @@ struct Checkerboard {
     }
 }
 ```
-Whenever a new Checkerboard instance is created, the closure is executed, and the default value of boardColors is calculated and returned. The closure in the example above calculates and sets the appropriate color for each square on the board in a temporary array called temporaryBoard, and returns this temporary array as the closure’s return value once its setup is complete. The returned array value is stored in boardColors and can be queried with the squareIsBlackAtRow utility function:
+새 `Checkerboard` 인스턴스가 생성될때, 해당 클로저가 실행되어 `boardColors`의 기본 값이 계산되고 반환됩니다. 위 예제에서 보이는 클로저는 게임판 위의 각각의 칸에 알맞은 색을 계산하여 임시 배열인 `temporaryBoard`에 설정합니다. 그리고 설정이 끝나면 이 임시 배열은 클로저의 반환값으로서 반환이 됩니다. 이 반환된 배열 값은 `boardColors` 에 저장이 되고, 기능성 함수 `squareIsBlackAtRow`에 의해 조회 될 수 있습니다.
 ```
 let board = Checkerboard()
 println(board.squareIsBlackAtRow(0, column: 1))
