@@ -143,3 +143,74 @@ fixedPoint.moveByX(2.0, y: 3.0)
 ```
 
 ##변하는(`Mutating`) 메소드안에서 `self`에 할당하기
+변하는(`Mutating`) 메소드는 암시적으로 `self`프로퍼티에 완전한 새 인스턴스를 할당할 수도 있다. 위 예제에서 보여준 `Point`는 아래와 같이 재 작성해볼 수 있다.
+```
+struct Point {
+    var x = 0.0, y = 0.0
+    mutating func moveByX(deltaX: Double, y deltaY: Double) {
+        self = Point(x: x + deltaX, y: y + deltaY)
+    }
+}
+```
+이 버전의 변하는 `moveByX` 메소드는 `x`값과 `y`값을 받아 대상 위치에 설정에 완전히 새로운 구조체를 만든다. 대안 버전의 메소드 호출 최종 결과는 이전 버전 호출에서와 정확하게 동일할 것이다.
+열거형에서 변하는 메소드는 동일 열거형에서 다른 구성원이 될 수 있게 암시적 self 매개변수를 설정할 수 있다.
+```
+enum TriStateSwitch {
+    case Off, Low, High
+    mutating func next() {
+        switch self {
+        case Off:
+            self = Low
+        case Low:
+            self = High
+        case High:
+            self = Off
+        }
+    }
+}
+var ovenLight = TriStateSwitch.Low
+ovenLight.next()
+// ovenLight is now equal to .High
+ovenLight.next()
+// ovenLight is now equal to .Off
+```
+이 예제에서 열거형은 3가지 상태 전이가 정의되어 있다. 3가지 전력 상태 (끔 `Off`, 낮음 `Low`, 높음 `High`) 사이의 전이 주기는 `next` 메소드가 호출되는 매회이다.
+
+##타입 메소드
+위에서 설명한데로, 인스턴스 메소드는 특정타입의 인스턴스에서 호출되는 메소드이다. 타입 자체에서 호출하는 메소드 또한 정의할 수 있다. 이런 종류의 메소드를 타입 메소드라고 한다. 클래스를 위한 타입 메소드는 `func` 키워드 앞에 `class` 키워드를 써서 그리고 구조체와 열거형을 위한 타입 메소드는 `func` 키워드 앞에 `static` 키워드를 써서 지칭할 수 있다.
+>노트
+오브젝티브씨에서는 오브젝티브씨 클래스를 위한 타입 단계 메소드만을 정의할 수 있었다. 스위프트에서는 모든 클래스, 구조체, 열거형에 타입 단계 메소드를 정의할 수 있다. 개별 타입 메소드는 지원하는 타입에 대해 명시적으로 범위를 지정한다.
+
+타입 메소드는 인스턴스 메소드처럼 점표기법(dot syntax)으로 호출한다. 그러나 타입에 대한 타입 메소드를 호출해야지 그 타입에 대한 인스턴스를 호출하는 것이 아니다. 여기에 어떻게 `SomeClass`라는 클래스에 타입 메소드를 호출하는지가 있다.
+```
+class SomeClass {
+    class func someTypeMethod() {
+        // type method implementation goes here
+    }
+}
+SomeClass.someTypeMethod()
+```
+타입 메소드 본체 안에서는 암시적 `self` 프로퍼티는 타입에 대한 인스턴스가 아니라 타입 그 자체를 가르킨다. 구조체와 열거형에서는 마치 인스턴스 프로퍼티와 인스턴스 메소드 매개변수에서 그랬던 것처럼 `static` 프로퍼티와 `static` 메소드 매개변수 사이의 명확하게 하기 위해 `self`를 쓸 수 있다라는 것을 뜻한다.
+More generally, any unqualified method and property names that you use within the body of a type method will refer to other type-level methods and properties.
+좀 더 일반적으로, 어떤 타입 메소드의 본체 안에서 사용하는 제한없는 메소드와 프로퍼티는 다른 타입단계 메소드와 프로퍼티를 참조 할 것이다. 타입 메소드는 어떤 다른 타입 메소드의 이름과 함께 또다른 타입 메소드를 호출할 수 있다. 비슷하게, 구조체와 열거형 타입 메소드는 타입 이름 접두사 없이 정적 프로퍼티 이름을 사용해서 정적 프로퍼티에 접근할 수 이다.
+아래 예제는 여러 레벨이나 게임 단계를 통해 플레이어의 진척도를 추적하는 `LevelTracker`이란 구조체를 정의한다. 어떤 레벨을 끝낼때마다 그 레벨은 장비에 있는 모든 플레이어를 풀 수 있다.  `LevelTracker` 구조체는 정적 프로퍼티와 메소드를 사용해 게임이 풀리는 레벨에 도달했는지 여부를 추적한다. 또한 개별 플레이어의 현재 수준에 대해 또한 추적한다.
+```
+struct LevelTracker {
+    static var highestUnlockedLevel = 1
+    static func unlockLevel(level: Int) {
+        if level > highestUnlockedLevel { highestUnlockedLevel = level }
+    }
+    static func levelIsUnlocked(level: Int) -> Bool {
+        return level <= highestUnlockedLevel
+    }
+    var currentLevel = 1
+    mutating func advanceToLevel(level: Int) -> Bool {
+        if LevelTracker.levelIsUnlocked(level) {
+            currentLevel = level
+            return true
+        } else {
+            return false
+        }
+    }
+}
+```
