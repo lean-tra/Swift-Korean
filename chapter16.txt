@@ -259,75 +259,68 @@ _편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라�
 >NOTE
 이 규칙들은 각각의 클래스를 생성하는 방법에 영향을 주지 않습니다. 위 다이어그램의 어느 이니셜라이저라도 자기가 속해야 될, 완전히 초기화된 클래스 인스턴스를 만드는데 쓰일 수 있습니다. 이 규칙은 오직 클래스 구현의 작성에만 영향을 끼칩니다.
 
-The figure below shows a more complex class hierarchy for four classes. It illustrates how the designated initializers in this hierarchy act as “funnel” points for class initialization, simplifying the interrelationships among classes in the chain:
 밑의 그림은 더 복잡한 4개의 클래스 간의 계층도를 나타냅니다. 이 그림은 지정 이니셜라이저가 어떻게 이 계층도의 클래스 초기화 과정에서 "깔때기"처럼 작동하고, 연쇄에서 클래스간의 관계를 단순화하는지 보여줍니다.
 
 ![initializerdelegation02_2x.png](images/initializerdelegation02_2x.png)
 
 
-### Two-Phase Initialization
-
-Class initialization in Swift is a two-phase process. In the first phase, each stored property is assigned an initial value by the class that introduced it. Once the initial state for every stored property has been determined, the second phase begins, and each class is given the opportunity to customize its stored properties further before the new instance is considered ready for use.
-
-The use of a two-phase initialization process makes initialization safe, while still giving complete flexibility to each class in a class hierarchy. Two-phase initialization prevents property values from being accessed before they are initialized, and prevents property values from being set to a different value by another initializer unexpectedly.
+### 이 단계 초기화
+스위프트의 초기화는 두 단계의 과정을 거칩니다. 첫번째 단계에서는 해당 클래스가 가지는 각각의 저장 속성에 초기값을 할당합니다. 모든 저장 속성의 초기 상태가 정해지고 나면, 두번째 단계가 시작됩니다. 두번째 단계에서는 클래스 인스턴스가 사용될 준비가 되기 전까지, (역주: 상속 트리 상에서의)각각의 클래스가 저장 속성을 사용자 정의할 기회를 가집니다.
+이 단계 초기화 과정을 사용하는 것은 초기화를 안전하게 하면서도, 클래스 상속 계층 상에서 각각의 클래스가 완전한 유연성을 가지게 합니다. 이 단계 초기화는 속성 값이 초기화 되기 전에 접근되는 것을 방지하며, 다른 이니셜라이저에 의해 의도치 않게 다른 값이 설정되는 것을 방지합니다.
 
 >NOTE
-Swift’s two-phase initialization process is similar to initialization in Objective-C. The main difference is that during phase 1, Objective-C assigns zero or null values (such as 0 or nil) to every property. Swift’s initialization flow is more flexible in that it lets you set custom initial values, and can cope with types for which 0 or nil is not a valid default value.
+스위프트의 이 단계 초기화 과정은 오브젝티브 C의 초기화와 비슷합니다. 주요한 차이점은 첫번째 단계에 있습니다. 오브젝티브 C는 0이나 널(null) 값(`0` 또는 `nil`)을 모든 속성에 할당합니다. 스위프트의 초기화 흐름은 좀 더 유연하려 사용자 정의 초기값을 설정할 수 있게 해줍니다. 그리고 
+`0`이나 `nil`이 기본값으로 유효하지 않은 타입에 대처할 수 있게 합니다.
 
-Swift’s compiler performs four helpful safety-checks to make sure that two-phase initialization is completed without error:
+스위프트의 컴파일러는 이 단계 초기화가 에러없이 완료 될 수 있게 4가지 안전 점검(safety check)을 수행합니다.
 
-**Safety check 1**
-A designated initializer must ensure that all of the properties introduced by its class are initialized before it delegates up to a superclass initializer.
+- **안전 점검 1**
+    지정 이니셜러이저는 해당 클래스에서 도입된 모든 속성이 초기화 되었는지를 부모 클래스의 이니셜라이저를 대리하기 전에 확실히 하여야 합니다.
 
-As mentioned above, the memory for an object is only considered fully initialized once the initial state of all of its stored properties is known. In order for this rule to be satisfied, a designated initializer must make sure that all its own properties are initialized before it hands off up the chain.
+위에 언급된 것처럼, 객체를 위한 메모리는 저장 속성의 초기 상태가 알려져야 완전히 초기화 되었다고 간주합니다. 이 규칙을 만족시키기 위해서 지정 이니셜라이저가 초기화 연쇄를 위로 전달하기 전에 자신의 속성이 초기화 되었음을 확실히 해야합니다.
 
-**Safety check 2**
-A designated initializer must delegate up to a superclass initializer before assigning a value to an inherited property. If it doesn’t, the new value the designated initializer assigns will be overwritten by the superclass as part of its own initialization.
+- **안전 점검 2**
+    지정 이니셜라이저는 상속받은 속성에 값을 할당하기 전에 부모 클래스의 이니셜라이저를 대리 수행해야 합니다. 만약 그렇게 하지 않는다면, 지정 이니셜라이저가 할당한 새 값은 부모 클래스의 초기화 과정중에 덮어 씌워질 것입니다.
 
-**Safety check 3**
-A convenience initializer must delegate to another initializer before assigning a value to any property (including properties defined by the same class). If it doesn’t, the new value the convenience initializer assigns will be overwritten by its own class’s designated initializer.
+- **안전 점검 3**
+    편의 이니셜라이저는 (역주: 클래스 상속 계층상) 같은 클래스 내부에서 정의된 속성을 포함한, 어떤 속성에라도 값을 할당하기 전에 다른 이니셜라이저를 대리 수행해야 합니다. 그렇게 하지 않을 경우 편의 이니셜라이저가 할당한 새 값은 해당 클래스의 지정 이니셜라이저에 의해 덮어씌워질 것입니다.
+    
 
-**Safety check 4**
-An initializer cannot call any instance methods, read the values of any instance properties, or refer to self as a value until after the first phase of initialization is complete.
+- **Safety check 4**
+    이니셜라이저는 어떠한 인스턴스 메소드도 호출 할 수 없습니다. 어떠한 인스턴스의 속성도 읽을 수 없습니다. 또한 `self`를 초기화의 첫 단계가 끝나기 전에 참조할 수 없습니다.
 
-The class instance is not fully valid until the first phase ends. Properties can only be accessed, and methods can only be called, once the class instance is known to be valid at the end of the first phase.
+클래스 인스턴스는 첫 단계가 끝나기 전까지는 완전히 유효하지 않습니다. 첫 단계가 끝나고 클래스 인스턴스가 유효하다고 알려져야만 속성에 접근 가능하고, 메소르를 호출 할 수 있습니다.
 
-Here’s how two-phase initialization plays out, based on the four safety checks above:
+여기서 어떻게 위의 4가지 안전 점검에 의한 두 단계 초기화가 진행되는지 설명합니다.
 
 **Phase 1**
 
-- A designated or convenience initializer is called on a class.
-- Memory for a new instance of that class is allocated. The memory is not yet initialized.
-- A designated initializer for that class confirms that all stored properties introduced by that --- class have a value. The memory for these stored properties is now initialized.
-- The designated initializer hands off to a superclass initializer to perform the same task for its own stored properties.
-- This continues up the class inheritance chain until the top of the chain is reached.
-- Once the top of the chain is reached, and the final class in the chain has ensured that all of its stored properties have a value, the instance’s memory is considered to be fully initialized, and phase 1 is complete.
+- 클래스의 지정 이니셜라이저 또는 편의 이니셜라이저가 호출됩니다.
+- 클래스 인스턴스를 위한 메모리가 할당됩니다. 메모리는 아직 초기화 되지 않았습니다.
+- 클래스의 지정 이니셜라이저가 해당 클래스에 의해 도입된 모든 저장 속성이 값을 가졌음을 확인합니다. 해당 저장 속성을 위한 메모리는 이제 초기화 되었습니다.
+- 지정 이니셜라이저는 부모 클래스 이니셜라이저로 같은 작업은 해당 클래스가 행하게 (순서를) 넘깁니다.
+- 이 작업의 연쇄는 클래스 상속 계층의 맨 꼭대기에 다다를때까지 계속 됩니다
+- 연쇄의 꼭대기에 다다르면, 연쇄의 마지막 클래스는 모든 저장 속성이 값을 가진 것을 확실히 합니다. 그러면 인스턴스의 메모리는 완전히 초기화 되었다고 간주되고, 첫 단계가 끝납니다.
 
 **Phase 2**
 
-- Working back down from the top of the chain, each designated initializer in the chain has the option to customize the instance further. Initializers are now able to access self and can modify its properties, call its instance methods, and so on.
-- Finally, any convenience initializers in the chain have the option to customize the instance and to work with self.
-Here’s how phase 1 looks for an initialization call for a hypothetical subclass and superclass:
+- 연쇄의 꼭대기에서 거꾸로 내려오면서 작업을 하여, 연쇄안의 각각의 지정 이니셜라이저는 추가로 인스턴스를 사용자 정의할 수 있는 선택권이 있습니다. 이니셜라이저는 이제 `self`에 접근 가능하고, 자신의 속성을 변경하거나, 인스턴스 메소드를 호출하거나 할 수 있습니다.
+- 마지막으로, 연쇄 안의 어떤 편의 이니셜라이저든 인스턴스를 사용자 정의 할 수 있는 선택권이 있으며, `self`를 이용하여 작업할 수 있습니다.
 
+초기화 호출의 첫 단계가 어떻게 보이는지 가상의 자식 클래스와 부모 클래스를 이용하여 보여줍니다.
 ![twophaseinitialization01_2x.png](images/twophaseinitialization01_2x.png)
 
-In this example, initialization begins with a call to a convenience initializer on the subclass. This convenience initializer cannot yet modify any properties. It delegates across to a designated initializer from the same class.
+이 예제에서 초기화는 자식 클래스의 편의 이니셜라이저를 호출 하는 것으로 시작합니다. 이 편의 이니셜라이저는 아직 어떤 속성도 변경할 수 없습니다. 편의 이니셜라이저는 같은 클래스 안의 지정 이니셜라이저를 대리 실행합니다.
+지정 이니셜라이저는 안전 점검 1에 따라, 모든 자식 클래스의 속성이 값을 가졌는지 확실히 합니다. 그 후에 지정 이니셜라이저는 부모 클래스의 지정 이니셜라이저를 불러 초기화 연쇄를 위로 올립니다.
+부모 클래스의 지정 이니셜라이저는 부모 클래스의 속성이 모두 값을 가졌는지 확실히 합니다. 초기화를 해야할 부모 클래스가 없기 때문에, 더 이상의 대리 수행(delegation)은 필요치 않습니다.
+부모 클래스의 속성들이 초기 값을 가지는 순간부터, 인스턴스의 메모리는 완전히 초기화가 되었다고 간주되며, 첫 단계는 끝이 납니다.
 
-The designated initializer makes sure that all of the subclass’s properties have a value, as per safety check 1. It then calls a designated initializer on its superclass to continue the initialization up the chain.
-
-The superclass’s designated initializer makes sure that all of the superclass properties have a value. There are no further superclasses to initialize, and so no further delegation is needed.
-
-As soon as all properties of the superclass have an initial value, its memory is considered fully initialized, and Phase 1 is complete.
-
-Here’s how phase 2 looks for the same initialization call:
-
+여기 두번째 단계가 같은 초기화 호출에서 어떻게 보이는지 설명이 있습니다.
 ![twophaseinitialization02_2x.png](images/twophaseinitialization02_2x.png)
 
-The superclass’s designated initializer now has an opportunity to customize the instance further (although it does not have to).
-
-Once the superclass’s designated initializer is finished, the subclass’s designated initializer can perform additional customization (although again, it does not have to).
-
-Finally, once the subclass’s designated initializer is finished, the convenience initializer that was originally called can perform additional customization.
+부모 클래스의 지정 이니셜라이저는 인스턴스를 추가적으로 사용자 정의할 수 있는 기회가 있습니다. 물론 하지 않아도 됩니다.
+부모 클래스의 지정 이니셜라이저가 종료되면, 자식 클래스의 이니셜라이저가 추가 사용자 정의를 수행할 수 있습니다. 이번에도 물론, 하지 않아도 됩니다.
+마지막으로, 자식 클래스의 지정 이니셜라이저가 종료되면, 처음에 지정 이니셜라이저를 호출한 편의 이니셜라이저가 추가적인 사용자 정의를 수행합니다.
 
 ### Initializer Inheritance and Overriding
 
