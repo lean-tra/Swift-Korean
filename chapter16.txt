@@ -217,7 +217,6 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
     size: Size(width: 3.0, height: 3.0))
 // centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 ```
-The init(center:size:) initializer could have assigned the new values of origin and size to the appropriate properties itself. However, it is more convenient (and clearer in intent) for the init(center:size:) initializer to take advantage of an existing initializer that already provides exactly that functionality.
 `init(center:size:)` 이니셜라이저는 새 `origin`과 `size`값을 적절한 속성에 할당받게 할 수 있습니다. 하지만 `init(center:size:)` 이니셜라이저를 이용하는게 더 편하고 의도가 명확하며, 이미 있는 이니셜라이저가 제공하는 기능을 활용할 수 있는 장점이 있습니다.
 
 >NOTE
@@ -234,7 +233,7 @@ _지정 이니셜라이저_는 클래스의 주 이니셜라이저입니다. 지
 _편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라이저입니다. 편의 이니셜라이저를 정의하여, 같은 클래스 내의 지정 이니셜라이저를 호출하는 편의 이니셜라이저를 만들 수 있습니다. 이 편의 이니셜라이져를 통해 호출하는 지정 이니셜라이저의 몇몇 파라메터를 기본 값으로 설정할 수 있습니다. 또한 편의 이니셜라이저를 정의하여 특정 쓰임새나 입력 값 타입에 대한 클래스 인스턴스를 만들 수 있습니다.
 클래스가 필요로 하지 않는다면 편의 이니셜라이저를 제공할 필요는 없습니다. 편의 이니셜라이저는 보통 초기화 패턴을 단축하거나, 클래스의 의도를 명확하게 할때 만듭니다.
 
-### Initializer Chaining
+### 이니셜라이저 연쇄
 지정 이니셜라이저와 편의 이니셜라이저의 관계를 단순화 하기 위해, 스위프트는 다음의 3개 규칙을 이니셜라이저간의 델리게이션에 적용합니다.
 
 - **Rule 1**
@@ -322,18 +321,13 @@ _편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라�
 부모 클래스의 지정 이니셜라이저가 종료되면, 자식 클래스의 이니셜라이저가 추가 사용자 정의를 수행할 수 있습니다. 이번에도 물론, 하지 않아도 됩니다.
 마지막으로, 자식 클래스의 지정 이니셜라이저가 종료되면, 처음에 지정 이니셜라이저를 호출한 편의 이니셜라이저가 추가적인 사용자 정의를 수행합니다.
 
-### Initializer Inheritance and Overriding
-
-Unlike subclasses in Objective-C, Swift subclasses do not not inherit their superclass initializers by default. Swift’s approach prevents a situation in which a simple initializer from a superclass is automatically inherited by a more specialized subclass and is used to create a new instance of the subclass that is not fully or correctly initialized.
-
-If you want your custom subclass to present one or more of the same initializers as its superclass—perhaps to perform some customization during initialization—you can provide an overriding implementation of the same initializer within your custom subclass.
-
-If the initializer you are overriding is a designated initializer, you can override its implementation in your subclass and call the superclass version of the initializer from within your overriding version.
-
-If the initializer you are overriding is a convenience initializer, your override must call another designated initializer from its own subclass, as per the rules described above in Initializer Chaining.
-
+### 이니셜라이저 상속과 오버라이딩
+오브젝티브 C의 자식 클래스와는 다르게, 스위프트의 자식 클래스는 부모 클래스의 이니셜라이저를 기본적으로 상속받지 않습니다. 스위프트의 이러한 접근 방식은 부모 클래스의 단순한 이니셜라이저가 자동적으로 더 복잡한 자식 클래스에 상속되어, 자식 클래스의 새 인스턴스를 생성할때 완전하지 않게 또는 올바르지 않게 초기화되는 것을 방지합니다.
+만약 자식 클래스가 부모 클래스와 똑같은 이니셜라이저를 하나 이상 가지게 하고 싶다면, - 아마도 약간의 사용자 정의를 초기화 과정중에 수행할  -  같은 이니셜라이져를 사용자 정의 자식 클래스에서 오버라이드 하려 구현해 제공할 수 있습니다.
+만약 오버라이드 하려는 이니셜라이저가 지정 이니셜라이져라면, 그 구현을 자식 클래스에서 오버라이드합니다. 그리고 부모 클래스 버전의 이니셜라이저를 오버라이딩 버전에서 호출합니다.
+만약 오버라이드 하려는 이니셜라이저가 편의 이니셜라이저라면, 오버라이드한 이니셜라이저는 반드시 해당 자식 클래스 안의 지정 이니셜라이저를 호출해야 합니다. 위의 이니셜라이저 연쇄에서 설명한 것처럼 말이죠.
 >NOTE
-Unlike methods, properties, and subscripts, you do not need to write the override keyword when overriding an initializer.
+메소드, 속성, 서브스크립트와는 달리 이니셜라이는 오버라이드 할때 `override` 키워드가 필요하지 않습니다.
 
 ### Automatic Initializer Inheritance
 
