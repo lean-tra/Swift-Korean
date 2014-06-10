@@ -214,3 +214,4 @@ struct LevelTracker {
     }
 }
 ```
+`LevelTracker` 구조체는 어떤 플레이어가 락을 풀고 도달한 가장 높은 레벨를 추적한다. 이 값은 `highestUnlockedLevel`이라고 불리는 정적 프로퍼티이다.
