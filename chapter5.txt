@@ -1,9 +1,7 @@
 # 05 문자열과 문자 (Strings and Characters)
 > Translator : 해탈 (kimqqyun@gmail.com)
 
-# 문자열과 문자 (Strings and Characters)
-
-문자열은 `"hello, world"` 또는 `"albatross"` 와 같은 문자의 컬렉션입니다. Swift 문자열은 문자열 타입으로 표시되며 이는 문자 타입의 컬렉션 값 표현입니다.
+_문자열_은 `"hello, world"` 또는 `"albatross"` 와 같은 문자의 컬렉션입니다. Swift 문자열은 문자열 타입으로 표시되며 이는 문자 타입의 컬렉션 값 표현입니다.
 
 Swift 문자열 및 문자 타입은 코드와 함께 텍스트 작업에서 유니코드호환을 완벽호환하며 빠릅니다. 문자 생성 및 조작을 위한 구문은 C 문자열과 유사한 구문을 사용하여 가볍게 읽을 수 있습니다. 문자열 연결은 두 문자열을 추가할 때 `+` 연산자를 추가하는 것만큼 간단하며 문자열의 가변성은 Swift의 다른 값과 상수나 변수 그리고 다른 값들의 선택으로 관리됩니다.
 
@@ -12,11 +10,8 @@ Swift의 문자열 유형은 빠르고 현대적인 구현에도 불구하고 �
 문자열 삽입 과정에서 상수, 변수, 리터럴 및 긴 문자열을 삽입할 수 있습니다. 이것은 사용자 정의 문자열 값을 만들어서 보여주거나 저장을 쉽게 할 수 있습니다.
 
 
-> NOTE
->
-> Swift의 문자열 타입은 Foundation의 NSString 클래스에 연결됩니다. 당신은 Cocoa 또는 Cocoa Touch의 Foundation 프레임워크로 작업하는 경우 NSString의 API를 이용하여 문자열 값 호출을 만드는 것이 가능하며 또한 이 장에서 설명한 문자열 기능도 사용 가능합니다. 또한, NSString의 API 인스턴스를 필요로 하는 문자열 값도 사용 가능합니다.
->
->Foundation 과 Cocoa 에 대한 자세한 정보는 _Using Swift With Cocoa and Objective-C_ 를 참조하십시오.
+> NOTE Swift의 문자열 타입은 Foundation의 NSString 클래스에 연결됩니다. 당신은 Cocoa 또는 Cocoa Touch의 Foundation 프레임워크로 작업하는 경우 NSString의 API를 이용하여 문자열 값 호출을 만드는 것이 가능하며 또한 이 장에서 설명한 문자열 기능도 사용 가능합니다. 또한, NSString의 API 인스턴스를 필요로 하는 문자열 값도 사용 가능합니다.
+Foundation 과 Cocoa 에 대한 자세한 정보는 _Using Swift With Cocoa and Objective-C_ 를 참조하십시오.
 
 ## 문자열 리터럴
 
