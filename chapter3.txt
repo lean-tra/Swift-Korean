@@ -1,5 +1,6 @@
 # 03 기초 다지기 (The Basics)
 > Translator : FlashMaestro (masterofflash@nate.com)
+> Translator : Snowcat8436 (snowcat8436@gmail.com)
 
 Swift는 iOS와 OS X 앱을 개발하기 위한 새로운 프로그래밍 언어 입니다. 그러나 C나 Objective-C로 개발하면서 얻었던 경험들과 많은 부분이 유사할 것입니다.
 
