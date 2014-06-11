@@ -1,9 +1,9 @@
 # 10 열거형 (Enumerations)
 > Translator : inureyes (inureyes@gmail.com)
 
-열거형 _(Enumeration)_ 은 관련있는 값들의 그룹에 대한 일반적인 타입을 정의하며, 이를 이용하여 코드 안에서 타입에 안전한 방법으로 작업할 수 있습니다. C에 익숙한 사용자라면, C 열거형은 관련있는 이름을 정수값의 집합에 할당하는 것을 알고 있을 것입니다. Swift의 열거형은 훨씬 더 유연하며, 열거형의 각 숫자마다 반드시 값을 제공할 필요가 없습니다. 만약 ("원시(raw)" 값으로 알려진) 값이 각 열거형 번호마다 제공될 경우, 그 값들은 문자열, 글자, 어떠한 정수나 부동 소수점 타입이 될 수 있습니다. 
+열거형 _(Enumeration)_ 은 관련있는 값들의 그룹에 대한 일반적인 타입을 정의하며, 이를 이용하여 코드 안에서 타입에 안전한 방법으로 작업할 수 있습니다. C에 익숙한 사용자라면, C 열거형은 관련있는 이름을 정수값의 집합(set)에 할당하는 것을 알고 있을 것입니다. Swift의 열거형은 훨씬 더 유연하며, 열거형의 각 숫자마다 반드시 값을 제공할 필요가 없습니다. 만약 ("원시(raw)" 값으로 알려진) 값이 각 열거형 번호마다 제공될 경우, 그 값들은 문자열, 글자, 어떠한 정수나 부동 소수점 타입이 될 수 있습니다. 
 
-또한, 열거형 멤버들은 각각 다른 멤버 값에 대하여 다른 언어의 union및 비슷한 기능들이 하듯 연관된 값들을 어떤 타입이든 지정할 수 있습니다. 관련있는 멤버들의 일반적인 집합을 하나의 열거형의 부분으로 정의할 수도 있으며, 각각은 그에 연관된 적당한 타입의 값들의 다양한 집합을 가질 수 있습니다.
+또한, 열거형 멤버들은 각각 다른 멤버 값에 대하여 다른 언어의 공용체(union)및 비슷한 기능들이 하듯 연관된 값들을 어떤 타입이든 지정할 수 있습니다. 관련있는 멤버들의 일반적인 집합을 하나의 열거형의 부분으로 정의할 수도 있으며, 각각은 그에 연관된 적당한 타입의 값들의 다양한 집합을 가질 수 있습니다.
 
 Swift의 열거형은 열거형의 현재 값에 대한 추가적인 정보를 제공하기 위한 계산된 프로퍼티나, 열거형이 표현하는 값들과 연관된 기능들을 제공하는 인스턴스 메소드 같이 전통적으로 클래스 등에서만 지원되는 많은 기능들을 차용하였습니다. 또한 열거형은 초기 멤버 값을 제공하는 initiailizer를 제공할 수 있고, 원래 구현을 넘어서 기능을 확장할 수도 있으며, 표준 기능을 제공하기 위한 프로토콜을 따를 수 있습니다.
 
@@ -12,67 +12,68 @@ Swift의 열거형은 열거형의 현재 값에 대한 추가적인 정보를 �
 
 ### 열거형 문법 (Enumeration Syntax)
 열거형은 `enum` 키워드로 작성하며, 중괄호 안에 모든 정의를 집어넣습니다.
-
-	enum SomeEnumeration {
-        // enumeration definition goes here
-    }
-    Here’s an example for the four main points of a compass:
-    
-    enum CompassPoint {
-        case North
-        case South
-        case East
-        case West
-    }
-
+```
+enum SomeEnumeration {
+    // enumeration definition goes here
+}
+```
+여기에 나침반의 4가지 주요 방향을 위한 예제가 하나 있습니다:
+```
+enum CompassPoint {
+    case North
+    case South
+    case East
+    case West
+}
+```
 (`North`, `South`, `East` 및 `West` 같이) 열거형에 정의된 값들은 이 열거형의 멤버 값들입니다. `case` 키워드는 멤버 값들의 새 줄이 정의될 것임을 나타냅니다.
 
-> **노트**
-C 및 Objective-C 와는 다르게, Swift의 열거형 멤버들은 생성시 기본 정수값들에 할당되지 않습니다. 위의 `CompassPoints` 예제에서 보듯, `North`, `South`, `East` 및 `West`는 명시적으로 0, 1, 2 및 3에 대응되지 않습니다. 대신에, 기본 열거형 멤버들은 `CompassPoint`의 명시적으로 정의된 타입과 함께 정의된 완벽하게 갖춰진 값입니다.
+>NOTE
+C 및 Objective-C 와는 다르게, Swift의 열거형 멤버들은 생성시 기본 정수값들에 할당되지 않습니다. 위의 **CompassPoints** 예제에서 보듯, **North**, **South**, **East** 및 **West**는 명시적으로 **0**, **1**, **2** 및 **3**에 대응되지 않습니다. 대신에, 기본 열거형 멤버들은 **CompassPoint**의 명시적으로 정의된 타입과 함께 정의된 완벽하게 갖춰진 값입니다.
 
 여러 멤버 값들이 콤마(,) 로 구분되어 한 줄에 나올 수도 있습니다:
-
-    enum Planet {
-        case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-    }
-
-각 열거형 정의들은 새로운 타입을 정의합니다. Swift의 다른 타입과 마찬가지로, 이름들 ( `CompassPoint` 및 `Planet`과 같은) 은 대문자로 시작해야 합니다. 열거형 타입에게 자명하게 읽힐 수 있도록 복수형 대신 단수형 이름을 주세요.
-
-    var directionToHead = CompassPoint.West
-
-`directionToHead` 타입은 `CompassPoint`의 가능한 값들 중 하나가 초기화 될 때 유추됩니다. `directionToHead`가 `CompassPoint`로 선언되면, 짧은 닷 구문을 사용하여 그 값을 다른 `CompassPoint` 값으로 할당할 수 있습니다:
-
-    directionToHead = .East
-
-`directionToHead`의 타입은 이미 알려져 있으므로, 값을 할당할 때 타입을 명기하지 않을 수 있습니다. 이러한 부분은 명시적으로 타입된 열거형 값들로 작업할 때 매우 읽기 편한 코드를 만들어줍니다.
+```
+enum Planet {
+    case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+}
+```
+각 열거형 정의들은 새로운 타입을 정의합니다. Swift의 다른 타입과 마찬가지로, 이름들 ( **CompassPoint** 및 **Planet**과 같은) 은 대문자로 시작해야 합니다. 열거형 타입에게 자명하게 읽힐 수 있도록 복수형 대신 단수형 이름을 주세요.
+```
+var directionToHead = CompassPoint.West
+```
+**directionToHead** 타입은 **CompassPoint**의 가능한 값들 중 하나가 초기화 될 때 유추됩니다. **directionToHead**가 **CompassPoint**로 선언되면, 짧은 닷 구문을 사용하여 그 값을 다른 **CompassPoint** 값으로 할당할 수 있습니다:
+```
+directionToHead = .East
+```
+**directionToHead**의 타입은 이미 알려져 있으므로, 값을 설정할 때 타입을 명기하지 않을 수 있습니다. 이러한 부분은 명시적으로 타입된 열거형 값들로 작업할 때 매우 읽기 편한 코드를 만들어줍니다.
 
 
 ## 열거형의 값들과 스위치 구문간의 대응 (Matching Enumeration Values with a Switch Statement)
 
 각각의 열거형 값들을 `switch` 구문과 대응할 수 있습니다.
-
-    directionToHead = .South
-    switch directionToHead {
-    case .North:
-        println("Lots of planets have a north")
-    case .South:
-        println("Watch out for penguins")
-    case .East:
-        println("Where the sun rises")
-    case .West:
-        println("Where the skies are blue")
-    }
-    // prints "Watch out for penguins
-
+```
+directionToHead = .South
+switch directionToHead {
+case .North:
+    println("Lots of planets have a north")
+case .South:
+    println("Watch out for penguins")
+case .East:
+    println("Where the sun rises")
+case .West:
+    println("Where the skies are blue")
+}
+// prints "Watch out for penguins"
+```
 이 코드는 다음과 같이 읽을 수 있습니다:
-"`directionToHead`의 값을 봅시다. 만약 `.North`와 값이 같다면,  `"Lots of planets have a north"` 를 출력합니다. 만약 `.South`와 값이 같다면, `"Watch out for penguins"` 를 출력합니다."
+"**directionToHead**의 값을 봅시다. 만약 **.North**와 값이 같다면,  **"Lots of planets have a north"** 를 출력합니다. 만약 **.South**와 값이 같다면, **"Watch out for penguins"** 를 출력합니다."
 
 ...식이 됩니다.
 
-[제어 구문]() 에서 설명했듯이, `switch` 구문은 열거형 멤버를 고려할때 완벽하게 작성되어야 합니다. 만약 `.West`가 빠진 경우, 이 코드는 `CompassPoint` 멤버의 완벽한 리스트를 고려하지 않았기 때문에 컴파일되지 않을 것입니다. 완벽성 (exhaustiveness) 의 요구는 열거형 멤버가 실수로 생략되는 것을 방지합니다. 
+[제어 구문]() 에서 설명했듯이, `switch` 구문은 열거형 멤버를 고려할때 완벽하게 작성되어야 합니다. 만약 **.West**를 표현하기 위한 `case`가 빠진 경우, 이 코드는 **CompassPoint** 멤버의 완벽한 리스트를 고려하지 않았기 때문에 컴파일되지 않을 것입니다. 완벽성 (exhaustiveness) 의 요구는 열거형 멤버가 실수로 생략되는 것을 방지합니다. 
 
 모든 열거형 멤버에 대한 케이스를 제공하기에 적당하지 않은 경우, 명시적으로 언급되지 않은 멤버들을 위한 기본 케이스를 제공할 수 있습니다.
-
+```
     let somePlanet = Planet.Earth
     switch somePlanet {
     case .Earth:
@@ -81,7 +82,7 @@ C 및 Objective-C 와는 다르게, Swift의 열거형 멤버들은 생성시 �
         println("Not a safe place for humans")
     }
     // prints "Mostly harmless”
-
+```
 ## 관련된 값들 (Associated Values)
 
 앞 섹션의 에제는 열거형의 멤버들이 각각의 어떻게 정의되었는지 보여줍니다. 상수 및 변수를 `Planet.Earth` 에 할당할 수 있으며, 나중에 값들을 확인할 수도 있습니다. 그렇지만, 종종 멤버 값들과 함께 연관된 다른 타입의 값들을 저장하는 것이 유용한 경우들이 있습니다. 이는 추가적인 사용자 지정 정보를 멤버 값들마다 저장할수 있게 하며, 코드 안에서 멤버를 사용할 때 마다 정보가 변경되는 것을 허용합니다. 
