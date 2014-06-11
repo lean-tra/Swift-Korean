@@ -365,7 +365,7 @@ However, you can also define computed variables and define observers for stored 
 
 > Local constants and variables are never computed lazily.
 
-Type Properties
+##Type Properties
 
 Instance properties are properties that belong to an instance of a particular type. Every time you create a new instance of that type, it has its own set of property values, separate from any other instance.
 
@@ -381,7 +381,7 @@ NOTE
 
 Unlike stored instance properties, you must always give stored type properties a default value. This is because the type itself does not have an initializer that can assign a value to a stored type property at initialization time.
 
-Type Property Syntax
+###Type Property Syntax
 
 In C and Objective-C, you define static constants and variables associated with a type as global static variables. In Swift, however, type properties are written as part of the type’s definition, within the type’s outer curly braces, and each type property is explicitly scoped to the type it supports.
 
@@ -408,7 +408,7 @@ NOTE
 
 The computed type property examples above are for read-only computed type properties, but you can also define read-write computed type properties with the same syntax as for computed instance properties.
 
-Querying and Setting Type Properties
+###Querying and Setting Type Properties
 
 Type properties are queried and set with dot syntax, just like instance properties. However, type properties are queried and set on the type, not on an instance of that type. For example:
 
@@ -476,6 +476,135 @@ println(AudioChannel.maxInputLevelForAllChannels)
 
 If you try to set the currentLevel of the right channel to 11, you can see that the right channel’s currentLevel property is capped to the maximum value of 10, and the maxInputLevelForAllChannels type property is updated to equal 10:
 
+```
+rightChannel.currentLevel = 11
+println(rightChannel.currentLevel)
+// prints "10"
+println(AudioChannel.maxInputLevelForAllChannels)
+// prints "10"
+```
+
+## 속성감시자 (Property Observers)
+속성 감시자는 속성값 변경를 감시하고 대응한다. 속성 감시자는 속성값이 설정될 때마다 호출되는데 새 값이 현재값과 동일하다라고 하더라도 호출된다.
+지연 저장 속성은 별도로 선언한 모든 저장속성에 속성 감시자를 추가할 수 있다. 하위 클래스 안에서 속성을 오버라이딩해서 모든 상속받은 속성(저장 속성이나 계산 속성에 관계 없이)에도 속성 감시자를 추가할 수 있다.
+속성 오버라이딩은 `Overriding` 항목에 설명한다.
+>NOTE
+오버라이딩 되지 않은 계산 속성에 속성감시자를 추가할 필요는 없다. 계산 속성 설정자(setter)에서 직접 해당 값 변화를 감시하고 대응할 수 있기 때문이다.
+
+두가지 중 하나나 모두 설정할 수 있는 옵션을 속성에 대한 감시자에 정의할 수 있다.
+- `willSet`는 값이 저장되지 직전에 호출된다.
+- `didSet`는 새 값이 저장된 직후에 즉시 호출된다.
+만약에 `willSet` 관찰자를 구현한다면, 새 속성값은 상수 매개변수로 전달된다. `willSet`  구현의 일부분으로 이 매개변수 이름을 정의할 수 있다. 만약 매개변수 이름과 둥근괄호를 구현에 작성하지 않기로 결정해도, 여전히 기본 매개변수 이름인 `newValue`로 매개변수를 사용할 수 있을 것이다.
+유사하게, `didSet` 감시자를 구현한다면 옛 속성값을 담고 있는 상수 매개변수를 전달할 것이다. 매개변수 이름을 원한다면 명명하고 혹은, `oldValue`이라는 기본 매개변수 이름을 사용할 수 있다.
+>NOTE
+`willSet`과 `didSet` 감시자는 속성이 최초로 초기화될 때는 호출되지 않는다. 속성값이 초기화 문맥을 벗어나서 설정되는 경우에만 호출된다.
+
+`willSet`과 `didSet` 실제 예제가 있다. 아래 예는 `StepCounter`이라는 새 클래스를 정의하는데 이는 어떤 사람이 걷는 동안 걸은 전체 걸음 수를 추적한다. 이 클래스는 만보계나 다른 보수계로부터 입력 데이터를 받아 사용받아 일상 하루 동안 어떤 사람의 운동량을 추적할 것이다.
+```
+class StepCounter {
+    var totalSteps: Int = 0 {
+    willSet(newTotalSteps) {
+        println("About to set totalSteps to \(newTotalSteps)")
+    }
+    didSet {
+        if totalSteps > oldValue  {
+            println("Added \(totalSteps - oldValue) steps")
+        }
+    }
+    }
+}
+let stepCounter = StepCounter()
+stepCounter.totalSteps = 200
+// About to set totalSteps to 200
+// Added 200 steps
+stepCounter.totalSteps = 360
+// About to set totalSteps to 360
+// Added 160 steps
+stepCounter.totalSteps = 896
+// About to set totalSteps to 896
+// Added 536 steps
+```
+`StepCounter` 클래스에는 `Int` 타입의 `totalSteps` 속성이 선언되어 있는데 `willSet`과 `didSet` 감시자를 가지는 저장 속성이다.
+`totalSteps`를 위한 `willSet`과 `didSet`  감시자는 속성에 새값이 할당될 때마다 호출된다. 심지어 현재 값과 새 값이 같을 때에도 정말이다.
+이 예에서 `willSet` 감시자는 `newTotalSteps`이라는 이름의 커스텀 매개변수를 사용한다. 이 예에서는 단순히 설정될 값에 대해 출력한다.
+`didSet` 감시자는 `totalSteps`의 값이 갱신된 직후에 호출된다. `totalSteps`의 새 값과 옛 값을 비교한다. 만약 총 걸음수가 증가한다면, 얼마나 많은 걸음을 걸었는지 알려줄 메시지가 출력된다. `didSet` 감시자는 옛값을 위한 커스텀 매개변수 이름을 제공하지 않고, 대신 기본 이름인 `oldValue`를 사용한다.
+>NOTE
+만약 `didSet` 감시자 자체에서 속성을 할당한다면, 새로 할당한 값은 좀 전에 막 설정되었던 값을 대신할 것이다.
+
+
+## 전역 변수와 지역 변수(Global and Local Variables)
+이전에 설명한 계산 속성과 관찰 속성에 대한 능력은 _전역_ 변수와 _지역_변수에서도 가능하다. 전역 변수가 모든 함수, 메소드, 클로저, 타입의 문맥 밖에 정의된 변수라면, 지역 변수는 어떤 함수, 메소드, 클로저 문맥 안에 정의된 변수이다.
+이전장에서 만난 전역 변수와 지역 변수는 모두 저장 변수 뿐이었다. 저장 변수란 저장 속성처럼 특정 타입의 값에 대한 저장소를 제공하고 그 값을 설정하거나 집어올 수 있도록 해준다.
+그러나, 전역이냐 지역 유효범위이냐 관계 없이 _계산_변수나 저장 변수를 위한 관찰자를 또한 정의할 수 있다. 계산 변수는 값을 저장한다기 보다 계산을 하고 계산속성에서와 동일한 방식으로 작성하면 된다.
+>NOTE
+전역 상수와 변수는 지연 저장 속성과 유사한 방식으로 항상 지연 계산한다. 그러나 지연 저장 속성과는 다르게 전역 상수와 변수는 `@lazy`이라는 특성으로 표시하지 않아도 된다.
+
+## 타입 속성(Type Properties)
+인스턴스 속성은 특정 타입의 인스턴스에 속한 속성이다. 해당 타입에 대한 새 인스턴스를 생성할 때마다 다른 인스턴스와 분리된 인스턴스 자신의 속성값 세트를 가지게 된다.
+타입의 어떤 하나의 인스턴스에 속한 것이 아닌 해당 타입 자체에 속한 속성 역시 정의할 수 있다. 이 속성에 대해서는 얼마나 많은 인스턴스를 만들었는지에 관계없이 단 한개의 복사본만이 존재할 것이다. 이런 종류의 속성을 타입 속성이라고 한다.
+타입속성은 특정 타입의 _모든_인스턴스에 영향을 미치는 값을 정의하는데 유용하다. 모든 인스턴스가 사용하는 상수 속성이라든지 (C의 정적 상수 같이), 특정 타입의 모든 인스턴스가 글로벌하게 값을 저장하는 변수 속성(C의 정적 변수 같이) 같은 경우가 있다.
+값타입에서는 (즉, 구조체와 열거형), 저장 과 계산 타입 속성을 정의할 수 있다. 클래스에서는 계산 타입 속성만을 정의할 수 있다.
+값 타입에서 저장 타입 속성은 변수가 상수가 될 수 있다. 저장 타입 속성은 항상 변수 속성으로 정의될 것이다. 저장 인스턴스 속성과 동일한 방식이다.
+> NOTE
+위에 나온 계산 타입 속성은 읽기 전용 계산 타입 속성이지만, 계산 인스턴스 속성과 동일한 문법을 사용해서 읽고쓰기용 계산 타입 속성 또한 정의할 수 있다.
+
+###타입 속성 조회와 설정
+타입 속성은 인스턴스 속성처럼 닷 표기법을 이용해서 조회하고 설정한다. 그러나, 타입 속성이 _타입_의 인스턴스가 아니라 타입에 조회하고 설정한다.
+```
+println(SomeClass.computedTypeProperty)
+// prints "42"
+ 
+println(SomeStructure.storedTypeProperty)
+// prints "Some value."
+SomeStructure.storedTypeProperty = "Another value."
+println(SomeStructure.storedTypeProperty)
+// prints "Another value."
+```
+이어지는 예제에서 많은 오디오 채널에 대한 오디오 레벨 미터를 추상화한 구조체 일부로 두개의 저장 타입 속성을 사용한다. 각 채널은 `0`부터 `10`까지를 포함한 정수형 오디오 레벨 미터를 가진다.
+밑의 그림은 어떻게 이 두가지 오디오 채널이 스테레오 오디오 레벨 미터로 조합해 만드는지 도해한다. 채널의 오디오 레벨이 `0`일 때 채널의 모든 불 빛은 꺼지게 된다. 채널 오디오 레벨이 `10`일 때 채널의 모든 불빛은 켜지게 된다. 그림처럼, 왼쪽 채널은 현재 `9`레벨이고, 오른쪽 채널은 현재 `7`레벨이다.
+![image: ../Art/staticPropertiesVUMeter_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/staticPropertiesVUMeter_2x.png)
+위에 표시된 오디오 채널은 `AudioChannel` 구조체의 인스턴스로 표현된다.
+```
+struct AudioChannel {
+    static let thresholdLevel = 10
+    static var maxInputLevelForAllChannels = 0
+    var currentLevel: Int = 0 {
+    didSet {
+        if currentLevel > AudioChannel.thresholdLevel {
+            // cap the new audio level to the threshold level
+            currentLevel = AudioChannel.thresholdLevel
+        }
+        if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+            // store this as the new overall maximum input level
+            AudioChannel.maxInputLevelForAllChannels = currentLevel
+        }
+    }
+    }
+}
+```
+`AudioChannel` 구조체는 기능성을 지원하기 위한 두개의 저장 타입 속성을 정의한다. 먼저, `thresholdLevel`는 오디오 레벨이 받을 수 있는 최대 임계값을 정의한다. 이는 모든 `AudioChannel` 인스턴스를 위한 `10`이라는 상수 값이다. 만약 오디오 신호가 `10`보다 높은 값이 들어온다면, 이 임계값에 따라 ( 아래 설명하는 것처럼 ) 상한선이 정해질 것이다.
+둘째 타입 속성은 `maxInputLevelForAllChannels`이란 변수 저장 속성이다. 이는 어떤 `AudioChannel` 인스턴스로 받는 최대 입력값을 계속 추적한다. 그 초기값은 0부터 시작한다.
+`AudioChannel` 구조체 역시 `currentLevel`이란 저장 인스턴스 속성 정의하는데 0부터 10까지 현재 체늘의 오디오 레벨를 나타낸다.
+`currentLevel` 속성은 `didSet` 속성 관찰자를 가지는데 언제 설정되던간에 `currentLevel`값을 확인하기 위함이다. 이 관찰자는 두가지 확인 사항을 실행한다:
+- 만약 `currentLevel`의 새 값이 `thresholdLevel`에 의해 허용된 것보다 크다면, 속성 관찰자는 `currentLevel`를 `thresholdLevel`으로 상한선을 맞출 것이다.
+- 만약 `currentLevel`의 새 값이(상한선이 맞춰진 다음) 이전에 아무 `AudioChannel`인스턴스로부터 전달 받은 어떤 값보다도 크다면 속성관찰자는 `maxInputLevelForAllChannels` 정적 속성에 새 `currentLevel`값을 저장할 것이다.
+>NOTE
+두가지 확인 사항 중 전자에서 `didSet` 관찰자는 `currentLevel`에 다른 값을 저장한다. 그러나 그렇지 않으면 또다시 관찰자가 호출되기 때문이다.
+
+스테레오 사운드 시스템의 오디오 레벨을 나타내기 위해 `leftChannel`, `rightChannel`이란 2개의 신규 오디오 채널을 만들기 위해 `AudioChannel` 구조체를 사용할 수 있다.
+```
+var leftChannel = AudioChannel()
+var rightChannel = AudioChannel()
+```
+만약 왼쪽 채널의 `currentLevel`를 7로 설정한다면 `maxInputLevelForAllChannels` 타입 속성이 `7`과 동일하게 갱신되는 것을 볼 수 있다.
+```
+leftChannel.currentLevel = 7
+println(leftChannel.currentLevel)
+// prints "7"
+println(AudioChannel.maxInputLevelForAllChannels)
+// prints "7"
+```
+만약 오른쪽 채널의  `currentLevel`를 11로 설정하려고 하면, 오른쪽 채널의 `currentLevel`속성 은 10이라는 최대값에 상한선이 맞춰지는 것을 볼 수 있고`maxInputLevelForAllChannels`이란 타입 속성은 10이라는 상한선이 맞춰진다.
 ```
 rightChannel.currentLevel = 11
 println(rightChannel.currentLevel)
