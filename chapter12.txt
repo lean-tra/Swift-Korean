@@ -484,6 +484,54 @@ println(AudioChannel.maxInputLevelForAllChannels)
 // prints "10"
 ```
 
+## 속성감시자 (Property Observers)
+속성 감시자는 속성값 변경를 감시하고 대응한다. 속성 감시자는 속성값이 설정될 때마다 호출되는데 새 값이 현재값과 동일하다라고 하더라도 호출된다.
+지연 저장 속성은 별도로 선언한 모든 저장속성에 속성 감시자를 추가할 수 있다. 하위 클래스 안에서 속성을 오버라이딩해서 모든 상속받은 속성(저장 속성이나 계산 속성에 관계 없이)에도 속성 감시자를 추가할 수 있다.
+속성 오버라이딩은 `Overriding` 항목에 설명한다.
+>NOTE
+오버라이딩 되지 않은 계산 속성에 속성감시자를 추가할 필요는 없다. 계산 속성 설정자(setter)에서 직접 해당 값 변화를 감시하고 대응할 수 있기 때문이다.
+
+두가지 중 하나나 모두 설정할 수 있는 옵션을 속성에 대한 감시자에 정의할 수 있다.
+- `willSet`는 값이 저장되지 직전에 호출된다.
+- `didSet`는 새 값이 저장된 직후에 즉시 호출된다.
+만약에 `willSet` 관찰자를 구현한다면, 새 속성값은 상수 매개변수로 전달된다. `willSet`  구현의 일부분으로 이 매개변수 이름을 정의할 수 있다. 만약 매개변수 이름과 둥근괄호를 구현에 작성하지 않기로 결정해도, 여전히 기본 매개변수 이름인 `newValue`로 매개변수를 사용할 수 있을 것이다.
+유사하게, `didSet` 감시자를 구현한다면 옛 속성값을 담고 있는 상수 매개변수를 전달할 것이다. 매개변수 이름을 원한다면 명명하고 혹은, `oldValue`이라는 기본 매개변수 이름을 사용할 수 있다.
+>NOTE
+`willSet`과 `didSet` 감시자는 속성이 최초로 초기화될 때는 호출되지 않는다. 속성값이 초기화 문맥을 벗어나서 설정되는 경우에만 호출된다.
+
+`willSet`과 `didSet` 실제 예제가 있다. 아래 예는 `StepCounter`이라는 새 클래스를 정의하는데 이는 어떤 사람이 걷는 동안 걸은 전체 걸음 수를 추적한다. 이 클래스는 만보계나 다른 보수계로부터 입력 데이터를 받아 사용받아 일상 하루 동안 어떤 사람의 운동량을 추적할 것이다.
+```
+class StepCounter {
+    var totalSteps: Int = 0 {
+    willSet(newTotalSteps) {
+        println("About to set totalSteps to \(newTotalSteps)")
+    }
+    didSet {
+        if totalSteps > oldValue  {
+            println("Added \(totalSteps - oldValue) steps")
+        }
+    }
+    }
+}
+let stepCounter = StepCounter()
+stepCounter.totalSteps = 200
+// About to set totalSteps to 200
+// Added 200 steps
+stepCounter.totalSteps = 360
+// About to set totalSteps to 360
+// Added 160 steps
+stepCounter.totalSteps = 896
+// About to set totalSteps to 896
+// Added 536 steps
+```
+`StepCounter` 클래스에는 `Int` 타입의 `totalSteps` 속성이 선언되어 있는데 `willSet`과 `didSet` 감시자를 가지는 저장 속성이다.
+`totalSteps`를 위한 `willSet`과 `didSet`  감시자는 속성에 새값이 할당될 때마다 호출된다. 심지어 현재 값과 새 값이 같을 때에도 정말이다.
+이 예에서 `willSet` 감시자는 `newTotalSteps`이라는 이름의 커스텀 매개변수를 사용한다. 이 예에서는 단순히 설정될 값에 대해 출력한다.
+`didSet` 감시자는 `totalSteps`의 값이 갱신된 직후에 호출된다. `totalSteps`의 새 값과 옛 값을 비교한다. 만약 총 걸음수가 증가한다면, 얼마나 많은 걸음을 걸었는지 알려줄 메시지가 출력된다. `didSet` 감시자는 옛값을 위한 커스텀 매개변수 이름을 제공하지 않고, 대신 기본 이름인 `oldValue`를 사용한다.
+>NOTE
+만약 `didSet` 감시자 자체에서 속성을 할당한다면, 새로 할당한 값은 좀 전에 막 설정되었던 값을 대신할 것이다.
+
+
 ## 전역 변수와 지역 변수(Global and Local Variables)
 이전에 설명한 계산 속성과 관찰 속성에 대한 능력은 _전역_ 변수와 _지역_변수에서도 가능하다. 전역 변수가 모든 함수, 메소드, 클로저, 타입의 문맥 밖에 정의된 변수라면, 지역 변수는 어떤 함수, 메소드, 클로저 문맥 안에 정의된 변수이다.
 이전장에서 만난 전역 변수와 지역 변수는 모두 저장 변수 뿐이었다. 저장 변수란 저장 속성처럼 특정 타입의 값에 대한 저장소를 제공하고 그 값을 설정하거나 집어올 수 있도록 해준다.
