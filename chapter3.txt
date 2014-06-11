@@ -27,14 +27,15 @@ var currentLoginAttempt = 0
 
 이 코드는 다음과 같이 해석할 수 있습니다.
 
-"maxiumNumberOfLoginAttempts라는 새로운 상수를 선언하고 값은 10으로 할당한다. 그리고 currentLoginAttempt라는 변수를 선언하고 0이라는 초기값을 할당한다."
+"`maxiumNumberOfLoginAttempts`라는 새로운 상수를 선언하고 값은 10으로 할당한다. 그리고 `currentLoginAttemp`라는 변수를 선언하고 0이라는 초기값을 할당한다."
 
 예제에서 보면 최대값은 변하지 않기 때문에 로그인을 시도할 수 있는 최대 횟수가 상수에 정의되어 있습니다.  그리고 매번 로그인을 실패할 때마다 숫자가 증가해야 하기 때문에 현재 로그인 시도 횟수는 변수로 정의되어 있습니다.
 
 콤마로 구분해서 한줄에 여러개의 상수나 변수를 선언하는 것도 가능합니다.
-
-	var x = 0.0, y = 0.0, z = 0.0
-    
+```
+var x = 0.0, y = 0.0, z = 0.0
+```   
+ 
 >노트
 코드를 작성할 때 변경할 필요가 없는 값을 저장하는 경우 항상 `let` 키워드를 사용해 상수로 선언하라. 그리고 변경할 필요가 있을 경우에만 변수로 선언하라.
 
@@ -47,7 +48,7 @@ var currentLoginAttempt = 0
     
 콜론은 "~타입 의"라는 의미를 가집니다. 따라서 위의 코드는 다음과 같이 해석할 수 있습니다.
 
-"`String`타입의 변수 welcomeMessage를 선언한다."
+"`String`타입의 변수 `welcomeMessage`를 선언한다."
 
 "`String`타입의" 라는 말은 "어떤 `String`값이든 저장할 수 있다."라는 의미 입니다. "어떤타입의"(혹은 "어떤 종류의") 라는 것은 그것이 저장될 수 있다 라는 의미로 생각하면 됩니다.
 
@@ -82,7 +83,7 @@ friendlyWelcome = "Bonjour!"
 // friendlyWelcome is now "Bonjour!
 ```
 
-변수와는 다르게 상수는 한번 값이 정해지면 변경할 수 없습니다.. 컴파일할 때 에러가 발생하도록 시도해 봅시다.
+변수와는 다르게 상수는 한번 값이 정해지면 변경할 수 없습니다. 컴파일할 때 에러가 발생하도록 시도해 봅시다.
 
 ```c
 let languageName = "Swift"
@@ -125,9 +126,9 @@ println("The current value of friendlyWelcome is \(friendlyWelcome)")
 스스로 상기하기 위해서 혹은 메모하기 위해 코드내에 실행되지 않는 글을 쓰려고 할 때 주석을 사용할 수 있습니다. 작성한 코드를 컴파일 할 때 Swift의 컴파일러는 주석을 무시합니다.
 
 Swift의 주석은 C의 주석과 흡사합니다. 한줄 주석은 /(슬래시)를 두번 연속해서 쓰면 시작됩니다.
-
-	// this is a comment
-
+```
+// this is a comment
+```
 또 여러줄 주석도 쓸 수 있습니다. 여러줄 주석은 슬래시와 별표를 쓰고(/*) 끝에는 별표와 슬래시(*/)를 순서대로 써주면 됩니다.
 
 ```c
@@ -137,7 +138,7 @@ but written over multiple lines */
 
 C의 여러줄 주석과는 다르게 Swift에서는 여러줄 주석 안에 다른 여러줄 주석을 쓸 수 있습니다.  내부 여러줄 주석을 쓰려면 첫번째 여러줄 주석 부분을 시작하고 두번째 여러줄 주석을 첫번째 주석 안에서 시작합니다. 그리고 두번째 주석을 닫아준 후 첫번째 주석을 닫아주면 됩니다.
 
-```c
+```
 /* this is the start of the first multiline comment
 /* this is the second, nested multiline comment */
 this is the end of the first multiline comment */
