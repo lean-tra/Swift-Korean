@@ -1,45 +1,17 @@
 ## 12 속성 (Properties)
 > Translator : mango (minkyu.shim@gmail.com)
 
-Properties associate values with a particular class, structure, or enumeration. Stored
-properties store constant and variable values as part of an instance, whereas computed
-properties calculate (rather than store) a value. Computed properties are provided by
-classes, structures, and enumerations. Stored properties are provided only by classes and
-structures.
-
 속성은 특정 클래스, 구조체(structure), 혹은 열거형(Enumeration)과 값들을 연결해준다. 저장속성(Stored property)는 상수나 변수값을 인스턴스의 일부로 저장한다. 계산속성(Computed property)는 값을 그냥 저장하는 것이 아니라 계산한다. 계산속성은 클래스나 구조체 그리고 열거형에서 사용할 수 있다. 저장속성은 클래스와 구조체에서만 사용할 수 있다. 
 
-Stored and computed properties are usually associated with instances of a particular
-type. However, properties can also be associated with the type itself. Such properties are
-known as type properties.
-
 저장속성과 계산속성은 일반적으로 특정 타입의 인스턴스와 연결된다. 하지만, 속성이 타입 자체와 연결될수도 있는데, 이런 속성을 타입 속성(type property)라고 한다.
-
-In addition, you can define property observers to monitor changes in a property’s value,
-which you can respond to with custom actions. Property observers can be added to stored
-properties you define yourself, and also to properties that a subclass inherits from i ts
-superclass.
 
 덧붙여, 프로그래머는 속성값의 변경을 모니터링하기 위해 속성 관찰/감시자(property observer)를 정의할 수 있다. 이것은 프로그래머가 속성값의 변경에 직접 정의한 동작들로 대응할 수 있게 해준다. 속성감시자는 프로그래머가 직접 정의한 저장속성이나 상위클래스에서 상속받은 속성들에 추가할 수 있다.
 
 # 저장속성 (Stored Property)
 
-In its simplest form, a stored property is a constant or variable that is stored as part of an
-instance of a particular class or structure. Stored properties can be either variable stored
-properties (introduced by the var keyword) or constant stored properties (introduced by
-the let keyword).
-
 저장 속성은 가장 단순한 형태일때 특정 클래스와 구조체의 인스턴스에 저장되는 상수나 변수다. var 키워드로 선언(introduced)되면, 변수저장속성(variable stored property). let 키워드로 선언되면 상수저장속성(constant stored property)이라 한다.
 
-You can provide a default value for a stored property as part of its definition, as described
-in Default Property Values. You can also set and modify the initial value for a stored
-property during initialization. This is true even for constant stored properties, as
-described in Modifying Constant Properties During Initialization.
-
 프로그래머는 저장 속성을 정의할 때 초기값을 지정할 수 있다. 이에 대해서는 "초기속성값" 챕터에서 설명되어있다. 저장된 속성의 초기값을 수정할 수도 있는데, 심지어 상수 저장속성마저도 수정이 가능하다. 이에 대해서는 "초기화시 상수속성수정/변경하기" 챕터에 설명되어있다.
-
-The example below defines a structure called FixedLengthRange, whi ch describes a range of
-integers whose range length cannot be changed once i t i s created:
 
 아래 예제는 FixedLengthRange라는 구조체를 정의한다. 이 구조체는 특정 범위의 정수들을 의미하는데, 이 범위는 한번 생성되면 수정되지 않는다.
 
@@ -60,16 +32,10 @@ rangeOfThreeItems.firstValue = 6
 // 구조체의 범위는 이제 6, 7, 8 이다.
 ```
 
-Instances of FixedLengthRange have a variable stored property called firstValue and a constant
-stored property called l ength. In the example above, l ength i s ini tial i zed when the new range
-i s created and cannot be changed thereafter, because i t i s a constant property.
-
 FixedLengthRange 구조체의 인스턴스들은 변수저장속성 firstValue와 상수저장속성 length를 갖는다. 위의 예제에서는 length 속성은 상수속성이기 때문에 구조체가 생성될때 최초로 지정되고, 이후로는 변경되지 않는다. 
 
 # 상수 구조체 인스턴스의 저장속성 (Stored Properties of Constant Structure Instances)
 
-
-If you create an instance of a structure and assign that instance to a constant, you cannot modify the instance’s properties, even if they were declared as variable properties:
 
 상수로 선언된 구조체 인스턴스의 속성들은 변수속성이더라도 수정되지 않는다. 
 
@@ -79,43 +45,18 @@ let rangeOfFourItems = FixedLengthRange(firstVal ue: 0,  length: 4)
 rangeOfFourItems.firstValue = 6
 // firstValue는 변수속성이지만 여기서 에러가 난다. 
 ```
-Because rangeOfFourItems is declared as a constant (with the let keyword), it is not possible
-to change its firstValue property, even though firstVal ue i s a variable property.
-Thi s behavior i s due to structures being value types. When an instance of a value type i s
-marked as a constant, so are al l  of i ts properties.
-The same i s not true for classes, whi ch are reference types. If you assign an instance of a
-reference type to a constant, you can sti l l  change that instance’s variable properties.
-
 위 예제에서 rangeOfFourItems 인스턴스는 let 키워드를 통해 상수로 선언되었으므로 그 속성인 firstValue는 비록 변수속성이더라도  수정할 수 없다.
 이러한 동작은 구조체가 값타입(value type)이기 때문인데, 값타입의 인스턴스가 상수로 선언되면 그 속성들도 모두 상수가 된다.
 이와 비교해서, 참조타입(reference type)인 클래스는 다르게 동작한다. 참조타입의 인스턴스를 상수로 선언하더라고 그 변수 속성들은 여전히 수정이 가능하다.
 
 # 게으른 저장속성(Lazy Stored Property)
 
-A lazy stored property i s a property whose ini tial  value i s not cal culated unti l  the fi rst time
-i t i s used. You indi cate a lazy stored property by wri ting the @l azy attribute before i ts
-declaration.
-
 게으른 저장속성은 그 초기값이 최초로 사용되기전까지는 계산되지 않는다. 프로그래머는 선언시에 @lazy attribute라고 써줌으로써 게으른 저장속성을 표시할 수 있다. 
-
-> N O T E
-Y ou must al w ays decl are a l azy property as a vari abl e (w i th the var keyw ord),  because its initial  value may not
-be retrieved until  after instance initialization completes.  Constant properties must always have a value before
-initialization completes,  and therefore cannot be declared as lazy.
-Lazy properties are useful  when the ini tial  value for a property i s dependent on outside
-factors whose values are not known unti l  after an instance’s ini tial i zation i s complete.
-Lazy properties are al so useful  when the ini tial  value for a property requi res complex or
-computational ly expensive setup that should not be performed unless or unti l  i t i s
-needed.
 
 > NOTE
 게으론 속성은 초기화(initialization)가 끝난 뒤에도 초기값을 꺼낼 수 없을지도 모르기 때문에 언제나 var 키워드를 통해 변수로 선언되어야한다. 반면, 상수 속성은 초기화가 끝나기 전에 반드시 값을 가져야하기 때문에 게으른 속성으로 선언될 수 없다. 
 게으른 속성은 속성의 초기값이 객체의 초기화가 끝날때까지도 값을 알 수 없는 외부 변수에 의존하고 있을때 유용하다. 
 게으른 속성은 속성의 값이 매우 복잡하거나 리소스를 많이 사용하는 (expensive) 계산이어서 필요한 경우가 아니면 수행되지 말아야 하는 경우에도 역시 유용하다. 
-
-The example below uses a lazy stored property to avoid unnecessary ini tial i zation of a
-complex class. Thi s example defines two classes cal led DataImporter and DataManager, nei ther
-of whi ch i s shown in ful l :
 
 아래 예시는 복잡한 클래스의 불필요한 초기화를 피하기 위해 게으른 저장속성을 사용하고 있다. 예시된 코드는 DataImporter 클래스와 DataManager 클래스 정의의 일부분이다. 
 
@@ -139,20 +80,11 @@ ager.data += "Some data"
 ager.data += "Some more data"
 // importer 속성에 할당된 DataImporter 인스턴스는 아직 생성되지 않았다.
 ```
-
-The DataManager class has a stored property called data, which is initialized with a new, empty array of String values. Although the rest of its functionality is not shown, the purpose of this DataManager class is to manage and provide access to this array of String data.
-
 DataManager 클래스는 data라는 저장속성을 가지는데, 이 data 저장속성은 새로운 String 값들로 이루어진 빈 배열로 초기화된다. 나머지 기능들은 코드에 드러나지 않지만, DataManager 클래스의 목적은 이 String 데이터의 배열을 외부에서 접근하여 사용하도록 관리하는 것이다.
-
-Part of the functionality of the DataManager class is the ability to import data from a file. This functionality is provided by the DataImporter class, which is assumed to take a non-trivial amount of time to initialize. This might be because a DataImporter instance needs to open a file and read its contents into memory when the DataImporter instance is initialized.
 
 DataManager 클래스의 기능 중 하나는 파일에서 데이터를 가져오는 것이다. 이 기능은 초기화하는데 많은 시간이 드는 DataImporter 클래스가 제공한다. 이것은 DataImporter 인스턴스가 초기화될때 화일로부터 데이터를 읽어 메모리로 로드해야하기 때문이라고 가정하자. 
 
-It is possible for a DataManager instance to manage its data without ever importing data from a file, so there is no need to create a new DataImporter instance when the DataManager itself is created. Instead, it makes more sense to create the DataImporter instance if and when it is first used.
-
 DataManager 인스턴스가 데이터를 관리할 때 파일에서 읽어오지 않는 경우도 있을 수 있다. 이런 경우엔 DataManager가 생성될때, DataImporter 인스턴스를  생성하는 것은 불필요하다. 대신에, DataImporter 인스턴스를 최초로 사용할때 생성되도록 하는 것이 더 좋다.
-
-Because it is marked with the @lazy attribute, the DataImporter instance for the importer property is only created when the importer property is first accessed, such as when its fileName property is queried:
 
 게으른 속성(@lazy)으로 표시되어있기 때문에, DataImporter 인스턴스인 DataManager의 importer 속성은 fileName 속성을 조회할 때와 같은 최초의 접근시 생성된다.
 
@@ -164,17 +96,11 @@ println(manager.importer.fileName)
 
 # 저장속성과 인스턴스 변수 (Stored Properties and Instance Variables)
 
-If you have experience with Objective-C, you may know that it provides two ways to store values and references as part of a class instance. In addition to properties, you can use instance variables as a backing store for the values stored in a property.
-
 Objective-C에 경험이 있는 프로그래머라면, 클래스 인스턴스에 값이나 참조를 저장하는 두가지 방법을 알고 있을 것이다. 속성과 별도로, 프로그래머는 인스턴스 변수를 속성에 저장된 값들의 저장소(backing store)로 활용할 수 있다. 
-
-Swift unifies these concepts into a single property declaration. A Swift property does not have a corresponding instance variable, and the backing store for a property is not accessed directly. This approach avoids confusion about how the value is accessed in different contexts and simplifies the property’s declaration into a single, definitive statement. All information about the property—including its name, type, and memory management characteristics—is defined in a single location as part of the type’s definition.
 
 스위프트(Swift)는 위의 개념들을 하나의 속성 선언에 통합시켰다. 스위프트에서 속성은 (Objective-C와 달리) 대응되는 인스턴스 변수가 없고, 속성의 저장소에도 직접 접근할 수 없다. 이러한 접근방식으로 스위프트는 서로 다른 맥락에서 하나의 값이 접근되는 방식에 대한 혼란을 줄이고, 속성의 선언을 하나의 정의문에 단순화 시켰다. 
 
 # 계산속성 (Computed Properties)
-
-In addition to stored properties, classes, structures, and enumerations can define computed properties, which do not actually store a value. Instead, they provide a getter and an optional setter to retrieve and set other properties and values indirectly.
 
 저장속성에 더해서, 클래스, 구조체 그리고 열거체에는 계산속성(Computed properties)를 정의할 수 있다. 계산속성은 실제로 값을 저장하지는 않고, 다른 속성이나 값들이 간접적으로 접근하여 값을 조회하거나 수정할 수 있는 getter와 선택적인 setter를 제공한다. 
 
@@ -207,39 +133,24 @@ square.center = Point(x: 15.0, y: 15.0)
 println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 // prints "square.origin is now at (10.0, 10.0)"
 ```
-This example defines three structures for working with geometric shapes:
 
 위 예제는 기하학의 도형을 다루기 위한 세개의 구조체를 정의하고 있다. 
-
-* Point encapsulates an (x, y) coordinate.
-* Size encapsulates a width and a height.
-* Rect defines a rectangle by an origin point and a size.
 
 * Point 구조체는 x,y 좌표를 가진다.
 * Size 구조체는 너비와 높이를 가진다.
 * Rect 구조체는 시작점과 크기로 사각형을 정의한다.
 
-The Rect structure also provides a computed property called center. The current center position of a Rect can always be determined from its origin and size, and so you don’t need to store the center point as an explicit Point value. Instead, Rect defines a custom getter and setter for a computed variable called center, to enable you to work with the rectangle’s center as if it were a real stored property.
-
 Rect 구조체는 center라는 이름의 계산속성도 제공한다. Rect 구조체의 현재 중점(center position)은 언제나 시작점과 크기에 의해 결정된다. 그러므로, 프로그래머는 중점을 명시적인 Point 값으로 저장하지 않아도 된다. 대신에, Rect 구조체는 center라는 이름의 저장속성을 위한 맞춤 getter와 setter를 제공한다. 프로그래머는 이 center 계산속성을 마치 실제 저장속성인 것처럼 사용할 수 있다. 
-
-The preceding example creates a new Rect variable called square. The square variable is initialized with an origin point of (0, 0), and a width and height of 10. This square is represented by the blue square in the diagram below.
 
 이어지는 코드에서는 square란 이름의 새로운 Rect 변수가 생성된다. square 변수는 시작점 (0,0)과 너비 10 ,높이 10으로 초기화된다. 이 square는 아래 도표의 파란색 사각형으로 표시된다. 
 
-The square variable’s center property is then accessed through dot syntax (square.center), which causes the getter for center to be called, to retrieve the current property value. Rather than returning an existing value, the getter actually calculates and returns a new Point to represent the center of the square. As can be seen above, the getter correctly returns a center point of (5, 5).
-
 square 변수의 center 속성은 마침표(.)를 통해 square.center 처럼 접근할 수 있다. 이렇게 접근할 경우, 현재 속성값을 조회하는 getter가 호출된다. 이 getter는 실재하는 속성값을 반환하는게 아니라, 계산을 통해서 현재 사각형의 중점에 해당하는 새로운 Point 값을 반환한다. 위에서 보듯이, getter는 정확하게 (5,5) 좌표를 반환한다.
-
-The center property is then set to a new value of (15, 15), which moves the square up and to the right, to the new position shown by the orange square in the diagram below. Setting the center property calls the setter for center, which modifies the x and y values of the stored origin property, and moves the square to its new position.
 
 그 다음엔 center 속성을 (15,15)로 변경한다. 이것은 사각형을 아래 도표 속의 우상단에 있는 오렌지 사각형의 위치로 이동시킨다. center 속성에 값을 지정하게 되면 setter를 호출하게 되는데, 이것은 x, y 저장속성을 함께 변경시켜, 사각형이 새로운 위치로 이동하도록 만든다.
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png "Rect구조체의 center 계산속성")
 
 # 단축/축약(?) Setter 선언(Shorthand Setter Declaration)
-
-If a computed property’s setter does not define a name for the new value to be set, a default name of newValue is used. Here’s an alternative version of the Rect structure, which takes advantage of this shorthand notation:
 
 계산속성의 setter에 새로운 값이 저장될 이름이 명시되지 않으면 기본값으로 newValue를 사용한다. 축약형을 이용한 Rect 구조체의 새로운 버전은 다음과 같다:
 
@@ -263,17 +174,10 @@ struct AlternativeRect {
 
 # 읽기전용 계산속성 (Read-Only Computed Properties)
 
-A computed property with a getter but no setter is known as a read-only computed property. A read-only computed property always returns a value, and can be accessed through dot syntax, but cannot be set to a different value.
-
 getter만 있고, setter가 없는 계산속성은 읽기전용 계산속성(read-only computed property)라 부른다. 읽기전용 계산속성은 언제나 값을 반환하며, 마침표(.)를 통해 접근할 수 있지만, 다른 값을 지정할 수는 없다. 
 
-> N O T E
-> You must declare computed properties—including read-only computed properties—as variable properties with the var keyword, because their value is not fixed. The let keyword is only used for constant properties, to indicate that their values cannot be changed once they are set as part of instance initialization.
-
 > NOTE
-> 읽기전용을 포함한 모든 계산속성은 반드시 var 키워드로 선언되어야한다. 왜냐하면, 계산속성의 값은 고정되지 않았기 때문이다. let 키워드는 초기화시 한번 지정되면 변경할 수 없다는 것을 표시하기 위해 상수속성 선언에만 사용해야한다. 
-
-You can simplify the declaration of a read-only computed property by removing the get keyword and its braces:
+읽기전용을 포함한 모든 계산속성은 반드시 var 키워드로 선언되어야한다. 왜냐하면, 계산속성의 값은 고정되지 않았기 때문이다. let 키워드는 초기화시 한번 지정되면 변경할 수 없다는 것을 표시하기 위해 상수속성 선언에만 사용해야한다. 
 
 읽기전용 계산속성의 선언은 단순히 get 키워드와 중괄호를 제거하면 된다. (엄멀하게 말하자만, set 부분은 아예 없고, get 블록 내부의 코드가 한꺼풀 바깥으로 나오는 형상이네요)
 
@@ -289,33 +193,24 @@ println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 // prints "the volume of fourByFiveByTwo is 40.0"
 ```
 
-This example defines a new structure called Cuboid, which represents a 3D rectangular box with width, height, and depth properties. This structure also has a read-only computed property called volume, which calculates and returns the current volume of the cuboid. It doesn’t make sense for volume to be settable, because it would be ambiguous as to which values of width, height, and depth should be used for a particular volume value. Nonetheless, it is useful for a Cuboid to provide a read-only computed property to enable external users to discover its current calculated volume.
-
 위 예제코드는 Cuboid란 이름의 새로운 구조체를 정의합니다. Cuboid는 너비, 높이, 그리고 깊이를 가진 3D 직육면체 상자를 표시합니다. 이 구조체는 volume이라는 읽기전용 계산속성을 제공합니다. volume 은 현재 cuboid의 면적을 계산하여 반환합니다. 면적이 변경되면 어떤 너비, 높이, 그리고 깊이값으로 변경되어야하는지 모호하기 때문에 면적을 변경하는 것은 말이 되지 않습니다. 그럼에도 불구하고, Cuboid 구조체를 사용하는 프로그래머에게 계산된 면적으로 제공하는 읽기전용 계산속성을 제공하는 것은 유용할 것입니다. 
 
-# 속성감시자 (Property Observers)
+## 속성감시자 (Property Observers)
+속성 감시자는 속성값 변경를 감시하고 대응한다. 속성 감시자는 속성값이 설정될 때마다 호출되는데 새 값이 현재값과 동일하다라고 하더라도 호출된다.
+지연 저장 속성은 별도로 선언한 모든 저장속성에 속성 감시자를 추가할 수 있다. 하위 클래스 안에서 속성을 오버라이딩해서 모든 상속받은 속성(저장 속성이나 계산 속성에 관계 없이)에도 속성 감시자를 추가할 수 있다.
+속성 오버라이딩은 `Overriding` 항목에 설명한다.
+>NOTE
+오버라이딩 되지 않은 계산 속성에 속성감시자를 추가할 필요는 없다. 계산 속성 설정자(setter)에서 직접 해당 값 변화를 감시하고 대응할 수 있기 때문이다.
 
-Property observers observe and respond to changes in a property’s value. Property observers are called every time a property’s value is set, even if the new value is the same as the property’s current value.
+두가지 중 하나나 모두 설정할 수 있는 옵션을 속성에 대한 감시자에 정의할 수 있다.
+- `willSet`는 값이 저장되지 직전에 호출된다.
+- `didSet`는 새 값이 저장된 직후에 즉시 호출된다.
+만약에 `willSet` 관찰자를 구현한다면, 새 속성값은 상수 매개변수로 전달된다. `willSet`  구현의 일부분으로 이 매개변수 이름을 정의할 수 있다. 만약 매개변수 이름과 둥근괄호를 구현에 작성하지 않기로 결정해도, 여전히 기본 매개변수 이름인 `newValue`로 매개변수를 사용할 수 있을 것이다.
+유사하게, `didSet` 감시자를 구현한다면 옛 속성값을 담고 있는 상수 매개변수를 전달할 것이다. 매개변수 이름을 원한다면 명명하고 혹은, `oldValue`이라는 기본 매개변수 이름을 사용할 수 있다.
+>NOTE
+`willSet`과 `didSet` 감시자는 속성이 최초로 초기화될 때는 호출되지 않는다. 속성값이 초기화 문맥을 벗어나서 설정되는 경우에만 호출된다.
 
-You can add property observers to any stored properties you define, apart from lazy stored properties. You can also add property observers to any inherited property (whether stored or computed) by overriding the property within a subclass. Property overriding is described in Overriding.
-
->N O T E
-You don’t need to define property observers for non-overridden computed properties, because you can observe and respond to changes to their value from directly within the computed property’s setter.
-
-You have the option to define either or both of these observers on a property:
-
-* willSet is called just before the value is stored.
-* didSet is called immediately after the new value is stored.
-
-If you implement a willSet observer, it is passed the new property value as a constant parameter. You can specify a name for this parameter as part of your willSet implementation. If you choose not to write the parameter name and parentheses within your implementation, the parameter will still be made available with a default parameter name of newValue.
-
-Similarly, if you implement a didSet observer, it will be passed a constant parameter containing the old property value. You can name the parameter if you wish, or use the default parameter name of oldValue.
-
->N O T E
-willSet and didSet observers are not called when a property is first initialized. They are only called when the property’s value is set outside of an initialization context.
-
-Here’s an example of willSet and didSet in action. The example below defines a new class called StepCounter, which tracks the total number of steps that a person takes while walking. This class might be used with input data from a pedometer or other step counter to keep track of a person’s exercise during their daily routine.
-
+`willSet`과 `didSet` 실제 예제가 있다. 아래 예는 `StepCounter`이라는 새 클래스를 정의하는데 이는 어떤 사람이 걷는 동안 걸은 전체 걸음 수를 추적한다. 이 클래스는 만보계나 다른 보수계로부터 입력 데이터를 받아 사용받아 일상 하루 동안 어떤 사람의 운동량을 추적할 것이다.
 ```
 class StepCounter {
     var totalSteps: Int = 0 {
@@ -340,150 +235,20 @@ stepCounter.totalSteps = 896
 // About to set totalSteps to 896
 // Added 536 steps
 ```
-
-The StepCounter class declares a totalSteps property of type Int. This is a stored property with willSet and didSet observers.
-
-The willSet and didSet observers for totalSteps are called whenever the property is assigned a new value. This is true even if the new value is the same as the current value.
-
-This example’s willSet observer uses a custom parameter name of newTotalSteps for the upcoming new value. In this example, it simply prints out the value that is about to be set.
-
-The didSet observer is called after the value of totalSteps is updated. It compares the new value of totalSteps against the old value. If the total number of steps has increased, a message is printed to indicate how many new steps have been taken. The didSet observer does not provide a custom parameter name for the old value, and the default name of oldValue is used instead.
-
-> NOTE
-> If you assign a value to a property within its own didSet observer, the new value that you assign will replace the one that was just set.
-
-# 전역변수와 지역변수 (Global and Local Variables)
-
-The capabilities described above for computing and observing properties are also available to global variables and local variables. Global variables are variables that are defined outside of any function, method, closure, or type context. Local variables are variables that are defined within a function, method, or closure context.
-
-The global and local variables you have encountered in previous chapters have all been stored variables. Stored variables, like stored properties, provide storage for a value of a certain type and allow that value to be set and retrieved.
-
-However, you can also define computed variables and define observers for stored variables, in either a global or local scope. Computed variables calculate rather than store a value, and are written in the same way as computed properties.
-
-> NOTE
-> Global constants and variables are always computed lazily, in a similar manner to Lazy Stored Properties. Unlike lazy stored properties, global constants and variables do not need to be marked with the @lazy attribute.
-
-> Local constants and variables are never computed lazily.
-
-##Type Properties
-
-Instance properties are properties that belong to an instance of a particular type. Every time you create a new instance of that type, it has its own set of property values, separate from any other instance.
-
-You can also define properties that belong to the type itself, not to any one instance of that type. There will only ever be one copy of these properties, no matter how many instances of that type you create. These kinds of properties are called type properties.
-
-Type properties are useful for defining values that are universal to all instances of a particular type, such as a constant property that all instances can use (like a static constant in C), or a variable property that stores a value that is global to all instances of that type (like a static variable in C).
-
-For value types (that is, structures and enumerations), you can define stored and computed type properties. For classes, you can define computed type properties only.
-
-Stored type properties for value types can be variables or constants. Computed type properties are always declared as variable properties, in the same way as computed instance properties.
-
-NOTE
-
-Unlike stored instance properties, you must always give stored type properties a default value. This is because the type itself does not have an initializer that can assign a value to a stored type property at initialization time.
-
-###Type Property Syntax
-
-In C and Objective-C, you define static constants and variables associated with a type as global static variables. In Swift, however, type properties are written as part of the type’s definition, within the type’s outer curly braces, and each type property is explicitly scoped to the type it supports.
-
-You define type properties for value types with the static keyword, and type properties for class types with the class keyword. The example below shows the syntax for stored and computed type properties:
-
-struct SomeStructure {
-    static var storedTypeProperty = "Some value."
-    static var computedTypeProperty: Int {
-    // return an Int value here
-    }
-}
-enum SomeEnumeration {
-    static var storedTypeProperty = "Some value."
-    static var computedTypeProperty: Int {
-    // return an Int value here
-    }
-}
-class SomeClass {
-    class var computedTypeProperty: Int {
-    // return an Int value here
-    }
-}
-NOTE
-
-The computed type property examples above are for read-only computed type properties, but you can also define read-write computed type properties with the same syntax as for computed instance properties.
-
-###Querying and Setting Type Properties
-
-Type properties are queried and set with dot syntax, just like instance properties. However, type properties are queried and set on the type, not on an instance of that type. For example:
-
-println(SomeClass.computedTypeProperty)
-// prints "42"
- 
-println(SomeStructure.storedTypeProperty)
-// prints "Some value."
-SomeStructure.storedTypeProperty = "Another value."
-println(SomeStructure.storedTypeProperty)
-// prints "Another value."
-The examples that follow use two stored type properties as part of a structure that models an audio level meter for a number of audio channels. Each channel has an integer audio level between 0 and 10 inclusive.
-
-The figure below illustrates how two of these audio channels can be combined to model a stereo audio level meter. When a channel’s audio level is 0, none of the lights for that channel are lit. When the audio level is 10, all of the lights for that channel are lit. In this figure, the left channel has a current level of 9, and the right channel has a current level of 7:
-
-image: ../Art/staticPropertiesVUMeter_2x.png
-The audio channels described above are represented by instances of the AudioChannel structure:
-
-struct AudioChannel {
-    static let thresholdLevel = 10
-    static var maxInputLevelForAllChannels = 0
-    var currentLevel: Int = 0 {
-    didSet {
-        if currentLevel > AudioChannel.thresholdLevel {
-            // cap the new audio level to the threshold level
-            currentLevel = AudioChannel.thresholdLevel
-        }
-        if currentLevel > AudioChannel.maxInputLevelForAllChannels {
-            // store this as the new overall maximum input level
-            AudioChannel.maxInputLevelForAllChannels = currentLevel
-        }
-    }
-    }
-}
-The AudioChannel structure defines two stored type properties to support its functionality. The first, thresholdLevel, defines the maximum threshold value an audio level can take. This is a constant value of 10 for all AudioChannel instances. If an audio signal comes in with a higher value than 10, it will be capped to this threshold value (as described below).
-
-The second type property is a variable stored property called maxInputLevelForAllChannels. This keeps track of the maximum input value that has been received by any AudioChannel instance. It starts with an initial value of 0.
-
-The AudioChannel structure also defines a stored instance property called currentLevel, which represents the channel’s current audio level on a scale of 0 to 10.
-
-The currentLevel property has a didSet property observer to check the value of currentLevel whenever it is set. This observer performs two checks:
-
-* If the new value of currentLevel is greater than the allowed thresholdLevel, the property observer caps currentLevel to thresholdLevel.
-* If the new value of currentLevel (after any capping) is higher than any value previously received by any AudioChannel instance, the property observer stores the new currentLevel value in the maxInputLevelForAllChannels static property.
-
+`StepCounter` 클래스에는 `Int` 타입의 `totalSteps` 속성이 선언되어 있는데 `willSet`과 `didSet` 감시자를 가지는 저장 속성이다.
+`totalSteps`를 위한 `willSet`과 `didSet`  감시자는 속성에 새값이 할당될 때마다 호출된다. 심지어 현재 값과 새 값이 같을 때에도 정말이다.
+이 예에서 `willSet` 감시자는 `newTotalSteps`이라는 이름의 커스텀 매개변수를 사용한다. 이 예에서는 단순히 설정될 값에 대해 출력한다.
+`didSet` 감시자는 `totalSteps`의 값이 갱신된 직후에 호출된다. `totalSteps`의 새 값과 옛 값을 비교한다. 만약 총 걸음수가 증가한다면, 얼마나 많은 걸음을 걸었는지 알려줄 메시지가 출력된다. `didSet` 감시자는 옛값을 위한 커스텀 매개변수 이름을 제공하지 않고, 대신 기본 이름인 `oldValue`를 사용한다.
 >NOTE
-In the first of these two checks, the didSet observer sets currentLevel to a different value. This does not, however, cause the observer to be called again.
+만약 `didSet` 감시자 자체에서 속성을 할당한다면, 새로 할당한 값은 좀 전에 막 설정되었던 값을 대신할 것이다.
 
-You can use the AudioChannel structure to create two new audio channels called leftChannel and rightChannel, to represent the audio levels of a stereo sound system:
 
-```
-var leftChannel = AudioChannel()
-var rightChannel = AudioChannel()
-```
-
-If you set the currentLevel of the left channel to 7, you can see that the maxInputLevelForAllChannels type property is updated to equal 7:
-
-```
-leftChannel.currentLevel = 7
-println(leftChannel.currentLevel)
-// prints "7"
-println(AudioChannel.maxInputLevelForAllChannels)
-// prints "7"
-```
-
-If you try to set the currentLevel of the right channel to 11, you can see that the right channel’s currentLevel property is capped to the maximum value of 10, and the maxInputLevelForAllChannels type property is updated to equal 10:
-
-```
-rightChannel.currentLevel = 11
-println(rightChannel.currentLevel)
-// prints "10"
-println(AudioChannel.maxInputLevelForAllChannels)
-// prints "10"
-```
-
+## 전역 변수와 지역 변수(Global and Local Variables)
+이전에 설명한 계산 속성과 관찰 속성에 대한 능력은 _전역_ 변수와 _지역_변수에서도 가능하다. 전역 변수가 모든 함수, 메소드, 클로저, 타입의 문맥 밖에 정의된 변수라면, 지역 변수는 어떤 함수, 메소드, 클로저 문맥 안에 정의된 변수이다.
+이전장에서 만난 전역 변수와 지역 변수는 모두 저장 변수 뿐이었다. 저장 변수란 저장 속성처럼 특정 타입의 값에 대한 저장소를 제공하고 그 값을 설정하거나 집어올 수 있도록 해준다.
+그러나, 전역이냐 지역 유효범위이냐 관계 없이 _계산_변수나 저장 변수를 위한 관찰자를 또한 정의할 수 있다. 계산 변수는 값을 저장한다기 보다 계산을 하고 계산속성에서와 동일한 방식으로 작성하면 된다.
+>NOTE
+전역 상수와 변수는 지연 저장 속성과 유사한 방식으로 항상 지연 계산한다. 그러나 지연 저장 속성과는 다르게 전역 상수와 변수는 `@lazy`이라는 특성으로 표시하지 않아도 된다.
 
 ## 타입 속성(Type Properties)
 인스턴스 속성은 특정 타입의 인스턴스에 속한 속성이다. 해당 타입에 대한 새 인스턴스를 생성할 때마다 다른 인스턴스와 분리된 인스턴스 자신의 속성값 세트를 가지게 된다.
@@ -494,7 +259,7 @@ println(AudioChannel.maxInputLevelForAllChannels)
 > NOTE
 위에 나온 계산 타입 속성은 읽기 전용 계산 타입 속성이지만, 계산 인스턴스 속성과 동일한 문법을 사용해서 읽고쓰기용 계산 타입 속성 또한 정의할 수 있다.
 
-###타입 속성 조회와 설정
+### 타입 속성 조회와 설정
 타입 속성은 인스턴스 속성처럼 닷 표기법을 이용해서 조회하고 설정한다. 그러나, 타입 속성이 _타입_의 인스턴스가 아니라 타입에 조회하고 설정한다.
 ```
 println(SomeClass.computedTypeProperty)

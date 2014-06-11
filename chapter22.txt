@@ -69,8 +69,8 @@ println("A marathon is \(aMarathon) meters long")
 확장은 새 convenience 이니셜라이저를 클래스에 추가할 수 있습니다. 하지만 새 designated 이니셜라이저 또는 디이니셜라이저를 추가할 수는 없습니다. designated 이니셜라이저와 디이니셜라이저는 반드시 본래의 클래스 구현에서 제공되어야 합니다.
 
 > 주의
-> 만약 확장을 사용해서 모든 저장 속성의 기본 값을 제공하는 값 타입에 새로운 이니셜라이저를 추가하고, 어떠한 커스텀 이니셜라이저도 정의하지 않았다면, 기본 이니셜라이저와 memberwise 이니셜라이저를 호출 할 수 있습니다. 
-> *Initializer Delegation for Value Type*에서 설명한 것 처럼 이니셜라이저를 값 타입의 본래 구현에 작성을 한 경우에는 해당 되지 않습니다. 
+만약 확장을 사용해서 모든 저장 속성의 기본 값을 제공하는 값 타입에 새로운 이니셜라이저를 추가하고, 어떠한 커스텀 이니셜라이저도 정의하지 않았다면, 기본 이니셜라이저와 memberwise 이니셜라이저를 호출 할 수 있습니다. 
+*Initializer Delegation for Value Type*에서 설명한 것 처럼 이니셜라이저를 값 타입의 본래 구현에 작성을 한 경우에는 해당 되지 않습니다. 
 
 아래의 예제는 직사각형을 나타내기 위한 커스텀 `Rect` 구조체를 정의합니다. 또한 모든 속성의 기본값이 0.0인 `Size`와 `Point`구조체를 정의합니다. 
 
@@ -252,4 +252,4 @@ printLetterKinds("Hello")
 `printLetterinds` 함수는 `String` 값을 받아서 문자열의 각 문자를 iterate 합니다. 각 문자에 대해서 `kind` 연산 속성에 따라 그 글자에 알맞는 종류를 출력합니다. 위 "Hello" 단어의 결과 처럼 `printLetterinds` 함수를 호출해서 단어 안의 모든 문자의 종류들을 출력할 수 있습니다.
 
 > 주의
-> `character.kind` 는 이미 Character.Kind 타입으로 알려져 있기 때문에 모든 `Character.Kind` 멤버 값들은 `switch` 문에서 `Character.Kind.Vowel`보다 `.Vowel`같이 생략된 형식으로 쓸 수 있습니다. 
+`character.kind` 는 이미 Character.Kind 타입으로 알려져 있기 때문에 모든 `Character.Kind` 멤버 값들은 `switch` 문에서 `Character.Kind.Vowel`보다 `.Vowel`같이 생략된 형식으로 쓸 수 있습니다. 
