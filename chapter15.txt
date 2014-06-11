@@ -1,5 +1,4 @@
 # 15 상속 (Inheritance)
-(Inheritance)
 > Translator : YoonJeong Kwon (hoppingbonny@naver.com)
 
 하나의 클래스는 또다른 클래스의 메서드, 프로퍼티, 이 외에 다른 특징들을 상속받을 수 있다. 어떤 클래스가 다른 클래스로부터 상속받을 때, 상속받는 클래스를 _**하위클래스(subclass)**_라 하고 하위클래스가 상속하는 클래스를 _**상위클래스(superclass)**_라 한다.
