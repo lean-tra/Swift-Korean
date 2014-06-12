@@ -64,8 +64,9 @@
         $.ajax({
                 type: "GET",
                 url: url,
-                dataType: "json"
-            })
+                dataType: "json",
+                headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
+        })
             .done(function(data) {
                 var decoded = Base64.decode(data.content);
                 markdownToHtml(decoded);
@@ -83,7 +84,8 @@
                 type: "POST",
                 url: url,
                 data: JSON.stringify(params),
-                dataType: "html"
+                dataType: "html",
+                headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
             })
             .done(function(data) {
                 for (var i in pages) {

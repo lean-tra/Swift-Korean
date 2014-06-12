@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.html" />
     <Content Include="apple-touch-icon-114x114.png" />
     <Content Include="apple-touch-icon-120x120.png" />
     <Content Include="apple-touch-icon-144x144.png" />
@@ -65,8 +66,6 @@
     <Content Include="apple-touch-icon-72x72.png" />
     <Content Include="apple-touch-icon-76x76.png" />
     <Content Include="apple-touch-icon.png" />
-    <Content Include="a-swift-tour.html" />
-    <Content Include="about-swift.html" />
     <Content Include="favicon.ico" />
     <Content Include="images\btnupdate.png" />
     <Content Include="images\chapter10-fig1.png" />
@@ -85,9 +84,9 @@
     <Content Include="index.html" />
     <Content Include="js\base64.js" />
     <Content Include="js\base64.min.js" />
-    <Content Include="js\history.js" />
-    <Content Include="js\history.min.js" />
     <Content Include="js\jquery.cookie.js" />
+    <Content Include="js\jquery.scrollTo.js" />
+    <Content Include="js\jquery.scrollTo.min.js" />
     <Content Include="js\variables.js" />
     <Content Include="js\main.js" />
     <Content Include="js\purl.js" />
