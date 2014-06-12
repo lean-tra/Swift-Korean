@@ -34,6 +34,10 @@ h6,
    Author's custom styles
    ========================================================================== */
 
+#nav-menu {
+    display: block;
+}
+
 .nav-sidebar-fixed {
     display: none;
 }
@@ -43,10 +47,14 @@ h6,
 }
 
 @media (min-width: 768px) {
+    #nav-menu {
+        display: none;
+    }
+
     .nav-sidebar-fixed {
         display: block;
         position: fixed;
-        margin-top: 10px;
+        margin-top: 20px;
         width: 200px;
     }
 

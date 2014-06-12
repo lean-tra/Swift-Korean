@@ -2,29 +2,23 @@
 
 (function ($) {
     $(document).ready(function () {
-        var file = getCurrentPage();
-        for (var i in pages) {
-            var page = pages[i];
+        var path = getCurrentPath();
+        if (path == undefined || path == "404") {
+            return;
+        }
+
+        $.each(pages, function(i, page) {
+            getDropdown(page);
+            getSideNavigation(page);
 
             if (page.page == "index") {
-                getMarkdown(page.doc);
+                getMarkdown(page);
             } else {
-                for (var j in page.children) {
-                    var p = page.children[j];
-                    if (p.doc == undefined || p.page!= file) {
-                        continue;
-                    }
-                    getMarkdown(p.doc);
-                }
+                $.each(page.children, function(j, p) {
+                    getMarkdown(p);
+                });
             }
-
-            if (!page.isParent) {
-                continue;
-            }
-
-            getNavBar(page);
-            getSideNavigation(page);
-        }
+        });
 
         $("a").click(function () {
             var href = $(this).attr("href");
@@ -49,32 +43,140 @@
         });
     });
 
-    // Gets the current page.
-    var getCurrentPage = function() {
-        var page = $.url().attr("file");
-        if (page == undefined || !page.length) {
-            page = "index";
+    // Gets the current path.
+    var getCurrentPath = function () {
+        var path = $.url().attr("path");
+        if (path == undefined || path == "/") {
+            path = "index";
+            var query = $.url().attr("query");
+            if (query != undefined && query.length) {
+                path = query;
+                if (!validatePage(path)) {
+                    path = "404";
+                }
+            }
         }
-        return page;
+        return path.replace("/", "");
+    };
+
+    // Validates whether the path provide is valid or not.
+    var validatePage = function (path) {
+        if (path == undefined || !path.length) {
+            return false;
+        }
+
+        if (path == "index") {
+            return true;
+        }
+
+        var validated = false;
+        for (var i in pages) {
+            var page = pages[i];
+            if (page.children == undefined) {
+                continue;
+            }
+
+            for (var j in page.children) {
+                var p = page.children[j];
+                if (p.page != path) {
+                    continue;
+                }
+
+                validated = true;
+                break;
+            }
+
+            if (validated) {
+                break;
+            }
+        }
+        return validated;
+    };
+
+    // Gets the dropdown menu link.
+    var getDropdown = function(page) {
+        if (page == undefined) {
+            return;
+        }
+
+        if (page.page == "index") {
+            return;
+        }
+
+        if (page.children == undefined) {
+            return;
+        }
+
+        var $link = $("<a></a>").addClass("dropdown-toggle").attr({ "data-toggle": "dropdown", "href": "#" }).html(page.name + " <strong class=\"caret\"></strong>");
+
+        var $dropdown = $("#dropdown-" + page.page);
+        $dropdown.append($link);
+
+        var $ul = $("<ul></ul>").addClass("dropdown-menu");
+        for (var i in page.children) {
+            var p = page.children[i];
+            var $l = $("<a></a>").addClass("internal").attr("href", "?" + page.page + "#" + p.page).text(p.name);
+            var $li = $("<li></li>").append($l);
+            $ul.append($li);
+        }
+        $dropdown.append($ul);
+    };
+
+    // Gets the side navigation menus.
+    var getSideNavigation = function(page) {
+        if (page == undefined) {
+            return;
+        }
+
+        if (page.page == "index") {
+            return;
+        }
+
+        if (page.children == undefined) {
+            return;
+        }
+
+        var $link = $("<a></a>").attr({ "data-toggle": "collapse", "data-parent": "#accordion", "href": "#" + page.page }).text(page.name);
+        var $title = $("<h4></h4>").addClass("panel-title").append($link);
+        var $heading = $("<div></div>").addClass("panel-heading").append($title);
+        var $panel = $("<div></div>").addClass("panel panel-default").append($heading);
+
+        var $ul = $("<ul></ul>").addClass("nav nav-stacked");
+        for (var i in page.children) {
+            var p = page.children[i];
+            var $l = $("<a></a>").addClass("nav-padding-flat").attr("href", "?" + page.page + "#" + p.page).text(p.name);
+            var $li = $("<li></li>").append($l);
+            $ul.append($li);
+        }
+
+        var $body = $("<div></div>").addClass("panel-body").append($ul);
+        var $collapsable = $("<div></div>").attr("id", page.page).addClass("panel-collapse collapse").append($body);
+
+        $panel.append($collapsable);
+        $("#accordion").append($panel);
     };
 
     // Gets the given markdown page.
-    var getMarkdown = function (doc) {
-        var url = "https://api.github.com/repos/lean-tra/Swift-Korean/contents/" + doc;
+    var getMarkdown = function (page) {
+        if (page == undefined) {
+            return;
+        }
+
+        var url = "https://api.github.com/repos/lean-tra/Swift-Korean/contents/" + page.doc;
         $.ajax({
                 type: "GET",
                 url: url,
                 dataType: "json",
                 headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
-        })
+            })
             .done(function(data) {
                 var decoded = Base64.decode(data.content);
-                markdownToHtml(decoded);
+                markdownToHtml(page, decoded);
             });
     };
 
     // Converts the markdown to HTML and put them into the HTML element.
-    var markdownToHtml = function (markdown) {
+    var markdownToHtml = function (page, markdown) {
         var url = "https://api.github.com/markdown";
         var params = {
             "mode": "gfm",
@@ -89,96 +191,11 @@
             })
             .done(function(data) {
                 for (var i in pages) {
-                    var doc = pages[i].doc;
-                    var page = pages[i].page;
-                    data = data.replace(doc, page);
+                    data = data.replace(pages[i].doc, pages[i].page);
                 }
+
                 $("#main-content").html(data);
             });
-    };
-
-    // Gets the nav bar dropdowns.
-    var getNavBar = function(page) {
-        if (page == undefined) {
-            return;
-        }
-
-        if (page.page == "index") {
-            return;
-        }
-
-        if (page.children != undefined) {
-            var dropdown = $("#dropdown-" + page.page);
-
-            var link = $("<a></a>").addClass("dropdown-toggle").attr({ "data-toggle": "dropdown", "href": "#" }).html(page.name + " <strong class=\"caret\"></strong>");
-            dropdown.append(link);
-
-            var ul = $("<ul></ul>").addClass("dropdown-menu");
-            for (var i in page.children) {
-                var p = page.children[i];
-                var l = $("<a></a>").attr("href", p.page).text(p.name);
-                var li = $("<li></li>").append(l);
-                ul.append(li);
-            }
-            dropdown.append(ul);
-        }
-    };
-
-    // Gets the side navigation menus.
-    var getSideNavigation = function (page) {
-        if (page == undefined) {
-            return;
-        }
-
-        if (page.page == "index") {
-            return;
-        }
-
-        var link = $("<a></a>").text(page.name);
-        if (page.children == undefined) {
-            link.attr({ "href": page.page});
-        } else {
-            link.attr({ "data-toggle": "collapse", "data-parent": "#accordion", "href": "#" + page.page });
-        }
-
-        var title = $("<h4></h4>")
-            .addClass("panel-title")
-            .append(link);
-
-        var heading = $("<div></div>")
-            .addClass("panel-heading")
-            .append(title);
-
-        var panel = $("<div></div>")
-            .addClass("panel panel-default")
-            .append(heading);
-
-        if (page.children != undefined) {
-            var ul = $("<ul></ul>")
-                .addClass("nav nav-stacked");
-
-            for (var i in page.children) {
-                var p = page.children[i];
-                var l = $("<a></a>")
-                    .addClass("nav-padding-flat")
-                    .attr("href", p.page)
-                    .text(p.name);
-                var li = $("<li></li>")
-                    .append(l);
-                ul.append(li);
-            }
-
-            var body = $("<div></div>")
-                .addClass("panel-body")
-                .append(ul);
-            var collapsable = $("<div></div>")
-                .attr("id", page.page)
-                .addClass("panel-collapse collapse")
-                .append(body);
-
-            panel.append(collapsable);
-        }
-        $("#accordion").append(panel);
     };
 
     // Gets the section of the page.
