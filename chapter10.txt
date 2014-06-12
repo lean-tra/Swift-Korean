@@ -177,7 +177,7 @@ var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
     // earthsOrder is 3
 ```
 
-열거형의 **fromRaw** 메소드를 사용하여 특정한 원시 값에 해당되는 열거형 멤버를 찾읍시다. 이 예제는 원시값 7에 해당되는 행성이 Uranus임을 판별합니다:
+열거형의 **fromRaw** 메소드를 사용하여 특정한 원시 값에 해당되는 열거형 멤버를 찾읍시다. 이 예제는 원시값 **7**에 해당되는 행성이 Uranus임을 판별합니다:
 ```
     let possiblePlanet = Planet.fromRaw(7)
     // possiblePlanet is of type Planet? and equals Planet.Uranus
