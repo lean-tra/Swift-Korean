@@ -8,7 +8,7 @@
 >NOTE
 클래스의 인스턴스는 전통적으로 오브젝트로 알려져 있습니다. 하지만 Swifit의 클래스와 구조체는 다른 언어보다도 기능(functionality)에 가깝고, 이 챕터의 대부분은 클래스나 스트럭쳐 타입의 인스턴스에 적용 가능한 기능을 설명할 것입니다. 이런 이유때문에 일반적인 용어로서의 인스턴스가 사용될 것입니다.
 
-## 클래스와 구조체의 비교
+## 클래스와 구조체의 비교(Comparing Classes and Structures)
 Swift에서 클래스와 구조체는 여러 공통점을 가지고 있습니다. 공통적으로 가능한 것으로는:
  * 값을 저장하기 위한 프로퍼티를 정의할 수 있습니다.
  * 기능을 제공하기 위한 메서드를 정의할 수 있습니다.
@@ -30,7 +30,7 @@ Swift에서 클래스와 구조체는 여러 공통점을 가지고 있습니다
 >NOTE
 여러분의 코드에서 구조체를 사용할때, 구조체는 언제나 복사가 될뿐, 참조카운팅을 사용하지 못합니다.
 
-## 정의문법
+### 정의 문법(Definition Syntax)
 클래스와 구조체는 유사한 문법적 구조를 가지고 있습니다. 클래스는 `class` 키워드를 구조체는 `struct` 키워드를 사용합니다.  구조체와 클래스 모두 그들의 모든 정의는 중괄호({})내에 위치시킵니다.
 ```
 class SomeClass {
@@ -60,38 +60,36 @@ class VideoMode {
 위의 예제는 픽셀기반 해상도를 표현하기 위한 `Resolution`이란 새로운 구조체를 정의합니다. 이 구조체는 `width`와 `height`라는 두개의 저장된 프로퍼티(stored property)를 가지고 있습니다. 저장된 프로퍼티는 클래스의 변수나 상수로서 구성되고 저장된 변수나 상수입니다. 이 두 프로퍼티는 정수값 0으로 초기화된 `int`타입으로 표현됩니다.
 
 위의 예제는 또한 비디오 화면을 위한 특정 비디오 모드를 정의하는 `VideoMode`라는 클래스를 정의합니다. 이 클래스는 네개의 변수인 저장된 프로퍼티를 가지고 있습니다. 첫번째로 `resolution`은 새로운 `Resolution`구조체의 인스턴스로 초기화됩니다. 즉 `Resolution`의 프로퍼티 타입으로 표현됩니다. 나머지 세개의 프로퍼티들은, 새로운 `VideoMode`인스턴스들은 각각 
+`interanced`는 non-interlaced 비디오라는 의미의 `false`로 초기화 되고, 재생시 재생률(frame Rate)는 0.0으로 초기화 된다. 그리고 `name`이라 불리는 옵셔널 `String`값이 있다. `name` 프로퍼티는 옵셔널 타입이기 때문에 자동적으로 "`name` 프로퍼티에 값이 없다"는 의미인 `nil`로 기본값이 주어집니다.
 
-새로 생성되는 VideoMode 인스턴스는 interlaced변수는 false로 플레이 프레임 레이트는 0.0로, name은 옵션널(?) String으로 초기화합니다. `name` 프로퍼티는 옵셔널 타입이기 때문에 자동적으로 "`name` 프로퍼티에 값이 없다"는 의미인 `nil`로 기본값이 주어집니다.
+### 클래스와 구조체 인스턴스
+`Resolution` 구조체와 `VideoMode` 클래스는 오직 `Resolution`또는 `VideoMode`가 어떻게 보일지를 정의할뿐, 특정한 해상도나 비디오 모드를 표현하지는 않습니다. 그러기에, 여러분은 구조체나 클래스의 인스턴스를 만들 필요가 있습니다.
 
-## 클래스와 구조체 인스턴스
-Resolution 구조체와 VideoMode 클래스는 Resolution또는 VideoMode가 어떻게 보일지를 정의할뿐 특정 해상도나 비디오모드를 정의하진 않습니다. 그렇게학 위해서 여러분은 이 구조체나 클래스의 인스턴스를 생성해야 합니다.
-구조체나 클래스 인스턴스를 생성하기 위한 문법적 구조는 유사합니다.
+구조체나 클래스 인스턴스를 생성하기 위한 문법은 매우 유사합니다:
 ```
 let someResolution = Resolution()
 let someVideoMode = VideoMode()
 ```
-구조체와 클래스는 새 인스턴스를 생성하기위해 초기화 문법을 사용합니다. 가장 간단한 초기화 문법은 Resolution()이나 VideoMode()와 같이 클래스나 구조체의 형 이름에 괄호(())를 덧붙여주는것 입니다. 이 구문은 프로퍼티의 기본값을 갖는 새 인스턴스를 생성합니다. 자세한 클래스와 구조체의 초기화는 Initialization 항목을 참조하십시오.
+구조체와 클래스는 둘 다 새 인스턴스를 생성하기위해 Initializer 문법을 사용합니다. 가장 간단한 형태의 Initializer 문법은 `Resolution()`이나 `VideoMode()`와 같이 클래스나 구조체의 타입 이름에 빈 괄호(())를 덧붙인 것을 사용하는 것입니다. 이는 각 프로퍼티가 기본값으로 초기화 되어 있는 클래스나 구조체의 새 인스턴스를 생성합니다. 자세한 클래스와 구조체의 초기화는 [Initialization]() 항목을 참조하십시오.
 
-## 프로퍼티 접근하기
-dot(.) 문법을 사용해서 여러분은 인스턴스의 프로퍼티에 접근할수 있습니다. dot 문법은 인스턴스 이름 뒤에 공백문자 없이 dot(.)과 프로퍼티 네임을 적는것입니다.
+### 프로퍼티 접근
+dot(.) 문법을 사용해서 인스턴스의 프로퍼티에 접근할 수 있습니다. dot 문법에서,  인스턴스 이름 뒤에 아무런 공간 없이 바로 dot(.)과 프로퍼티 네임을 적는것입니다.
 ```
-println("The width of someResolution is \
-		(someResolution.width)")
-// "The width of soneResolution is 0" 출력
+println("The width of someResolution is \(someResolution.width)")
+// prints "The width of someResolution is 0"
 ```
-이 예제에서 `someResolution.width`는 `someResolution`의 `width` 프로퍼티를 참조하고 기본 초기값 0를 반환합니다.
-여러분은 섭(sub)프로퍼티를 통해 `VideoMode`에 속한 `resolution` 프로퍼티의 `width` 프로퍼티에도 접근할수 있습니다. 
+이 예제에서 `someResolution.width`는 `someResolution`의 `width` 프로퍼티를 참조하고 기본 초기값인 0를 반환합니다.
+
+여러분은 섭(sub)프로퍼티를 통해 원하는 정보를 찾기 내부로 계속 들어갈 수 있습니다. 예를 들면 `VideoMode`에 속한 `resolution` 프로퍼티내의 `width` 프로퍼티와 같이 말입니다.
 ```
-println("The width of someVideoMode is \
-		(someVideoMode.resolution.width)")
-// "The width of someVideoMode is 0" 출력
+println("The width of someVideoMode is \(someVideoMode.resolution.width)")
+// prints "The width of someVideoMode is 0"
 ```
-dot 문법을 통해 변수 프로퍼티에 새로운 값을 할당하는것도 가능합니다.
+dot 문법을 통해 변수 프로퍼티로서 새로운 값을 할당하는것도 가능합니다.
 ```
 someVideoMode.resolution.width = 1280
-println("The width of someVideoMode is now \
-		(someVideoMode.resolution.width)")
-// "The width of someVideoMode is now 1280" 출력
+println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
+// prints "The width of someVideoMode is now 1280"
 ```
 > NOTE
 Objective-C와는 달리 Swift는 구조체의 프로퍼티도 섭프로퍼티를 통해 직접적으로 설정할수 있습니다. 위의 마지막 예제에서 someVideoMode에 속한 resulotion 프로퍼티의 width 프로퍼티의 값을 resolution 프로퍼티를 새로설정할 필요없이 직접적으로 할당했습니다.
