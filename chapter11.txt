@@ -94,14 +94,14 @@ println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 > NOTE
 Objective-C와는 달리 Swift는 구조체 프로퍼티의 내부프로퍼티들을 직접적으로 설정하는 것이 가능합니다. 위의 마지막 예제를 보면, `someVideoMode`의 `resulotion` 프로퍼티내의 `width` 프로퍼티의 값을 `resolution` 프로퍼티의 전체를 새로운 값으로 설정할 필요없이 직접적으로 설정하고 있습니다.
 
-### 구조체형의 멤버 초기화 (Memberwise Initializers for Structure Types)
+### 구조체 타입의 멤버 초기화 (Memberwise Initializers for Structure Types)
 모든 구조체는 여러분이 새로은 구조체 인스턴스의 멤버 프로퍼티들을 초기화 할수있는 자동 생성된 멤버초기자(*member initializer*)를 제공합니다. 새로운 구조체 프로퍼티의 기본 초기화 값은 각 변수의 이름으로 멤버초기자에 넘겨줄수 있습니다.
 ```
 let vga = Resolution(width: 640, height: 480)
 ```
 구조체완 달리 클래스 인스턴스의 경우에는 기본 멤버초기자를 받지 않습니다. 초기자의 자세한 사항은 `Initialization`을 참조해주십시오.
 
-## 구조체와 열거형은 값형식
+## 구조체와 열거형은 값 타입 (Structures and Enumerations Are Value Types)
 갑형식(*value type*)은 함수에 매개변수로 넘겨지거나 변수나 상수에 할당될때 값을 복사하는 형입니다.
 
 사실 여러분은 지금까지 전 챕터에서 값형식을 광범위하게 사용했습니다. 사실 스위프트에서 기본 형- 정수, 실수, 불리언, 문자열, 배열과 딕셔너리-은 전부 값형식이고 구조체로 구현되어있습니다.
