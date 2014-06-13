@@ -60,7 +60,7 @@ class VideoMode {
 위의 예제는 픽셀기반 해상도를 표현하기 위한 `Resolution`이란 새로운 구조체를 정의합니다. 이 구조체는 `width`와 `height`라는 두개의 저장된 프로퍼티(stored property)를 가지고 있습니다. 저장된 프로퍼티는 클래스의 변수나 상수로서 구성되고 저장된 변수나 상수입니다. 이 두 프로퍼티는 정수값 0으로 초기화된 `int`타입으로 표현됩니다.
 
 위의 예제는 또한 비디오 화면을 위한 특정 비디오 모드를 정의하는 `VideoMode`라는 클래스를 정의합니다. 이 클래스는 네개의 변수인 저장된 프로퍼티를 가지고 있습니다. 첫번째로 `resolution`은 새로운 `Resolution`구조체의 인스턴스로 초기화됩니다. 즉 `Resolution`의 프로퍼티 타입으로 표현됩니다. 나머지 세개의 프로퍼티들은, 새로운 `VideoMode`인스턴스들은 각각 
-`interanced`는 non-interlaced 비디오라는 의미의 `false`로 초기화 되고, 재생시 재생률(frame Rate)는 0.0으로 초기화 된다. 그리고 `name`이라 불리는 옵셔널 `String`값이 있다. `name` 프로퍼티는 옵셔널 타입이기 때문에 자동적으로 "`name` 프로퍼티에 값이 없다"는 의미인 `nil`로 기본값이 주어집니다.
+`interanced`는 non-interlaced 비디오라는 의미의 `false`로 초기화 되고, 재생시 frame Rate는 0.0으로 초기화 된다. 그리고 `name`이라 불리는 옵셔널 `String`값이 있다. `name` 프로퍼티는 옵셔널 타입이기 때문에 자동적으로 "`name` 프로퍼티에 값이 없다"는 의미인 `nil`로 기본값이 주어집니다.
 
 ### 클래스와 구조체 인스턴스 (Class and Structure Instances)
 `Resolution` 구조체와 `VideoMode` 클래스는 오직 `Resolution`또는 `VideoMode`가 어떻게 보일지를 정의할뿐, 특정한 해상도나 비디오 모드를 표현하지는 않습니다. 그러기에, 여러분은 구조체나 클래스의 인스턴스를 만들 필요가 있습니다.
@@ -159,7 +159,7 @@ tenEighty.interlaced = true
 tenEighty.name = "1080i"
 tenEighty.frameRate = 25.0
 ```
-이 예제에서 우리는 `tenEighty`라는 상수를 선언하고 새로 생성된 `VideoMode` 클래스의 인스턴스를 할당했습니다. 비디오 모드는 전에 설정했던 1920 x 1080의 HD 해상도의 복사된 값을 할당했습니다. 또한 interlaced를 설정하고 name에 "1080i"를 주었습니다. 그리고 마지막으로 프레임 레이트를 초당 25.0로 설정했습니다.
+이 예제에서 우리는 `tenEighty`라는 상수를 선언하고 새로 생성된 `VideoMode` 클래스의 인스턴스를 할당합니다. 비디오 모드는 전에 설정했던 1920 x 1080의 HD 해상도의 복사본을 할당했습니다. 또한 interlaced를 설정하고 "1080i"라는 이름을 주었습니다. 마지막으로 frame rate는 프레임 레이트를 초당 25.0로 설정했습니다.
 
 다음으로 `tenEighty`를 `alsoTenEighty'라는 새로운 상수에 할당하고 `alsoTenEighty`의 프레임 레이트의 값을 수정하겠습니다.
 ```
