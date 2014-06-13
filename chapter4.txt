@@ -267,7 +267,6 @@ if hasHeader {
 } else {
 	rowHeight = rowHeight + 20
 }
-
 ```
 
 첫번째 예제의 삼항 조건 연산자의 사용은 `rowheight`에 단 한줄의 코드를 이용하여 올바른 값으로 설정될 수 있음을 의미합니다. 이것은 두 번째 예제코드보다 간결하고 그 값이 `if` 문 내에서 수정될 필요가 없기 떄문에 이것은 `rowheight`가 변수가 될 필요성이 없어집니다.
@@ -331,15 +330,15 @@ if !allowedEnrty {
 }
 // prints "ACCESS DENIED"
 ```
+
 `if !allowedEntry` 는 "if not allowed entry" 로 읽을 수 있습니다.
 즉 `allowedEntry`이 `false`인 경우 라인 이후의 `not allowed entry` 가 `true`인 경우에 해당할 경우로 실행됩니다.
 이 예제에서와 같이 불리언 상수와 변수 이름의 주의 깊은 선택은 이중 부정 또는 혼란한 논리구문을 피하면서 읽기 쉽고 간결한 코드를 유지하는데 도움이 될 수 있습니다.
 
 ## 논리 AND 연산자
-
 논리 AND 연산자(`a && b`)의 전체 표현식은 두 값이 모두 `true`이어야 `true`가 됩니다.
 
-반대로 두 값이 `false` 이면 전체 표현식 또한 `false` 입니다. 사실 첫번째 값이 `false` 인 경우 두번째 값이 평가되지 않습니다. 그것을 가능할수 없기 때문에 전체표현식이 `true`와 같게 됩니다. 이는 short-circuit evaluation 로 불립니다.
+반대로 두 값이 `false` 이면 전체 표현식 또한 `false` 입니다. 사실 첫번째 값이 `false` 인 경우 두번째 값이 평가되지 않습니다. 그것을 가능할수 없기 때문에 전체표현식이 `true`와 같게 됩니다. 이는 _short-circuit evaluation_ 로 불립니다.
 
 이 예제에서는 두 개의 `Bool`값을 고려하여 만약 두 값이 `true` 에만 접근할 수 있습니다.
 
@@ -349,10 +348,11 @@ let passedRetinaScan = false
 if enteredDoorCode && passedRetinaScan {
 	println("Welcome!")
 } else {
-	println("ACCEss DENIED")
+	println("ACCESS DENIED")
 }
 // prints "ACCESS DENIED"
 ```
+
 ## 논리 OR 연산자
 논리 OR 연산자(`a || b`)는 인접한 파이프 문자로 만든 중위연산자 입니다. 전체표현식이 `true`가 될 때 까지 두 개의 값 중 하나만이 참이어야 하는 논리식을 만드는데 사용합니다.
 
@@ -370,9 +370,10 @@ if hasDoorKey || knowOverridePassword {
 }
 // prints "Welcome!"
 ```
-## 복합 논리 연산자
 
+## 복합 논리 연산자
 당신은 여러 논리 연산자를 결합하여 복합 논리 연산자를 만들 수 있습니다.
+
 ```
 if enteredDoorCode && passedRetinaScan || hasDoorKey || knowOverridePassword {
 	println("Welcome!")
@@ -381,6 +382,7 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowOverridePassword {
 }
 // prints "Welcome!"
 ```
+
 이 예제는 `&&` 및 `||` 연산자를 여러개 사용하여 긴 복합 표현식을 만들었습니다. 그러나 `&&` 와 `||` 연산자는 여전히 두 개의 값에 대해 작동하므로 이는 실제로 서로 세개가 연결된 작은 표현입니다.
 
 만약 우리가 문의 코드를 입력하고 망막 검사를 통과한경우; 우리가 유효한 도어 키가 있는 경우이거나  긴급 재정의 암호를 알고있는 다음에 접근할 수 있습니다.
@@ -400,5 +402,6 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowOverridePassword {
 }
 // prints "Welcome!"
 ```
+
 괄호는 처음 두 값을 전체 논리에서 별도의 가능한 상태의 일부로 분명히 간주되게 만듭니다. 복합식의 출력이 변하지는 않지만 전체적인 목적이 독자에게 명확해집니다. 가독성은 항상 간결함을 선호합니다; 괄호의 사용은 당신의 의도를 확실히 파악하는데 도움이 됩니다.
 
