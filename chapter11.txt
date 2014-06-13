@@ -159,23 +159,22 @@ tenEighty.interlaced = true
 tenEighty.name = "1080i"
 tenEighty.frameRate = 25.0
 ```
-이 예제에서 우리는 `tenEighty`라는 상수를 선언하고 새로 생성된 `VideoMode` 클래스의 인스턴스를 할당합니다. 비디오 모드는 전에 설정했던 1920 x 1080의 HD 해상도의 복사본을 할당했습니다. 또한 interlaced를 설정하고 "1080i"라는 이름을 주었습니다. 마지막으로 frame rate는 프레임 레이트를 초당 25.0로 설정했습니다.
+이 예제에서 우리는 `tenEighty`라는 상수를 선언하고 새로 생성된 `VideoMode` 클래스의 인스턴스를 할당합니다. 비디오 모드는 전에 설정했던 1920 x 1080의 HD 해상도의 복사본을 할당했습니다. 또한 interlaced를 설정하고 "1080i"라는 이름을 주었습니다. 마지막으로 frame rate는 프레임 레이트를 초당 25.0 프레임으로 설정했습니다.
 
-다음으로 `tenEighty`를 `alsoTenEighty'라는 새로운 상수에 할당하고 `alsoTenEighty`의 프레임 레이트의 값을 수정하겠습니다.
+다음으로 `tenEighty`를 `alsoTenEighty`라는 새로운 상수에 할당하고, `alsoTenEighty`의 프레임 레이트의 값을 수정하겠습니다.
 ```
 let alsoTenEighty = tenEighty
 asloTenEighty.frameRate = 30.0
 ```
-클래스는 참조형식이기때문에 `tenEighty`와 `alsoTenEighty`는 실제적으로 동일한 `VideoMode` 인스턴스를 참조하고 있습니다. 그들은 단지 동일한 인스턴스를 참조하는 서로 다른 이름일뿐입니다.
+클래스는 참조 타입이기때문에 `tenEighty`와 `alsoTenEighty`는  사실 동일한 `VideoMode` 인스턴스를 참조하고 있습니다. 실제적으로 그들은 단지 동일한 인스턴스를 참조하는 서로 다른 이름일뿐입니다.
 
 아래의 예제코드를 통해 `tenEighty`의 `framerate` 프로퍼티가 새로운 프레임 레이트 값인 30.0임을 확인할수 있습니다.
 ```
-println("The frameRate property of tenEighty is now
-		\(tenEighty.frameRate)")
-// "The frameRate property of tenEighty is now 30.0" 출력
+println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
+// prints "The frameRate property of tenEighty is now 30.0"
 ```
-`tenEighty`와 `alsoTenEighty`가 변수가 아니라 상수로 선언되었음을 주의깊게 보십시오. `tenEighty`와 `alsoTenEighty` 상수의 그자체는 실제적으로 바뀌지 않기때문에 여러분은 여전히 tenEighty.frameRate과 alsoTenEighty.frameRate의 값을 바꿀수 있습니다. 
-`tenEighty`와 `alsoTenEighty` 자체는 `VideoMode` 인스턴스를 "저장"하지 않고 `VideoMode` 인스턴스를 참조만 합니다. 바뀌는것은 참조되고 있는 `VideoMode`의 `frameRate`프로퍼티이지 `VideoMode`를 참조하고 있는 상수의 값은 변하지 않습니다.
+`tenEighty`와 `alsoTenEighty`가 변수가 아니라 상수로 선언되었음을 주의깊게 보십시오. `tenEighty`와 `alsoTenEighty` 상수의 그자체는 실제적으로 바뀌지 않기때문에 여러분은 여전히 `tenEighty.frameRate`과 `alsoTenEighty.frameRate`의 값을 바꿀수 있습니다. 
+`tenEighty`와 `alsoTenEighty` 자체는 `VideoMode` 인스턴스를 "저장"하지 않고 보이지 않는 곳에서 `VideoMode` 인스턴스를 참조만 합니다. 바뀌는것은 참조되고 있는 `VideoMode`의 `frameRate`프로퍼티이지 `VideoMode`를 참조하고 있는 상수의 값은 변하지 않습니다.
 
 ## 식별연산자(Identity Operators)
 클래스는 참조타입이기때문에 여러 상수나 변수가 동일한 클래스의 인스턴스를 참조하는게 가능합니다.(구조체와 열거형은 할당되거나 함수에 매개변수로 전달될때 복사가 이루어지기때문에 동일한 인스턴스의 참조는 불가능합니다.)
