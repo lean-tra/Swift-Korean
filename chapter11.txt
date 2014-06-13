@@ -131,8 +131,7 @@ println("cinema is now \(cinema.width) pixels wide")
 println("hd is still \(hd.width) pixels wide")
 // prints "hd is still 1920 pixels wide"
 ```
-`cinema`에 `hd` 인스턴스를 할당할때 `hd`에 저장되어있던 프로퍼티의 값들이 새로 생성된 `cinema` 인스턴스로 복사가 이루어졌음을 알수 있습니다. 결과를 보면 동일한 값을 가지고 있는 완전히 분리된 인스턴스임을 알수 있습니다.
-두 인스턴스는 서로 다른 인스턴스이기 때문에 `cinema`의 `width`를 2048로 할당하더라도 `hd` 인스턴스에 저장되어있는 width 값에는 어떠한 영향도 미치지 않습니다.
+`cinema`에 `hd` 인스턴스를 할당할때 `hd`에 저장되어있던 프로퍼티의 값들이 새로 생성된 `cinema` 인스턴스로 복사가 이루어졌음을 알수 있습니다. 결과를 보면 동일한 값을 가지고 있는 완전히 분리된 인스턴스임을 알수 있습니다. 두 인스턴스는 서로 다른 인스턴스이기 때문에 `cinema`의 `width`를 2048로 할당하더라도 `hd` 인스턴스에 저장되어있는 width 값에는 어떠한 영향도 미치지 않습니다.
 
 열거형에도 동일한 법칙이 적용됩니다
 ```
@@ -147,12 +146,12 @@ if rememberedDirection == .West {
 }
 // "The remembered direction is still .West" 출력
 ```
-`rememberedDirection`에 `currentDirection`의 값이 할당될때 실제적으로는 값의 복사가 이루어집니다. 그러므로 `currentDirection`의 값이 변경된후에도 `rememberedDirection`에 복사되어서 저장된 원래 값에는 어떠한 영향도 미치지 않습니다.
+`rememberedDirection`에 `currentDirection`의 값이 할당될때 그 값의 복사본이 실제로 설정됩니다. 그러므로 `currentDirection`의 값이 변경된후에도 `rememberedDirection`에 저장된 원래 값에 복사본에는 어떠한 영향도 미치지 않습니다.
 
-## 클래스는 참조형식
-값형식과는 달리 참조형식(*reference type*)은 함수에 인자로 전달되때나 상수나 변수에 할당될때 복사가 이루어지지 않습니다. 동일한 인스턴스의 레퍼런스(reference)가 복사대신 사용됩니다.
+## 클래스는 참조 타입 (Classes Are Reference Types)
+값 타입과 달리 참조 타입(reference type)은 함수로 전달되때나 상수나 변수에 할당될때 복사가 이루어지지 않습니다. 복사본 대신, 동일한 인스턴스의 레퍼런스(reference)가 사용됩니다.
 
-위에서 정의한 `VideoMode` 클래스의 사용을 통한 예제를 살펴보도록 하겠습니다.
+위에서 정의한 `VideoMode` 클래스의 사용을 통한 예제가 있습니다:
 ```
 let tenEighty = VideoMode()
 tenEighty.resolution = hd
