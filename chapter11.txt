@@ -321,21 +321,21 @@ if b === c {
 또한 식별연산자를 사용해 subarray들이 동일한 요소를 공유하는지도 검사할수 있습니다. 아래 예제는 `b`의 동일한 subarray를 비교함으로써 그 둘이 동일한 요소를 참조하고 있음을 확인합니다.
 ```
 if b[0...1] === b[0...1] {
-	printls("These two subarrays share the same elements.")
+    println("These two subarrays share the same elements.")
 } else {
-	println("These two subarrays do not share the same elements.")
+    println("These two subarrays do not share the same elements.")
 }
-// "These two subarrays share the same elements." 출력
+// prints "These two subarrays share the same elements."
 ```
-## 강제로 배열 복제하기
-배열의 `copy` 메소드를 호출함으로 강제적으로 배열의 복제를 할수 있습니다. 이 메소드는 얕은복제(shallow copy)를 행하며 복사된 요소들을 갖는 새로운 배열을 반환합니다.
+## 강제로 배열 복제하기 (Forcing a Copy of an Array)
+배열의 `copy` 메서드를 호출함으로 강제적으로 배열의 복제를 할수 있습니다. 이 메서드는 얕은복제(shallow copy)를 행하며 복사된 요소들을 갖는 새로운 배열을 반환합니다.
 아래 예제에서 우리는 `names`라는 배열을 정의하고 7명의 이름을 저장합니다. `copiedNames`로 명명된 새로운 변수에 `names`배열의 `copy`메소드를 호출하고 결과값을 할당합니다.
 ```
 var names = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
 var copiedNames = names.copy()
 ```
 여러분은 둘중 하나의 배열 요소의 값을 수정하고 다른 배열에서의 요소값을 확인함으로써 `names` 배열의 복제가 제대로 이루어졌는지 확인하실수 있습니다.
-만약 여러분이 `copiedNames` 배열의 첫번째 요소의 값을 `Mohsen`에서 "Mo"로 수정해도 `names`배열은 여전히 복제가 일어나기전의 원래 값인 "Mohsen"을 반환합니다.
+만약 여러분이 `copiedNames` 배열의 첫번째 요소의 값을 `Mohsen`에서 `"Mo"`로 수정해도 `names`배열은 여전히 복제가 일어나기전의 원래 값인 "Mohsen"을 반환합니다.
 ```
 copiedNames[0] = "Mo"
 println(names[0])
