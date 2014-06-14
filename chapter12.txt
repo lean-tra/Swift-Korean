@@ -295,7 +295,7 @@ class SomeClass {
 
 
 ### 타입 속성 조회와 설정 (Querying and Setting Type Properties)
-타입 속성은 인스턴스 속성처럼 닷 표기법을 이용해서 조회하고 설정한다. 그러나, 타입 속성이 _타입_의 인스턴스가 아니라 타입에 조회하고 설정한다.
+타입 속성은 인스턴스 속성처럼 닷 표기법을 이용해서 조회하고 설정한다. 그러나, 타입 속성이 _타입_의 인스턴스가 아니라 타입에 조회하고 설정한다. 예를들면:
 ```
 println(SomeClass.computedTypeProperty)
 // prints "42"
@@ -307,6 +307,7 @@ println(SomeStructure.storedTypeProperty)
 // prints "Another value."
 ```
 이어지는 예제에서 많은 오디오 채널에 대한 오디오 레벨 미터를 추상화한 구조체 일부로 두개의 저장 타입 속성을 사용한다. 각 채널은 `0`부터 `10`까지를 포함한 정수형 오디오 레벨 미터를 가진다.
+
 밑의 그림은 어떻게 이 두가지 오디오 채널이 스테레오 오디오 레벨 미터로 조합해 만드는지 도해한다. 채널의 오디오 레벨이 `0`일 때 채널의 모든 불 빛은 꺼지게 된다. 채널 오디오 레벨이 `10`일 때 채널의 모든 불빛은 켜지게 된다. 그림처럼, 왼쪽 채널은 현재 `9`레벨이고, 오른쪽 채널은 현재 `7`레벨이다.
 
 ![staticpropertiesvumeter_2x.png](images/staticpropertiesvumeter_2x.png)
