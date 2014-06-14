@@ -265,6 +265,35 @@ stepCounter.totalSteps = 896
 > NOTE
 위에 나온 계산 타입 속성은 읽기 전용 계산 타입 속성이지만, 계산 인스턴스 속성과 동일한 문법을 사용해서 읽고쓰기용 계산 타입 속성 또한 정의할 수 있다.
 
+###타입 속성의 문법 (Type Property Syntax)
+
+C나 Objective-C에서는, you define static constants and variables associated with a type as global static variables. In Swift, however, type properties are written as part of the type’s definition, within the type’s outer curly braces, and each type property is explicitly scoped to the type it supports.
+
+You define type properties for value types with the static keyword, and type properties for class types with the class keyword. The example below shows the syntax for stored and computed type properties:
+```
+struct SomeStructure {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+    // return an Int value here
+    }
+}
+enum SomeEnumeration {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+    // return an Int value here
+    }
+}
+class SomeClass {
+    class var computedTypeProperty: Int {
+    // return an Int value here
+    }
+}
+```
+>NOTE
+
+The computed type property examples above are for read-only computed type properties, but you can also define read-write computed type properties with the same syntax as for computed instance properties.
+
+
 ### 타입 속성 조회와 설정
 타입 속성은 인스턴스 속성처럼 닷 표기법을 이용해서 조회하고 설정한다. 그러나, 타입 속성이 _타입_의 인스턴스가 아니라 타입에 조회하고 설정한다.
 ```
@@ -279,7 +308,8 @@ println(SomeStructure.storedTypeProperty)
 ```
 이어지는 예제에서 많은 오디오 채널에 대한 오디오 레벨 미터를 추상화한 구조체 일부로 두개의 저장 타입 속성을 사용한다. 각 채널은 `0`부터 `10`까지를 포함한 정수형 오디오 레벨 미터를 가진다.
 밑의 그림은 어떻게 이 두가지 오디오 채널이 스테레오 오디오 레벨 미터로 조합해 만드는지 도해한다. 채널의 오디오 레벨이 `0`일 때 채널의 모든 불 빛은 꺼지게 된다. 채널 오디오 레벨이 `10`일 때 채널의 모든 불빛은 켜지게 된다. 그림처럼, 왼쪽 채널은 현재 `9`레벨이고, 오른쪽 채널은 현재 `7`레벨이다.
-![image: ../Art/staticPropertiesVUMeter_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/staticPropertiesVUMeter_2x.png)
+![staticpropertiesvumeter_2x.png](images/staticpropertiesvumeter_2x.png)
+
 위에 표시된 오디오 채널은 `AudioChannel` 구조체의 인스턴스로 표현된다.
 ```
 struct AudioChannel {
@@ -305,8 +335,9 @@ struct AudioChannel {
 `currentLevel` 속성은 `didSet` 속성 관찰자를 가지는데 언제 설정되던간에 `currentLevel`값을 확인하기 위함이다. 이 관찰자는 두가지 확인 사항을 실행한다:
 - 만약 `currentLevel`의 새 값이 `thresholdLevel`에 의해 허용된 것보다 크다면, 속성 관찰자는 `currentLevel`를 `thresholdLevel`으로 상한선을 맞출 것이다.
 - 만약 `currentLevel`의 새 값이(상한선이 맞춰진 다음) 이전에 아무 `AudioChannel`인스턴스로부터 전달 받은 어떤 값보다도 크다면 속성관찰자는 `maxInputLevelForAllChannels` 정적 속성에 새 `currentLevel`값을 저장할 것이다.
+
 >NOTE
-두가지 확인 사항 중 전자에서 `didSet` 관찰자는 `currentLevel`에 다른 값을 저장한다. 그러나 그렇지 않으면 또다시 관찰자가 호출되기 때문이다.
+두가지 확인 사항 중 전자에서 `didSet` 관찰자는 `currentLevel`에 다른 값을 저장한다. 그렇지 않으면 또다시 관찰자가 호출되기 때문이다.
 
 스테레오 사운드 시스템의 오디오 레벨을 나타내기 위해 `leftChannel`, `rightChannel`이란 2개의 신규 오디오 채널을 만들기 위해 `AudioChannel` 구조체를 사용할 수 있다.
 ```
