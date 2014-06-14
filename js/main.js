@@ -7,39 +7,25 @@
             return;
         }
 
-        $.each(pages, function(i, page) {
+        getSections();
+
+        $.each(pages, function (i, page) {
             getDropdown(page);
             getSideNavigation(page);
 
             if (page.page == "index") {
-                getMarkdown(page);
+                getMarkdown(page, page.page);
             } else {
                 $.each(page.children, function(j, p) {
-                    getMarkdown(p);
+                    getMarkdown(p, page.page);
                 });
             }
         });
 
-        $("a").click(function () {
-            var href = $(this).attr("href");
-            var path = href.substring(href.lastIndexOf("/") + 1);
-            var section = getSection(path);
-            if (section != undefined) {
-                for (var k in pages) {
-                    if (section.page == pages[k].page) {
-                        $("#" + section.page).addClass("in");
-                    } else {
-                        $("#" + pages[k].page).removeClass("in");
-                    }
-                }
-            }
-            var subPage = getSubPage(path);
-            if (subPage != undefined) {
-                history.pushState(null, null, $(this).attr("href"));
-                getMarkdown(subPage.doc);
-                return false;
-            }
-            return true;
+        $("a.internal").click(function () {
+            //getPushState($(this));
+            getScrollTo($(this));
+            return false;
         });
     });
 
@@ -48,9 +34,9 @@
         var path = $.url().attr("path");
         if (path == undefined || path == "/") {
             path = "index";
-            var query = $.url().attr("query");
-            if (query != undefined && query.length) {
-                path = query;
+            var hash = $.url().attr("fragment");
+            if (hash != undefined && hash.length) {
+                path = hash;
                 if (!validatePage(path)) {
                     path = "404";
                 }
@@ -93,6 +79,24 @@
         return validated;
     };
 
+    // Gets the sections.
+    var getSections = function() {
+        for (var i in pages) {
+            var page = pages[i];
+            if (page.isParent) {
+                var $section = $("<div></div>").attr("id", "section-" + page.page);
+                if (page.children != undefined) {
+                    for (var j in page.children) {
+                        var p = page.children[j];
+                        var $page = $("<div></div>").attr("id", "page-" + p.page);
+                        $section.append($page);
+                    }
+                }
+                $("#main-content").append($section);
+            }
+        }
+    };
+
     // Gets the dropdown menu link.
     var getDropdown = function(page) {
         if (page == undefined) {
@@ -115,7 +119,7 @@
         var $ul = $("<ul></ul>").addClass("dropdown-menu");
         for (var i in page.children) {
             var p = page.children[i];
-            var $l = $("<a></a>").addClass("internal").attr("href", "?" + page.page + "#" + p.page).text(p.name);
+            var $l = $("<a></a>").addClass("internal").attr("href", "#" + p.page).text(p.name);
             var $li = $("<li></li>").append($l);
             $ul.append($li);
         }
@@ -141,11 +145,11 @@
         var $heading = $("<div></div>").addClass("panel-heading").append($title);
         var $panel = $("<div></div>").addClass("panel panel-default").append($heading);
 
-        var $ul = $("<ul></ul>").addClass("nav nav-stacked");
+        var $ul = $("<ul></ul>").addClass("nav nav-pills nav-stacked");
         for (var i in page.children) {
             var p = page.children[i];
-            var $l = $("<a></a>").addClass("nav-padding-flat").attr("href", "?" + page.page + "#" + p.page).text(p.name);
-            var $li = $("<li></li>").append($l);
+            var $l = $("<a></a>").addClass("nav-padding-flat internal").attr("href", "#" + p.page).text(p.name);
+            var $li = $("<li></li>").attr("id", "nav-" + p.page).append($l);
             $ul.append($li);
         }
 
@@ -157,7 +161,7 @@
     };
 
     // Gets the given markdown page.
-    var getMarkdown = function (page) {
+    var getMarkdown = function(page, section) {
         if (page == undefined) {
             return;
         }
@@ -171,12 +175,12 @@
             })
             .done(function(data) {
                 var decoded = Base64.decode(data.content);
-                markdownToHtml(page, decoded);
+                markdownToHtml(page, section, decoded);
             });
     };
 
     // Converts the markdown to HTML and put them into the HTML element.
-    var markdownToHtml = function (page, markdown) {
+    var markdownToHtml = function(page, section, markdown) {
         var url = "https://api.github.com/markdown";
         var params = {
             "mode": "gfm",
@@ -190,61 +194,43 @@
                 headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
             })
             .done(function(data) {
-                for (var i in pages) {
-                    data = data.replace(pages[i].doc, pages[i].page);
-                }
-
-                $("#main-content").html(data);
+                getContents(page, section, data);
             });
     };
 
-    // Gets the section of the page.
-    var getSection = function(path) {
-        var section = undefined;
+    // Gets the contents.
+    var getContents = function(page, section, data) {
         for (var i in pages) {
-            var page = pages[i];
-            if (page.children == undefined) {
-                continue;
-            }
-            if (page.children.length > 0) {
-                for (var j in page.children) {
-                    var p = page.children[j];
-                    if (p.page != path) {
-                        continue;
-                    }
-                    section = page;
-                    break;
-                }
-            }
-            if (section != undefined) {
-                break;
-            }
+            data = data.replace(pages[i].doc, pages[i].page);
         }
-        return section;
+
+        if (section == "index") {
+            $("#main-content #section-" + section).html(data).append($("<hr />"));
+        } else {
+            $("#main-content #section-" + section + " #page-" + page.page).html(data).append($("<hr />"));
+        }
+
+        $("#main-content #section-" + page.page + " a[href^='#']")
+            .addClass("internal")
+            .on("click", function() {
+                //getPushState(this);
+                getScrollTo(this);
+                return false;
+            });
     };
 
-    // Gets the sub page.
-    var getSubPage = function (path) {
-        var subPage = undefined;
-        for (var i in pages) {
-            var page = pages[i];
-            if (page.doc != undefined && page.doc.length > 0 && page.page == path) {
-                subPage = page;
-                break;
-            }
-            if (page.children != undefined && page.children.length > 0) {
-                for (var j in page.children) {
-                    var p = page.children[j];
-                    if (p.doc != undefined && p.doc.length > 0 && p.page == path) {
-                        subPage = p;
-                        break;
-                    }
-                }
-            }
-            if (subPage != undefined && subPage.page != undefined && subPage.page.length > 0) {
-                break;
-            }
-        }
-        return subPage;
+    // Puts the hashtag into the pushstate.
+    var getPushState = function ($anchor) {
+        var hash = "#" + $.url($anchor.attr("href")).attr("fragment");
+        history.pushState(null, null, hash);
+    };
+
+    // Gets the smooth scroll.
+    var getScrollTo = function ($anchor) {
+        var fragment = $.url($anchor.attr("href")).attr("fragment");
+        var hash = "#page-" + fragment;
+        $("html, body").scrollTo(hash, 500, { "offset": { "top": -60, "left": 0 } });
+        $("#accordion li").removeClass("active");
+        $("#nav-" + fragment).addClass("active");
     };
 })(jQuery);

@@ -43,7 +43,7 @@ h6,
 }
 
 .nav > li > a.nav-padding-flat {
-    padding: 0px !important;
+    padding: 0px 5px !important;
 }
 
 @media (min-width: 768px) {
