@@ -179,16 +179,16 @@ println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 ### 식별연산자(Identity Operators)
 클래스는 참조타입이기때문에 보이지 않는 곳에서 여러 상수나 변수가 동일한 클래스의 인스턴스 하나를 참조하는게 가능합니다.(구조체와 열거형은 할당되거나 함수에 매개변수로 전달될때 복사가 이루어지기때문에 이와는 같지 않습니다.)
 
-이러한 이유로 두 상수나 변수가 정확하게 동일한 클래스의 인스턴스를 참조하고 있는지 알아내는것은 종종 유용하게 사용됩니다. 그러한 경우를 알아내기 위해서 Swift는 아래의 두가지 식별연산자를 제공합니다
+두 상수나 변수가 정확하게 동일한 클래스의 인스턴스를 참조하고 있는지 찾아내는것은 종종 유용하게 사용됩니다. 그러기 위해서 Swift는 아래의 두가지 식별연산자를 제공합니다
 * 동일한(Identical to) (===)
 * 동일하지 않은(Not identical to) (!==)
 
 두 상수나 변수가 동일한 인스턴스를 가리키는지 검사하기 위해 위의 두 연산자를 사용하십시오.
 ```
 if tenEighty === alsoTenEighty {
-	println("tenEighty and alsoTenEighty refer to the same Resolution instance.")
+    println("tenEighty and alsoTenEighty refer to the same Resolution instance.")
 }
-// "tenEighty and alsoTenEighty refer to the same Resolution instance." 출력
+// prints "tenEighty and alsoTenEighty refer to the same Resolution instance."
 ```
 "동일한(identical to)"("==="로 표현된)과 "같은(equal to)"("=="로 표현된)가 같지 않다라것에 주의하십시오.
 * "동일한"은 클래스 형의 두 상수나 변수가 정확하게 동일한 클래스 인스턴스를 참조하고 있음을 뜻합니다.
@@ -197,7 +197,7 @@ if tenEighty === alsoTenEighty {
 여러분이 사용자 클래스나 구조체를 정의할때 두 인스턴스가 "같은"조건을 결정하는것은 여러분의 결정입니다.
 여러분만의 "같은"과 "같지않은(not equal to)"연사자를 구현하는 과정에 대한 자세한 사항은 `Equivalence Operators`를 참조하십시오.
 
-## 포인터
+### 포인터
 만약 여러분이 C나 C++ 또는 Objective-C를 사용해본 경험이 있으시다면 이 언어들이 메모리주소를 참조하기 위해 포인터를 사용한다는 것을 아실겁니다. 어떤 참조형식 인스턴스를 참조하는 Swift 상수나 변수는 C에서의 포인터와 유사합니다. 하지만 이것은 메모리상의 주소를 직접적으로 가르키는 것은 아니고 또한 여러분이 생성한 인스턴스를 가르키기 위해 asterisk(*)를 필요로 하지도 않습니다. 대신 Swift에서는 이러한 레퍼런스들은 다른 상수나 변수처럼 정의할수 있습니다.
 
 ## 클래스와 구조체중에 선택하기
