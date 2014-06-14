@@ -82,7 +82,6 @@ manager.data += "Some more data"
 `DataManage`r 인스턴스가 데이터를 관리할 때 파일에서 읽어오지 않는 경우도 있을 수 있다. 이런 경우엔 `DataManager`가 생성될때, `DataImporter` 인스턴스를  생성하는 것은 불필요하다. 대신에, `DataImporter` 인스턴스를 최초로 사용할때 생성되도록 하는 것이 더 좋다.
 
 게으른 속성(`@lazy`)으로 표시되어있기 때문에, `DataImporte`r 인스턴스인 `DataManager`의 `importer` 속성은 `fileName` 속성을 조회할 때와 같은 최초의 접근시 생성된다.
-
 ```
 println(manager.importer.fileName)
 // the DataImporter instance for the importer property has now been created
@@ -98,7 +97,6 @@ Swift는 위의 개념들을 하나의 속성 선언에 통합시켰다. 스위�
 ## 계산속성 (Computed Properties)
 
 저장속성에 더해서, 클래스, 구조체 그리고 열거체에는 계산속성(Computed properties)를 정의할 수 있다. 계산속성은 실제로 값을 저장하지는 않고, 다른 속성이나 값들이 간접적으로 접근하여 값을 조회하거나 수정할 수 있는 getter와 선택적인 setter를 제공한다. 
-
 ```
 struct Point {
     var x = 0.0, y = 0.0
@@ -128,7 +126,6 @@ square.center = Point(x: 15.0, y: 15.0)
 println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 // prints "square.origin is now at (10.0, 10.0)"
 ```
-
 위 예제는 기하학의 도형을 다루기 위한 세개의 구조체를 정의하고 있다. 
 
 * `Point` 구조체는 `x`,`y` 좌표를 가진다.
@@ -148,7 +145,6 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 ### 속기식의 Setter 선언(Shorthand Setter Declaration)
 
 계산속성의 setter에 새로운 값이 저장될 이름이 명시되지 않으면 기본값으로 `newValue`를 사용한다. 속기식의 방식을 이용한 `Rect` 구조체의 새로운 버전은 다음과 같다:
-
 ```
 struct AlternativeRect {
     var origin = Point()
@@ -169,13 +165,12 @@ struct AlternativeRect {
 
 ### 읽기전용 계산속성 (Read-Only Computed Properties)
 
-getter만 있고, setter가 없는 계산속성은 읽기전용 계산속성(read-only computed property)라 부른다. 읽기전용 계산속성은 언제나 값을 반환하며, 마침표(.)를 통해 접근할 수 있지만, 다른 값을 지정할 수는 없다. 
+getter만 있고, setter가 없는 계산속성은 읽기전용 계산속성(read-only computed property)라 부른다. 읽기전용 계산속성은 언제나 값을 반환하며, 마침표(.)를 통해 접근할 수 있지만, 다른 값으로 설정할 수는 없다. 
 
 > NOTE
-읽기전용을 포함한 모든 계산속성은 반드시 var 키워드로 선언되어야한다. 왜냐하면, 계산속성의 값은 고정되지 않았기 때문이다. let 키워드는 초기화시 한번 지정되면 변경할 수 없다는 것을 표시하기 위해 상수속성 선언에만 사용해야한다. 
+읽기전용을 포함한 모든 계산속성은 반드시 `var` 키워드로 선언되어야한다. 왜냐하면, 계산속성의 값은 고정되지 않았기 때문이다. `let` 키워드는 초기화시 한번 지정되면 변경할 수 없다는 것을 표시하기 위해 상수속성 선언에만 사용해야한다. 
 
-읽기전용 계산속성의 선언은 단순히 get 키워드와 중괄호를 제거하면 된다. (엄멀하게 말하자만, set 부분은 아예 없고, get 블록 내부의 코드가 한꺼풀 바깥으로 나오는 형상이네요)
-
+읽기전용 계산속성의 선언은 단순히 `get` 키워드와 중괄호를 제거하면 된다. (역자 주 : 엄밀하게 말하자만, set 부분은 아예 없고, get 블록 내부의 코드가 한단계 바깥으로 나오는 형상)
 ```
 struct Cuboid {
     var width = 0.0, height = 0.0, depth = 0.0
@@ -187,7 +182,6 @@ let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
 println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 // prints "the volume of fourByFiveByTwo is 40.0"
 ```
-
 위 예제코드는 Cuboid란 이름의 새로운 구조체를 정의합니다. Cuboid는 너비, 높이, 그리고 깊이를 가진 3D 직육면체 상자를 표시합니다. 이 구조체는 volume이라는 읽기전용 계산속성을 제공합니다. volume 은 현재 cuboid의 면적을 계산하여 반환합니다. 면적이 변경되면 어떤 너비, 높이, 그리고 깊이값으로 변경되어야하는지 모호하기 때문에 면적을 변경하는 것은 말이 되지 않습니다. 그럼에도 불구하고, Cuboid 구조체를 사용하는 프로그래머에게 계산된 면적으로 제공하는 읽기전용 계산속성을 제공하는 것은 유용할 것입니다. 
 
 ## 속성감시자 (Property Observers)
