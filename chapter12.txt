@@ -231,7 +231,7 @@ stepCounter.totalSteps = 896
 ```
 `StepCounter` 클래스에는 `Int` 타입의 `totalSteps` 속성이 선언되어 있는데 `willSet`과 `didSet` 감시자를 가지는 저장 속성이다.
 
-`totalSteps`를 위한 `willSet`과 `didSet`  감시자는 속성에 새값이 할당될 때마다 호출된다. 심지어 현재 값과 새 값이 같을 때에도 정말이다.
+`totalSteps`를 위한 `willSet`과 `didSet`  감시자는 속성에 새값이 할당될 때마다 호출된다. 심지어 현재 값과 새 값이 같을 때에도 말이다.
 
 이 예에서 `willSet` 감시자는 `newTotalSteps`이라는 이름의 커스텀 매개변수를 사용한다. 이 예에서는 단순히 설정될 값에 대해 출력한다.
 
