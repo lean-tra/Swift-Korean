@@ -133,7 +133,7 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 * `Point` 구조체는 `x`,`y` 좌표를 가진다.
 * `Size` 구조체는 `width`(너비)와 `height`(높이)를 가진다.
-* `Rect` 구조체는 시작점과 크기로 사각형을 정의한다.
+* `Rect` 구조체는 `origin`(시작점)과 `size`(크기)로 사각형을 정의한다.
 
 `Rect` 구조체는 `center`라는 이름의 계산속성도 제공한다. `Rect` 구조체의 현재 중점(center position)은 언제나 시작점과 크기에 의해 결정된다. 그러므로, 프로그래머는 중점을 명시적인 Point 값으로 저장하지 않아도 된다. 대신에, Rect 구조체는 center라는 이름의 저장속성을 위한 맞춤 getter와 setter를 제공한다. 프로그래머는 이 center 계산속성을 마치 실제 저장속성인 것처럼 사용할 수 있다. 
 
@@ -143,9 +143,9 @@ square 변수의 center 속성은 마침표(.)를 통해 square.center 처럼 �
 
 그 다음엔 center 속성을 (15,15)로 변경한다. 이것은 사각형을 아래 도표 속의 우상단에 있는 오렌지 사각형의 위치로 이동시킨다. center 속성에 값을 지정하게 되면 setter를 호출하게 되는데, 이것은 x, y 저장속성을 함께 변경시켜, 사각형이 새로운 위치로 이동하도록 만든다.
 
-![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png "Rect구조체의 center 계산속성")
+![computedproperties_2x.png](images/computedproperties_2x.png)
 
-# 단축/축약(?) Setter 선언(Shorthand Setter Declaration)
+# 속기식의 Setter 선언(Shorthand Setter Declaration)
 
 계산속성의 setter에 새로운 값이 저장될 이름이 명시되지 않으면 기본값으로 newValue를 사용한다. 축약형을 이용한 Rect 구조체의 새로운 버전은 다음과 같다:
 
