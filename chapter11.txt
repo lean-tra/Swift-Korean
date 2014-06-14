@@ -190,7 +190,7 @@ if tenEighty === alsoTenEighty {
 }
 // prints "tenEighty and alsoTenEighty refer to the same Resolution instance."
 ```
-"동일한(identical to)"("==="로 표현된)과 "같은(equal to)"("=="로 표현된)가 같지 않다라것에 주의하십시오.
+"동일한(identical to)"("==="로 표현된)과 "같은(equal to)"("=="로 표현된)가  동일한 의미가 아니라는 것에 주의하십시오:
 * "동일한"은 클래스 형의 두 상수나 변수가 정확하게 동일한 클래스 인스턴스를 참조하고 있음을 뜻합니다.
 * "같은"은 두 인스턴스가 같은 값을 가지고 있는지를 검사합니다.
 
