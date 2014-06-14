@@ -159,16 +159,16 @@ tenEighty.interlaced = true
 tenEighty.name = "1080i"
 tenEighty.frameRate = 25.0
 ```
-이 예제에서 우리는 `tenEighty`라는 상수를 선언하고 새로 생성된 `VideoMode` 클래스의 인스턴스를 할당합니다. 비디오 모드는 전에 설정했던 1920 x 1080의 HD 해상도의 복사본을 할당했습니다. 또한 interlaced를 설정하고 "1080i"라는 이름을 주었습니다. 마지막으로 frame rate는 프레임 레이트를 초당 25.0 프레임으로 설정했습니다.
+이 예제에서 우리는 `tenEighty`라는 상수를 선언하고 새로 생성된 `VideoMode` 클래스의 인스턴스로 설정합니다. 비디오 모드는 전에 설정했던 1920 x 1080의 HD 해상도의 복사본을 할당했습니다. 또한 interlaced를 설정하고 "1080i"라는 이름을 주었습니다. 마지막으로 frame rate는 초당 25.0 프레임으로 설정했습니다.
 
-다음으로 `tenEighty`를 `alsoTenEighty`라는 새로운 상수에 할당하고, `alsoTenEighty`의 프레임 레이트의 값을 수정하겠습니다.
+다음으로 `tenEighty`를 `alsoTenEighty`라는 새로운 상수에 할당하고, `alsoTenEighty`의 프레임 레이트의 값을 수정하겠습니다:
 ```
 let alsoTenEighty = tenEighty
 asloTenEighty.frameRate = 30.0
 ```
 클래스는 참조 타입이기때문에 `tenEighty`와 `alsoTenEighty`는  사실 동일한 `VideoMode` 인스턴스를 참조하고 있습니다. 실제적으로 그들은 단지 동일한 인스턴스를 참조하는 서로 다른 이름일뿐입니다.
 
-아래의 예제코드를 통해 `tenEighty`의 `framerate` 프로퍼티가 새로운 프레임 레이트 값인 30.0임을 확인할수 있습니다.
+`tenEighty`의 `framerate` 프로퍼티를 체크하면,  새로운 frame rate 값인 30.0임을 확인할수 있습니다.
 ```
 println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 // prints "The frameRate property of tenEighty is now 30.0"
