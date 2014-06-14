@@ -267,9 +267,9 @@ stepCounter.totalSteps = 896
 
 ###타입 속성의 문법 (Type Property Syntax)
 
-C나 Objective-C에서는, you define static constants and variables associated with a type as global static variables. In Swift, however, type properties are written as part of the type’s definition, within the type’s outer curly braces, and each type property is explicitly scoped to the type it supports.
+C나 Objective-C에서는 전역적인 static 변수의 타입을 가지는 static 상수와 변수를 정의할 수있다. 그러나 Swift에서는 타입 속성은  타입들의 바깥쪽 중괄호 안에 타입의 정의 부분을 적을 수 있다. 그리고 각 타입 속성은 그 타입이 지원하는 명시적인 scope를 가진다.
 
-You define type properties for value types with the static keyword, and type properties for class types with the class keyword. The example below shows the syntax for stored and computed type properties:
+`static`키워드를 가지고 값 타입의 타입 속성을 정의할 수 있고, `class`키워드를 이용해서 클래스 타입의 타입 속성을 정의할 수 있다. 아래의 예시는 저장되거나 혹은 계산된 타입 속성을 위한 문법들을 보여준다:
 ```
 struct SomeStructure {
     static var storedTypeProperty = "Some value."
@@ -289,12 +289,12 @@ class SomeClass {
     }
 }
 ```
+
 >NOTE
+위의 계산된 타입 속성예지들은 읽기 전용의 계산된 타입 속성들을 위한 것이다. 그러나 당신은 똑같은 문법을 계산된 인스턴스 속성에 대하여 사용하는 것으로 읽고 쓸수 있는 계산된 타입 속성을 정의할 수 있다.
 
-The computed type property examples above are for read-only computed type properties, but you can also define read-write computed type properties with the same syntax as for computed instance properties.
 
-
-### 타입 속성 조회와 설정
+### 타입 속성 조회와 설정 (Querying and Setting Type Properties)
 타입 속성은 인스턴스 속성처럼 닷 표기법을 이용해서 조회하고 설정한다. 그러나, 타입 속성이 _타입_의 인스턴스가 아니라 타입에 조회하고 설정한다.
 ```
 println(SomeClass.computedTypeProperty)
@@ -308,6 +308,7 @@ println(SomeStructure.storedTypeProperty)
 ```
 이어지는 예제에서 많은 오디오 채널에 대한 오디오 레벨 미터를 추상화한 구조체 일부로 두개의 저장 타입 속성을 사용한다. 각 채널은 `0`부터 `10`까지를 포함한 정수형 오디오 레벨 미터를 가진다.
 밑의 그림은 어떻게 이 두가지 오디오 채널이 스테레오 오디오 레벨 미터로 조합해 만드는지 도해한다. 채널의 오디오 레벨이 `0`일 때 채널의 모든 불 빛은 꺼지게 된다. 채널 오디오 레벨이 `10`일 때 채널의 모든 불빛은 켜지게 된다. 그림처럼, 왼쪽 채널은 현재 `9`레벨이고, 오른쪽 채널은 현재 `7`레벨이다.
+
 ![staticpropertiesvumeter_2x.png](images/staticpropertiesvumeter_2x.png)
 
 위에 표시된 오디오 채널은 `AudioChannel` 구조체의 인스턴스로 표현된다.
