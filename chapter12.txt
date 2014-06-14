@@ -9,12 +9,11 @@
 
 # 저장속성 (Stored Property)
 
-저장 속성은 가장 단순한 형태일때 특정 클래스와 구조체의 인스턴스에 저장되는 상수나 변수다. var 키워드로 선언(introduced)되면, 변수저장속성(variable stored property). let 키워드로 선언되면 상수저장속성(constant stored property)이라 한다.
+저장 속성은 가장 단순한 형태일때 특정 클래스와 구조체의 인스턴스에 저장되는 상수나 변수다. `var` 키워드로 선언(introduced)되면, 변수저장속성(variable stored property). `let` 키워드로 선언되면 상수저장속성(constant stored property)이라 한다.
 
 프로그래머는 저장 속성을 정의할 때 초기값을 지정할 수 있다. 이에 대해서는 "초기속성값" 챕터에서 설명되어있다. 저장된 속성의 초기값을 수정할 수도 있는데, 심지어 상수 저장속성마저도 수정이 가능하다. 이에 대해서는 "초기화시 상수속성수정/변경하기" 챕터에 설명되어있다.
 
-아래 예제는 FixedLengthRange라는 구조체를 정의한다. 이 구조체는 특정 범위의 정수들을 의미하는데, 이 범위는 한번 생성되면 수정되지 않는다.
-
+아래 예제는 `FixedLengthRange`라는 구조체를 정의한다. 이 구조체는 특정 범위의 정수들을 의미하는데, 이 범위는 한번 생성되면 수정되지 않는다.
 ```
 struct FixedLengthRange {
     var firstValue: Int
@@ -22,28 +21,23 @@ struct FixedLengthRange {
 }
 
 var rangeOfT hreeItems = FixedLengthRange(firstValue: 0,  length: 3)
-
 // the range represents integer values 0,  1,  and 2
-// 이 구조체의 범위는 0, 1, 2 이다.
 
 rangeOfThreeItems.firstValue = 6
-
 // the range now  represents integer val ues 6,  7,  and 8
-// 구조체의 범위는 이제 6, 7, 8 이다.
 ```
-
-FixedLengthRange 구조체의 인스턴스들은 변수저장속성 firstValue와 상수저장속성 length를 갖는다. 위의 예제에서는 length 속성은 상수속성이기 때문에 구조체가 생성될때 최초로 지정되고, 이후로는 변경되지 않는다. 
+`FixedLengthRange` 구조체의 인스턴스들은 변수저장속성 `firstValue`와 상수저장속성 `length`를 갖는다. 위의 예제에서는 `length` 속성은 상수속성이기 때문에 구조체가 생성될때 최초로 지정되고, 이후로는 변경되지 않는다. 
 
 # 상수 구조체 인스턴스의 저장속성 (Stored Properties of Constant Structure Instances)
 
 
 상수로 선언된 구조체 인스턴스의 속성들은 변수속성이더라도 수정되지 않는다. 
 
-```swift
-let rangeOfFourItems = FixedLengthRange(firstVal ue: 0,  length: 4)
-// 이 구조체의 범위는 0, 1, 2, 3 이다.
+```
+let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
+// this range represents integer values 0, 1, 2, and 3
 rangeOfFourItems.firstValue = 6
-// firstValue는 변수속성이지만 여기서 에러가 난다. 
+// this will report an error, even thought firstValue is a variable property
 ```
 위 예제에서 rangeOfFourItems 인스턴스는 let 키워드를 통해 상수로 선언되었으므로 그 속성인 firstValue는 비록 변수속성이더라도  수정할 수 없다.
 이러한 동작은 구조체가 값타입(value type)이기 때문인데, 값타입의 인스턴스가 상수로 선언되면 그 속성들도 모두 상수가 된다.
