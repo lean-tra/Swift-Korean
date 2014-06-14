@@ -2,3 +2,4 @@
 
 About.txt
 translator.txt
+chapter29.txt
