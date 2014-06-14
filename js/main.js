@@ -9,15 +9,16 @@
 
         getSections();
 
+        var total = getTotalPages();
         $.each(pages, function (i, page) {
             getDropdown(page);
             getSideNavigation(page);
 
             if (page.page == "index") {
-                getMarkdown(page, page.page);
+                getMarkdown(page, page.page, total);
             } else {
                 $.each(page.children, function(j, p) {
-                    getMarkdown(p, page.page);
+                    getMarkdown(p, page.page, total);
                 });
             }
         });
@@ -160,8 +161,10 @@
         $("#accordion").append($panel);
     };
 
+    var count = 0;
+
     // Gets the given markdown page.
-    var getMarkdown = function(page, section) {
+    var getMarkdown = function(page, section, total) {
         if (page == undefined) {
             return;
         }
@@ -176,6 +179,9 @@
             .done(function(data) {
                 var decoded = Base64.decode(data.content);
                 markdownToHtml(page, section, decoded);
+
+                count++;
+                getProgressbar((count / total) * 100);
             });
     };
 
@@ -217,6 +223,32 @@
                 getScrollTo(this);
                 return false;
             });
+    };
+
+    // Gets the progress bar.
+    var getProgressbar = function (progress) {
+        $(".progress-bar").attr("aria-valuenow", progress).css("width", progress + "%");
+        if (progress < 100) {
+            $("#main-content").hide();
+            $("#progress-bar").show();
+        } else {
+            $("#progress-bar").slideUp("slow", function() {
+                $("#main-content").slideDown("slow");
+            });
+        }
+    };
+
+    // Gets the total number of pages.
+    var getTotalPages = function() {
+        var total = 0;
+        for (var i in pages) {
+            if (pages[i].page == "index") {
+                total++;
+            } else {
+                total += pages[i].children.length;
+            }
+        }
+        return total;
     };
 
     // Puts the hashtag into the pushstate.
