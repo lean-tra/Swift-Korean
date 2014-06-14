@@ -306,17 +306,17 @@ println(b[0])
 println(c[0])
 // 42
 ```
-## 복수의 배열이 동일한 요소들을 공유하는지 검사
+## 복수의 배열이 동일한 요소들을 공유하는지 검사 (Checking Whether Two Arrays Share the Same Elements)
 식별 연산자(===와 !===)를 통해 하나 이상의 배열 또는 subarray들이 동일한 저장소와 요소들을 공유하는지를 확인할수 있습니다.
 
 아래 예제에서는 "동일한(identical to)" 연산자(===)를 사용해서 배열 `b`와 `c`가 여전히 배열요소들을 공유하는지 확인합니다.
 ```
 if b === c {
-	println("b and c still share the same array elements.")
+    println("b and c still share the same array elements.")
 } else {
-	println("b and c now refer to two independent sets of array elements.")
+    println("b and c now refer to two independent sets of array elements.")
 }
-// "b and c now refer to two independent sets of array elements." 출력
+// prints "b and c now refer to two independent sets of array elements."
 ```
 또한 식별연산자를 사용해 subarray들이 동일한 요소를 공유하는지도 검사할수 있습니다. 아래 예제는 `b`의 동일한 subarray를 비교함으로써 그 둘이 동일한 요소를 참조하고 있음을 확인합니다.
 ```
