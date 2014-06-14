@@ -135,19 +135,19 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 * `Size` 구조체는 `width`(너비)와 `height`(높이)를 가진다.
 * `Rect` 구조체는 `origin`(시작점)과 `size`(크기)로 사각형을 정의한다.
 
-`Rect` 구조체는 `center`라는 이름의 계산속성도 제공한다. `Rect` 구조체의 현재 중점(center position)은 언제나 시작점과 크기에 의해 결정된다. 그러므로, 프로그래머는 중점을 명시적인 Point 값으로 저장하지 않아도 된다. 대신에, Rect 구조체는 center라는 이름의 저장속성을 위한 맞춤 getter와 setter를 제공한다. 프로그래머는 이 center 계산속성을 마치 실제 저장속성인 것처럼 사용할 수 있다. 
+`Rect` 구조체는 `center`라는 이름의 계산속성도 제공한다. `Rect` 구조체의 현재 중점(center position)은 언제나 `origin`과 `size`에 의해 결정된다. 그러므로, 프로그래머는 중점을 명시적인 `Point` 값으로 저장하지 않아도 된다. 대신에, `Rect` 구조체는 `center`라는 이름의 저장속성을 위한 맞춤 getter와 setter를 제공한다. 프로그래머는 이 `center` 계산속성을 마치 실제 저장속성인 것처럼 사용할 수 있다. 
 
-이어지는 코드에서는 square란 이름의 새로운 Rect 변수가 생성된다. square 변수는 시작점 (0,0)과 너비 10 ,높이 10으로 초기화된다. 이 square는 아래 도표의 파란색 사각형으로 표시된다. 
+이어지는 코드에서는 `square`란 이름의 새로운 `Rect` 변수가 생성된다. `square` 변수는 시작점 (0,0)과 너비 10 ,높이 10으로 초기화된다. 이 square는 아래 도표의 파란색 사각형으로 표시된다. 
 
-square 변수의 center 속성은 마침표(.)를 통해 square.center 처럼 접근할 수 있다. 이렇게 접근할 경우, 현재 속성값을 조회하는 getter가 호출된다. 이 getter는 실재하는 속성값을 반환하는게 아니라, 계산을 통해서 현재 사각형의 중점에 해당하는 새로운 Point 값을 반환한다. 위에서 보듯이, getter는 정확하게 (5,5) 좌표를 반환한다.
+`square` 변수의 `center` 속성은 마침표(.)를 통해 `square.center` 처럼 접근할 수 있다. 이렇게 접근할 경우, 현재 속성값을 조회하는 getter가 호출된다. 이 getter는 실재하는 속성값을 반환하는게 아니라, 계산을 통해서 현재 사각형의 중점에 해당하는 새로운 `Point` 값을 반환한다. 위에서 보듯이, getter는 정확하게 (5,5) 좌표를 반환한다.
 
-그 다음엔 center 속성을 (15,15)로 변경한다. 이것은 사각형을 아래 도표 속의 우상단에 있는 오렌지 사각형의 위치로 이동시킨다. center 속성에 값을 지정하게 되면 setter를 호출하게 되는데, 이것은 x, y 저장속성을 함께 변경시켜, 사각형이 새로운 위치로 이동하도록 만든다.
+그 다음엔 `center` 속성을 (15,15)로 변경한다. 이것은 사각형을 아래 도표 속의 우상단에 있는 오렌지 사각형의 위치로 이동시킨다. `center` 속성에 값을 지정하게 되면 setter를 호출하게 되는데, 이것은 `x`, `y` 저장속성을 함께 변경시켜, 사각형이 새로운 위치로 이동하도록 만든다.
 
 ![computedproperties_2x.png](images/computedproperties_2x.png)
 
 # 속기식의 Setter 선언(Shorthand Setter Declaration)
 
-계산속성의 setter에 새로운 값이 저장될 이름이 명시되지 않으면 기본값으로 newValue를 사용한다. 축약형을 이용한 Rect 구조체의 새로운 버전은 다음과 같다:
+계산속성의 setter에 새로운 값이 저장될 이름이 명시되지 않으면 기본값으로 newValue를 사용한다. 속기식을 이용한 Rect 구조체의 새로운 버전은 다음과 같다:
 
 ```
 struct AlternativeRect {
