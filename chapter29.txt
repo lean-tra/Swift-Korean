@@ -1,4 +1,4 @@
-# 27 언어 구조 (Lexcial Structure)
+# 29 표현 (Expressions)
 > Translator : 이름 (메일주소)
 
 준비중
