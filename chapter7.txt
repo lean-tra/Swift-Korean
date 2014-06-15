@@ -165,7 +165,8 @@ Swift는 `for-in`루프 말고도 C언어에서 쓰는, 조건부와 증가부�
        
 이번에 사용할 예제는 뱀과 사다리 게임입니다.
 
- ![뱀과 사다리 게임](images/image__255.png)
+
+ ![뱀과 사다리 게임](https://github.com/lean-tra/Swift-Korean/blob/master/images/image__255.png)
 
 게임의 규칙은 다음과 같습니다:
 
