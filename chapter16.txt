@@ -250,7 +250,7 @@ _편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라�
 
 이 규칙은 다음의 그림으로 표현될 수 있습니다.
 
-![initializerdelegation01_2x.png](images/initializerdelegation01_2x.png)
+![initializerdelegation01_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/initializerdelegation01_2x.png)
 
 여기 부모 클래스는 하나의 지정 이니셜라이저를 가지고 있으며, 두개의 편의 이니셜라이저를 가지고 있습니다. 한 편의 이니셜라이저는 다른 편의 이니셜라이저를 호출하며, 그 이니셜라니저는 하나 있는 지정 이니셜라이저를 호출합니다. 이는 위의 규칙 2와 3을 충족시킵니다. 부모 클래스는 더이상의 부모 클래스를 가지지 않기에 규칙 1은 적용되지 않습니다.
 그림의 서브 클래스는 두개의 지정 이니셜라이져와 하나의 편의 이니셜라이저가 있습니다. 편의 이니셜라이저는 반드시 두 지정 이니셜라이저중 하나의 이니셜라이저를 호출해야 합니다. 편의 이니셜라이저는 클래스 안의 다른 이니셜라이저만 호출 가능하기 떄문입니다. 이는 위의 규칙 2와 3을 만족시킵니다. 규칙 1을 만족시키기 위해, 두개의 지정 이니셜라이저는 반드시 부모 클래스에 하나 있는 지정 이니셜라이저를 호출해야 합니다.
@@ -260,7 +260,7 @@ _편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라�
 
 밑의 그림은 더 복잡한 4개의 클래스 간의 계층도를 나타냅니다. 이 그림은 지정 이니셜라이저가 어떻게 이 계층도의 클래스 초기화 과정에서 "깔때기"처럼 작동하고, 연쇄에서 클래스간의 관계를 단순화하는지 보여줍니다.
 
-![initializerdelegation02_2x.png](images/initializerdelegation02_2x.png)
+![initializerdelegation02_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/initializerdelegation02_2x.png)
 
 
 ### 이 단계 초기화
@@ -307,7 +307,7 @@ _편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라�
 - 마지막으로, 연쇄 안의 어떤 편의 이니셜라이저든 인스턴스를 사용자 정의 할 수 있는 선택권이 있으며, `self`를 이용하여 작업할 수 있습니다.
 
 초기화 호출의 첫 단계가 어떻게 보이는지 가상의 자식 클래스와 부모 클래스를 이용하여 보여줍니다.
-![twophaseinitialization01_2x.png](images/twophaseinitialization01_2x.png)
+![twophaseinitialization01_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/twophaseinitialization01_2x.png)
 
 이 예제에서 초기화는 자식 클래스의 편의 이니셜라이저를 호출 하는 것으로 시작합니다. 이 편의 이니셜라이저는 아직 어떤 속성도 변경할 수 없습니다. 편의 이니셜라이저는 같은 클래스 안의 지정 이니셜라이저를 대리 실행합니다.
 지정 이니셜라이저는 안전 점검 1에 따라, 모든 자식 클래스의 속성이 값을 가졌는지 확실히 합니다. 그 후에 지정 이니셜라이저는 부모 클래스의 지정 이니셜라이저를 불러 초기화 연쇄를 위로 올립니다.
@@ -315,7 +315,7 @@ _편의 이니셜라이저_는 클래스를 지탱하는 두번째 이니셜라�
 부모 클래스의 속성들이 초기 값을 가지는 순간부터, 인스턴스의 메모리는 완전히 초기화가 되었다고 간주되며, 첫 단계는 끝이 납니다.
 
 여기 두번째 단계가 같은 초기화 호출에서 어떻게 보이는지 설명이 있습니다.
-![twophaseinitialization02_2x.png](images/twophaseinitialization02_2x.png)
+![twophaseinitialization02_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/twophaseinitialization02_2x.png)
 
 부모 클래스의 지정 이니셜라이저는 인스턴스를 추가적으로 사용자 정의할 수 있는 기회가 있습니다. 물론 하지 않아도 됩니다.
 부모 클래스의 지정 이니셜라이저가 종료되면, 자식 클래스의 이니셜라이저가 추가 사용자 정의를 수행할 수 있습니다. 이번에도 물론, 하지 않아도 됩니다.
@@ -373,7 +373,7 @@ class Food {
 }
 ```
 밑의 그림은 `Food` 클래스의 이니셜라이저 연쇄가 어떻게 되는지 보여줍니다.
-![initializersexample01_2x.png](images/initializersexample01_2x.png)
+![initializersexample01_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/initializersexample01_2x.png)
 
 클래스는 기본 멤버 단위 이니셜라이저를 가지고 있지 않습니다. 그리고 `Food` 클래스는 단일 인자 `name`을 받는 지정 이니셜라이저를 제공합니다. 이 이니셜라이저는 특정 이름으로 `Food` 인스턴스를 생성하는데 사용될 수 있습니다.
 ```
@@ -400,7 +400,7 @@ class RecipeIngredient: Food {
 }
 ```
 밑의 그림은 `RecipeIngredient`의 이니셜라이저 연쇄가 어떠한지 보여줍니다.
-![initializersexample02_2x.png](images/initializersexample02_2x.png)
+![initializersexample02_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/initializersexample02_2x.png)
 
 `RecipeIngredient` 클래스는 한개의 지정 이니셜라이저 `init(name: String, quantity: Int)`을 가지고 있습니다. 이 이니셜라이저는 새 `RecipeIngredient` 인스턴스의 모든 속성을 채우는데 쓰입니다. 이 이니셜라이저는  `RecipeIngredient` 클래스가 도입한 유일한 새 속성인  `quantity` 속성에 넘겨받은 `quantity` 인자를 할당하는 것으로 시작합니다. 그리고 위의 이니셜라이저는 `Food` 클래스의 `init(name: String)` 이니셜라이저를 대리 수행합니다. 이 과정은 위의 **이 단계 초기화**에 다온 안전 점검 1을 만족합니다.
 
@@ -437,7 +437,7 @@ class ShoppingListItem: RecipeIngredient {
 
 밑의 그림은 전체 클래스 세개의 이니셜라이저 연쇄를 보여줍니다.
 
-![initializersexample03_2x.png](images/initializersexample03_2x.png)
+![initializersexample03_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/initializersexample03_2x.png)
 
 `ShoppingListItem` 인스턴스를 만드는데 세개의 상속받은 이니셜라이저 전부를 이용할 수 있습니다.
 ```
@@ -480,7 +480,7 @@ class SomeClass {
 
 이 예제는 `Checkerboard` 구조체를 정의하여 _Draughts_라고도 알려진 _체커_ 게임의 보드를 모델링합니다.
 
-![checkersboard_2x.png](images/checkersboard_2x.png)
+![checkersboard_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/checkersboard_2x.png)
 
 _체커_ 게임은 흑백 칸이 번갈아 있는 10 * 10 판 위에서 플레이합니다. 이 게임판을 표현하기 위해 `Checkerboard` 구조체는 길이가 100이고, `Bool` 값을 가지는 `boardColors`라는 단일 속성을 가집니다. 배열에서 `ture` 값은 검은 칸을 표현하고, `false` 값은 흰색 칸을 표현합니다. 배열의 첫번째 아이템은 게임판에서 제일 좌상단의 칸을 표현하고, 마지막 아이템은 제일 게임판에서 우하단의 칸을 표현합니다.
 

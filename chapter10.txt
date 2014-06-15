@@ -91,11 +91,11 @@ case .West:
 
 예를 들어 재고 추적 시스템이 각 제품을 두가지 타입의 바코드로 추적할 필요가 있다고 해 봅시다. 어떤 제품들은 UPC-A 포맷의 **0**에서 **9** 사이의 숫자를 사용하는 1차원 바코드로 레이블링 되어 있습니다. 각 바코드는 열 개의 "확인 번호(identifier)" 숫자가 뒤따르는 "번호 시스템" 숫자를 갖고 있습니다. 이 숫자들 뒤에는 각 코드가 제대로 스캔되었는지를 검증하기 위한 "확인(check)" 숫자가 붙습니다.
 
-![chapter10-fig1.png](images/chapter10-fig1.png)
+![chapter10-fig1.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/chapter10-fig1.png)
 
 다른 제품들은 모든 ISO 8859-1 문자를 사용할 수 있으며 2,953글자의 길이를 갖는 QR 코드 포맷의 2차원 바코드로 레이블링되어 있습니다.
 
-![chapter10-fig2.png](images/chapter10-fig2.png)
+![chapter10-fig2.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/chapter10-fig2.png)
 
 재고추적 시스템이 UPC-A 바코드를 3개의 숫자 튜플로 저장하고, QR 코드는 임의의 길이의 문자열로 저장할 수 있다면 매우 편할 것입니다.
 
