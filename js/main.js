@@ -9,11 +9,15 @@
 
         getSections();
 
+        for (var i in pages) {
+            getDropdown(pages[i]);
+            getSideNavigation(pages[i]);
+        }
+
+        getRateLimit();
+
         var total = getTotalPages();
         $.each(pages, function (i, page) {
-            getDropdown(page);
-            getSideNavigation(page);
-
             if (page.page == "index") {
                 getMarkdown(page, page.page, total);
             } else {
@@ -159,6 +163,27 @@
 
         $panel.append($collapsable);
         $("#accordion").append($panel);
+    };
+
+    // Gets the rate limit.
+    var getRateLimit = function () {
+        var url = "https://api.github.com/rate_limit";
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
+        })
+            .done(function (data) {
+                var rate = data.rate;
+                if (rate.remaining <= 0) {
+                    $("#progress-bar").hide();
+
+                    var reset = new Date(rate.reset * 1000);
+                    var $exceeded = $("<h1></h1>").text("Traffic Exploded. Back on " + reset.toString());
+                    $("#main-content").append($exceeded);
+                }
+            });
     };
 
     var count = 0;
