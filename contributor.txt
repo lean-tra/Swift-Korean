@@ -45,7 +45,7 @@
 - 소감 : 작은 부분이지만 즐거운 경험이었습니다. OSXDev 만세!
 
 ### FlashMaestro 
-![flashmaestro](flashmaestro.jpeg)
+![flashmaestro](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/flashmaestro.jpeg)
 - 연락처 : masterofflash@nate.com
 - 소감 : 공동번역으로 책 한권을 번역해내다니. 너무나 기분이 좋습니다. 앞으로 해외의 좋은 자료들을 잘 번역해서 국내 개발 문화에 많은 도움이 되고 싶습니다. 또 뜻하지 않게 많은 분들이 함께해 주셔서 함께 무언가를 한다는 기쁨도 맛보고 행복합니다!
 
@@ -98,7 +98,7 @@
 - 소감 : 빠르게 진행이 되다보니 아차하는 사이에 다른분들이 진행할까봐 졸린눈 부벼가며 번역했습니다. 즉 발번역인거죠. 흥이 날때 후딱 해치우니 좋네요.
 
 ###  (, Eonil)
-![hoonh](hoonh.jpeg)
+![hoonh](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/hoonh.jpeg)
 - 연락처 : , , http://observatory.eonil.com
 - 소개: 엔지니어 or 디자이너 or 아티스트의 자아 정체성을 갖고 있다고 생각합니다. 요즘 주로 쓰는 작업도구는 C/C++/Objective-C입니다.
 - 소감: 하고 싶었고, 잘 끝났고, 재밌었어요. 잘 마무리되었으면 합니다.
