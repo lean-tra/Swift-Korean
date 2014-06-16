@@ -171,16 +171,15 @@
             return;
         }
 
-        // TODO: Need to make config for endpoint URLs
-        var url = "https://cdn.rawgit.com/lean-tra/Swift-Korean/master/" + page.doc;
+        var url = gitcdn + page.doc;
         $.ajax({
+                type: "GET",
                 url: url,
                 dataType: "text"
             })
-            .done(function(markdownText) {
-                var html = markdown.toHTML(markdownText);
-
-                getContents(page, section, html);
+            .done(function(data) {
+                data = marked(data);
+                getContents(page, section, data);
 
                 count++;
                 getProgressbar((count / total) * 100);
