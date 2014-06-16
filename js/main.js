@@ -194,7 +194,8 @@
             return;
         }
 
-        var url = "https://cdn.rawgit.com/Jin-Kim/Swift-Korean/master/" + page.doc;
+        // TODO: Need to make config for endpoint URLs
+        var url = "https://cdn.rawgit.com/lean-tra/Swift-Korean/master/" + page.doc;
         $.ajax({
                 url: url,
                 dataType: "text"
