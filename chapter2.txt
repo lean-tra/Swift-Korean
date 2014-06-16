@@ -2,53 +2,53 @@
 > Translator : FlashMaestro (masterofflash@nate.com)
 
 전통적으로 새로운 언어를 배울 때 첫번째 프로그램은 화면에 "Hello, world"란 구문을 출력해 보는 것입니다. Swift에서는 코드 한 줄로 이를 구현할 수 있습니다.
-```	
+``` 
 println("Hello, world")
 ```    
 C나 Objective-C에서 코드를 작성해본적이 있다면 이런 문법이 매우 익숙할 것입니다. Swift에서는 이 한줄의 코드가 완전한 프로그램입니다. 입/출력이나 문자열을 다루기 위한 함수들 같은 기능들을 사용하기 위해 분리된 라이브러리를 볼러올(Import) 필요가 없습니다. 전역 범위(Global scope)에 해당하는 코드는 프로그램의 진입점(entry point)로 사용되기 때문에, main 함수는 필요하지 않습니다. 또한 모든 문장끝에 세미콜론을 쓸 필요도 없습니다.
 
 이번 장에서는 다양한 프로그래밍 과제를 어떻게 완수해 나가는지 보여주면서 Swift로 어떻게 코드를 작성해야하는지에 대한 충분한 정보를 제공할 것입니다. 몇몇가지를 이해하지 못한다고 해서 걱정하지 마세요. 이번 장에서 소개되는 모든 것들은 책의 뒷 부분에서 자세히 설명할 것입니다.
 
->노트
+> NOTE
 이번 장을 확실하게 이해하려면 Xcode 6의 Playground를 열어보세요. Playground는 코드를 수정하는 즉기 결과를 볼 수 있게 해줄 것입니다.
 
 ## 간단한 값
 
-let을 사용하면 상수를 만들고 var를 사용하면 변수를 만들 수 있습니다. 상수는 컴파일할 때 값을 알 필요가 없습니다. 그러나 한 번만 값을 할당할 수 있습니다. 이는 상수에 한 번만 값을 할당한 다음, 해당 상수 이름을 여러곳에 사용할 수 있다는 것을 의미합니다.
+`let`을 사용하면 상수를 만들고 `var`를 사용하면 변수를 만들 수 있습니다. 상수는 컴파일할 때 값을 알 필요가 없습니다. 그러나 한 번만 값을 할당할 수 있습니다. 이는 상수에 한 번만 값을 할당한 다음, 해당 상수 이름을 여러곳에 사용할 수 있다는 것을 의미합니다.
 
-```c
+```
 var myVariable =42
 myVariable = 50
 let myConstant = 42
 ```
 
-상수나 변수 값 모두에 여러분이 할당하고 싶은 값의 타입(type)을 지정할 수 있습니다. 그러나 항상 타입을 명시해야만 하는 것은 아닙니다. 여러분이 상수나 변수를 만들 때 할당한 값을 통해 컴파일러는 해당 값의 타입을 추측합니다. 위의 예를 보면, myVariable이 정수 타입 값으로 초기화되었기 때문에 컴파일러는 정수 타입이라고 추측합니다.
+상수나 변수 값 모두에 여러분이 할당하고 싶은 값의 타입(type)을 지정할 수 있습니다. 그러나 항상 타입을 명시해야만 하는 것은 아닙니다. 여러분이 상수나 변수를 만들 때 할당한 값을 통해 컴파일러는 해당 값의 타입을 추측합니다. 위의 예를 보면, `myVariable`이 정수 타입 값으로 초기화되었기 때문에 컴파일러는 정수 타입이라고 추측합니다.
 
 만약 초기값이 충분한 정보를 제공하지 못한 경우(혹은 초기값이 없는 경우) 특정한 타입을 변수명 뒤에 콜론으로 분리하여 써줘야 합니다.
 
-```c
+```
 let inplicitInteger = 70
 let implicitDouble = 70.0
 let explicitDouble: Double  = 70
 ```
 
->실습
-명시적으로 Float 타입인 상수를 만들고 4라는 값을 할당해보자.
+> EXPERIMENT
+명시적으로 `Float` 타입인 상수를 만들고 `4`라는 값을 할당해보자.
 
 할당된 값은 절대 다른 타입의 값으로 암시적인 변환을 할 수 없습니다. 만약 다른 타입의 값으로 변화해야 한다면 원하는 형태의 인스턴스로 만들어 타입을 명시해야 합니다.
 
-```c
+```
 let label = "The width is "
 let width = 94
 let widthLabel = label + String(width)
 ```
 
->실습
-마지막 줄에 명시한 String 타입 변환 부분을 제거해보자. 어떤 에러가 발생하는가?
+> EXPERIMENT
+마지막 줄에 명시한 `String` 타입 변환 부분을 제거해보자. 어떤 에러가 발생하는가?
 
 문자열 안에 값들을 쉽게 포함하는 방법도 있습니다. 괄호 안에 값을 쓰고 괄호 앞에 백슬래시(\)를 쓰면 됩니다. 예를 들면
 
-```c
+```
 let apples = 3
 let oranges = 5
 let appleSummary = "I have \(apples) apples."
@@ -57,32 +57,32 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 
 과 같습니다.
 
->실습
+> EXPERIMENT
 `\()` 를 이용해 문자열 안에 실수형 계산을 포함하도록 해보고, 인사말 안에 누군가의 이름을 넣어보자.
 
-배열(array)과 딕셔너리(dictionary)는 대괄호([])를 이용해 만들 수 있습니다. 그리고 대괄호 안에 인덱스(index)나 키(key)를 이용해 각각의 요소에 접근할 수 있습니다.
+배열(array)과 딕셔너리(dictionary)는 대괄호(`[]`)를 이용해 만들 수 있습니다. 그리고 대괄호 안에 인덱스(index)나 키(key)를 이용해 각각의 요소에 접근할 수 있습니다.
 
-```c
+```
 var shoppingList = ["catfish", "water", "tulips", "blue paint"]
 shoppingList[1] = "bottle of water"
 
 var occupations = [
-	"Malcolm":"Captian",
-	"Kaylee":"Mechanic",
+    "Malcolm":"Captian",
+    "Kaylee":"Mechanic",
 ]
 occupations["Jayne"] = "Public Relations"
 ```
 
 빈 배열이나 딕셔너리를 만들려면, 이니셜라이저(initializer)를 사용하면 됩니다.
 
-```c
+```
 let emptyArray = String[]()
 let emptyDictionary = Dictionary<String, Float>()
 ```
 
-타입 정보를 추론할 수 없다면 빈 배열은 []로 빈 딕셔너리는 [:]로 표기할 수 있습니다. 예를 들어 변수에 새로운 값을 할당하거나 함수에 인자(argument)로 전달할 때
+타입 정보를 추론할 수 없다면 빈 배열은 `[]`로 빈 딕셔너리는 `[:]`로 표기할 수 있습니다. 예를 들어 변수에 새로운 값을 할당하거나 함수에 인자(argument)로 전달할 때
 
-```c
+```
 shoppingList = [] // Went shopping and bought everything.
 ```
 
@@ -90,9 +90,9 @@ shoppingList = [] // Went shopping and bought everything.
 
 
 ## 흐름 제어
-if와 switch를 사용해서 조건문을 만들 수 있고 for-in, for, while, do-while을 이용해서 반복문을 만들 수 있습니다. 조건문과 반복문을 괄호로 감싸는 것은 선택사항입니다. 단, 중괄호로 해당 문 안(body)의 코드를 감싸는 것은 필수입니다.
+`if`와 `switch`를 사용해서 조건문을 만들 수 있고 `for-in`, `for`, `while`, `do-while`을 이용해서 반복문을 만들 수 있습니다. 조건문과 반복문을 괄호로 감싸는 것은 선택사항입니다. 단, 중괄호로 해당 문 안(body)의 코드를 감싸는 것은 필수입니다.
 
-```c
+```
  let individualScores = [75, 43, 103, 87, 12]
  var teamScore = 0
  for score in individualScores {
@@ -105,11 +105,11 @@ if와 switch를 사용해서 조건문을 만들 수 있고 for-in, for, while, 
 teamScore
 ```
 
-if문 안의 조건은 꼭 불리언(Boolean) 표현이어야 합니다. if score {...}라고 표현하면 0과의 비교를 암시하지 않기 때문에 에러가 발생합니다.
+`if`문 안의 조건은 꼭 불리언(Boolean) 표현이어야 합니다. `if score {...}`라고 표현하면 0과의 비교를 암시하지 않기 때문에 에러가 발생합니다.
 
-빈 값을 가지고 if와 let을  함께 사용하는 것도 가능합니다. 이런 값들은 옵션으로 표현합니다. 옵션 값은 어떤 값을 가지거나 빈 값을 표현하는 nil로 지정하기도 합니다. 값의 타입 뒤에 물음표를 쓰면 옵션 값이라는 것을 나타냅니다.
+빈 값을 가지고 `if`와 `let`을  함께 사용하는 것도 가능합니다. 이런 값들은 옵션으로 표현합니다. 옵션 값은 어떤 값을 가지거나 빈 값을 표현하는 `nil`로 지정하기도 합니다. 값의 타입 뒤에 물음표를 쓰면 옵셔널 값이라는 것을 나타냅니다.
 
-```c
+```
  var optionalString: String? = "Hello"
  optionalString == nil
  
@@ -120,14 +120,14 @@ if문 안의 조건은 꼭 불리언(Boolean) 표현이어야 합니다. if scor
  }
 ```
  
->실습
-optionalName의 값을 nil로 바꿔보자. 어떤 greeting의 값을 받을 수 있는가? optionalName에 할당된 값이 nil일 때 다른 값을 greeting에 할당하도록 else 절을 추가해보자.
+> EXPERIMENT
+`optionalName`의 값을 `nil`로 바꿔보자. 어떤 greeting의 값을 받을 수 있는가? `optionalName`에 할당된 값이 `nil`일 때 다른 값을 greeting에 할당하도록 `else` 절을 추가해보자.
 
-만약 옵션 값이 nil이라면 조건문은 거짓(false)이고 중괄호 안에 있는 코드를 실행하지 않고 건너뜁니다. 반대의 경우에는 중괄호 블록 안에서 사용할 수 있도록 let 뒷 부분의 상수에 값이 할당되고 옵션 값으로 사용할 수 있습니다.  
+만약 옵션 값이 `nil`이라면 조건문은 거짓(false)이고 중괄호 안에 있는 코드를 실행하지 않고 건너뜁니다. 반대의 경우에는 중괄호 블록 안에서 사용할 수 있도록 `let` 뒷 부분의 상수에 값이 할당되고 옵셔널 값으로 사용할 수 있습니다.  
 
 `switch`문에는 정수 타입 값이나 동등 비교연산 뿐만 아니라 어떤 종류의 데이터든 사용할 수 있고 다양한 비교 연산자들을 사용할 수 있습니다.
 
-```c
+```
   let vegetable = "red pepper"
   switch vegetable {
   case "celery":
@@ -141,14 +141,14 @@ optionalName의 값을 nil로 바꿔보자. 어떤 greeting의 값을 받을 수
   }
 ```
 
->실습
-switch문에서 default 부분을 제거해 보자. 어떤 에러가 발생하는가?
+> EXPERIMENT
+switch문에서 `default` 부분을 제거해 보자. 어떤 에러가 발생하는가?
     
 switch문은 case문의 조건과 일치할 때 case문 아래에 속한 코드를 실행하 switch문을 빠져나옵니다. 이후에 나오는 case문은 자동적으로 실행하지 않기 때문에 코드 끝에 break 키워드를 명시하지 않아도 됩니다.
 
-for-in 문을 사용하면 각각 키/값 쌍으로 사용할 수 있는 이름들의 쌍을 이용해 딕셔너리에 있는 요소들을 반복 처리할 수 있습니다.
+`for-in` 문을 사용하면 각각 키/값 쌍으로 사용할 수 있는 이름들의 쌍을 이용해 딕셔너리에 있는 요소들을 반복 처리할 수 있습니다.
 
-```c
+```
 let interestingNumbers = [
   "Prime": [2, 3, 5, 7, 11, 13],
   "Fibonacci": [1, 1, 2, 3, 5, 8],
@@ -158,80 +158,80 @@ var largest = 0
 for (kind, numbers) in interestingNumbers {
   for number in numbers {
     if number > largest {
- 	   largest = number
+       largest = number
     }
   }
 }
 largest
 ```
  
->실습
+> EXPERIMENT
 어떤 숫자가 가장 큰 수로 저장되는지 확인하기 위해 다른 변수를 추가하고, 가장 큰 수로 저장된 숫자가 무엇인지 확인해보라.
     
-이번에는 조건문이 변경될 때까지 코드 블록을 반복 실행하기 위해서 while 문을 사용해 봅시다. 반복문이 적어도 한번은 실행될 수 있도록 보장하려면 조건문을 반복문의 끝에 작성할 수도 있습니다.
+이번에는 조건문이 변경될 때까지 코드 블록을 반복 실행하기 위해서 `while` 문을 사용해 봅시다. 반복문이 적어도 한번은 실행될 수 있도록 보장하려면 조건문을 반복문의 끝에 작성할 수도 있습니다.
 
-```c
+```
 var n = 2
 while n < 100 {
-	n = n * 2
+    n = n * 2
 }
 n
 
 var m = 2
 do {
-	m = m * 2
+    m = m * 2
 } while m < 100
 m
 ```
 
  반복문안에서 `..`을 사용해 인덱스의 범위를 만들거나 명시적으로 초기화, 조건문, 증감식을 사용할 수도 있습니다. 아래 두 가지 반복문은 동일한 작업을 수행합니다.
 
-```c
+```
 var firstForLoop = 0
 for i in 0..3 {
-	firstForLoop += i
+    firstForLoop += i
 }
 firstForLoop
 
 var secondForLoop = 0
 for var i = 0; i < 3; ++i {
-	secondForLoop += 1
+    secondForLoop += 1
 }
 secondForLoop
 ```
  
 `..`을 사용해서 범위를 지정하면 제일 맨 마지막 값은 제외됩니다. 반면에 `...`을 사용하면 양쪽 끝의 값을 모두 범위에 포함하게 됩니다.
  
- ##함수(Functions)와 클로저(Closures)
+## 함수(Functions)와 클로저(Closures)
  
-`func`를 사용해 함수를 선언할 수 있습니다. 함수를 호출할 때 함수의 이름과 괄호안에 인자들을 넣을 수 있습니다. 매개변수의 이름과 분리해서 '->'를 사용해 타입 이름을 표기하면 함수 반환 값의 타입을 지정할 수 있습니다.
+`func`를 사용해 함수를 선언할 수 있습니다. 함수를 호출할 때 함수의 이름과 괄호안에 인자들을 넣을 수 있습니다. 매개변수의 이름과 분리해서 `>`사용해 타입 이름을 표기하면 함수 반환 값의 타입을 지정할 수 있습니다.
 
-```c
+```
 func greet(name: String, day: String) -> String {
-	return "Hello \(name), today is \(day)."
+    return "Hello \(name), today is \(day)."
 }
 greet("Bob", "Tuesday")
 ```   
 
->실습
+> EXPERIMENT
 매개변수 day를 제거하고 인사말에 '오늘의 특별한 점심'을 포함하도록 매개변수를 추가해보자.
     
 튜플(tuple)을 사용하면 여러개의 값을 반환할 수 있습니다.
 
-```c
+```
 func getGasPrices() -> (Double, Double, Double) {
-	return (3.59, 3.69, 3.79)
+    return (3.59, 3.69, 3.79)
 }
 getGasPrices()
 ```
 
 배열을 이용해서 여러 개의 값을 함수의 인자로 받을 수도 있습니다.
 
-```c
+```
 func sumOf(numbers: Int...) -> Int {
   var sum = 0
   for number in numbers {
-	  sum += number
+      sum += number
   }
   return sum
 }
@@ -239,29 +239,29 @@ sumOf()
 sumOf(42, 597, 12)
 ```
 
->실습
+> EXPERIMENT
 인자들의 평균값을 계산하는 함수를 만들어보자.
     
 함수는 중첩해서 사용할 수도 있습니다. 중첩(Nested) 함수는 감싸고 있는 함수에서 선언된 변수에 접근할 수 있습니다. 코드가 길어지고 복잡해지는 함수라면 이를 정리하려고 중첩 함수를 사용할 수 있습니다.
 
-```c
+```
 func returnFifteen() -> Int {
   var y = 10
   func add() {
-	  y += 5
-	}
-	add()
-	return y
+      y += 5
+    }
+    add()
+    return y
 }
 returnFifteen()
 ```
 
 함수는 최상위(first-class) 타입입니다. 즉, 어떤 함수가 다른 함수를 반환 값 형태로  반환할 수 있다는 것을 의미합니다.
 
-```c
+```
 func makeIncrementer() -> (Int -> Int) {
   func addOne(number: Int) -> Int {
-  	return 1 + number
+    return 1 + number
   }
   return addOne
 }
@@ -271,7 +271,7 @@ increment(7)
 
 또 함수는 다른 함수를 인자로 받을 수 있습니다.
 
-```c
+```
   func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
       for item in list {
           if condition(item) {
@@ -287,9 +287,9 @@ increment(7)
   hasAnyMatches(numbers, lessThanTen)
 ```
 
-실제로 함수는 클로저(Closure)의 특별한 예입니다. 중괄호로 묶어서 이름을 지정하지 않고도 클로저를 사용할 수 있습니다. `in` 키워드를 사용해 인자와 반환값 타입을 분리해 사용할 수도 있습니다.
+실제로 함수는 클로저(Closure)의 특별한 예입니다. 중괄호(`{}`)를 지정하지 않고도 클로저를 사용할 수 있습니다. `in` 키워드를 사용해 인자와 반환값 타입을 분리해 사용할 수도 있습니다.
 
-```c
+```
   numbers.map({
       (number: Int) -> Int in
       let result = 3 * number
@@ -297,7 +297,7 @@ increment(7)
       })
 ```
 
->실습
+> EXPERIMENT
 모든 홀수값에 대해 0을 반환하도록 클로저를 수정해보자.
     
 클로저를 간결하게 사용하는 몇가지 옵션이 있습니다. 델리게이트(delegate)를 위한 콜백(callback)처럼 이미 클로저의 타입을 아는 경우라면 매개변수의 타입, 반환 값 타입을 모두 생략하거나 선택적으로 생략할 수 있습니다. 한 줄짜리 구문을 가진 클로저라면 구문만 가지고도 반환 타입을 추측할 수 있습니다.
@@ -311,9 +311,9 @@ sort([1, 5, 3, 12, 2]) { $0 > $1 }
 
 ##객체(Objects)와 클래스(Classes)
 
-클래스를 만들기 위해서는 클래스 이름과 함께 class 키워드를 사용하면 됩니다.클래스 컨텍스트(context) 내부를 제외하고 클래스 안에 속성을 선언하기 위해서는 상수나 변수를 선언하는 것과 똑같은 방식으로 쓰면 됩니다. 마찬가지로 메서드와 함수도 선언할 수 있습니다.
+클래스를 만들기 위해서는 클래스 이름과 함께 `class` 키워드를 사용하면 됩니다.클래스 컨텍스트(context) 내부를 제외하고 클래스 안에 속성을 선언하기 위해서는 상수나 변수를 선언하는 것과 똑같은 방식으로 쓰면 됩니다. 마찬가지로 메서드와 함수도 선언할 수 있습니다.
 
-```c
+```
   class Shape {
     var numberOfSides = 0
     func simpleDescription() -> String {
@@ -321,18 +321,20 @@ sort([1, 5, 3, 12, 2]) { $0 > $1 }
     }
   }
 ```
+> EXPERIMENT
+상수 속성을 `let`을 이용하여 만들고, 다른 인자를 받는 메서드를 만들어봅시다.
 
 어떤 클래스의 인스턴스를 만들려면 클래스 이름 다음에 괄호를 넣으면 됩니다. .(점) 문법을 사용하면 인스턴스의 속성이나 메서드에 접근할 수 있습니다.
 
-```c
+```
   var shape = Shape()
   shape.numberOfSides = 7
   var shapeDescription = shape.simpleDescription()
 ```
 
-현재 상태의 Shape클래스는 중요한 것이 빠져있습니다. 바로 클래스가 생성될 때 클래스를 초기화하기 위한 초기화자 입니다. init 키워드를 사용해 만들어 봅시다.
+현재 상태의 `Shape` 클래스는 중요한 것이 빠져있습니다. 바로 클래스가 생성될 때 클래스를 초기화하기 위한 초기화자 입니다. `init` 키워드를 사용해 만들어 봅시다.
 
-```c
+```
   class NamedShape {
       var numberOfSides: Int = 0
       var name: String
@@ -345,15 +347,15 @@ sort([1, 5, 3, 12, 2]) { $0 > $1 }
   }
 ```
 
-인자의 name과 속성의 name을 구분하기 위해서 self 키워드가 어떻게 사용되는지 주의해서 봅시다.  클래스의 인스턴스를 만들 때 초기화자에 인자를 전달하는 방식은 함수에 전달하는 방식과 동일합니다. 모든 속성은 numberOfSides 처럼 값을 선언 할 때 혹은 name처럼 클래스를 초기화 할 때 처럼 적어도 둘중에 한가지 방법을 통해 값을 할당해줘야 합니다.
+인자의 `name`과 속성의 `name`을 구분하기 위해서 `self` 키워드가 어떻게 사용되는지 주의해서 봅시다.  클래스의 인스턴스를 만들 때 초기화자에 인자를 전달하는 방식은 함수에 전달하는 방식과 동일합니다. 모든 속성은 `numberOfSides` 처럼 값을 선언 할 때 혹은 `name`처럼 클래스를 초기화 할 때 처럼 적어도 둘중에 한가지 방법을 통해 값을 할당해줘야 합니다.
 
-오브젝트를 해제하기전 정리 작업이 필요하다면 deinit을 사용해서 디이니셜라이저(deinitializer)를 만들 수 있습니다.
+오브젝트를 해제하기전 정리 작업이 필요하다면 `deinit`을 사용해서 디이니셜라이저(deinitializer)를 만들 수 있습니다.
 
 하위 클래스는 클래스명 뒤에 상위 클래스의 이름을 세미콜론으로 구분해 포함합니다. 꼭 기본 루트 클래스가 필요한 것은 아니기 때문에 상위 클래스를 포함해도 되고 생략해도 됩니다.
 
-하위 클래스에서 상위 클래스에서 구현된 메서드를 오버라이드(override) 하려면 override 키워드를 이용해 표시해줘야 합니다. override키워드를 사용하지 않고 어떤 메서드를 갑자기 오버라이드하면 컴파일러에서 에러로 인식합니다. 또 override 키워드를 사용했는데 실제로 상위 클래스에는 해당 메서드가 없다면 이것 또한 컴파일러가 잡아냅니다.
+하위 클래스에서 상위 클래스에서 구현된 메서드를 오버라이드(override) 하려면 `override` 키워드를 이용해 표시해줘야 합니다. `override` 키워드를 사용하지 않고 어떤 메서드를 갑자기 오버라이드하면 컴파일러에서 에러로 인식합니다. 또 `override` 키워드를 사용했는데 실제로 상위 클래스에는 해당 메서드가 없다면 이것 또한 컴파일러가 잡아냅니다.
 
-```c
+```
 class Square: NamedShape {
     var sideLength: Double
     
@@ -376,12 +378,12 @@ test.area()
 test.simpleDescription()
 ```
 
->실험
-NamedShape클래스의 또 다른 하위 클래스인 Circle을 만들어보자. 이 클래스는 이니셜 라이저를 통해 radius와 name을 인자로 받는다. Circle 클래스 안에 area, describe 함수를 구현해보자.
+> EXPERIMENT
+`NamedShape` 클래스의 또 다른 하위 클래스인 `Circle`을 만들어보자. 이 클래스는 이니셜 라이저를 통해 `radius`와 `name`을 인자로 받는다. `Circle` 클래스 안에 `area`, `describe` 함수를 구현해보자.
 
 저장되어 있는 간단한 속성 외에도 속성은 getter와 setter를 가질 수 있습니다.
 
-```c
+```
 class EquilateralTriangle: NamedShape {
     var sideLength: Double = 0.0
     
@@ -409,17 +411,17 @@ triangle.perimeter
 triangle.perimeter = 9.9
 triangle.sideLength
 ```
-perimeter의 setter안에서는 newValue라는 이름이 새로운 값을 나타내고 있습니다. 반면에 명시적으로 set 뒤에 괄호를 이용해 명시적으로 이름을 지정해 줄수도 있습니다.
+`perimeter`의 setter안에서는 `newValue`라는 이름이 새로운 값을 나타내고 있습니다. 반면에 명시적으로 `set` 뒤에 괄호를 이용해 명시적으로 이름을 지정해 줄수도 있습니다.
 
-EquilateralTriangle 클래스의 이니셜라이저는 세가지의 다른 단계를 가지고 있음을 살펴봅시다.
+`EquilateralTriangle` 클래스의 이니셜라이저는 세가지의 다른 단계를 가지고 있음을 살펴봅시다.
 
 1. 하위 클래스에서 선언한 속성의 값을 지정합니다.
 2. 상위 클래스의 이니셜라이저를 호출합니다.
 3. 상위 클래스에 의해 정의된 속성값을 변경합니다. 어떤 메서드나 setter,getter를 사용하지 않고도 가능 하다는 것이 중요한점 입니다.
 
-속성의 값을 계산할 필요는 없지만 새로운 값을 할당하기  전이나 후에 수행해야할 코드가 있다면 willSet, didSet을 사용할 수 있습니다. 예를 들면 아래쪽에 나오는 클래스에서는 삼각형의 빗면의 길이가 사각형의 옆면의 길이와 항상 동일하다는 것을 보장합니다.
+속성의 값을 계산할 필요는 없지만 새로운 값을 할당하기  전이나 후에 수행해야할 코드가 있다면 `willSet`, `didSet`을 사용할 수 있습니다. 예를 들면 아래쪽에 나오는 클래스에서는 삼각형의 빗면의 길이가 사각형의 옆면의 길이와 항상 동일하다는 것을 보장합니다.
 
-```c
+```
 class TriangleAndSquare {
     var triangle: EquilateralTriangle {
     willSet {
@@ -445,7 +447,7 @@ triangleAndSquare.triangle.sideLength
 
 클래스에 있는 메서드들은 함수와는 다른 중요한 특징이 한가지 있습니다.함수에서 사용되는 매개변수의 이름들은 함수 내부에서만 사용합니다. 그러나 메서드에 사용되는 매개변수의 이름은 메서드를 호출할 때도 사용됩니다(첫번째 매개변수의 이름은 제외하고). 기본적으로 메서드는 호출할 때 혹은 메서드에서 사용되는 이름과 동일한 매개변수 이름을 갖습니다. 하지만 메서드 내부에서 사용될 두번째 이름을 특별히 정해줄 수도 있습니다.
 
-```c
+```
 class Counter {
     var count: Int = 0
     func incrementBy(amount: Int, numberOfTimes times: Int) {
@@ -455,12 +457,12 @@ class Counter {
 var counter = Counter()
 counter.incrementBy(2, numberOfTimes: 7)
 ```
-옵션 값을 사용할 때는 메서드나 속성, 서브스크립트 앞에 ?를 쓸 수 있습니다.  만약 ? 앞에 값이 nil 이라면 ? 이후에 나오는 모든 것은 무시되고 표현의 값들은 nil을 갖습니다. 반면에 값이 있는 경우라면 ? 이후의 모든 그 값을 기준으로 동작합니다. 양쪽 경우 모두 옵션 값으로 사용됩니다.
+옵션 값을 사용할 때는 메서드나 속성, 서브스크립트 앞에 ?를 쓸 수 있습니다.  만약 ? 앞에 값이 `nil` 이라면 ? 이후에 나오는 모든 것은 무시되고 표현의 값들은 `nil`을 갖습니다. 반면에 값이 있는 경우라면 ? 이후의 모든 그 값을 기준으로 동작합니다. 양쪽 경우 모두 옵션 값으로 사용됩니다.
 
 ## 열거형(Enumerations)과 구조체(Structures)
-enum 키워드를 사용하면 열거형을 만들 수 있습니다. 클래스나 모든 알려진 타입들의 경우 열거형에 메서드를 포함할 수 있습니다.  
+`enum` 키워드를 사용하면 열거형을 만들 수 있습니다. 클래스나 모든 알려진 타입들의 경우 열거형에 메서드를 포함할 수 있습니다.  
 
-```c
+```
 enum Rank: Int {
     case Ace = 1
     case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
@@ -484,14 +486,14 @@ let ace = Rank.Ace
 let aceRawValue = ace.toRaw()
 ```
 
->실험
-두개의 Rank 값의 원본 값을 비교하는 함수를 만들어보자.
+> EXPERIMENT
+두개의 `Rank` 값의 원본 값을 비교하는 함수를 만들어보자.
 
-위의 예를 보면 열거형의 원본 값의 타입은 int 입니다. 그래서 특별히 첫번째 원본값만 가지고 있는 것입니다. 나머지 원본 값들은 순서에 따라 자동으로 할당됩니다. 또 문자열이나 실수형태의 값들도 원본값으로 가진 열거형을 만들 수 있습니다.
+위의 예를 보면 열거형의 원본 값의 타입은 `int` 입니다. 그래서 특별히 첫번째 원본값만 가지고 있는 것입니다. 나머지 원본 값들은 순서에 따라 자동으로 할당됩니다. 또 문자열이나 실수형태의 값들도 원본값으로 가진 열거형을 만들 수 있습니다.
 
-toRaw와 fromRaw 함수를 사용해서 원본값과 열거형 값을 상호 변환할 수 있습니다.
+`toRaw`와 `fromRaw` 함수를 사용해서 원본값과 열거형 값을 상호 변환할 수 있습니다.
 
-```c
+```
 if let convertedRank = Rank.fromRaw(3) {
     let threeDescription = convertedRank.simpleDescription()
 }
@@ -499,7 +501,7 @@ if let convertedRank = Rank.fromRaw(3) {
 
 열거형의 구성값들은 실제 값을 쓰는 다른 방법일 뿐 아니라. 모두 실제 값입니다. 사실 실제값이 의미있는 경우가 아니라면 굳이 첫번째 값을 제공할 필요가 없습니다.
 
-```c
+```
 enum Suit {
     case Spades, Hearts, Diamonds, Clubs
     func simpleDescription() -> String {
@@ -519,14 +521,14 @@ let hearts = Suit.Hearts
 let heartsDescription = hearts.simpleDescription()
 ```
 
->실험
-Suit에 color 메서드를 추가해 보자. color 메서드는 스페이드와 클로버는 'black'을 반환하고 하트와 다이아몬드는 'red'를 반환하도록 하면 됩니다.
+> EXPERIMENT
+`Suit`에 `color` 메서드를 추가해 보자. `color` 메서드는 스페이드와 클로버는 'black'을 반환하고 하트와 다이아몬드는 'red'를 반환하도록 하면 됩니다.
 
-열거형의 구성중 하나인 Heart가 상단값을 어떻게 참조하는지 두가지 방법을 살펴봅시다. 상수 hearts에 값을 할당 할 때, 상수는 명시적으로 타입을 가지고 있지 않기 때문에 Suit.Hearts 처럼 전체 이름을 살펴봅니다. 스위치문 안에서는 열거형은 .Hearts로 축약형을 써서 참조하는데, 이것은 self가 이미 suit라는 것을 알고 있기 때문입니다. 값의 형을 이미 알고 있다면 언제든지 축약형을 사용해도 됩니다.
+열거형의 구성중 하나인 `Heart`가 상단값을 어떻게 참조하는지 두가지 방법을 살펴봅시다. 상수 `hearts`에 값을 할당 할 때, 상수는 명시적으로 타입을 가지고 있지 않기 때문에 `Suit.Hearts` 처럼 전체 이름을 살펴봅니다. 스위치문 안에서는 열거형은 `.Hearts`로 축약형을 써서 참조하는데, 이것은 `self`가 이미 suit라는 것을 알고 있기 때문입니다. 값의 형을 이미 알고 있다면 언제든지 축약형을 사용해도 됩니다.
 
-구조체를 만들기 위해서는 struct 키워드를 사용합니다. 구조체는 메서드나 이니셜라이저 같은 클래스와 비슷한 기능들을 지원합니다. 클래스와 구조체의 가장 중요한 차이점중 하나는 구조체의 경우 코드 내에서 전달될 때 값복사 형태로 전달되지만 클래스의 경우에는 참조복사 형태로 전달된 다는 것입니다.
+구조체를 만들기 위해서는 `struct` 키워드를 사용합니다. 구조체는 메서드나 이니셜라이저 같은 클래스와 비슷한 기능들을 지원합니다. 클래스와 구조체의 가장 중요한 차이점중 하나는 구조체의 경우 코드 내에서 전달될 때 값복사 형태로 전달되지만 클래스의 경우에는 참조복사 형태로 전달된 다는 것입니다.
 
-```c
+```
 struct Card {
     var rank: Rank
     var suit: Suit
@@ -537,14 +539,14 @@ struct Card {
 let threeOfSpades = Card(rank: .Three, suit: .Spades)
 let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 ```
->실험
-각 카드를 rank와 suit를 조합해서 만들어 전체 카드를 만들어 주는 메서드를 Card에 추가해보자.
+> EXPERIMENT
+각 카드를 rank와 suit를 조합해서 만들어 전체 카드를 만들어 주는 메서드를 `Card`에 추가해보자.
 
 열거형 구성자의 인스턴스는 인스턴스와 함께 관련값들을 사용할 수 있습니다. 같은 열거형의 구성자의 인스턴스들은 각 인스턴스와 함께 다른 관련값을 가질 수 있습니다. 인스턴스를 만들 때 관련값을 공급할 수 있습니다. 관련값과 원본값은 다릅니다. 열거형 구성자의 원본값은 모든 인스턴스에서 같은 값(열거형을 정의할 때 지정한 값)을 갖습니다. 
 
 예를 들면, 일출, 일몰 시간을 서버에 요청한다고 가정해보자. 서버는 두 시간 모두를 응답하거나 에러 정보를 응답할 수도 있다.
 
-```c
+```
 enum ServerResponse {
     case Result(String, String)
     case Error(String)
@@ -561,16 +563,16 @@ case let .Error(error):
 }
 ```
 
->실험
-ServerResponse에 세번째 경우를 추가하고 스위치문에도 추가해보자.
+> EXPERIMENT
+`ServerResponse`에 세번째 경우를 추가하고 스위치문에도 추가해보자.
 
-스위치문의 경우의 수와 비교를 수행하기 위해 ServerResponse로 부터 일출, 일몰 시간 값을 어떻게 추출해 내는지 눈여겨 보자. 
+스위치문의 경우의 수와 비교를 수행하기 위해 `ServerResponse`로 부터 일출, 일몰 시간 값을 어떻게 추출해 내는지 눈여겨 보자. 
 
 ## 프로토콜(Protocols)와 확장(Extensions)##
 
-프로토콜을 선언하기 위해 protocol 키워드를 사용하자
+프로토콜을 선언하기 위해 `protocol` 키워드를 사용하자
 
-```c
+```
 protocol ExampleProtocol {
     var simpleDescription: String { get }
     mutating func adjust()
@@ -579,7 +581,7 @@ protocol ExampleProtocol {
 
 클래스, 열거형, 구조체 모두에 프로토콜을 사용할 수 있다.
 
-```c
+```
 class SimpleClass: ExampleProtocol {
     var simpleDescription: String = "A very simple class."
     var anotherProperty: Int = 69105
@@ -602,14 +604,14 @@ b.adjust()
 let bDescription = b.simpleDescription
 ```
 
->실험
+> EXPERIMENT
 프로토콜을 사용하는 열거형을 만들어보자.
 
-구조체를 수정하기 위해 사용되는 메서드를 표시하기 위해 SimpleStructure 선언부에 사용되는 mutating 키워드를 살펴봅시다. SimpleClass에는 mutating으로 표시된 메서드가 필요하지 않습니다. 왜냐하면 클래스 안에 있는 모든 메서드들은 항상 클래스를 수정할 수 있기 때문입니다.
+구조체를 수정하기 위해 사용되는 메서드를 표시하기 위해 `SimpleStructure` 선언부에 사용되는 `mutating` 키워드를 살펴봅시다. `SimpleClass`에는 `mutating`으로 표시된 메서드가 필요하지 않습니다. 왜냐하면 클래스 안에 있는 모든 메서드들은 항상 클래스를 수정할 수 있기 때문입니다.
 
 extension 키워드를 사용해서 기존의 타입들에 새로운 메서드나 속성들을 비교하기 위한 기능들을 추가할 수 있습니다. 타입이 선언된 곳 어디서든 혹은 라이브러리나 프레임워크에서 불러온 타입들에 extension 키워드를 사용해 프로토콜을 적용할 수 있습니다.
 
-```c
+```
 extension Int: ExampleProtocol {
     var simpleDescription: String {
     return "The number \(self)"
@@ -621,24 +623,24 @@ extension Int: ExampleProtocol {
 7.simpleDescription
 ```
 
->실험
+> EXPERIMENT
 extension을 사용해 Double 타입에 absoluteValue 속성을 추가해보자.
 
 프로토콜 이름은 다른 알려진 변수들 처럼 지정할 수 있습니다. 예를 들면 객체들의 모음을 만들 때, 모든 객체는 다른 타입을 가지지만 하나의 프로토콜을 따릅니다. 프로토콜 타입인 값들을 가지고 작업할 때 프로토콜 외부에서 메서드를 정의하는 것은 불가능 합니다.
 
-```c
+```
 let protocolValue: ExampleProtocol = a
 protocolValue.simpleDescription
 // protocolValue.anotherProperty  // Uncomment to see the error
 ```
 
-protocalValue 변수가 실행시 SimpleClass 타입이더라도 컴파일러는 주어진ExampleProtocal 타입으로 취급합니다. 이것은 프로토콜 관습 외에도 클래스에서 구현된 메서드나 속성에 실수로 접근할 수는 없다는 것을 의미합니다.
+`protocalValue` 변수가 실행시 `SimpleClass` 타입이더라도 컴파일러는 주어진 `ExampleProtocal` 타입으로 취급합니다. 이것은 프로토콜 관습 외에도 클래스에서 구현된 메서드나 속성에 실수로 접근할 수는 없다는 것을 의미합니다.
 
 ## 제네릭(Generics)
 
 제네릭 함수나 타입을 만들려면 꺾쇠안에 이름을 쓰면 됩니다.
 
-```c
+```
 func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
     var result = ItemType[]()
     for i in 0..times {
@@ -651,7 +653,7 @@ repeat("knock", 4)
 
 클래스, 열거형, 구조체와 마찬가지로 함수나 메서드를 제네릭 형태로 만들 수 있습니다. 
 
-```c
+```
 // Reimplement the Swift standard library's optional type
 enum OptionalValue<T> {
     case None
@@ -663,7 +665,7 @@ possibleInteger = .Some(100)
 
 특정 요구 조건들의 타입 뒤에 `where`키워드를 사용해 봅시다. 예를 들어 프로토콜 구현의 위한 타입을 요구하거나 똑같은 타입을 요구하는 경우 혹은 특정 상위 클래스를 요구하는 경우 말입니다.
 
-```c
+```
 func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Element: Equatable, T.GeneratorType.Element == U.GeneratorType.Element> (lhs: T, rhs: U) -> Bool {
     for lhsItem in lhs {
         for rhsItem in rhs {
@@ -677,7 +679,7 @@ func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Ele
 anyCommonElements([1, 2, 3], [3])
 ```
 
->실험
+> EXPERIMENT
 anyCommonElements 함수를 공통적으로 두개의 연속값을 갖는 배열을 반환하도록 수정해 봅시다.
 
 간단한 경우에는 where을 생략하고 프로토콜과 클래스 이름을 콜론뒤에 바로 쓸 수 있습니다. `<T:Equatable>`과 `<T where T: Equatable>`은 동일합니다.
