@@ -165,7 +165,8 @@ Swift는 `for-in`루프 말고도 C언어에서 쓰는, 조건부와 증가부�
        
 이번에 사용할 예제는 뱀과 사다리 게임입니다.
 
- ![뱀과 사다리 게임](images/image__255.png)
+
+![뱀과 사다리 게임](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/image__255.png)
 
 게임의 규칙은 다음과 같습니다:
 
@@ -450,7 +451,7 @@ default:
     }
     //prints "(1,  1) is inside the box"   
 ```
-![그래프](images/image__256.png)
+![그래프](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/image__256.png)
 
 `switch`문은 점이 원점(0,0)에 있는지, 빨간선으로 표현된 x축 상에 있는지, 주황색으로 표현된 y축 상에 있는지, 그래프의 중앙에 파란색으로 칠한 4x4 상자 안에 있는지, 그 상자의 밖에 있는지를 판단합니다.
 
@@ -475,7 +476,7 @@ C언어와는 다르게, Swift에서는 하나의 값이나 값 묶음을 여러
 
 // 다음을 출력합니다:  "x축 상에 있으며 x의 값은 2입니다"  
 ```
-![그래프](images/image__257.png)
+![그래프](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/image__257.png)
 
 `switch`문은 이 점이 빨간색선인 x축 상에 있는지, 주황색선인 y축 상에 있는지, 또는 그 이외의 구역에 있는지를 판단합니다. 
 
@@ -506,7 +507,7 @@ C언어와는 다르게, Swift에서는 하나의 값이나 값 묶음을 여러
 // prints "(1, -1) 은 x==-y인 곳에 있습니다."  
 
 ```
-![image__258.png](images/image__258.png)
+![image__258.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/image__258.png)
 
 위 예제의 `switch`문은 이 점이 `x == y`인 녹색사선 상에 있는지, `x==-y`인 보라색 사선 상에 있는지, 그 이외의 지점에 있는지 판단합니다. 
 
@@ -652,7 +653,7 @@ Swift에서는 루프문이나 `switch`문 안에서 루프문이나 `switch`문
 주사위를 던졌더니, 25번 칸 보다 넘어가는 경우에는, 25번 칸으로 이동할 수 있는 수가 나올 때까지 주사위를 다시 던져야 합니다.
 
 게임판은 이전에 사용한 것과 동일합니다:
-![뱀과 사다리 - 게임판](images/image__260.png)
+![뱀과 사다리 - 게임판](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/image__260.png)
 
 
 변수 `finalSquare`, `board`, `square`, `diceRoll`은 이전 예제에서와 동일한 값으로 초기화합니다:
