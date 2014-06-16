@@ -4,6 +4,7 @@ var gitcdn = "https://cdn.rawgit.com/lean-tra/Swift-Korean/master/";
 
 var pages = [
     { "page": "index", "isParent": true, "name": "Home", "doc": "About.txt" },
+    { "page": "contributor", "isParent": true, "name": "Contributor", "doc": "contributor.txt" },
     {
         "page": "welcome-to-swift",
         "isParent": true,

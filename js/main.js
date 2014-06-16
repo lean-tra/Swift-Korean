@@ -16,7 +16,7 @@
 
         var total = getTotalPages();
         $.each(pages, function (i, page) {
-            if (page.page == "index") {
+            if (page.page == "index" || page.page == "contributor") {
                 getMarkdown(page, page.page, total);
             } else {
                 $.each(page.children, function(j, p) {
@@ -54,7 +54,7 @@
             return false;
         }
 
-        if (path == "index") {
+        if (path == "index" || path == "contributor") {
             return true;
         }
 
@@ -106,7 +106,7 @@
             return;
         }
 
-        if (page.page == "index") {
+        if (page.page == "index" || page.page == "contributor") {
             return;
         }
 
@@ -135,7 +135,7 @@
             return;
         }
 
-        if (page.page == "index") {
+        if (page.page == "index" || page.page == "contributor") {
             return;
         }
 
@@ -192,7 +192,7 @@
             data = data.replace(pages[i].doc, pages[i].page);
         }
 
-        if (section == "index") {
+        if (section == "index" || page.page == "contributor") {
             $("#main-content #section-" + section).html(data).append($("<hr />"));
         } else {
             $("#main-content #section-" + section + " #page-" + page.page).html(data).append($("<hr />"));
@@ -224,7 +224,7 @@
     var getTotalPages = function() {
         var total = 0;
         for (var i in pages) {
-            if (pages[i].page == "index") {
+            if (pages[i].page == "index" || pages[i].page == "contributor") {
                 total++;
             } else {
                 total += pages[i].children.length;
@@ -243,6 +243,9 @@
     var getScrollTo = function ($anchor) {
         var fragment = $.url($anchor.attr("href")).attr("fragment");
         var hash = "#page-" + fragment;
+        if (fragment == "contributor") {
+            hash = hash.replace("#page-", "#section-");
+        }
         var left = $(hash).offset().left * -1;
 
         $("html, body").scrollTo(hash, 500, { "offset": { "top": -60, "left": left } });
