@@ -244,7 +244,9 @@
     var getScrollTo = function ($anchor) {
         var fragment = $.url($anchor.attr("href")).attr("fragment");
         var hash = "#page-" + fragment;
-        $("html, body").scrollTo(hash, 500, { "offset": { "top": -60, "left": 0 } });
+        var left = $(hash).offset().left * -1;
+
+        $("html, body").scrollTo(hash, 500, { "offset": { "top": -60, "left": left } });
         $("#accordion li").removeClass("active");
         $("#nav-" + fragment).addClass("active");
     };
