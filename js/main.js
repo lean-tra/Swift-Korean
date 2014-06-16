@@ -14,8 +14,6 @@
             getSideNavigation(pages[i]);
         }
 
-        getRateLimit();
-
         var total = getTotalPages();
         $.each(pages, function (i, page) {
             if (page.page == "index") {
@@ -165,27 +163,6 @@
         $("#accordion").append($panel);
     };
 
-    // Gets the rate limit.
-    var getRateLimit = function () {
-        var url = "https://api.github.com/rate_limit";
-        $.ajax({
-            type: "GET",
-            url: url,
-            dataType: "json",
-            headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
-        })
-            .done(function (data) {
-                var rate = data.rate;
-                if (rate.remaining <= 0) {
-                    $("#progress-bar").hide();
-
-                    var reset = new Date(rate.reset * 1000);
-                    var $exceeded = $("<h1></h1>").text("Traffic Exploded. Back on " + reset.toString());
-                    $("#main-content").append($exceeded);
-                }
-            });
-    };
-
     var count = 0;
 
     // Gets the given markdown page.
@@ -194,38 +171,19 @@
             return;
         }
 
-        var url = "https://api.github.com/repos/lean-tra/Swift-Korean/contents/" + page.doc;
+        // TODO: Need to make config for endpoint URLs
+        var url = "https://cdn.rawgit.com/lean-tra/Swift-Korean/master/" + page.doc;
         $.ajax({
-                type: "GET",
                 url: url,
-                dataType: "json",
-                headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
+                dataType: "text"
             })
-            .done(function(data) {
-                var decoded = Base64.decode(data.content);
-                markdownToHtml(page, section, decoded);
+            .done(function(markdownText) {
+                var html = markdown.toHTML(markdownText);
+
+                getContents(page, section, html);
 
                 count++;
                 getProgressbar((count / total) * 100);
-            });
-    };
-
-    // Converts the markdown to HTML and put them into the HTML element.
-    var markdownToHtml = function(page, section, markdown) {
-        var url = "https://api.github.com/markdown";
-        var params = {
-            "mode": "gfm",
-            "text": markdown
-        };
-        $.ajax({
-                type: "POST",
-                url: url,
-                data: JSON.stringify(params),
-                dataType: "html",
-                headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
-            })
-            .done(function(data) {
-                getContents(page, section, data);
             });
     };
 
