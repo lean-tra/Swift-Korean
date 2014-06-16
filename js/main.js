@@ -198,6 +198,8 @@
             $("#main-content #section-" + section + " #page-" + page.page).html(data).append($("<hr />"));
         }
 
+        $("#main-content #section-" + section + " img").addClass("img-responsive");
+
         $("#main-content #section-" + page.page + " a[href^='#']")
             .addClass("internal")
             .on("click", function() {
@@ -246,7 +248,7 @@
         if (fragment == "contributor") {
             hash = hash.replace("#page-", "#section-");
         }
-        var left = $(hash).offset().left * -1;
+        var left = 0;//$(hash).offset().left * -1;
 
         $("html, body").scrollTo(hash, 500, { "offset": { "top": -60, "left": left } });
         $("#accordion li").removeClass("active");
