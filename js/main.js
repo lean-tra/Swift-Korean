@@ -194,38 +194,18 @@
             return;
         }
 
-        var url = "https://api.github.com/repos/lean-tra/Swift-Korean/contents/" + page.doc;
+        var url = "https://cdn.rawgit.com/Jin-Kim/Swift-Korean/master/" + page.doc;
         $.ajax({
-                type: "GET",
                 url: url,
-                dataType: "json",
-                headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
+                dataType: "text"
             })
-            .done(function(data) {
-                var decoded = Base64.decode(data.content);
-                markdownToHtml(page, section, decoded);
+            .done(function(markdownText) {
+                var html = markdown.toHTML(markdownText);
+
+                getContents(page, section, html);
 
                 count++;
                 getProgressbar((count / total) * 100);
-            });
-    };
-
-    // Converts the markdown to HTML and put them into the HTML element.
-    var markdownToHtml = function(page, section, markdown) {
-        var url = "https://api.github.com/markdown";
-        var params = {
-            "mode": "gfm",
-            "text": markdown
-        };
-        $.ajax({
-                type: "POST",
-                url: url,
-                data: JSON.stringify(params),
-                dataType: "html",
-                headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
-            })
-            .done(function(data) {
-                getContents(page, section, data);
             });
     };
 
