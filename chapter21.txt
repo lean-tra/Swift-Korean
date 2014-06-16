@@ -1,6 +1,5 @@
 # 21 중첩 타입 (Nested Types )
 > Translator : Alice Kim (mail@jua.kim)
-번역에 대한 의견이 있을 때에는 메일이나 [Chapter21 - Discussion ](https://www.penflip.com/jjuakim/swift-korean/discussions/7)에 의견을 남겨주세요
 
 열거형(Enumerations)은 종종 특정 클래스 또는 구조체(structure)의 기능을 지원하기 위해 만들어집니다. 마찬가지로, 복잡한 형태의 맥락에서 사용하기위한 유틸리티 클래스 또는 구조체를 정의하는데 유용합니다. 이를 위해 Swift는 중첩을 지원하는타입의 정의 안에 열거형, 클래스, 구조체를 내장타입으로 사용할 수 있게 함[^1]으로써 **중첩타입(Nested Types)**을 정의 할 수있습니다. 
 [^1]: 예를 들면, 구조체 안에 클래스를 정의하고 그 클래스 안에 다시 열거형 또는 사용자가 정의한 구조체를 넣을 수있다는 얘기.
