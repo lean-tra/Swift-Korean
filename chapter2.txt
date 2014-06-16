@@ -9,7 +9,7 @@ C나 Objective-C에서 코드를 작성해본적이 있다면 이런 문법이 �
 
 이번 장에서는 다양한 프로그래밍 과제를 어떻게 완수해 나가는지 보여주면서 Swift로 어떻게 코드를 작성해야하는지에 대한 충분한 정보를 제공할 것입니다. 몇몇가지를 이해하지 못한다고 해서 걱정하지 마세요. 이번 장에서 소개되는 모든 것들은 책의 뒷 부분에서 자세히 설명할 것입니다.
 
->노트
+> NOTE
 이번 장을 확실하게 이해하려면 Xcode 6의 Playground를 열어보세요. Playground는 코드를 수정하는 즉기 결과를 볼 수 있게 해줄 것입니다.
 
 ## 간단한 값
@@ -32,7 +32,7 @@ let implicitDouble = 70.0
 let explicitDouble: Double  = 70
 ```
 
->실습
+> EXPERIMENT
 명시적으로 Float 타입인 상수를 만들고 4라는 값을 할당해보자.
 
 할당된 값은 절대 다른 타입의 값으로 암시적인 변환을 할 수 없습니다. 만약 다른 타입의 값으로 변화해야 한다면 원하는 형태의 인스턴스로 만들어 타입을 명시해야 합니다.
@@ -43,7 +43,7 @@ let width = 94
 let widthLabel = label + String(width)
 ```
 
->실습
+> EXPERIMENT
 마지막 줄에 명시한 String 타입 변환 부분을 제거해보자. 어떤 에러가 발생하는가?
 
 문자열 안에 값들을 쉽게 포함하는 방법도 있습니다. 괄호 안에 값을 쓰고 괄호 앞에 백슬래시(\)를 쓰면 됩니다. 예를 들면
@@ -57,7 +57,7 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 
 과 같습니다.
 
->실습
+> EXPERIMENT
 `\()` 를 이용해 문자열 안에 실수형 계산을 포함하도록 해보고, 인사말 안에 누군가의 이름을 넣어보자.
 
 배열(array)과 딕셔너리(dictionary)는 대괄호([])를 이용해 만들 수 있습니다. 그리고 대괄호 안에 인덱스(index)나 키(key)를 이용해 각각의 요소에 접근할 수 있습니다.
@@ -120,7 +120,7 @@ if문 안의 조건은 꼭 불리언(Boolean) 표현이어야 합니다. if scor
  }
 ```
  
->실습
+> EXPERIMENT
 optionalName의 값을 nil로 바꿔보자. 어떤 greeting의 값을 받을 수 있는가? optionalName에 할당된 값이 nil일 때 다른 값을 greeting에 할당하도록 else 절을 추가해보자.
 
 만약 옵션 값이 nil이라면 조건문은 거짓(false)이고 중괄호 안에 있는 코드를 실행하지 않고 건너뜁니다. 반대의 경우에는 중괄호 블록 안에서 사용할 수 있도록 let 뒷 부분의 상수에 값이 할당되고 옵션 값으로 사용할 수 있습니다.  
@@ -141,7 +141,7 @@ optionalName의 값을 nil로 바꿔보자. 어떤 greeting의 값을 받을 수
   }
 ```
 
->실습
+> EXPERIMENT
 switch문에서 default 부분을 제거해 보자. 어떤 에러가 발생하는가?
     
 switch문은 case문의 조건과 일치할 때 case문 아래에 속한 코드를 실행하 switch문을 빠져나옵니다. 이후에 나오는 case문은 자동적으로 실행하지 않기 때문에 코드 끝에 break 키워드를 명시하지 않아도 됩니다.
@@ -165,7 +165,7 @@ for (kind, numbers) in interestingNumbers {
 largest
 ```
  
->실습
+> EXPERIMENT
 어떤 숫자가 가장 큰 수로 저장되는지 확인하기 위해 다른 변수를 추가하고, 가장 큰 수로 저장된 숫자가 무엇인지 확인해보라.
     
 이번에는 조건문이 변경될 때까지 코드 블록을 반복 실행하기 위해서 while 문을 사용해 봅시다. 반복문이 적어도 한번은 실행될 수 있도록 보장하려면 조건문을 반복문의 끝에 작성할 수도 있습니다.
@@ -213,7 +213,7 @@ func greet(name: String, day: String) -> String {
 greet("Bob", "Tuesday")
 ```   
 
->실습
+> EXPERIMENT
 매개변수 day를 제거하고 인사말에 '오늘의 특별한 점심'을 포함하도록 매개변수를 추가해보자.
     
 튜플(tuple)을 사용하면 여러개의 값을 반환할 수 있습니다.
@@ -239,7 +239,7 @@ sumOf()
 sumOf(42, 597, 12)
 ```
 
->실습
+> EXPERIMENT
 인자들의 평균값을 계산하는 함수를 만들어보자.
     
 함수는 중첩해서 사용할 수도 있습니다. 중첩(Nested) 함수는 감싸고 있는 함수에서 선언된 변수에 접근할 수 있습니다. 코드가 길어지고 복잡해지는 함수라면 이를 정리하려고 중첩 함수를 사용할 수 있습니다.
@@ -297,7 +297,7 @@ increment(7)
       })
 ```
 
->실습
+> EXPERIMENT
 모든 홀수값에 대해 0을 반환하도록 클로저를 수정해보자.
     
 클로저를 간결하게 사용하는 몇가지 옵션이 있습니다. 델리게이트(delegate)를 위한 콜백(callback)처럼 이미 클로저의 타입을 아는 경우라면 매개변수의 타입, 반환 값 타입을 모두 생략하거나 선택적으로 생략할 수 있습니다. 한 줄짜리 구문을 가진 클로저라면 구문만 가지고도 반환 타입을 추측할 수 있습니다.
@@ -376,7 +376,7 @@ test.area()
 test.simpleDescription()
 ```
 
->실험
+> EXPERIMENT
 NamedShape클래스의 또 다른 하위 클래스인 Circle을 만들어보자. 이 클래스는 이니셜 라이저를 통해 radius와 name을 인자로 받는다. Circle 클래스 안에 area, describe 함수를 구현해보자.
 
 저장되어 있는 간단한 속성 외에도 속성은 getter와 setter를 가질 수 있습니다.
@@ -484,7 +484,7 @@ let ace = Rank.Ace
 let aceRawValue = ace.toRaw()
 ```
 
->실험
+> EXPERIMENT
 두개의 Rank 값의 원본 값을 비교하는 함수를 만들어보자.
 
 위의 예를 보면 열거형의 원본 값의 타입은 int 입니다. 그래서 특별히 첫번째 원본값만 가지고 있는 것입니다. 나머지 원본 값들은 순서에 따라 자동으로 할당됩니다. 또 문자열이나 실수형태의 값들도 원본값으로 가진 열거형을 만들 수 있습니다.
@@ -519,7 +519,7 @@ let hearts = Suit.Hearts
 let heartsDescription = hearts.simpleDescription()
 ```
 
->실험
+> EXPERIMENT
 Suit에 color 메서드를 추가해 보자. color 메서드는 스페이드와 클로버는 'black'을 반환하고 하트와 다이아몬드는 'red'를 반환하도록 하면 됩니다.
 
 열거형의 구성중 하나인 Heart가 상단값을 어떻게 참조하는지 두가지 방법을 살펴봅시다. 상수 hearts에 값을 할당 할 때, 상수는 명시적으로 타입을 가지고 있지 않기 때문에 Suit.Hearts 처럼 전체 이름을 살펴봅니다. 스위치문 안에서는 열거형은 .Hearts로 축약형을 써서 참조하는데, 이것은 self가 이미 suit라는 것을 알고 있기 때문입니다. 값의 형을 이미 알고 있다면 언제든지 축약형을 사용해도 됩니다.
@@ -537,7 +537,7 @@ struct Card {
 let threeOfSpades = Card(rank: .Three, suit: .Spades)
 let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 ```
->실험
+> EXPERIMENT
 각 카드를 rank와 suit를 조합해서 만들어 전체 카드를 만들어 주는 메서드를 Card에 추가해보자.
 
 열거형 구성자의 인스턴스는 인스턴스와 함께 관련값들을 사용할 수 있습니다. 같은 열거형의 구성자의 인스턴스들은 각 인스턴스와 함께 다른 관련값을 가질 수 있습니다. 인스턴스를 만들 때 관련값을 공급할 수 있습니다. 관련값과 원본값은 다릅니다. 열거형 구성자의 원본값은 모든 인스턴스에서 같은 값(열거형을 정의할 때 지정한 값)을 갖습니다. 
@@ -561,7 +561,7 @@ case let .Error(error):
 }
 ```
 
->실험
+> EXPERIMENT
 ServerResponse에 세번째 경우를 추가하고 스위치문에도 추가해보자.
 
 스위치문의 경우의 수와 비교를 수행하기 위해 ServerResponse로 부터 일출, 일몰 시간 값을 어떻게 추출해 내는지 눈여겨 보자. 
@@ -602,7 +602,7 @@ b.adjust()
 let bDescription = b.simpleDescription
 ```
 
->실험
+> EXPERIMENT
 프로토콜을 사용하는 열거형을 만들어보자.
 
 구조체를 수정하기 위해 사용되는 메서드를 표시하기 위해 SimpleStructure 선언부에 사용되는 mutating 키워드를 살펴봅시다. SimpleClass에는 mutating으로 표시된 메서드가 필요하지 않습니다. 왜냐하면 클래스 안에 있는 모든 메서드들은 항상 클래스를 수정할 수 있기 때문입니다.
@@ -621,7 +621,7 @@ extension Int: ExampleProtocol {
 7.simpleDescription
 ```
 
->실험
+> EXPERIMENT
 extension을 사용해 Double 타입에 absoluteValue 속성을 추가해보자.
 
 프로토콜 이름은 다른 알려진 변수들 처럼 지정할 수 있습니다. 예를 들면 객체들의 모음을 만들 때, 모든 객체는 다른 타입을 가지지만 하나의 프로토콜을 따릅니다. 프로토콜 타입인 값들을 가지고 작업할 때 프로토콜 외부에서 메서드를 정의하는 것은 불가능 합니다.
@@ -677,7 +677,7 @@ func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Ele
 anyCommonElements([1, 2, 3], [3])
 ```
 
->실험
+> EXPERIMENT
 anyCommonElements 함수를 공통적으로 두개의 연속값을 갖는 배열을 반환하도록 수정해 봅시다.
 
 간단한 경우에는 where을 생략하고 프로토콜과 클래스 이름을 콜론뒤에 바로 쓸 수 있습니다. `<T:Equatable>`과 `<T where T: Equatable>`은 동일합니다.
