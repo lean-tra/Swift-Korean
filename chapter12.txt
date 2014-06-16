@@ -140,7 +140,7 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 그 다음엔 `center` 속성을 (15,15)로 변경한다. 이것은 사각형을 아래 도표 속의 우상단에 있는 오렌지 사각형의 위치로 이동시킨다. `center` 속성에 값을 지정하게 되면 setter를 호출하게 되는데, 이것은 `x`, `y` 저장속성을 함께 변경시켜, 사각형이 새로운 위치로 이동하도록 만든다.
 
-![computedproperties_2x.png](images/computedproperties_2x.png)
+![computedproperties_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/computedproperties_2x.png)
 
 ### 속기식의 Setter 선언(Shorthand Setter Declaration)
 
@@ -310,7 +310,7 @@ println(SomeStructure.storedTypeProperty)
 
 밑의 그림은 어떻게 이 두가지 오디오 채널이 스테레오 오디오 레벨 미터로 조합해 만드는지 그림으로 설명한다. 채널의 오디오 레벨이 `0`일 때 채널의 모든 불 빛은 꺼지게 된다. 채널 오디오 레벨이 `10`일 때 채널의 모든 불빛은 켜지게 된다. 그림처럼, 왼쪽 채널은 현재 `9`레벨이고, 오른쪽 채널은 현재 `7`레벨이다.
 
-![staticpropertiesvumeter_2x.png](images/staticpropertiesvumeter_2x.png)
+![staticpropertiesvumeter_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/staticpropertiesvumeter_2x.png)
 
 위에 표시된 오디오 채널은 `AudioChannel` 구조체의 인스턴스로 표현된다.
 ```

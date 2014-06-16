@@ -84,7 +84,7 @@ let dogCow = dog + cow
 > 나머지 연산자는 (`%`) 또한 _모듈로(modulo) 연산_으로 다른 언어에 알려져있다. 그러나 Swift에서의 동작은 음수를 의미한다. 엄격히 말하면, 모듈로 연산보다는 나머지 연산이다.
 
 여기에 나머지 연산의 동작이 어떻게 되는지 나와있습니다. `9 % 4`을 계산해보면, 당신은 첫번째로 `9`안에 몇 개의 `4`가 들어갈 수 있는지 알아낼 것이다.
-![remainderinteger_2x.png](images/remainderinteger_2x.png)
+![remainderinteger_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/remainderinteger_2x.png)
 
 당신은 `4`들을 `9`에 맞추었고 그리고 나머지는 `1`이다. (오렌지 색깔을 보라)
 
@@ -125,7 +125,7 @@ C 와 Objective-C의 나머지 연산과는 달리, Swift의 나머지 연산은
 ```
   
 예를 들어 `8`을 `2.5`로 나누었을때 `3`과 같으며 나머지는 `0.5`와 같습니다. 그리고 나머지 연산이 반환하는 값은 `Double` 타입의 `0.5` 입니다.
-![remainderfloat_2x.png](images/remainderfloat_2x.png)
+![remainderfloat_2x.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/remainderfloat_2x.png)
 
 
 ## 증가연산자와 감소 연산자
