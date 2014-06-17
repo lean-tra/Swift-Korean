@@ -1,7 +1,6 @@
 # 09 클로저 (Closures)
 > Translator : inureyes (inureyes@gmail.com)
 
-## 클로저 (Closures)
 클로저는 사용자의 코드 안에서 전달되거나 사용할 수 있는 기능을 포함한 독립적인 블록(block)입니다. Swift에서의 클로저는 C 및 Objective-C 의 blocks와 유사하며, 다른 언어의 람다(lambda)와도 유사합니다.
 클로저는 자신이 정의된 컨텍스트 (context) 로부터 임의의 상수 및 변수의 참조(reference) 를 획득 (capture)하고 저장할 수 있습니다. _(주: 클로저의 경우 클로저 바로 밖의 scope 의 상수 및 변수에 접근할 수 있다는 이야기입니다)_ 이렇게 상수 및 변수를 제약하는 특징때문에 클로저라는 이름이 되었습니다. Swift는 획득 과정의 메모리 관리를 모두 제어해줍니다.
 
@@ -21,12 +20,12 @@ Swift의 클로저 표현식은 일반적인 경우에 대한 간략하고 명�
 - 단축 인자 이름
 - 클로저 문법 추적
 
-## 클로저 표현식 (Closure expressions)
+### 클로저 표현식 (Closure expressions)
 중첩 함수에서 소개된 중첩 함수들은 더 큰 함수의 일부로서 동작하는 자체 포함된 코드 블럭을 명명하거나 정의하는 편리한 방법입니다. 그러나, 종종 완전한 선언이나 이름이 없는 더 짧은 버전의 함수같은 구조를 만드는 것이 유용할 때가 있습니다. 이는 다른 함수들을 하나 또는 그 이상의 인자로 받는 함수를 만들때 특히 그렇습니다.
 
 클로저 표현식들은 인라인 클로저를 간단명료하고 집중적인 문법으로 작성하는 방법입니다. 클로저 표현식은 명확성과 의도를 잃지 않는 선에서 가장 간결한 형태로 클로저를 작성하기 위한 몇가지 문법 최적화를 제공합니다. 아래의 클로저 표현식 예에서 sort 함수를 각 단계마다 동일한 기능을 표현하지만 더 간결해지도록 몇가지 단계를 거쳐 개량하는 최적화를 소개합니다.
 
-## 정렬 함수
+### 정렬 함수
 Swift 의 표준 라이브러리는 당신에 제공한 정렬 클로저(sorting closure)의 결과값에 기반하여 알려진 값들의 배열을 정렬하는 `sort` 라는 함수를 제공합니다. 정렬 과정이 끝나면, sort 함수는 원래와 동일한 타입(type) 및 크기를 갖지만 그 요소들은 올바르게 정렬된 새로운 배열을 반환합니다.
 
 아래의 클로저 표현식 예는 `string` 값으로 구성된 배열을 알파벳 역순으로 정렬합니다.
@@ -54,7 +53,7 @@ var reversed = sort(names, backwards)
 
 그러나, 이것은 본질적으로 하나의 표현 함수 `(a > b)` 인 기능을 작성하기엔 다소 장황한 방법입니다. 이 예제의 경우 클로저 표현식 문법을 사용하여 인라인 정렬 클로저를 작성하는 것이 더 바람직할 것입니다.
 
-## 클로저 표현식 문법  (Closure Expression Syntax)
+### 클로저 표현식 문법  (Closure Expression Syntax)
 클로저 표현식 문법은 아래의 일반 형식을 따릅니다:
 ```
 { ( parameters ) -> return type in 
@@ -79,7 +78,7 @@ reversed = sort(names, { (s1: String, s2: String) - > Bool in return s1 > s2 } )
 ```
 이 구문은 `sort` 함수의 전체적인 호출이 똑같이 유지됨을 보여줍니다. 괄호쌍은 여전히 함수의 전체 인자를 감싸고 있습니다. 그러나 그 중 하나의 인자는 이제 인라인 클로저입니다.
 
-## 컨텍스트로부터 타입 유추하기 (Inferring Type From Context)
+### 컨텍스트로부터 타입 유추하기 (Inferring Type From Context)
 
 정렬 클로저가 함수의 인자로 전달되기 때문에, Swift는 클로저의 인자 타입과 `sort` 함수의 두번째 인자의 타입으로부터 반환되는 값의 타입을 유추할 수 있습니다. 이 인자는 `(String, String) -> Bool` 타입의 함수를 기대합니다. 이는 `String, String` 및 `Bool` 타입이 클로저 표현형의 정의의 일부로 쓰일 필요가 없음을 의미합니다. 모든 타입이 유추 가능하기 때문에, 반환 화살표 (->) 와 인자 이름을 감싼 괄호 또한 제외할 수 있습니다.
 ```
@@ -89,7 +88,7 @@ reversed = sort(names, { s1, s2 in return s1 > s2 } )
 
 그럼에도 불구하고, 당신이 필요로 하거나, 또한 코드를 읽는 사람들에게 모호함을 주고 싶지 않을 경우 타입을 명시적으로 기술할 수 있습니다. `sort` 함수의 경우, 클로저의 목적은 정렬이 일어난다는 사실로부터 명확하게 보이며, 독자들은 문자열들의 배열을 정렬하는 것을 돕기 떄문에 이 클로저가 `String` 값과 함께 돌아간다고 가정하는 것이 안전합니다. 
 
-## 단일 표현식 클로저로부터의 암시적 반환 ( Implicit Returns from Single-Expression Closures)
+### 단일 표현식 클로저로부터의 암시적 반환 ( Implicit Returns from Single-Expression Closures)
 
 단일 표현식 클로저는 앞의 예에서 정의할 때 `return` 키워드를 생략하여 단일 표현식의 결과를 암시적으로 반환할 수 있습니다. 
 ```
@@ -97,16 +96,16 @@ reversed = sort(names, { s1, s2 in s1 > s2 } )
 ```
 sort 함수의 두번째 인자의 함수 형은 클로저가 `Bool` 값을 반드시 반환해야 함을 명확하게 해 줍니다. 클로저의 내용이 `Bool` 값을 반환하는 단일 표현식 `(s1 > s2)` 이기 때문에, 이 경우 애매모호함이 발생하지 않으며, `return` 키워드는 생략이 가능합니다.
 
-## 단축 인자 이름들 ( Shorthand Argument Names)
-Swift는 자동으로 단축 인자 이름을 인라인 클로저에 제공하며, 클로저의 인자들을 $0, $1, $2 등등의 방식으로 참조할 수 있습니다. 
+### 단축 인자 이름들 ( Shorthand Argument Names)
+Swift는 자동으로 단축 인자 이름을 인라인 클로저에 제공하며, 클로저의 인자들을 `$0`, `$1`, `$2` 등등의 방식으로 참조할 수 있습니다. 
 
 만약 이러한 단축 인자 이름들을 클로저 표현식에서 사용할 경우, 클로저 인자 리스트를 클로저의 정의에서 생략할 수 있으며, 단축 인자들의 번호 및 타입은 기대되는 함수 타입으로부터 추정될 것입니다. 클로저 표현식이 클로저 내용에 완전히 표현될 수 있으므로 `in` 키워드 또한 생략할 수 있습니다:
 ```
 reversed = sort(names, { $0 > $1 } )
 ```
-여기서 $0 와 $1 은 클로저의 첫번째와 두번째 `String` 매개변수를 가리킵니다.
+여기서 `$0` 와 `$1` 은 클로저의 첫번째와 두번째 `String` 매개변수를 가리킵니다.
 
-## 연산자 함수들 ( Operator Functions )
+### 연산자 함수들 ( Operator Functions )
 사실 위의 클로저 표현식은 _더 짧아질 수도_ 있습니다. Swift 의 `String` 타입은 `String`에 특화된 크기 비교 연산자 (>) 를 두 `String` 인자를 갖는 함수로 정의하고 있으며, `Bool` 타입을 반환합니다. 이 연산자는 `sort` 함수의 두번째 인자를 위해 필요한 함수형과 정확히 일치합니다. 그러므로, 이 크기 비교 연산자를 바로 전달하면 Swift 는 사용자가 `String` 전용의 구현체를 사용하려고 한다고 유추합니다.
 ```
 reversed = sort(names, > )
@@ -190,7 +189,7 @@ let strings = numbers.map {
 
 Swift에서 클로저의 가장 간단한 형태는 다른 함수의 본문 안에 작성된 중첩 함수입니다. 중첩 함수는 바깥 함수의 모든 인자를 획득할 수 있으며, 또한 바깥 함수 내에서 정의된 모든 상수 및 변수를 획득할 수 있습니다.
 
-아래는 `Incrementor`라는 중첩 함수를 포함한 `makeIncrementor` 예입니다. 중첩된 `incrementor` 함수는 `runningTotal` 및 amount 의 두 값을 자신을 둘러싼 컨텍스트로부터 획득합니다. 이 두 값을 획득한 후, `incrementor`는 호출될 때 마다 `runningTotal` 을 `mount` 만큼 증가시키는 클로저로써 `makeIncrementor` 로부터 반환됩니다.
+아래는 `Incrementor`라는 중첩 함수를 포함한 `makeIncrementor` 예입니다. 중첩된 `incrementor` 함수는 `runningTotal` 및 `amount` 의 두 값을 자신을 둘러싼 컨텍스트로부터 획득합니다. 이 두 값을 획득한 후, `incrementor`는 호출될 때 마다 `runningTotal` 을 `mount` 만큼 증가시키는 클로저로써 `makeIncrementor` 로부터 반환됩니다.
 ```
 func makeIncrementor(forIncrement amount: Int) -> () -> Int {
 	var runningTotal = 0
@@ -203,7 +202,7 @@ func makeIncrementor(forIncrement amount: Int) -> () -> Int {
 ```
 `makeIncrementor` 의 반환 타입은 `() -> Int` 입니다. 이는 간단한 값 대신 함수를 반환함을 의미합니다. 반환되는 함수는 인자가 하나도 없으며, 호출될 때 마다 `Int` 값을 반환합니다. 어떻게 함수가 다른 함수를 반환할 수 있는가에 대해서는 [반환 타입으로서의 함수 타입]() 을 참조하시기 바랍니다.
 
-`makeIncrementor` 함수는 runningTotal 정수 변수를 정의하며, 이 변수는 현재 실행중인 incrementor 의 총합을 보관하고 반환될 변수입니다. 이 변수는 0으로 초기화됩니다.
+`makeIncrementor` 함수는 `runningTotal` 정수 변수를 정의하며, 이 변수는 현재 실행중인 `incrementor` 의 총합을 보관하고 반환될 변수입니다. 이 변수는 0으로 초기화됩니다.
 
 `makeIncrementor` 함수는 `Int` 인자를 외부 이름인 `forIncrement` 와 지역 이름인  `amount` 로 받습니다. 이 인자로 전달된 인수는 `runningTotal` 이 `incrementor` 함수가 호출될 때 마다 얼마만큼씩 증가해야 할 지 지정합니다.
 
