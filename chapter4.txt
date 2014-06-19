@@ -300,7 +300,7 @@ for index in 1...5 {
 ```
 let names = ["Anna", "Alex", "Brian", "Jack"]
 let count = name.count
-for i in 0.count {
+for i in 0..count {
 	println("Person \(i + 1) is called \(names[i]")
 }
 // Person 1 is called Anna
