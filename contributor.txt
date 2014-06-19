@@ -46,6 +46,7 @@
 
 ### FlashMaestro 
 ![flashmaestro](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/flashmaestro.jpeg)
+
 - 연락처 : masterofflash@nate.com
 - 소감 : 공동번역으로 책 한권을 번역해내다니. 너무나 기분이 좋습니다. 앞으로 해외의 좋은 자료들을 잘 번역해서 국내 개발 문화에 많은 도움이 되고 싶습니다. 또 뜻하지 않게 많은 분들이 함께해 주셔서 함께 무언가를 한다는 기쁨도 맛보고 행복합니다!
 
@@ -70,7 +71,10 @@
 - 연락처 : devthewild@gmail.com
 
 ### Quartet
+![Quartet](http://www.gravatar.com/avatar/7370b4ac1c57d60ce58fc7af8256d1ba.png)
+
 - 연락처 : ungsik.yun@gmail.com
+- 소감 : [애플 스위프트 언어 가이드 문서 번역 후기](http://lifeisquartet.wordpress.com/2014/06/19/%EC%95%A0%ED%94%8C-%EC%8A%A4%EC%9C%84%ED%94%84%ED%8A%B8-%EB%B2%88%EC%97%AD-%ED%9B%84%EA%B8%B0/)
 
 ### wizplan
 - 연락처 : wizplaneer@me.com
