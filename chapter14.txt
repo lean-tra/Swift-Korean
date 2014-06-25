@@ -11,12 +11,12 @@
 서브스크립트는 인스턴스의 이름 뒤에 있는 '[]'안에 한개 이상의 값을 적는 것으로 당신이 인스턴스들의 타입(instances of a type)를 요구할 수 있다. 그들의 문법은 인스턴스의 메서드나 computed property의 문법과 유사합니다.  인스턴스의 메서드들과 동일한 방식으로 `subscript`키워드와 함께 특정한 하나 이상의 입력 파라미터와 와 리턴타입을 통해서 서브스크립트를 정의할 수 있다. 다만 인스턴스의 메서드들과는 달리 서브스크립트는 읽고 쓰는 권한만 있거나 읽는 권한만을 가질 수 있다. 다음 코드는 서브스크립트가 computed property들과 동일한 방식으로 getter와 setter를 통해 작업하는 것을 보여줍니다
 ```
 subscript(index: Int) -> Int {
- get {
- // return an appropriate subscript value here
- }
- set(newValue) {
- // perform a suitable setting action here
- }
+  get {
+	  // return an appropriate subscript value here
+  }
+  set(newValue) {
+	  // perform a suitable setting action here
+  }
 }
 ```
 `newValue`의 type은 해당 subscript의 리턴값과 동일합니다.
@@ -31,10 +31,10 @@ subscript(index: Int) -> Int {
 이곳에 정수를 n배 한 결과를 표시하는 `TimesTable structure`를 선언하기 을 위한 읽기 전용의 서브스크립트를 구현하는 예제가 하나 있습니다.
 ```
 struct TimesTable {
- let multiplier: Int
- subscript(index: Int) -> Int {
- return multiplier * index
- }
+  let multiplier: Int
+  subscript(index: Int) -> Int {
+	  return multiplier * index
+  }
 }
 let threeTimesTable = TimesTable(multiplier: 3)
 println("six times three is \(threeTimesTable[6])")
@@ -45,7 +45,7 @@ println("six times three is \(threeTimesTable[6])")
 해당 서브스크립트를 부르는 것으로 `threeTimesTable`의 인스턴스에게 요청할 수 있다. 보는 바와같이 `threeTimesTable[6]`과 같이 부르는 것으로 `threeTimesTable` 인스턴스의 서브스크립트를 부를 수 있다. 해당 요청은 6의 3배 테이블을 요청했으며 그 값은 18=6*3 이 된다.
 
 >NOTE
-n배 테이블은 고정된 숫자값을 출력하는 규칙에 기반합니다. 따라서 **newValue**등을 통하여 **treeTimesTable[someindex]**를 따로 설정하는 것은 적절하지 않으며 그러기에 위의 **TimesTable**을 위한 서브스크립트는 읽기전용의 서브스크립트로 선언되었습니다.
+n배 테이블은 고정된 숫자값을 출력하는 규칙에 기반합니다. 따라서 `newValue`등을 통하여 `treeTimesTable[someindex]`를 따로 설정하는 것은 적절하지 않으며 그러기에 위의 `TimesTable`을 위한 서브스크립트는 읽기전용의 서브스크립트로 선언되었습니다.
 
 ## 서브스크립트 사용(Subscript Usage)
 
@@ -61,7 +61,7 @@ numberOfLegs["bird"] = 2
 딕셔너리 서브스크립트에 관한 보다 많은 정보를 원한다면, [Accessing and Modifying a Dicionary](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_142)를 참고하기 바란다.
 
 >NOTE
-Swift의 딕셔너리 타입은 내부적인 key-value 서브스크립트가 요구하고 반환하는 타입이 옵셔널 타입인 서브스크립트로 구현하였습니다. 위에서 **numberOfLegs** 딕셔너리를 보면, key-value 서브스크립트를 요구하고 반환하는 타입이 `Int`일까요?, 그렇지 않으면 옵셔널 `Int`일까요? 딕셔너리 타입은  '모든 키가 값을 가지는 것은 아니다'라는 사실을 위한 모델을 지원하기 위해 옵셔널 서브스크립트 타입을 사용합니다. 그리고 어떤 키에 값을 삭제하는 방법을 제공하는데, 이 경우 해당 키값의 값는 `nil`로 할당된다.
+Swift의 딕셔너리 타입은 내부적인 key-value 서브스크립트가 요구하고 반환하는 타입이 옵셔널 타입인 서브스크립트로 구현하였습니다. 위에서 `numberOfLegs` 딕셔너리를 보면, key-value 서브스크립트를 요구하고 반환하는 타입이 `Int`일까요?, 그렇지 않으면 옵셔널 `Int`일까요? 딕셔너리 타입은  '모든 키가 값을 가지는 것은 아니다'라는 사실을 위한 모델을 지원하기 위해 옵셔널 서브스크립트 타입을 사용합니다. 그리고 어떤 키에 값을 삭제하는 방법을 제공하는데, 이 경우 해당 키값의 값는 `nil`로 할당된다.
 
 ## 서브스크립트 옵션(Subscript Options)
 
@@ -72,24 +72,27 @@ Swift의 딕셔너리 타입은 내부적인 key-value 서브스크립트가 요
 다음 예제는 `Double`값을 가지는 2차원 행렬을 표현하는 `Matrix`라는 구조체를 선언하고 있습니다. `Matrix` 구조체의 서브스크립트는 두개의 정수형 파라미터를 요구 하고 있습니다:
 ```
 struct Matrix {
- let rows: Int, columns: Int
- var grid: Double[]
- init(rows: Int, columns: Int) {
- self.rows = rows
- self.columns = columns
- grid = Array(count: rows * columns, repeatedValue: 0.0)
- }
- func indexIsValidForRow(row: Int, column: Int) -> Bool {
- return row >= 0 && row < rows && column >= 0 && column < columns
-subscript(row: Int, column: Int) -> Double {
- get {
- assert(indexIsValidForRow(row, column: column), "Index out of range")
- return grid[(row * columns) + column]
- }
- set {
- assert(indexIsValidForRow(row, column: column), "Index out of range")
- grid[(row * columns) + column] = newValue
- }
+  let rows: Int, columns: Int
+  var grid: Double[]
+  init(rows: Int, columns: Int) {
+	  self.rows = rows
+	  self.columns = columns
+	  grid = Array(count: rows * columns, repeatedValue: 0.0)
+  }
+  func indexIsValidForRow(row: Int, column: Int) -> Bool {
+	  return row >= 0 && row < rows && column >= 0 && column < columns
+  }
+  subscript(row: Int, column: Int) -> Double {	
+      get {
+        assert(indexIsValidForRow(row, column: column), "Index out of range")
+        return grid[(row * columns) + column]
+      }
+      set {
+        assert(indexIsValidForRow(row, column: column), "Index out of range")
+        grid[(row * columns) + column] = newValue
+      }
+  }
+}
 ```
 `Matrix`는 `rows`와 `columns`이라는 두개의 파라미터를 요구하는 initializer 를 제공하며, `Double` 타입으로 `rows * columns`를 충분히 저장할 수 있을만큼 큰 배열을 생성합니다. 각 `Matrix`의 위치의 초기값은 `0.0`으로 주어지며. 이러한 작업이 모두 이루어 진 다음에는 만들어진 배열을 배열의 initializer로 보내서 올바른 크기의 배열을 만듭니다. 이 initializer에 다한 자세한 사항은 [Creating and Initializing an Array](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_142)를 참고하세요.
 
