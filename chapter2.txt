@@ -634,7 +634,7 @@ protocolValue.simpleDescription
 // protocolValue.anotherProperty  // Uncomment to see the error
 ```
 
-`protocalValue` 변수가 실행시 `SimpleClass` 타입이더라도 컴파일러는 주어진 `ExampleProtocal` 타입으로 취급합니다. 이것은 프로토콜 관습 외에도 클래스에서 구현된 메서드나 속성에 실수로 접근할 수는 없다는 것을 의미합니다.
+`protocolValue` 변수가 실행시 `SimpleClass` 타입이더라도 컴파일러는 주어진 `ExampleProtocol` 타입으로 취급합니다. 이것은 프로토콜 관습 외에도 클래스에서 구현된 메서드나 속성에 실수로 접근할 수는 없다는 것을 의미합니다.
 
 ## 제네릭(Generics)
 
