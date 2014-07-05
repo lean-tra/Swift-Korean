@@ -15,15 +15,8 @@
         }
 
         var total = getTotalPages();
-        $.each(pages, function (i, page) {
-            if (page.page == "index" || page.page == "contributor") {
-                getMarkdown(page, page.page, total);
-            } else {
-                $.each(page.children, function(j, p) {
-                    getMarkdown(p, page.page, total);
-                });
-            }
-        });
+
+        getSha(total);
 
         $("a.internal").click(function () {
             //getPushState($(this));
@@ -31,6 +24,31 @@
             return false;
         });
     });
+
+    //  Gets the latest commit key.
+    var getSha = function(total) {
+        var url = "https://githubapicache.apphb.com/api/ref/lean-tra/Swift-Korean/master";
+        $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
+            })
+            .done(function(data) {
+                var sha = data.object.sha;
+
+                $.each(pages, function(i, page) {
+                    if (page.page == "index" || page.page == "contributor") {
+                        getMarkdown(page, page.page, total, sha);
+                    } else {
+                        $.each(page.children, function(j, p) {
+                            getMarkdown(p, page.page, total, sha);
+                        });
+                    }
+                });
+            });
+    };
+
 
     // Gets the current path.
     var getCurrentPath = function () {
@@ -166,12 +184,12 @@
     var count = 0;
 
     // Gets the given markdown page.
-    var getMarkdown = function(page, section, total) {
+    var getMarkdown = function(page, section, total, sha) {
         if (page == undefined) {
             return;
         }
 
-        var url = gitcdn + page.doc;
+        var url = gitcdn + "/" + sha + "/" + page.doc;
         $.ajax({
                 type: "GET",
                 url: url,

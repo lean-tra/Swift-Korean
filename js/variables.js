@@ -1,6 +1,6 @@
 ; "use strict";
 
-var gitcdn = "https://cdn.rawgit.com/lean-tra/Swift-Korean/master/";
+var gitcdn = "https://cdn.rawgit.com/lean-tra/Swift-Korean/master";
 
 var pages = [
     { "page": "index", "isParent": true, "name": "Home", "doc": "About.txt" },
