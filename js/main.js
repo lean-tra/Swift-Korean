@@ -27,37 +27,27 @@
 
     //  Gets the latest commit key.
     var getSha = function (total) {
-        var sha = "5baff2d4b0425b8b24fd0121629a0710cdaca7e2";
-        $.each(pages, function (i, page) {
-            if (page.page == "index" || page.page == "contributor") {
-                getMarkdown(page, page.page, total, sha);
-            } else {
-                $.each(page.children, function (j, p) {
-                    getMarkdown(p, page.page, total, sha);
-                });
-            }
-        });
-        //var url = "https://githubapicache.apphb.com/api/ref/lean-tra/Swift-Korean/master";
-        //$.ajax({
-        //        cache: false,
-        //        type: "GET",
-        //        url: url,
-        //        dataType: "json",
-        //        headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
-        //    })
-        //    .done(function(data) {
-        //        var sha = data.object.sha;
+        var url = "https://githubapicache.apphb.com/api/ref/lean-tra/Swift-Korean/master";
+        $.ajax({
+                cache: false,
+                type: "GET",
+                url: url,
+                dataType: "jsonp",
+                headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
+            })
+            .done(function(data) {
+                var sha = data.object.sha;
 
-        //        $.each(pages, function(i, page) {
-        //            if (page.page == "index" || page.page == "contributor") {
-        //                getMarkdown(page, page.page, total, sha);
-        //            } else {
-        //                $.each(page.children, function(j, p) {
-        //                    getMarkdown(p, page.page, total, sha);
-        //                });
-        //            }
-        //        });
-        //    });
+                $.each(pages, function(i, page) {
+                    if (page.page == "index" || page.page == "contributor") {
+                        getMarkdown(page, page.page, total, sha);
+                    } else {
+                        $.each(page.children, function(j, p) {
+                            getMarkdown(p, page.page, total, sha);
+                        });
+                    }
+                });
+            });
     };
 
 
