@@ -24,7 +24,7 @@
 - 문대선
 - 물좀
 - 북극산펭귄
-- 유정협
+- 유정협 (Justin Yoo)
 - 해탈
 - 허혁
 - 황보훈
@@ -96,8 +96,10 @@
 - 연락처 : say8425@gmail.com
 - 소감 : 짧지만 쉽게 겪어보지 못할 경험을 같이해서 영광이었습니다. 감사합니다.
 
-### 유정협 
+### 유정협 (Justin Yoo)
 - 연락처 : justin.yoo@aliencube.com
+- 소개: [http://au.linkedin.com/in/justinyoo](http://au.linkedin.com/in/justinyoo)
+- 소감: [Swift Programming Language 번역 프로젝트 참여 후기](http://justinchronicles.net/ko/2014/07/12/reviewing-swift-programming-language-translation-project)
 
 ### 해탈(Nirvana) 
 - 연락처 : kimqqyun@gmail.com
