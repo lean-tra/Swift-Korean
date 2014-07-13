@@ -1,5 +1,7 @@
 ; "use strict";
 
+var authKey = "66b2543e01677885e8fd3b68bcdc79edfc3d63e1";
+var gitHubApiCacheUrl = "https://githubapicache.apphb.com";
 var gitcdn = "https://cdn.rawgit.com/lean-tra/Swift-Korean";
 
 var pages = [

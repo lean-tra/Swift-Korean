@@ -27,13 +27,13 @@
 
     //  Gets the latest commit key.
     var getSha = function (total) {
-        var url = "https://githubapicache.apphb.com/api/ref/lean-tra/Swift-Korean/master";
+        var url = gitHubApiCacheUrl + "/repos/lean-tra/Swift-Korean/git/refs/heads/master";
         $.ajax({
                 cache: false,
                 type: "GET",
                 url: url,
                 dataType: "json",
-                headers: { "Authorization": "token 66b2543e01677885e8fd3b68bcdc79edfc3d63e1" }
+                headers: { "Authorization": "token " + authKey }
             })
             .done(function(data) {
                 var sha = data.object.sha;
