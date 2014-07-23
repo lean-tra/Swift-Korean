@@ -111,7 +111,6 @@
 - 소감 : 빠르게 진행이 되다보니 아차하는 사이에 다른분들이 진행할까봐 졸린눈 부벼가며 번역했습니다. 즉 발번역인거죠. 흥이 날때 후딱 해치우니 좋네요.
 
 ###  (, Eonil)
-![hoonh](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/hoonh.jpeg)
 - 연락처 : 
 - 소감: 하고 싶었고, 잘 끝났고, 재밌었어요. 잘 마무리되었으면 합니다.
 
