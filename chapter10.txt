@@ -97,26 +97,26 @@ case .West:
 
 ![chapter10-fig2.png](https://raw.githubusercontent.com/lean-tra/Swift-Korean/master/images/chapter10-fig2.png)
 
-재고추적 시스템이 UPC-A 바코드를 3개의 숫자 튜플로 저장하고, QR 코드는 임의의 길이의 문자열로 저장할 수 있다면 매우 편할 것입니다.
+재고추적 시스템이 UPC-A 바코드를 4개의 숫자 튜플로 저장하고, QR 코드는 임의의 길이의 문자열로 저장할 수 있다면 매우 편할 것입니다.
 
 Swift에서, 각 유형의 제품의 바코드를 정의하는 열거형은 다음처럼 보일 것입니다:
 ```
 enum Barcode {
-        case UPCA(Int, Int, Int)
+        case UPCA(Int, Int, Int, Int)
         case QRCode(String)
     }
 ```
 이 코드는 다음과 같이 읽을 수 있습니다:
 
-"`(Int, Int, Int)` 타입의 **UPCA** 값 또는 `String` 타입의 **QRCode** 값을 가질 수 있는 **Barcode**라는 열거형 타입을 정의합니다."
+"`(Int, Int, Int, Int)` 타입의 **UPCA** 값 또는 `String` 타입의 **QRCode** 값을 가질 수 있는 **Barcode**라는 열거형 타입을 정의합니다."
 
 이 정의는 어떠한 실제 `Int` 및 `String` 값을 제공하지 않습니다. 오직 바코드 상수 및 변수들이 **Barcode.UPCA** 또는 **Barcode.QRCode** 중 하나와 같을 때, 그와 연관된 값들의 타입만을 정의합니다. 
 
 이제 새 바코드는 두가지 타입 중 하나로 생성될 수 있습니다:
 ```
-var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
+var productBarcode = Barcode.UPCA(8, 85909, 51226, 3)
 ```
-이 예제는 **productBarcode** 라는 새 변수를 생성하고, **Barcode.UPCA** 의 값으로 **(8, 8590951226, 3)** 튜플 값을 배정합니다. 제공된 "식별자" 값은 바코드로 읽기 좋도록 정수 표현 안의 밑줄 -**85909_51226**-로 을 갖고 있습니다.
+이 예제는 **productBarcode** 라는 새 변수를 생성하고, **Barcode.UPCA** 의 값으로 **(8, 85909, 51226, 3)** 튜플 값을 배정합니다. 제공된 "식별자" 값은 바코드로 읽기 좋도록 정수 표현 안의 밑줄 -**85909_51226**-로 을 갖고 있습니다.
 
 동일한 제품이 다른 형태의 바코드로 배정될 수도 있습니다.
 ``
@@ -127,22 +127,22 @@ var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
 서로 다른 바코드 타입들은 앞에서와 같이 `switch` 구문을 사용하여 체크할 수 있습니다. 그러나, 이번 경우 관련된 값들은 스위치 구분의 일부로 추출될 수 있습니다. 각각의 연관 값들을 `switch`의 `case` 내용으로 사용하기 위하여 (`let` 접두사와 함께) 상수 또는 (`var` 접두사와 함께) 변수로 추출할 수 있습니다. 
 ```
     switch productBarcode {
-    case .UPCA(let numberSystem, let identifier, let check):
-        println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+    case .UPCA(let numberSystem, let manufacturer, let product, let check):
+        println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
     case .QRCode(let productCode):
-        println("QR code with value of \(productCode).")
+        println("QR code: \(productCode).")
     }
-    // prints "QR code with value of ABCDEFGHIJKLMNOP."
+    // prints "QR code: ABCDEFGHIJKLMNOP."
 ```
 만약 열거형 멤버들의 모든 연관 값들이 상수로 추출되었거나 모두 변수로 추출되었다면, 간결함을 위하여 멤버 이름 앞에 하나의 `var` 또는 `let` 을 붙일 수 있습니다:
 ```
     switch productBarcode {
-    case let .UPCA(numberSystem, identifier, check):
-        println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+    case let .UPCA(numberSystem, manufacturer, product, check):
+        println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
     case let .QRCode(productCode):
-        println("QR code with value of \(productCode).")
+        println("QR code: \(productCode).")
     }
-    // prints "QR code with value of ABCDEFGHIJKLMNOP."
+    // prints "QR code: ABCDEFGHIJKLMNOP."
 ```
 ‌
 ##  원시 값 (Raw Values)
