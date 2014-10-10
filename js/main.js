@@ -281,13 +281,11 @@
 
     var processInitialHash = function() {
         var interval = setInterval(function() {
-            console.log("interval - 0")
             var target = $("a[href=" + location.hash+"]");
 
             // check DOM rendered successfully
             if ($(document).height() > 20000) {
-                console.log("interval length > 0")
-                getScrollTo(target)
+                getScrollTo(target);
                 clearInterval(interval);
             }
         }, 1000);
