@@ -201,6 +201,10 @@
 
                 count++;
                 getProgressbar((count / total) * 100);
+
+                if ( count/total == 1 ) {
+                    processInitialHash();
+                }
             });
     };
 
@@ -271,5 +275,21 @@
         $("html, body").scrollTo(hash, 500, { "offset": { "top": -60, "left": left } });
         $("#accordion li").removeClass("active");
         $("#nav-" + fragment).addClass("active");
+
+        location.hash = fragment
     };
+
+    var processInitialHash = function() {
+        var interval = setInterval(function() {
+            console.log("interval - 0")
+            var target = $("a[href=" + location.hash+"]");
+
+            // check DOM rendered successfully
+            if ($(document).height() > 20000) {
+                console.log("interval length > 0")
+                getScrollTo(target)
+                clearInterval(interval);
+            }
+        }, 1000);
+    }
 })(jQuery);
